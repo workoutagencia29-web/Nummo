@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Deploy na Vercel: fixa o preset do Nitro como "vercel" (fora do sandbox da Lovable).
+  // Gera .vercel/output (Build Output API), que a Vercel detecta sozinha — resolve o erro
+  // "No Output Directory named build".
+  nitro: { preset: "vercel" },
 });

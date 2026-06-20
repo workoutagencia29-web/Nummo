@@ -56,10 +56,10 @@
   --popover: oklch(0.18 0.014 250);
   --popover-foreground: oklch(0.98 0.005 250);
 
-  --primary: oklch(0.92 0.21 130);          /* electric lime */
-  --primary-foreground: oklch(0.16 0.02 250);
-  --neon: oklch(0.92 0.21 130);
-  --neon-soft: oklch(0.92 0.21 130 / 0.15);
+  --primary: oklch(0.581 0.229 263.9);          /* #2F6BFF azul */
+  --primary-foreground: oklch(0.98 0.005 250);  /* texto claro sobre o azul */
+  --neon: oklch(0.581 0.229 263.9);
+  --neon-soft: oklch(0.581 0.229 263.9 / 0.15);
   --accent-violet: oklch(0.7 0.22 295);
 
   --secondary: oklch(0.24 0.02 250);
@@ -72,12 +72,11 @@
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(1 0 0 / 0.08);
   --input: oklch(1 0 0 / 0.1);
-  --ring: oklch(0.92 0.21 130 / 0.5);
+  --ring: oklch(0.581 0.229 263.9 / 0.5);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -87,6 +86,17 @@
   }
   ::selection { background: var(--neon); color: var(--primary-foreground); }
 }
+
+/* ---------- lenis (scroll suave) ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* esconder o scrollbar nativo — usamos a barra custom (ScrollRail) */
+html, body { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
 /* ---------- utilities ---------- */
 @utility text-balance { text-wrap: balance; }
@@ -100,7 +110,7 @@
 }
 
 @utility radial-glow {
-  background: radial-gradient(60% 60% at 50% 0%, oklch(0.92 0.21 130 / 0.18), transparent 70%);
+  background: radial-gradient(60% 60% at 50% 0%, oklch(0.581 0.229 263.9 / 0.18), transparent 70%);
 }
 
 @utility noise {
@@ -117,8 +127,8 @@
 
 @utility neon-ring {
   box-shadow:
-    0 0 0 1px oklch(0.92 0.21 130 / 0.4),
-    0 0 30px oklch(0.92 0.21 130 / 0.25),
+    0 0 0 1px oklch(0.581 0.229 263.9 / 0.4),
+    0 0 30px oklch(0.581 0.229 263.9 / 0.25),
     inset 0 1px 0 oklch(1 0 0 / 0.08);
 }
 
@@ -140,3 +150,86 @@
 @utility animate-float-up { animation: float-up 0.6s ease-out both; }
 @utility animate-beam { animation: beam 2.4s ease-in-out infinite; }
 @utility animate-ticker { animation: ticker 8s ease-in-out infinite; }
+
+@keyframes nudge-down { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+@utility animate-nudge { animation: nudge-down 1.8s ease-in-out infinite; }
+
+@keyframes conveyor { from { transform: translateY(-46px); } to { transform: translateY(0); } }
+@utility animate-conveyor { animation: conveyor 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* ---------- botão CTA animado (Criar conta grátis) ---------- */
+.cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 9999px;
+  background-color: transparent;
+  cursor: pointer;
+  transform-origin: center;
+  transform: scale(calc(1 + (var(--cta-active, 0) * 0.04)));
+  transition: transform 0.3s ease-in-out;
+}
+.cta-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 9999px;
+  background-color: oklch(0.581 0.229 263.9);
+  box-shadow:
+    inset 0 0.5px hsl(0 0% 100% / 0.5),
+    inset 0 -1px 2px 0 hsl(0 0% 0% / 0.25),
+    0 6px 18px -6px oklch(0.581 0.229 263.9 / 0.6),
+    0 0 0 calc(var(--cta-active, 0) * 0.375rem) oklch(0.581 0.229 263.9 / 0.4);
+  transition: all 0.3s ease-in-out;
+}
+.cta-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 9999px;
+  background-image:
+    radial-gradient(at 51% 89%, oklch(0.74 0.15 264) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, oklch(0.66 0.2 264) 0px, transparent 50%),
+    radial-gradient(at 22% 91%, oklch(0.66 0.2 264) 0px, transparent 50%);
+  opacity: var(--cta-active, 0);
+  transition: opacity 0.3s ease-in-out;
+}
+.cta-btn:is(:hover, :focus-visible) { --cta-active: 1; }
+.cta-btn:active { transform: scale(0.98); }
+
+.cta-dots {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.cta-dots::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 100%;
+  height: 2rem;
+  transform-origin: left;
+  background-color: white;
+  -webkit-mask: linear-gradient(transparent 0%, white 120%);
+  mask: linear-gradient(transparent 0%, white 120%);
+  animation: cta-rotate 2s linear infinite;
+}
+@keyframes cta-rotate { to { transform: rotate(360deg); } }
+
+.cta-text {
+  position: relative;
+  z-index: 10;
+  background-image: linear-gradient(90deg, hsl(0 0% 100%) 0%, hsl(0 0% 100% / calc(0.65 + var(--cta-active, 0) * 0.35)) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

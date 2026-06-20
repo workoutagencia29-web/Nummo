@@ -3,6 +3,7 @@ import {
   Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import Lenis from "lenis";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -55,14 +56,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Zentra — A subadquirente do futuro" },
-      { name: "description", content: "Zentra: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
-      { property: "og:title", content: "Zentra — A subadquirente do futuro" },
-      { property: "og:description", content: "Zentra: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
+      { title: "Nummo — A subadquirente do futuro" },
+      { name: "description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
+      { property: "og:title", content: "Nummo — A subadquirente do futuro" },
+      { property: "og:description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Zentra — A subadquirente do futuro" },
-      { name: "twitter:description", content: "Zentra: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
+      { name: "twitter:title", content: "Nummo — A subadquirente do futuro" },
+      { name: "twitter:description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ce1c3739-bf7f-46d1-9b45-f6fcc398c978/id-preview-7ccf6883--12dd208d-c85f-4520-bf2c-b3b64ecb7114.lovable.app-1781800539382.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ce1c3739-bf7f-46d1-9b45-f6fcc398c978/id-preview-7ccf6883--12dd208d-c85f-4520-bf2c-b3b64ecb7114.lovable.app-1781800539382.png" },
     ],
@@ -93,6 +94,19 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+    let id = requestAnimationFrame(function raf(time: number) {
+      lenis.raf(time);
+      id = requestAnimationFrame(raf);
+    });
+    return () => {
+      cancelAnimationFrame(id);
+      lenis.destroy();
+      (window as unknown as { __lenis?: Lenis }).__lenis = undefined;
+    };
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background font-sans text-foreground">

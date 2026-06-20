@@ -1,9 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  ArrowRight, ArrowUpRight, Check, ChevronDown, Cpu, CreditCard,
-  Fingerprint, Link, Layers, Lock, Smartphone, TrendingUp,
-  Wallet, Zap, BarChart3, Code2, ShieldCheck, Infinity as InfinityIcon,
-  Instagram, Linkedin, Twitter, Github,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  ChevronDown,
+  Cpu,
+  CreditCard,
+  Fingerprint,
+  Link,
+  Layers,
+  Lock,
+  Smartphone,
+  TrendingUp,
+  Wallet,
+  Zap,
+  BarChart3,
+  Code2,
+  ShieldCheck,
+  Infinity as InfinityIcon,
+  Instagram,
+  Linkedin,
+  Twitter,
+  Github,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
@@ -11,9 +29,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Nummo — A subadquirente do futuro" },
-      { name: "description", content: "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar." },
+      {
+        name: "description",
+        content:
+          "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar.",
+      },
       { property: "og:title", content: "Nummo — Pagamentos sem atrito" },
-      { property: "og:description", content: "Subadquirente brasileira com liquidez D+0, API moderna e segurança PCI-DSS v4.0." },
+      {
+        property: "og:description",
+        content: "Subadquirente brasileira com liquidez D+0, API moderna e segurança PCI-DSS v4.0.",
+      },
     ],
   }),
   component: Landing,
@@ -35,7 +60,15 @@ function NeonChip({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PrimaryButton({ children, className = "", size = "md" }: { children: React.ReactNode; className?: string; size?: "md" | "lg" }) {
+function PrimaryButton({
+  children,
+  className = "",
+  size = "md",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  size?: "md" | "lg";
+}) {
   const sizeCls = size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm";
   return (
     <button className={`cta-btn group font-semibold ${sizeCls} ${className}`}>
@@ -46,7 +79,15 @@ function PrimaryButton({ children, className = "", size = "md" }: { children: Re
   );
 }
 
-function GhostButton({ children, className = "", size = "md" }: { children: React.ReactNode; className?: string; size?: "md" | "lg" }) {
+function GhostButton({
+  children,
+  className = "",
+  size = "md",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  size?: "md" | "lg";
+}) {
   const sizeCls = size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm";
   return (
     <button
@@ -57,7 +98,15 @@ function GhostButton({ children, className = "", size = "md" }: { children: Reac
   );
 }
 
-function SectionEyebrow({ kicker, title, sub }: { kicker: string; title: React.ReactNode; sub?: string }) {
+function SectionEyebrow({
+  kicker,
+  title,
+  sub,
+}: {
+  kicker: string;
+  title: React.ReactNode;
+  sub?: string;
+}) {
   return (
     <div className="mb-16 max-w-3xl">
       <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
@@ -154,7 +203,10 @@ function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <a href="#" className="hidden px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block">
+          <a
+            href="#"
+            className="hidden px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block"
+          >
             Entrar
           </a>
           <button className="rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition-transform hover:scale-[1.02]">
@@ -258,7 +310,9 @@ function LiveTransactions() {
               </span>
               <span className="truncate text-foreground/80">{t.name}</span>
             </span>
-            <span className="whitespace-nowrap font-mono font-medium text-foreground">+ {t.value}</span>
+            <span className="whitespace-nowrap font-mono font-medium text-foreground">
+              + {t.value}
+            </span>
           </div>
         ))}
       </div>
@@ -370,7 +424,17 @@ function HeroVisual() {
 }
 
 function LogoMarquee() {
-  const logos = ["VISA", "MASTERCARD", "ELO", "AMEX", "HIPERCARD", "PIX", "BOLETO", "APPLE PAY", "GOOGLE PAY"];
+  const logos = [
+    "VISA",
+    "MASTERCARD",
+    "ELO",
+    "AMEX",
+    "HIPERCARD",
+    "PIX",
+    "BOLETO",
+    "APPLE PAY",
+    "GOOGLE PAY",
+  ];
   return (
     <section className="border-y border-white/5 bg-surface/30 py-10">
       <div className="mx-auto max-w-7xl px-6">
@@ -410,10 +474,13 @@ function Bento() {
                   <Wallet className="size-5" />
                 </div>
                 <h3 className="font-display text-3xl font-medium tracking-tight">
-                  Recebimento na hora,<br />sem antecipação cara.
+                  Recebimento na hora,
+                  <br />
+                  sem antecipação cara.
                 </h3>
                 <p className="mt-4 max-w-sm text-muted-foreground">
-                  Liquidez D+0 nativa, sem custo extra. Seu dinheiro pinga na conta segundos depois da venda.
+                  Liquidez D+0 nativa, sem custo extra. Seu dinheiro pinga na conta segundos depois
+                  da venda.
                 </p>
               </div>
 
@@ -424,7 +491,9 @@ function Bento() {
                     <div className="grid size-12 place-items-center rounded-lg bg-white/5 text-foreground">
                       <CreditCard className="size-5" />
                     </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Venda</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">
+                      Venda
+                    </div>
                   </div>
                   <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/10">
                     <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-neon to-transparent" />
@@ -442,7 +511,9 @@ function Bento() {
                     <div className="grid size-12 place-items-center rounded-lg bg-white/5 text-foreground">
                       <Wallet className="size-5" />
                     </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Conta</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">
+                      Conta
+                    </div>
                   </div>
                 </div>
                 <div className="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-neon">
@@ -482,12 +553,22 @@ function Bento() {
 }
 
 function BentoCard({
-  icon, title, text, className = "", compact = false,
+  icon,
+  title,
+  text,
+  className = "",
+  compact = false,
 }: {
-  icon: React.ReactNode; title: string; text: string; className?: string; compact?: boolean;
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  className?: string;
+  compact?: boolean;
 }) {
   return (
-    <div className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}>
+    <div
+      className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}
+    >
       <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-white/5 text-foreground transition-colors group-hover:bg-neon/15 group-hover:text-neon">
         <span className="[&>svg]:size-5">{icon}</span>
       </div>
@@ -505,8 +586,16 @@ function PaymentMethods() {
     { name: "Crédito", desc: "Visa, Master, Elo, Amex, Hiper, Diners.", icon: <CreditCard /> },
     { name: "Débito", desc: "Aprovação online com taxas reduzidas.", icon: <CreditCard /> },
     { name: "Boleto", desc: "Emissão e conciliação automática.", icon: <Wallet /> },
-    { name: "Apple/Google Pay", desc: "Checkout sem fricção em qualquer dispositivo.", icon: <Smartphone /> },
-    { name: "Recorrência", desc: "Cobranças automáticas, retentativa inteligente.", icon: <InfinityIcon /> },
+    {
+      name: "Apple/Google Pay",
+      desc: "Checkout sem fricção em qualquer dispositivo.",
+      icon: <Smartphone />,
+    },
+    {
+      name: "Recorrência",
+      desc: "Cobranças automáticas, retentativa inteligente.",
+      icon: <InfinityIcon />,
+    },
   ];
   return (
     <section className="border-t border-white/5 bg-surface/30 py-32">
@@ -556,7 +645,9 @@ function Rates() {
 
           {/* Texto */}
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Taxas</div>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">
+              / Taxas
+            </div>
             <h2 className="text-balance text-5xl font-medium leading-[1.05] tracking-tight md:text-6xl">
               A taxa mais{" "}
               <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
@@ -564,13 +655,17 @@ function Rates() {
               </span>
             </h2>
             <p className="mt-6 max-w-md text-pretty text-xl text-muted-foreground">
-              Receba no Pix instantaneamente, em D+0.
-              A partir de <span className="font-semibold text-foreground">R$ 0,49</span> no Pix
-              e <span className="font-semibold text-foreground">2,45%</span> no crédito à vista —
-              sem mensalidade e sem letra miúda.
+              Receba no Pix instantaneamente, em D+0. A partir de{" "}
+              <span className="font-semibold text-foreground">R$ 0,49</span> no Pix e{" "}
+              <span className="font-semibold text-foreground">2,45%</span> no crédito à vista — sem
+              mensalidade e sem letra miúda.
             </p>
             <p className="mt-6 text-base text-muted-foreground">
-              Taxas padrões — <a href="#" className="font-medium text-neon transition-colors hover:text-foreground">fale com um gerente</a> para personalizá-las.
+              Taxas padrões —{" "}
+              <a href="#" className="font-medium text-neon transition-colors hover:text-foreground">
+                fale com um gerente
+              </a>{" "}
+              para personalizá-las.
             </p>
           </div>
         </div>
@@ -581,9 +676,21 @@ function Rates() {
 
 function HowItWorks() {
   const steps = [
-    { n: "01", title: "Crie sua conta", text: "100% online, sem papelada. Aprovação em até 24h úteis." },
-    { n: "02", title: "Integre em minutos", text: "Use nosso checkout pronto, link de pagamento ou API REST." },
-    { n: "03", title: "Comece a vender", text: "Aceite Pix, débito, crédito e boleto desde o primeiro dia." },
+    {
+      n: "01",
+      title: "Crie sua conta",
+      text: "100% online, sem papelada. Aprovação em até 24h úteis.",
+    },
+    {
+      n: "02",
+      title: "Integre em minutos",
+      text: "Use nosso checkout pronto, link de pagamento ou API REST.",
+    },
+    {
+      n: "03",
+      title: "Comece a vender",
+      text: "Aceite Pix, débito, crédito e boleto desde o primeiro dia.",
+    },
     { n: "04", title: "Receba na hora", text: "Liquidez D+0 no Pix, em minutos no seu banco." },
   ];
   return (
@@ -623,7 +730,11 @@ function DevSection() {
           <div>
             <NeonChip>Para desenvolvedores</NeonChip>
             <h2 className="mt-6 text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
-              API que dev <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">ama</span>.
+              API que dev{" "}
+              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">
+                ama
+              </span>
+              .
             </h2>
             <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground">
               REST, webhooks idempotentes, SDKs oficiais em Node, Python, PHP, Go e Ruby.
@@ -636,14 +747,19 @@ function DevSection() {
                 { icon: <Lock />, t: "OAuth 2.0 + chaves" },
                 { icon: <Cpu />, t: "Sandbox ilimitado" },
               ].map((f) => (
-                <div key={f.t} className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3">
+                <div
+                  key={f.t}
+                  className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3"
+                >
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>
                 </div>
               ))}
             </div>
             <div className="mt-10">
-              <GhostButton>Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
+              <GhostButton>
+                Ver documentação <ArrowUpRight className="size-4" />
+              </GhostButton>
             </div>
           </div>
 
@@ -653,19 +769,65 @@ function DevSection() {
               <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
                 <Code2 className="size-3.5" /> create-charge.ts
               </div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-neon">live</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-neon">
+                live
+              </span>
             </div>
             <pre className="overflow-x-auto p-6 font-mono text-[13px] leading-relaxed">
-<code><span className="text-muted-foreground">// 1. Cria uma cobrança Pix</span>{"\n"}
-<span className="text-accent-violet">const</span> <span className="text-foreground">charge</span> <span className="text-muted-foreground">=</span> <span className="text-accent-violet">await</span> <span className="text-foreground">nummo</span><span className="text-muted-foreground">.</span><span className="text-neon">charges</span><span className="text-muted-foreground">.</span><span className="text-neon">create</span><span className="text-muted-foreground">({`{`}</span>{"\n"}
-{"  "}<span className="text-foreground">amount</span><span className="text-muted-foreground">:</span> <span className="text-neon">15000</span><span className="text-muted-foreground">,</span> <span className="text-muted-foreground">// R$ 150,00</span>{"\n"}
-{"  "}<span className="text-foreground">currency</span><span className="text-muted-foreground">:</span> <span className="text-neon">"BRL"</span><span className="text-muted-foreground">,</span>{"\n"}
-{"  "}<span className="text-foreground">method</span><span className="text-muted-foreground">:</span> <span className="text-neon">"pix"</span><span className="text-muted-foreground">,</span>{"\n"}
-{"  "}<span className="text-foreground">customer</span><span className="text-muted-foreground">:</span> <span className="text-muted-foreground">{`{`}</span> <span className="text-foreground">name</span><span className="text-muted-foreground">:</span> <span className="text-neon">"Ana Souza"</span> <span className="text-muted-foreground">{`}`},</span>{"\n"}
-{"  "}<span className="text-foreground">settlement</span><span className="text-muted-foreground">:</span> <span className="text-neon">"instant"</span> <span className="text-muted-foreground">// D+0</span>{"\n"}
-<span className="text-muted-foreground">{`});`}</span>{"\n\n"}
-<span className="text-muted-foreground">{"// → { id: 'ch_4nL...', status: 'paid', net: 14951 }"}</span>
-</code>
+              <code>
+                <span className="text-muted-foreground">// 1. Cria uma cobrança Pix</span>
+                {"\n"}
+                <span className="text-accent-violet">const</span>{" "}
+                <span className="text-foreground">charge</span>{" "}
+                <span className="text-muted-foreground">=</span>{" "}
+                <span className="text-accent-violet">await</span>{" "}
+                <span className="text-foreground">nummo</span>
+                <span className="text-muted-foreground">.</span>
+                <span className="text-neon">charges</span>
+                <span className="text-muted-foreground">.</span>
+                <span className="text-neon">create</span>
+                <span className="text-muted-foreground">({`{`}</span>
+                {"\n"}
+                {"  "}
+                <span className="text-foreground">amount</span>
+                <span className="text-muted-foreground">:</span>{" "}
+                <span className="text-neon">15000</span>
+                <span className="text-muted-foreground">,</span>{" "}
+                <span className="text-muted-foreground">// R$ 150,00</span>
+                {"\n"}
+                {"  "}
+                <span className="text-foreground">currency</span>
+                <span className="text-muted-foreground">:</span>{" "}
+                <span className="text-neon">"BRL"</span>
+                <span className="text-muted-foreground">,</span>
+                {"\n"}
+                {"  "}
+                <span className="text-foreground">method</span>
+                <span className="text-muted-foreground">:</span>{" "}
+                <span className="text-neon">"pix"</span>
+                <span className="text-muted-foreground">,</span>
+                {"\n"}
+                {"  "}
+                <span className="text-foreground">customer</span>
+                <span className="text-muted-foreground">:</span>{" "}
+                <span className="text-muted-foreground">{`{`}</span>{" "}
+                <span className="text-foreground">name</span>
+                <span className="text-muted-foreground">:</span>{" "}
+                <span className="text-neon">"Ana Souza"</span>{" "}
+                <span className="text-muted-foreground">{`}`},</span>
+                {"\n"}
+                {"  "}
+                <span className="text-foreground">settlement</span>
+                <span className="text-muted-foreground">:</span>{" "}
+                <span className="text-neon">"instant"</span>{" "}
+                <span className="text-muted-foreground">// D+0</span>
+                {"\n"}
+                <span className="text-muted-foreground">{`});`}</span>
+                {"\n\n"}
+                <span className="text-muted-foreground">
+                  {"// → { id: 'ch_4nL...', status: 'paid', net: 14951 }"}
+                </span>
+              </code>
             </pre>
           </div>
         </div>
@@ -676,9 +838,21 @@ function DevSection() {
 
 function Security() {
   const items = [
-    { icon: <ShieldCheck />, title: "PCI-DSS v4.0", text: "Certificação Level 1, o nível mais alto da indústria." },
-    { icon: <Fingerprint />, title: "Tokenização", text: "Dados sensíveis nunca trafegam pela sua aplicação." },
-    { icon: <Lock />, title: "3DS 2.0 nativo", text: "Autenticação forte sem fricção desnecessária no checkout." },
+    {
+      icon: <ShieldCheck />,
+      title: "PCI-DSS v4.0",
+      text: "Certificação Level 1, o nível mais alto da indústria.",
+    },
+    {
+      icon: <Fingerprint />,
+      title: "Tokenização",
+      text: "Dados sensíveis nunca trafegam pela sua aplicação.",
+    },
+    {
+      icon: <Lock />,
+      title: "3DS 2.0 nativo",
+      text: "Autenticação forte sem fricção desnecessária no checkout.",
+    },
   ];
   return (
     <section className="relative overflow-hidden border-y border-white/5 bg-surface/30 py-32">
@@ -707,25 +881,31 @@ function Security() {
 function Testimonials() {
   const t = [
     {
-      quote: "Migramos da concorrente e economizamos R$ 38 mil no primeiro mês só em taxas. A API é cirúrgica.",
-      name: "Rafael Mendes", role: "CTO, Lojas Norte", photo: "/depoimentos/1.jpg",
+      quote:
+        "Migramos da concorrente e economizamos R$ 38 mil no primeiro mês só em taxas. A API é cirúrgica.",
+      name: "Rafael Mendes",
+      role: "CTO, Lojas Norte",
+      photo: "/depoimentos/1.jpg",
     },
     {
-      quote: "D+0 mudou o jogo do nosso fluxo de caixa. Conseguimos escalar na velocidade que sempre sonhamos.",
-      name: "Bruno Carvalho", role: "CEO, Café Dois Mundos", photo: "/depoimentos/2.jpg",
+      quote:
+        "D+0 mudou o jogo do nosso fluxo de caixa. Conseguimos escalar na velocidade que sempre sonhamos.",
+      name: "Bruno Carvalho",
+      role: "CEO, Café Dois Mundos",
+      photo: "/depoimentos/2.jpg",
     },
     {
-      quote: "Mais do que suporte, tenho um parceiro estratégico que entende minhas necessidades e oferece o acompanhamento que preciso para operar com segurança.",
-      name: "Lucas Hayashi", role: "Dev Lead, MercadoFit", photo: "/depoimentos/3.jpg",
+      quote:
+        "Mais do que suporte, tenho um parceiro estratégico que entende minhas necessidades e oferece o acompanhamento que preciso para operar com segurança.",
+      name: "Lucas Hayashi",
+      role: "Dev Lead, MercadoFit",
+      photo: "/depoimentos/3.jpg",
     },
   ];
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionEyebrow
-          kicker="Quem usa"
-          title="Sellers que não voltam atrás."
-        />
+        <SectionEyebrow kicker="Quem usa" title="Sellers que não voltam atrás." />
         <div className="grid gap-4 md:grid-cols-3">
           {t.map((q) => (
             <figure key={q.name} className="card-elevated flex flex-col p-8">
@@ -756,11 +936,26 @@ function Testimonials() {
 
 function Faq() {
   const items = [
-    { q: "Preciso ter CNPJ para abrir conta?", a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta em até 24h." },
-    { q: "Quanto custa começar?", a: "Na Nummo, você pode criar sua conta e começar a vender gratuitamente. Nossa plataforma oferece ferramentas para impulsionar suas vendas, sem custos, sem mensalidade, sem pegadinha. As taxas são aplicadas apenas sobre vendas aprovadas, descontadas no momento da transação. O que está esperando para vir para a Nummo?" },
-    { q: "Como funciona o D+0?", a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda." },
-    { q: "Quanto tempo leva para sacar?", a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
-    { q: "É seguro?", a: "Nós possuímos um sistema de segurança avançada para proteger cada transação. Somos certificados PCI-DSS Level 1, o mais alto padrão de segurança para dados de cartão. E também utilizamos 3DS 2.0 e uma camada antifraude com inteligência artificial, que analisa transações em tempo real para identificar comportamentos suspeitos, reduzir fraudes e evitar chargebacks." },
+    {
+      q: "Preciso ter CNPJ para abrir conta?",
+      a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta em até 24h.",
+    },
+    {
+      q: "Quanto custa começar?",
+      a: "Na Nummo, você pode criar sua conta e começar a vender gratuitamente. Nossa plataforma oferece ferramentas para impulsionar suas vendas, sem custos, sem mensalidade, sem pegadinha. As taxas são aplicadas apenas sobre vendas aprovadas, descontadas no momento da transação. O que está esperando para vir para a Nummo?",
+    },
+    {
+      q: "Como funciona o D+0?",
+      a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda.",
+    },
+    {
+      q: "Quanto tempo leva para sacar?",
+      a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h.",
+    },
+    {
+      q: "É seguro?",
+      a: "Nós possuímos um sistema de segurança avançada para proteger cada transação. Somos certificados PCI-DSS Level 1, o mais alto padrão de segurança para dados de cartão. E também utilizamos 3DS 2.0 e uma camada antifraude com inteligência artificial, que analisa transações em tempo real para identificar comportamentos suspeitos, reduzir fraudes e evitar chargebacks.",
+    },
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
@@ -801,7 +996,9 @@ function FinalCta() {
         <NeonChip>Comece em 3 minutos</NeonChip>
         <h2 className="mt-8 text-balance font-display text-5xl font-medium leading-[1.02] tracking-tight md:text-7xl">
           Vender nunca foi{" "}
-          <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">tão simples.</span>
+          <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">
+            tão simples.
+          </span>
         </h2>
         <p className="mt-6 text-lg text-muted-foreground">
           Sem mensalidade. Sem fidelidade. Sem surpresa.
@@ -876,7 +1073,10 @@ function Footer() {
                 <ul className="space-y-2.5">
                   {col.l.map((i) => (
                     <li key={i}>
-                      <a href="#" className="text-sm text-foreground/80 transition-colors hover:text-neon">
+                      <a
+                        href="#"
+                        className="text-sm text-foreground/80 transition-colors hover:text-neon"
+                      >
                         {i}
                       </a>
                     </li>

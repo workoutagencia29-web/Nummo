@@ -5,6 +5,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -114,6 +115,7 @@ function RootComponent() {
         <Outlet />
       </div>
       <Analytics />
+      <SpeedInsights />
     </QueryClientProvider>
   );
 }

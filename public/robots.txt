@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://usenummo.com.br/sitemap.xml

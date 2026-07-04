@@ -1,0 +1,16 @@
+{
+  "name": "Nummo",
+  "short_name": "Nummo",
+  "description": "O hub de pagamentos do futuro: Pix, cartões e boleto com liquidez D+0, taxas transparentes e API moderna.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#060a0e",
+  "theme_color": "#060a0e",
+  "icons": [
+    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

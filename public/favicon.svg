@@ -1,0 +1,7 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nummo">
+  <rect width="240" height="240" rx="54" fill="#0D1B39"/>
+  <g transform="translate(120 120) scale(1.18) translate(-124 -121)">
+    <path fill="#F6F9FC" d="M56 72 H86 V90 C93 79 106 72 122 72 C146 72 162 89 162 115 V170 H132 V120 C132 107 124 99 112 99 C98 99 86 109 86 124 V170 H56 Z"/>
+    <circle cx="180" cy="158" r="13" fill="#2F6BFF"/>
+  </g>
+</svg>

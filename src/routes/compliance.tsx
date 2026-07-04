@@ -35,13 +35,19 @@ function CompliancePage() {
         {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Compliance</div>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">
+              / Compliance
+            </div>
             <h1 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
               Confiança que se{" "}
-              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">comprova.</span>
+              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
+                comprova.
+              </span>
             </h1>
             <p className="mt-3 text-muted-foreground">
-              Segurança, regulação e proteção de dados no centro de tudo o que a Nummo faz. Conheça os nossos compromissos de conformidade e as práticas que mantêm a sua operação protegida.
+              Segurança, regulação e proteção de dados no centro de tudo o que a Nummo faz. Conheça
+              os nossos compromissos de conformidade e as práticas que mantêm a sua operação
+              protegida.
             </p>
           </div>
         </div>
@@ -82,12 +88,24 @@ export const Route = createFileRoute("/compliance")({
   head: () => ({
     meta: [
       { title: "Compliance — Nummo" },
-      { name: "description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
+      {
+        name: "description",
+        content:
+          "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC).",
+      },
       { property: "og:title", content: "Compliance — Nummo" },
-      { property: "og:description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
+      {
+        property: "og:description",
+        content:
+          "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC).",
+      },
       { property: "og:url", content: "https://usenummo.com.br/compliance" },
       { name: "twitter:title", content: "Compliance — Nummo" },
-      { name: "twitter:description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
+      {
+        name: "twitter:description",
+        content:
+          "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC).",
+      },
     ],
     links: [{ rel: "canonical", href: "https://usenummo.com.br/compliance" }],
   }),

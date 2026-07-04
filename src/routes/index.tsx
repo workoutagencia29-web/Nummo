@@ -1,9 +1,28 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
-  ArrowRight, ArrowUpRight, Check, ChevronDown, Cpu, CreditCard,
-  Fingerprint, Link, Layers, Lock, Smartphone, TrendingUp,
-  Wallet, Zap, BarChart3, Code2, ShieldCheck, Infinity as InfinityIcon,
-  Instagram, Linkedin, Youtube, Menu, X,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  ChevronDown,
+  Cpu,
+  CreditCard,
+  Fingerprint,
+  Link,
+  Layers,
+  Lock,
+  Smartphone,
+  TrendingUp,
+  Wallet,
+  Zap,
+  BarChart3,
+  Code2,
+  ShieldCheck,
+  Infinity as InfinityIcon,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Menu,
+  X,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 
@@ -23,18 +42,31 @@ function Pix() {
   );
 }
 
-export const WHATSAPP_URL = "https://api.whatsapp.com/message/ZOX6JAZW427OB1?autoload=1&app_absent=0";
+export const WHATSAPP_URL =
+  "https://api.whatsapp.com/message/ZOX6JAZW427OB1?autoload=1&app_absent=0";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Nummo — O hub de pagamentos do futuro" },
-      { name: "description", content: "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar." },
+      {
+        name: "description",
+        content:
+          "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar.",
+      },
       { property: "og:title", content: "Nummo — Pagamentos sem atrito" },
-      { property: "og:description", content: "Hub de pagamentos brasileiro com liquidez D+0, API moderna e segurança PCI-DSS v4.0." },
+      {
+        property: "og:description",
+        content:
+          "Hub de pagamentos brasileiro com liquidez D+0, API moderna e segurança PCI-DSS v4.0.",
+      },
       { property: "og:url", content: "https://usenummo.com.br/" },
       { name: "twitter:title", content: "Nummo — Pagamentos sem atrito" },
-      { name: "twitter:description", content: "Hub de pagamentos brasileiro com liquidez D+0, API moderna e segurança PCI-DSS v4.0." },
+      {
+        name: "twitter:description",
+        content:
+          "Hub de pagamentos brasileiro com liquidez D+0, API moderna e segurança PCI-DSS v4.0.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://usenummo.com.br/" }],
   }),
@@ -97,7 +129,21 @@ export function PrimaryButton({
   );
 }
 
-export function GhostButton({ children, className = "", size = "md", href, target, rel }: { children: React.ReactNode; className?: string; size?: "md" | "lg"; href?: string; target?: string; rel?: string }) {
+export function GhostButton({
+  children,
+  className = "",
+  size = "md",
+  href,
+  target,
+  rel,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  size?: "md" | "lg";
+  href?: string;
+  target?: string;
+  rel?: string;
+}) {
   const sizeCls = size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm";
   const cls = `inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] ${sizeCls} font-medium text-foreground/90 backdrop-blur transition-colors hover:border-white/20 hover:bg-white/[0.06] ${className}`;
   if (href) {
@@ -107,14 +153,18 @@ export function GhostButton({ children, className = "", size = "md", href, targe
       </a>
     );
   }
-  return (
-    <button className={cls}>
-      {children}
-    </button>
-  );
+  return <button className={cls}>{children}</button>;
 }
 
-function SectionEyebrow({ kicker, title, sub }: { kicker: string; title: React.ReactNode; sub?: string }) {
+function SectionEyebrow({
+  kicker,
+  title,
+  sub,
+}: {
+  kicker: string;
+  title: React.ReactNode;
+  sub?: string;
+}) {
   return (
     <div className="mb-16 max-w-3xl">
       <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
@@ -160,7 +210,15 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
-function Stagger({ children, className = "", step = 240 }: { children: React.ReactNode; className?: string; step?: number }) {
+function Stagger({
+  children,
+  className = "",
+  step = 240,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  step?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -201,22 +259,45 @@ function Stagger({ children, className = "", step = 240 }: { children: React.Rea
 function Landing() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
-      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-neon focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground">
+      <a
+        href="#conteudo"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-neon focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
+      >
         Pular para o conteúdo
       </a>
       <Nav />
       <main id="conteudo">
         <Hero />
-        <Reveal><LogoMarquee /></Reveal>
-        <Reveal><Bento /></Reveal>
-        <Reveal><PaymentMethods /></Reveal>
-        <Reveal><Rates /></Reveal>
-        <Reveal><HowItWorks /></Reveal>
-        <Reveal><DevSection /></Reveal>
-        <Reveal><Security /></Reveal>
-        <Reveal><Testimonials /></Reveal>
-        <Reveal><Faq /></Reveal>
-        <Reveal><FinalCta /></Reveal>
+        <Reveal>
+          <LogoMarquee />
+        </Reveal>
+        <Reveal>
+          <Bento />
+        </Reveal>
+        <Reveal>
+          <PaymentMethods />
+        </Reveal>
+        <Reveal>
+          <Rates />
+        </Reveal>
+        <Reveal>
+          <HowItWorks />
+        </Reveal>
+        <Reveal>
+          <DevSection />
+        </Reveal>
+        <Reveal>
+          <Security />
+        </Reveal>
+        <Reveal>
+          <Testimonials />
+        </Reveal>
+        <Reveal>
+          <Faq />
+        </Reveal>
+        <Reveal>
+          <FinalCta />
+        </Reveal>
       </main>
       <Footer />
       <ScrollRail />
@@ -267,9 +348,11 @@ function navScroll(e: React.MouseEvent<HTMLAnchorElement>, hash: string, off = -
   const el = document.getElementById(hash);
   if (!el) return; // não está na home: deixa o href "/#hash" navegar pra home
   e.preventDefault();
-  const lenis = (window as unknown as {
-    __lenis?: { scrollTo: (t: Element | string, o?: { offset?: number }) => void };
-  }).__lenis;
+  const lenis = (
+    window as unknown as {
+      __lenis?: { scrollTo: (t: Element | string, o?: { offset?: number }) => void };
+    }
+  ).__lenis;
   if (lenis) lenis.scrollTo(el, { offset: off });
   else el.scrollIntoView({ behavior: "smooth" });
 }
@@ -304,10 +387,20 @@ export function Nav() {
             ))}
           </nav>
           <div className="flex items-center gap-1.5">
-            <button type="button"  onClick={() => window.location.href = "https://app.usenummo.com.br/dashboard/login"} className="hidden px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block">
+            <button
+              type="button"
+              onClick={() => (window.location.href = "https://app.usenummo.com.br/dashboard/login")}
+              className="hidden px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block"
+            >
               Entrar
             </button>
-            <button type="button" className="rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition-transform hover:scale-[1.02]" onClick={() => window.location.href = "https://app.usenummo.com.br/dashboard/register"}>
+            <button
+              type="button"
+              className="rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition-transform hover:scale-[1.02]"
+              onClick={() =>
+                (window.location.href = "https://app.usenummo.com.br/dashboard/register")
+              }
+            >
               Criar conta
             </button>
             <button
@@ -318,13 +411,20 @@ export function Nav() {
               onClick={() => setOpen((v) => !v)}
               className="grid size-10 place-items-center rounded-full text-foreground transition-colors hover:bg-white/5 lg:hidden"
             >
-              {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
+              {open ? (
+                <X className="size-5" aria-hidden="true" />
+              ) : (
+                <Menu className="size-5" aria-hidden="true" />
+              )}
             </button>
           </div>
         </div>
 
         {open && (
-          <div id="mobile-nav" className="mt-2 overflow-hidden rounded-3xl border border-white/10 bg-surface/80 p-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl lg:hidden">
+          <div
+            id="mobile-nav"
+            className="mt-2 overflow-hidden rounded-3xl border border-white/10 bg-surface/80 p-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl lg:hidden"
+          >
             <nav className="flex flex-col">
               {NAV_ITEMS.map((item) => (
                 <a
@@ -341,7 +441,10 @@ export function Nav() {
               ))}
             </nav>
             <div className="mt-1 border-t border-white/10 p-2">
-              <button type="button" className="block w-full rounded-2xl px-4 py-2.5 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground">
+              <button
+                type="button"
+                className="block w-full rounded-2xl px-4 py-2.5 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+              >
                 Entrar
               </button>
             </div>
@@ -377,10 +480,7 @@ function Hero() {
             </div>
 
             <div className="mt-[108px] flex flex-wrap items-center gap-4">
-              <PrimaryButton
-                size="lg"
-                href="https://app.usenummo.com.br/dashboard/register"
-              >
+              <PrimaryButton size="lg" href="https://app.usenummo.com.br/dashboard/register">
                 Criar Conta
               </PrimaryButton>
 
@@ -457,7 +557,9 @@ function LiveTransactions() {
               </span>
               <span className="truncate text-foreground/80">{t.name}</span>
             </span>
-            <span className="whitespace-nowrap font-mono font-medium text-foreground">+ {t.value}</span>
+            <span className="whitespace-nowrap font-mono font-medium text-foreground">
+              + {t.value}
+            </span>
           </div>
         ))}
       </div>
@@ -569,7 +671,17 @@ function HeroVisual() {
 }
 
 function LogoMarquee() {
-  const logos = ["VISA", "MASTERCARD", "ELO", "AMEX", "HIPERCARD", "PIX", "BOLETO", "APPLE PAY", "GOOGLE PAY"];
+  const logos = [
+    "VISA",
+    "MASTERCARD",
+    "ELO",
+    "AMEX",
+    "HIPERCARD",
+    "PIX",
+    "BOLETO",
+    "APPLE PAY",
+    "GOOGLE PAY",
+  ];
   return (
     <section className="border-y border-white/5 bg-surface/30 py-10">
       <div className="mx-auto max-w-7xl px-6">
@@ -609,10 +721,13 @@ function Bento() {
                   <Wallet className="size-5" />
                 </div>
                 <h3 className="font-display text-3xl font-medium tracking-tight">
-                  Recebimento na hora,<br />sem antecipação cara.
+                  Recebimento na hora,
+                  <br />
+                  sem antecipação cara.
                 </h3>
                 <p className="mt-4 max-w-sm text-muted-foreground">
-                  Liquidez D+0 nativa, sem custo extra. Seu dinheiro pinga na conta segundos depois da venda.
+                  Liquidez D+0 nativa, sem custo extra. Seu dinheiro pinga na conta segundos depois
+                  da venda.
                 </p>
               </div>
 
@@ -623,7 +738,9 @@ function Bento() {
                     <div className="grid size-12 place-items-center rounded-lg bg-white/5 text-foreground">
                       <CreditCard className="size-5" />
                     </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Venda</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">
+                      Venda
+                    </div>
                   </div>
                   <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/10">
                     <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-neon to-transparent" />
@@ -641,7 +758,9 @@ function Bento() {
                     <div className="grid size-12 place-items-center rounded-lg bg-white/5 text-foreground">
                       <Wallet className="size-5" />
                     </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Conta</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">
+                      Conta
+                    </div>
                   </div>
                 </div>
                 <div className="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-neon">
@@ -681,12 +800,22 @@ function Bento() {
 }
 
 function BentoCard({
-  icon, title, text, className = "", compact = false,
+  icon,
+  title,
+  text,
+  className = "",
+  compact = false,
 }: {
-  icon: React.ReactNode; title: string; text: string; className?: string; compact?: boolean;
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  className?: string;
+  compact?: boolean;
 }) {
   return (
-    <div className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}>
+    <div
+      className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}
+    >
       <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-white/5 text-foreground transition-colors group-hover:bg-neon/15 group-hover:text-neon">
         <span className="[&>svg]:size-5">{icon}</span>
       </div>
@@ -704,8 +833,16 @@ function PaymentMethods() {
     { name: "Crédito", desc: "Visa, Master, Elo, Amex, Hiper, Diners.", icon: <CreditCard /> },
     { name: "Débito", desc: "Aprovação online com taxas reduzidas.", icon: <CreditCard /> },
     { name: "Boleto", desc: "Emissão e conciliação automática.", icon: <Wallet /> },
-    { name: "Apple/Google Pay", desc: "Checkout sem fricção em qualquer dispositivo.", icon: <Smartphone /> },
-    { name: "Recorrência", desc: "Cobranças automáticas, retentativa inteligente.", icon: <InfinityIcon /> },
+    {
+      name: "Apple/Google Pay",
+      desc: "Checkout sem fricção em qualquer dispositivo.",
+      icon: <Smartphone />,
+    },
+    {
+      name: "Recorrência",
+      desc: "Cobranças automáticas, retentativa inteligente.",
+      icon: <InfinityIcon />,
+    },
   ];
   return (
     <section className="border-t border-white/5 bg-surface/30 py-32">
@@ -759,7 +896,9 @@ function Rates() {
 
           {/* Texto */}
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Taxas</div>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">
+              / Taxas
+            </div>
             <h2 className="text-balance text-5xl font-medium leading-[1.05] tracking-tight md:text-6xl">
               A taxa mais{" "}
               <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
@@ -767,13 +906,22 @@ function Rates() {
               </span>
             </h2>
             <p className="mt-6 max-w-md text-pretty text-xl text-muted-foreground">
-              Receba no Pix instantaneamente, em D+0.
-              A partir de <span className="font-semibold text-foreground">R$ 0,49</span> no Pix
-              e <span className="font-semibold text-foreground">2,45%</span> no crédito à vista —
-              sem mensalidade e sem letra miúda.
+              Receba no Pix instantaneamente, em D+0. A partir de{" "}
+              <span className="font-semibold text-foreground">R$ 0,49</span> no Pix e{" "}
+              <span className="font-semibold text-foreground">2,45%</span> no crédito à vista — sem
+              mensalidade e sem letra miúda.
             </p>
             <p className="mt-6 text-base text-muted-foreground">
-              Taxas padrões — <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-neon transition-colors hover:text-foreground">fale com um gerente</a> para personalizá-las.
+              Taxas padrões —{" "}
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-neon transition-colors hover:text-foreground"
+              >
+                fale com um gerente
+              </a>{" "}
+              para personalizá-las.
             </p>
           </div>
         </div>
@@ -785,8 +933,16 @@ function Rates() {
 function HowItWorks() {
   const steps = [
     { n: "01", title: "Crie sua conta", text: "100% online, sem papelada. Aprovação em até 24h." },
-    { n: "02", title: "Integre em minutos", text: "Use nosso checkout pronto, link de pagamento ou API REST." },
-    { n: "03", title: "Comece a vender", text: "Aceite Pix, débito, crédito e boleto desde o primeiro dia." },
+    {
+      n: "02",
+      title: "Integre em minutos",
+      text: "Use nosso checkout pronto, link de pagamento ou API REST.",
+    },
+    {
+      n: "03",
+      title: "Comece a vender",
+      text: "Aceite Pix, débito, crédito e boleto desde o primeiro dia.",
+    },
     { n: "04", title: "Receba na hora", text: "Liquidez D+0 no Pix, em minutos no seu banco." },
   ];
   return (
@@ -825,14 +981,69 @@ const CODE_CLS: Record<string, string> = {
   n: "text-neon",
 };
 const CODE_TOKENS: [string, string][] = [
-  ["// 1. Cria uma cobrança Pix", "c"], ["\n", "c"],
-  ["const", "v"], [" ", "f"], ["charge", "f"], [" ", "f"], ["=", "c"], [" ", "f"], ["await", "v"], [" ", "f"], ["nummo", "f"], [".", "c"], ["charges", "n"], [".", "c"], ["create", "n"], ["({", "c"], ["\n", "c"],
-  ["  ", "f"], ["amount", "f"], [":", "c"], [" ", "f"], ["15000", "n"], [",", "c"], [" ", "f"], ["// R$ 150,00", "c"], ["\n", "c"],
-  ["  ", "f"], ["currency", "f"], [":", "c"], [" ", "f"], ['"BRL"', "n"], [",", "c"], ["\n", "c"],
-  ["  ", "f"], ["method", "f"], [":", "c"], [" ", "f"], ['"pix"', "n"], [",", "c"], ["\n", "c"],
-  ["  ", "f"], ["customer", "f"], [":", "c"], [" ", "f"], ["{", "c"], [" ", "f"], ["name", "f"], [":", "c"], [" ", "f"], ['"Ana Souza"', "n"], [" ", "f"], ["},", "c"], ["\n", "c"],
-  ["  ", "f"], ["settlement", "f"], [":", "c"], [" ", "f"], ['"instant"', "n"], [" ", "f"], ["// D+0", "c"], ["\n", "c"],
-  ["});", "c"], ["\n\n", "c"],
+  ["// 1. Cria uma cobrança Pix", "c"],
+  ["\n", "c"],
+  ["const", "v"],
+  [" ", "f"],
+  ["charge", "f"],
+  [" ", "f"],
+  ["=", "c"],
+  [" ", "f"],
+  ["await", "v"],
+  [" ", "f"],
+  ["nummo", "f"],
+  [".", "c"],
+  ["charges", "n"],
+  [".", "c"],
+  ["create", "n"],
+  ["({", "c"],
+  ["\n", "c"],
+  ["  ", "f"],
+  ["amount", "f"],
+  [":", "c"],
+  [" ", "f"],
+  ["15000", "n"],
+  [",", "c"],
+  [" ", "f"],
+  ["// R$ 150,00", "c"],
+  ["\n", "c"],
+  ["  ", "f"],
+  ["currency", "f"],
+  [":", "c"],
+  [" ", "f"],
+  ['"BRL"', "n"],
+  [",", "c"],
+  ["\n", "c"],
+  ["  ", "f"],
+  ["method", "f"],
+  [":", "c"],
+  [" ", "f"],
+  ['"pix"', "n"],
+  [",", "c"],
+  ["\n", "c"],
+  ["  ", "f"],
+  ["customer", "f"],
+  [":", "c"],
+  [" ", "f"],
+  ["{", "c"],
+  [" ", "f"],
+  ["name", "f"],
+  [":", "c"],
+  [" ", "f"],
+  ['"Ana Souza"', "n"],
+  [" ", "f"],
+  ["},", "c"],
+  ["\n", "c"],
+  ["  ", "f"],
+  ["settlement", "f"],
+  [":", "c"],
+  [" ", "f"],
+  ['"instant"', "n"],
+  [" ", "f"],
+  ["// D+0", "c"],
+  ["\n", "c"],
+  ["});", "c"],
+  ["\n\n", "c"],
   ["// → { id: 'ch_4nL...', status: 'paid', net: 14951 }", "c"],
 ];
 
@@ -870,7 +1081,8 @@ function CodeTyping() {
       acc += text.length;
     }
     let delay = 16 + Math.random() * 38; // ritmo humano
-    if (ch === "\n") delay = 150 + Math.random() * 140; // pausa em quebra de linha
+    if (ch === "\n")
+      delay = 150 + Math.random() * 140; // pausa em quebra de linha
     else if (ch === " ") delay = 26 + Math.random() * 34;
     const id = setTimeout(() => setCount((c) => c + 1), delay);
     return () => clearTimeout(id);
@@ -906,7 +1118,11 @@ function DevSection() {
           <div>
             <NeonChip>Para desenvolvedores</NeonChip>
             <h2 className="mt-6 text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
-              API que dev <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">ama</span>.
+              API que dev{" "}
+              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">
+                ama
+              </span>
+              .
             </h2>
             <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground">
               REST, webhooks idempotentes, SDKs oficiais em Node, Python, PHP, Go e Ruby.
@@ -919,14 +1135,19 @@ function DevSection() {
                 { icon: <Lock />, t: "OAuth 2.0 + chaves" },
                 { icon: <Cpu />, t: "API" },
               ].map((f) => (
-                <div key={f.t} className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3">
+                <div
+                  key={f.t}
+                  className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3"
+                >
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>
                 </div>
               ))}
             </div>
             <div className="mt-10">
-              <GhostButton>Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
+              <GhostButton>
+                Ver documentação <ArrowUpRight className="size-4" />
+              </GhostButton>
             </div>
           </div>
 
@@ -939,7 +1160,9 @@ function DevSection() {
                 <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
                   <Code2 className="size-3.5" /> create-charge.ts
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-neon">live</span>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-neon">
+                  live
+                </span>
               </div>
               <pre className="overflow-x-auto p-6 font-mono text-[13px] leading-relaxed">
                 <CodeTyping />
@@ -954,9 +1177,21 @@ function DevSection() {
 
 function Security() {
   const items = [
-    { icon: <ShieldCheck />, title: "PCI-DSS v4.0", text: "Certificação Level 1, o nível mais alto da indústria." },
-    { icon: <Fingerprint />, title: "Tokenização", text: "Dados sensíveis nunca trafegam pela sua aplicação." },
-    { icon: <Lock />, title: "3DS 2.0 nativo", text: "Autenticação forte sem fricção desnecessária no checkout." },
+    {
+      icon: <ShieldCheck />,
+      title: "PCI-DSS v4.0",
+      text: "Certificação Level 1, o nível mais alto da indústria.",
+    },
+    {
+      icon: <Fingerprint />,
+      title: "Tokenização",
+      text: "Dados sensíveis nunca trafegam pela sua aplicação.",
+    },
+    {
+      icon: <Lock />,
+      title: "3DS 2.0 nativo",
+      text: "Autenticação forte sem fricção desnecessária no checkout.",
+    },
   ];
   return (
     <section className="relative overflow-hidden border-y border-white/5 bg-surface/30 py-32">
@@ -985,25 +1220,31 @@ function Security() {
 function Testimonials() {
   const t = [
     {
-      quote: "Migramos da concorrente e economizamos R$ 38 mil no primeiro mês só em taxas. A API é cirúrgica.",
-      name: "Rafael Mendes", role: "CTO, Lojas Norte", photo: "/depoimentos/1.jpg",
+      quote:
+        "Migramos da concorrente e economizamos R$ 38 mil no primeiro mês só em taxas. A API é cirúrgica.",
+      name: "Rafael Mendes",
+      role: "CTO, Lojas Norte",
+      photo: "/depoimentos/1.jpg",
     },
     {
-      quote: "D+0 mudou o jogo do nosso fluxo de caixa. Conseguimos escalar na velocidade que sempre sonhamos.",
-      name: "Bruno Carvalho", role: "CEO, Café Dois Mundos", photo: "/depoimentos/2.jpg",
+      quote:
+        "D+0 mudou o jogo do nosso fluxo de caixa. Conseguimos escalar na velocidade que sempre sonhamos.",
+      name: "Bruno Carvalho",
+      role: "CEO, Café Dois Mundos",
+      photo: "/depoimentos/2.jpg",
     },
     {
-      quote: "Mais do que suporte, tenho um parceiro estratégico que entende minhas necessidades e oferece o acompanhamento que preciso para operar com segurança.",
-      name: "Lucas Hayashi", role: "Dev Lead, MercadoFit", photo: "/depoimentos/3.jpg",
+      quote:
+        "Mais do que suporte, tenho um parceiro estratégico que entende minhas necessidades e oferece o acompanhamento que preciso para operar com segurança.",
+      name: "Lucas Hayashi",
+      role: "Dev Lead, MercadoFit",
+      photo: "/depoimentos/3.jpg",
     },
   ];
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionEyebrow
-          kicker="Quem usa"
-          title="Sellers que não voltam atrás."
-        />
+        <SectionEyebrow kicker="Quem usa" title="Sellers que não voltam atrás." />
         <Stagger className="grid gap-4 md:grid-cols-3">
           {t.map((q) => (
             <figure key={q.name} className="card-elevated flex flex-col p-8">
@@ -1038,11 +1279,26 @@ function Testimonials() {
 
 function Faq() {
   const items = [
-    { q: "Preciso ter CNPJ para abrir conta?", a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta em até 24h." },
-    { q: "Quanto custa começar?", a: "Na Nummo, você pode criar sua conta e começar a vender gratuitamente. Nossa plataforma oferece ferramentas para impulsionar suas vendas, sem custos, sem mensalidade, sem pegadinha. As taxas são aplicadas apenas sobre vendas aprovadas, descontadas no momento da transação. O que está esperando para vir para a Nummo?" },
-    { q: "Como funciona o D+0?", a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda." },
-    { q: "Quanto tempo leva para sacar?", a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
-    { q: "É seguro?", a: "Nós possuímos um sistema de segurança avançada para proteger cada transação. Sua operação conta com segurança PCI-DSS Level 1 e 3DS 2.0 — o mais alto padrão de segurança para dados de cartão — além de uma camada antifraude com inteligência artificial, que analisa transações em tempo real para identificar comportamentos suspeitos, reduzir fraudes e evitar chargebacks." },
+    {
+      q: "Preciso ter CNPJ para abrir conta?",
+      a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta em até 24h.",
+    },
+    {
+      q: "Quanto custa começar?",
+      a: "Na Nummo, você pode criar sua conta e começar a vender gratuitamente. Nossa plataforma oferece ferramentas para impulsionar suas vendas, sem custos, sem mensalidade, sem pegadinha. As taxas são aplicadas apenas sobre vendas aprovadas, descontadas no momento da transação. O que está esperando para vir para a Nummo?",
+    },
+    {
+      q: "Como funciona o D+0?",
+      a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda.",
+    },
+    {
+      q: "Quanto tempo leva para sacar?",
+      a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h.",
+    },
+    {
+      q: "É seguro?",
+      a: "Nós possuímos um sistema de segurança avançada para proteger cada transação. Sua operação conta com segurança PCI-DSS Level 1 e 3DS 2.0 — o mais alto padrão de segurança para dados de cartão — além de uma camada antifraude com inteligência artificial, que analisa transações em tempo real para identificar comportamentos suspeitos, reduzir fraudes e evitar chargebacks.",
+    },
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
@@ -1104,9 +1360,7 @@ function FinalCta() {
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <PrimaryButton
-            href="https://app.usenummo.com.br/dashboard/register"
-          >
+          <PrimaryButton href="https://app.usenummo.com.br/dashboard/register">
             Criar Conta
           </PrimaryButton>
 
@@ -1123,21 +1377,21 @@ function FinalCta() {
   );
 }
 const FOOTER_ROUTES: Record<string, string> = {
-  "Sobre": "/sobre",
-  "Parceiros": "/parceiros",
-  "Documentação": "/documentacao",
-  "Status": "/status",
-  "Changelog": "/changelog",
-  "Integrações": "/integracoes",
-  "Privacidade": "/privacidade",
-  "Termos": "/termos",
-  "Cookies": "/cookies",
-  "Compliance": "/compliance",
+  Sobre: "/sobre",
+  Parceiros: "/parceiros",
+  Documentação: "/documentacao",
+  Status: "/status",
+  Changelog: "/changelog",
+  Integrações: "/integracoes",
+  Privacidade: "/privacidade",
+  Termos: "/termos",
+  Cookies: "/cookies",
+  Compliance: "/compliance",
   "E-mail": "/email",
 };
 
 const FOOTER_LINKS: Record<string, string> = {
-  "WhatsApp": WHATSAPP_URL,
+  WhatsApp: WHATSAPP_URL,
 };
 
 export function Footer() {
@@ -1164,7 +1418,11 @@ export function Footer() {
             {/* Redes sociais */}
             <div className="mt-7 flex items-center gap-2.5">
               {[
-                { icon: <Instagram />, label: "Instagram", href: "https://www.instagram.com/use.nummo" },
+                {
+                  icon: <Instagram />,
+                  label: "Instagram",
+                  href: "https://www.instagram.com/use.nummo",
+                },
                 { icon: <Linkedin />, label: "LinkedIn", href: "#" },
                 { icon: <TikTok />, label: "TikTok", href: "#" },
                 { icon: <Youtube />, label: "YouTube", href: "#" },
@@ -1216,9 +1474,7 @@ export function Footer() {
                             {i}
                           </a>
                         ) : (
-                          <span className="text-sm text-foreground/80">
-                            {i}
-                          </span>
+                          <span className="text-sm text-foreground/80">{i}</span>
                         )}
                       </li>
                     );
@@ -1231,7 +1487,9 @@ export function Footer() {
 
         {/* Selos de confiança / pagamento */}
         <div className="mt-16 flex flex-col items-start gap-5 border-t border-white/5 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-xs text-muted-foreground">© 2026 Nummo — CNPJ 63.320.977/0001-06</span>
+          <span className="text-xs text-muted-foreground">
+            © 2026 Nummo — CNPJ 63.320.977/0001-06
+          </span>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {[
               { name: "Pix", href: "https://www.bcb.gov.br/estabilidadefinanceira/pix" },

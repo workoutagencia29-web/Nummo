@@ -24,10 +24,26 @@ const STORY_END = [
 const STORY_KICKER = "Porque pagamentos não deveriam limitar negócios. Deveriam impulsioná-los.";
 
 const VALUES = [
-  { icon: <Eye />, title: "Transparência radical", desc: "Taxas claras, sem letra miúda e sem surpresa. Você sempre sabe exatamente quanto paga." },
-  { icon: <Zap />, title: "Velocidade obsessiva", desc: "Liquidez D+0 e uma stack construída para processar na velocidade do seu negócio." },
-  { icon: <ShieldCheck />, title: "Segurança inegociável", desc: "PCI-DSS Level 1, 3DS 2.0 e antifraude com IA protegendo cada transação." },
-  { icon: <Users />, title: "Parceria de verdade", desc: "Mais que um gateway: um time que entende seu negócio e cresce junto com você." },
+  {
+    icon: <Eye />,
+    title: "Transparência radical",
+    desc: "Taxas claras, sem letra miúda e sem surpresa. Você sempre sabe exatamente quanto paga.",
+  },
+  {
+    icon: <Zap />,
+    title: "Velocidade obsessiva",
+    desc: "Liquidez D+0 e uma stack construída para processar na velocidade do seu negócio.",
+  },
+  {
+    icon: <ShieldCheck />,
+    title: "Segurança inegociável",
+    desc: "PCI-DSS Level 1, 3DS 2.0 e antifraude com IA protegendo cada transação.",
+  },
+  {
+    icon: <Users />,
+    title: "Parceria de verdade",
+    desc: "Mais que um gateway: um time que entende seu negócio e cresce junto com você.",
+  },
 ];
 
 function SobrePage() {
@@ -40,7 +56,9 @@ function SobrePage() {
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[500px] radial-glow" />
           <div className="relative mx-auto max-w-4xl px-6">
             <div className="lg:-ml-24 xl:-ml-40">
-              <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Sobre</div>
+              <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">
+                / Sobre
+              </div>
               <h1 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
                 Construindo a infraestrutura de pagamentos da{" "}
                 <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
@@ -48,17 +66,21 @@ function SobrePage() {
                 </span>
               </h1>
               <p className="mt-3 text-muted-foreground">
-                A Nummo nasceu da união entre uma amizade de longa data, experiência real de mercado e uma ambição clara: tornar pagamentos mais simples, previsíveis e eficientes para empresas brasileiras.
+                A Nummo nasceu da união entre uma amizade de longa data, experiência real de mercado
+                e uma ambição clara: tornar pagamentos mais simples, previsíveis e eficientes para
+                empresas brasileiras.
               </p>
             </div>
             <div className="mt-14 space-y-5 text-pretty text-lg leading-relaxed text-muted-foreground lg:-ml-12 lg:-mr-16 xl:-ml-24 xl:-mr-28">
               <p>
-                <strong className="font-medium text-foreground">Pedro R.</strong> e <strong className="font-medium text-foreground">Heitor P.</strong> se conhecem desde a infância. Aos 9 e 10 anos, construíram uma amizade comum a qualquer criança: bicicleta, skate, futebol, videogame e muitas horas dividindo ideias. Com o tempo, essa amizade se transformou em parceria.
+                <strong className="font-medium text-foreground">Pedro R.</strong> e{" "}
+                <strong className="font-medium text-foreground">Heitor P.</strong> se conhecem desde
+                a infância. Aos 9 e 10 anos, construíram uma amizade comum a qualquer criança:
+                bicicleta, skate, futebol, videogame e muitas horas dividindo ideias. Com o tempo,
+                essa amizade se transformou em parceria.
               </p>
               {STORY.map((p, i) => (
-                <p key={i}>
-                  {p}
-                </p>
+                <p key={i}>{p}</p>
               ))}
 
               <p className="font-display text-2xl font-medium tracking-tight text-foreground md:text-3xl">
@@ -114,10 +136,14 @@ function SobrePage() {
             <h2 className="text-balance font-display text-4xl font-medium tracking-tight md:text-5xl">
               Vamos crescer juntos.
             </h2>
-            <p className="mt-5 text-lg text-muted-foreground">Crie sua conta em minutos ou fale com um especialista.</p>
+            <p className="mt-5 text-lg text-muted-foreground">
+              Crie sua conta em minutos ou fale com um especialista.
+            </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <PrimaryButton size="lg">Criar conta grátis</PrimaryButton>
-              <GhostButton size="lg" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Falar com o gerente</GhostButton>
+              <GhostButton size="lg" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                Falar com o gerente
+              </GhostButton>
             </div>
           </div>
         </section>
@@ -131,12 +157,24 @@ export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
       { title: "Sobre — Nummo" },
-      { name: "description", content: "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna." },
+      {
+        name: "description",
+        content:
+          "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna.",
+      },
       { property: "og:title", content: "Sobre — Nummo" },
-      { property: "og:description", content: "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna." },
+      {
+        property: "og:description",
+        content:
+          "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna.",
+      },
       { property: "og:url", content: "https://usenummo.com.br/sobre" },
       { name: "twitter:title", content: "Sobre — Nummo" },
-      { name: "twitter:description", content: "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna." },
+      {
+        name: "twitter:description",
+        content:
+          "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://usenummo.com.br/sobre" }],
   }),

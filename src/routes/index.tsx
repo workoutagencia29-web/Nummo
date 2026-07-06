@@ -701,7 +701,7 @@ function BentoCard({
 
 function PaymentMethods() {
   const methods = [
-    { name: "Pix", desc: "Aprovação instantânea, taxa fixa de R$ 0,49.", icon: <Pix /> },
+    { name: "Pix", desc: "Aprovação instantânea.", icon: <Pix /> },
     { name: "Crédito", desc: "Visa, Master, Elo, Amex, Hiper, Diners.", icon: <CreditCard /> },
     { name: "Débito", desc: "Aprovação online com taxas reduzidas.", icon: <CreditCard /> },
     { name: "Boleto", desc: "Emissão e conciliação automática.", icon: <Wallet /> },

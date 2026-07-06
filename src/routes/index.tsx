@@ -761,9 +761,9 @@ function Rates() {
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">
             <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Taxas</div>
             <h2 className="text-balance text-5xl font-medium leading-[1.05] tracking-tight md:text-6xl">
-              A taxa mais{" "}
+              Seu negócio não precisa caber em uma{" "}
               <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
-                justa do mercado.
+                taxa padrão.
               </span>
             </h2>
             <p className="mt-6 max-w-md text-pretty text-xl text-muted-foreground">

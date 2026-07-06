@@ -766,12 +766,12 @@ function Rates() {
                 taxa padrão.
               </span>
             </h2>
-            <p className="mt-6 max-w-md text-pretty text-xl text-muted-foreground">
+            <p className="mt-6 text-pretty text-xl text-muted-foreground">
               Temos <span className="font-semibold text-foreground">5 planos</span> de taxas definidos conforme o perfil da sua operação.
               E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
               suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-foreground">nova fase</span>.
             </p>
-            <p className="mt-6 max-w-md text-pretty text-base text-muted-foreground">
+            <p className="mt-6 text-pretty text-base text-muted-foreground">
               Comece com o plano ideal hoje — e{" "}
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-neon transition-colors hover:text-foreground">negocie condições ainda melhores</a>{" "}
               quando sua operação pedir.

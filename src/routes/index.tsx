@@ -960,7 +960,6 @@ function Security() {
   ];
   return (
     <section className="relative overflow-hidden py-32">
-      <div className="absolute inset-0 grid-bg opacity-30" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionEyebrow
           kicker="Segurança"
@@ -1087,7 +1086,6 @@ function FinalCta() {
   return (
     <section className="relative overflow-hidden py-32">
       <div className="absolute inset-x-0 top-1/2 h-[500px] -translate-y-1/2 radial-glow" />
-      <div className="absolute inset-0 grid-bg opacity-30" />
 
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <NeonChip>Comece em 3 minutos</NeonChip>

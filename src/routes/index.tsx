@@ -657,7 +657,7 @@ function Bento() {
             className="md:col-span-3"
             icon={<Sparkles />}
             title="Checkout Builder com IA"
-            text="Monte seu checkout com a ajuda da IA. Layout, campos e ofertas otimizados para converter mais — sem escrever uma linha de código."
+            text="A IA nativa da Nummo analisa seu checkout e atribui uma nota com base em comportamento de compra, conversão e padrões de alta performance. Ela identifica pontos que podem estar travando suas vendas. Depois, sugere melhorias estratégicas e ajustes cirúrgicos em cada etapa."
           />
 
           {/* Bottom right two */}

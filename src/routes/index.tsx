@@ -3,7 +3,7 @@ import {
   ArrowRight, ArrowUpRight, Check, ChevronDown, Cpu, CreditCard,
   Fingerprint, Link, Layers, Lock, Smartphone, TrendingUp,
   Wallet, Zap, BarChart3, Code2, ShieldCheck, Infinity as InfinityIcon,
-  Instagram, Linkedin, Youtube, Menu, X,
+  Instagram, Linkedin, Youtube, Menu, X, Sparkles,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 
@@ -655,9 +655,9 @@ function Bento() {
           {/* Top right cards */}
           <BentoCard
             className="md:col-span-3"
-            icon={<ShieldCheck />}
-            title="Antifraude com IA"
-            text="Modelo treinado em bilhões de transações. Reduz chargeback em até 73% sem fricção no checkout."
+            icon={<Sparkles />}
+            title="Checkout Builder com IA"
+            text="Monte seu checkout com a ajuda da IA. Layout, campos e ofertas otimizados para converter mais — sem escrever uma linha de código."
           />
 
           {/* Bottom right two */}

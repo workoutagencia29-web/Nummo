@@ -767,13 +767,14 @@ function Rates() {
               </span>
             </h2>
             <p className="mt-6 max-w-md text-pretty text-xl text-muted-foreground">
-              Receba no Pix instantaneamente, em D+0.
-              A partir de <span className="font-semibold text-foreground">R$ 0,49</span> no Pix
-              e <span className="font-semibold text-foreground">2,45%</span> no crédito à vista —
-              sem mensalidade e sem letra miúda.
+              Temos 5 planos de taxas definidos conforme o perfil da sua operação.
+              E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
+              suas condições podem ser revisadas para acompanhar essa nova fase.
             </p>
-            <p className="mt-6 text-base text-muted-foreground">
-              Taxas padrões — <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-neon transition-colors hover:text-foreground">fale com um gerente</a> para personalizá-las.
+            <p className="mt-6 max-w-md text-pretty text-base text-muted-foreground">
+              Comece com o plano ideal hoje — e{" "}
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-neon transition-colors hover:text-foreground">negocie condições ainda melhores</a>{" "}
+              quando sua operação pedir.
             </p>
           </div>
         </div>

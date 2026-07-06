@@ -45,7 +45,7 @@
   --radius: 0.875rem;
 
   /* Futuristic obsidian + lime/cyan neon */
-  --background: oklch(0.14 0.012 250);
+  --background: #060A0E;
   --foreground: oklch(0.98 0.005 250);
   --surface: oklch(0.18 0.014 250);
 

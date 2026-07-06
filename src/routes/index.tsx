@@ -571,7 +571,7 @@ function HeroVisual() {
 function LogoMarquee() {
   const logos = ["VISA", "MASTERCARD", "ELO", "AMEX", "HIPERCARD", "PIX", "BOLETO", "APPLE PAY", "GOOGLE PAY"];
   return (
-    <section className="border-y border-white/5 py-10">
+    <section className="py-10">
       <div className="mx-auto max-w-7xl px-6">
         <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
           <div className="flex w-max animate-marquee gap-16">
@@ -708,7 +708,7 @@ function PaymentMethods() {
     { name: "Recorrência", desc: "Cobranças automáticas, retentativa inteligente.", icon: <InfinityIcon /> },
   ];
   return (
-    <section className="border-t border-white/5 py-32">
+    <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
         <SectionEyebrow
           kicker="Métodos"
@@ -790,7 +790,7 @@ function HowItWorks() {
     { n: "04", title: "Receba na hora", text: "Liquidez D+0 no Pix, em minutos no seu banco." },
   ];
   return (
-    <section className="border-y border-white/5 py-32">
+    <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
         <SectionEyebrow
           kicker="Como funciona"
@@ -959,7 +959,7 @@ function Security() {
     { icon: <Lock />, title: "3DS 2.0 nativo", text: "Autenticação forte sem fricção desnecessária no checkout." },
   ];
   return (
-    <section className="relative overflow-hidden border-y border-white/5 py-32">
+    <section className="relative overflow-hidden py-32">
       <div className="absolute inset-0 grid-bg opacity-30" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionEyebrow
@@ -1046,7 +1046,7 @@ function Faq() {
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="border-t border-white/5 py-32">
+    <section id="faq" className="py-32">
       <div className="mx-auto max-w-3xl px-6">
         <SectionEyebrow kicker="FAQ" title="Perguntas frequentes." />
         <Stagger className="space-y-3">
@@ -1142,7 +1142,7 @@ const FOOTER_LINKS: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 px-6 pb-10 pt-20">
+    <footer className="relative overflow-hidden px-6 pb-10 pt-20">
       {/* Linha de destaque + glow sutil no topo */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon/50 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 -top-40 h-72 radial-glow opacity-60" />
@@ -1230,7 +1230,7 @@ export function Footer() {
         </div>
 
         {/* Selos de confiança / pagamento */}
-        <div className="mt-16 flex flex-col items-start gap-5 border-t border-white/5 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col items-start gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-xs text-muted-foreground">© 2026 Nummo — CNPJ 63.320.977/0001-06</span>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {[

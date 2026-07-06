@@ -767,9 +767,9 @@ function Rates() {
               </span>
             </h2>
             <p className="mt-6 max-w-md text-pretty text-xl text-muted-foreground">
-              Temos 5 planos de taxas definidos conforme o perfil da sua operação.
+              Temos <span className="font-semibold text-foreground">5 planos</span> de taxas definidos conforme o perfil da sua operação.
               E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
-              suas condições podem ser revisadas para acompanhar essa nova fase.
+              suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-foreground">nova fase</span>.
             </p>
             <p className="mt-6 max-w-md text-pretty text-base text-muted-foreground">
               Comece com o plano ideal hoje — e{" "}

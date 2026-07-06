@@ -655,6 +655,7 @@ function Bento() {
           {/* Top right cards */}
           <BentoCard
             className="md:col-span-3"
+            wide
             icon={<Sparkles />}
             title="Checkout Builder com IA"
             text="A IA nativa da Nummo analisa seu checkout e atribui uma nota com base em comportamento de compra, conversão e padrões de alta performance. Ela identifica pontos que podem estar travando suas vendas. Depois, sugere melhorias estratégicas e ajustes cirúrgicos em cada etapa."
@@ -681,9 +682,9 @@ function Bento() {
 }
 
 function BentoCard({
-  icon, title, text, className = "", compact = false,
+  icon, title, text, className = "", compact = false, wide = false,
 }: {
-  icon: React.ReactNode; title: string; text: string; className?: string; compact?: boolean;
+  icon: React.ReactNode; title: string; text: string; className?: string; compact?: boolean; wide?: boolean;
 }) {
   return (
     <div className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}>
@@ -693,7 +694,7 @@ function BentoCard({
       <h3 className={`font-display ${compact ? "text-lg" : "text-2xl"} font-medium tracking-tight`}>
         {title}
       </h3>
-      <p className="mt-3 max-w-sm text-sm text-muted-foreground">{text}</p>
+      <p className={`mt-3 ${wide ? "" : "max-w-sm"} text-sm text-muted-foreground`}>{text}</p>
     </div>
   );
 }

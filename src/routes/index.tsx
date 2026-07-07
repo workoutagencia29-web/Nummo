@@ -389,14 +389,21 @@ function Hero() {
           </div>
 
           <div className="relative flex animate-float-up justify-center [animation-delay:200ms] lg:justify-end">
-            <img
-              src="/hero-pessoa.png"
-              alt="Pessoa usando o app da Nummo no celular"
-              width={620}
-              height={620}
-              className="w-full max-w-sm select-none object-contain drop-shadow-[0_24px_40px_rgba(6,10,14,0.4)] sm:max-w-md lg:max-w-lg"
-              draggable={false}
-            />
+            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
+              {/* sombra/glow de fundo pra dar profundidade */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 translate-y-10 scale-90 rounded-[2.5rem] bg-[#060A0E]/55 blur-[70px]"
+              />
+              <img
+                src="/hero-pessoa.png"
+                alt="Pessoa usando o app da Nummo no celular"
+                width={620}
+                height={620}
+                className="relative w-full select-none object-contain drop-shadow-[0_24px_40px_rgba(6,10,14,0.4)]"
+                draggable={false}
+              />
+            </div>
           </div>
         </div>
       </div>

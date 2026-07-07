@@ -594,50 +594,50 @@ function Bento() {
 
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2" step={200}>
           {/* Big card */}
-          <div className="card-elevated noise relative col-span-1 row-span-2 overflow-hidden p-8 md:col-span-3">
+          <div className="noise relative col-span-1 row-span-2 overflow-hidden rounded-2xl bg-neon p-8 text-[#F6F9FC] shadow-[0_18px_50px_-20px_rgba(47,107,255,0.6)] md:col-span-3">
             <div className="flex h-full flex-col justify-between gap-10">
               <div>
-                <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-neon/15 text-neon">
+                <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-white/20 text-[#F6F9FC]">
                   <Wallet className="size-5" />
                 </div>
                 <h3 className="font-display text-3xl font-medium tracking-tight">
                   Recebimento na hora,<br />sem antecipação cara.
                 </h3>
-                <p className="mt-4 max-w-sm text-muted-foreground">
+                <p className="mt-4 max-w-sm text-[#F6F9FC]/75">
                   Liquidez D+0, sem custo extra. Seu dinheiro pinga na conta segundos depois da venda.
                 </p>
               </div>
 
               {/* Visual flow */}
-              <div className="relative flex h-44 flex-col justify-center rounded-xl border border-foreground/10 bg-secondary p-5">
+              <div className="relative flex h-44 flex-col justify-center rounded-xl border border-white/20 bg-white/10 p-5">
                 <div className="flex items-center justify-between">
                   <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-foreground/5 text-foreground">
+                    <div className="grid size-12 place-items-center rounded-lg bg-white/15 text-[#F6F9FC]">
                       <CreditCard className="size-5" />
                     </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Venda</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase text-[#F6F9FC]/70">Venda</div>
                   </div>
-                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-foreground/10">
-                    <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-neon to-transparent" />
+                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/25">
+                    <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-white to-transparent" />
                   </div>
                   <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-neon/15 text-neon neon-ring">
+                    <div className="grid size-12 place-items-center rounded-lg bg-white/25 text-[#F6F9FC]">
                       <Zap className="size-5" />
                     </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-neon">Nummo</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase text-[#F6F9FC]">Nummo</div>
                   </div>
-                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-foreground/10">
-                    <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-neon to-transparent [animation-delay:1.2s]" />
+                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/25">
+                    <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-white to-transparent [animation-delay:1.2s]" />
                   </div>
                   <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-foreground/5 text-foreground">
+                    <div className="grid size-12 place-items-center rounded-lg bg-white/15 text-[#F6F9FC]">
                       <Wallet className="size-5" />
                     </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Conta</div>
+                    <div className="mt-2 font-mono text-[10px] uppercase text-[#F6F9FC]/70">Conta</div>
                   </div>
                 </div>
-                <div className="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-neon">
-                  <span className="size-1.5 animate-pulse-soft rounded-full bg-neon" />
+                <div className="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-[#F6F9FC]">
+                  <span className="size-1.5 animate-pulse-soft rounded-full bg-white" />
                   liquidação em ~700ms
                 </div>
               </div>
@@ -680,7 +680,7 @@ function BentoCard({
 }) {
   return (
     <div className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}>
-      <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-foreground/5 text-foreground transition-colors group-hover:bg-neon/15 group-hover:text-neon">
+      <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-neon/10 text-neon transition-colors group-hover:bg-neon group-hover:text-[#F6F9FC]">
         <span className="[&>svg]:size-5">{icon}</span>
       </div>
       <h3 className={`font-display ${compact ? "text-lg" : "text-2xl"} font-medium tracking-tight`}>

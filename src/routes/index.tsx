@@ -612,7 +612,7 @@ function Bento() {
                   Recebimento na hora,<br />sem antecipação cara.
                 </h3>
                 <p className="mt-4 max-w-sm text-muted-foreground">
-                  Liquidez D+0 nativa, sem custo extra. Seu dinheiro pinga na conta segundos depois da venda.
+                  Liquidez D+0, sem custo extra. Seu dinheiro pinga na conta segundos depois da venda.
                 </p>
               </div>
 

@@ -1003,6 +1003,7 @@ function Security() {
                   {/* glow suave via blur (adaptado do rosa da flevopay p/ nosso azul) */}
                   <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-neon/30 blur-[80px]" />
                   <span
+                    style={{ WebkitTextStroke: "0.03em var(--neon)", paintOrder: "stroke fill" }}
                     className={`relative text-center font-display text-5xl font-bold leading-[0.9] tracking-tight text-neon sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
                   >
                     {p.card}

@@ -216,7 +216,7 @@ function Landing() {
         <Reveal><Rates /></Reveal>
         <Reveal><HowItWorks /></Reveal>
         <Reveal><DevSection /></Reveal>
-        <Reveal><Security /></Reveal>
+        <Security />
         <Reveal><Testimonials /></Reveal>
         <Reveal><Faq /></Reveal>
         <Reveal><FinalCta /></Reveal>
@@ -977,10 +977,12 @@ function Security() {
           {/* Coluna direita — conteúdo alinhado ao texto da seção Taxas
               (mesmo puxão pra esquerda), cards empilhados */}
           <div className="lg:-ml-12 xl:-ml-24">
-            <SectionEyebrow
-              title="Construído como um cofre. Operado como um foguete."
-            />
-            <Stagger className="grid gap-4">
+            <Reveal>
+              <SectionEyebrow
+                title="Construído como um cofre. Operado como um foguete."
+              />
+            </Reveal>
+            <div className="grid gap-4">
               {items.map((i) => (
                 <div key={i.title} className="card-elevated p-6">
                   <div className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
@@ -990,7 +992,7 @@ function Security() {
                   <p className="mt-2 text-sm text-muted-foreground">{i.text}</p>
                 </div>
               ))}
-            </Stagger>
+            </div>
           </div>
         </div>
       </div>

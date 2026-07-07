@@ -359,15 +359,12 @@ function Hero() {
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
         <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-4">
           <div className="mt-16 animate-float-up lg:mt-8">
-            <h1 className="text-balance text-[46px] font-bold leading-[0.95] tracking-[-0.005em] text-[#F6F9FC] max-[360px]:text-[38px] md:text-[68px] lg:text-[82px]">
+            <h1 className="whitespace-nowrap text-[38px] font-bold leading-[1] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[32px] md:text-[58px] lg:text-[72px]">
               Pagamentos
               <br />
-              <span className="text-[#F6F9FC]">na velocidade</span>
+              na velocidade
               <br />
-              do{" "}
-              <span className="text-[#F6F9FC]">
-                seu negócio.
-              </span>
+              do seu negócio.
             </h1>
 
             <div className="mt-[108px] flex flex-wrap items-center gap-4">

@@ -736,7 +736,7 @@ function PaymentMethods() {
         <SectionEyebrow
           kicker="Métodos"
           title="Venda onde e como quiser."
-          sub="Na Nummo você tem acesso aos meios de pagamentos que o brasileiro usa."
+          sub="Na Nummo você tem acesso aos meios de pagamentos que o brasileiro usa de verdade."
         />
         <div className="grid gap-10 lg:grid-cols-2">
           {/* 4 cards à esquerda */}

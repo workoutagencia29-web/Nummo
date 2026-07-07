@@ -394,7 +394,7 @@ function Hero() {
               alt="Pessoa usando o app da Nummo no celular"
               width={620}
               height={620}
-              className="w-full max-w-sm select-none rounded-3xl object-contain shadow-[0_30px_60px_rgba(6,10,14,0.35)] sm:max-w-md lg:max-w-lg"
+              className="w-full max-w-sm select-none object-contain drop-shadow-[0_24px_40px_rgba(6,10,14,0.4)] sm:max-w-md lg:max-w-lg"
               draggable={false}
             />
           </div>

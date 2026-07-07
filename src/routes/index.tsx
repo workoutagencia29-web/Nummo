@@ -998,13 +998,13 @@ function Security() {
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div
-                  className={`card-elevated relative flex min-h-[220px] items-center justify-center overflow-hidden p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  className={`card-elevated relative flex min-h-[220px] items-center justify-start overflow-hidden p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
                 >
                   {/* glow suave via blur (adaptado do rosa da flevopay p/ nosso azul) */}
                   <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-neon/30 blur-[80px]" />
                   <span
                     style={{ WebkitTextStroke: "0.03em var(--neon)", paintOrder: "stroke fill" }}
-                    className={`relative text-center font-display text-5xl font-bold leading-[0.9] tracking-tight text-neon sm:text-6xl md:text-7xl lg:-translate-x-10 ${p.upper ? "uppercase" : ""}`}
+                    className={`relative text-left font-display text-5xl font-bold leading-[0.9] tracking-tight text-neon sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
                   >
                     {p.card}
                   </span>

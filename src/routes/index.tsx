@@ -973,6 +973,7 @@ function Security() {
     {
       num: "02",
       card: "Tokenização",
+      upper: true,
       title: "Dados protegidos em cada etapa",
       text: "Os dados do cartão são convertidos em tokens, reduzindo a exposição de informações sensíveis durante as transações. Mais proteção para o seller, mais segurança para o cliente e menos risco operacional.",
       cardLeft: false,
@@ -980,6 +981,7 @@ function Security() {
     {
       num: "03",
       card: "3DS 2.0 nativo",
+      upper: true,
       title: "Autenticação inteligente",
       text: "Uma camada extra de autenticação integrada ao checkout para validar transações com mais segurança e menos fricção. Reduza fraudes, aumente a confiança e preserve a conversão da sua operação.",
       cardLeft: true,
@@ -996,11 +998,13 @@ function Security() {
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div
-                  className={`card-elevated relative flex min-h-[220px] items-end overflow-hidden p-8 md:p-10 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  className={`card-elevated relative flex min-h-[220px] items-end overflow-hidden p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
                 >
                   {/* glow (adaptado do rosa da flevopay para o nosso azul) */}
                   <div className="pointer-events-none absolute right-0 top-0 h-3/4 w-3/4 bg-[radial-gradient(circle_at_top_right,rgba(47,107,255,0.28),transparent_65%)]" />
-                  <span className="relative font-display text-4xl font-semibold leading-none tracking-tight text-neon md:text-5xl">
+                  <span
+                    className={`relative font-display text-5xl font-semibold leading-[0.9] tracking-tight text-neon sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
+                  >
                     {p.card}
                   </span>
                 </div>

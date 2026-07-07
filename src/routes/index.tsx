@@ -208,7 +208,6 @@ function Landing() {
       <Nav />
       <main id="conteudo">
         <Hero />
-        <Reveal><LogoMarquee /></Reveal>
         <Reveal><Bento /></Reveal>
         <Reveal><PaymentMethods /></Reveal>
         <Reveal><Rates /></Reveal>

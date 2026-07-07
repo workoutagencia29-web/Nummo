@@ -287,9 +287,8 @@ export function Nav() {
     <header className="sticky top-0 z-50 px-4 pt-4">
       <div className="relative mx-auto max-w-6xl">
         <div className="relative flex h-16 items-center justify-between gap-3 rounded-full border border-white/10 bg-surface/45 pl-6 pr-2.5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150">
-          <RouterLink to="/" className="flex items-baseline">
-            <span className="font-display text-2xl font-semibold tracking-tight">nummo</span>
-            <span className="font-display text-2xl font-semibold leading-none text-neon">.</span>
+          <RouterLink to="/" className="flex items-center" aria-label="Nummo — início">
+            <img src="/logo-nummo.svg" alt="Nummo" width={169} height={28} className="h-7 w-auto" />
           </RouterLink>
           <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 lg:flex">
             {NAV_ITEMS.map((item) => (
@@ -1152,9 +1151,8 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.5fr_3fr]">
           {/* Marca */}
           <div>
-            <RouterLink to="/" className="inline-flex items-baseline">
-              <span className="font-display text-3xl font-semibold tracking-tight">nummo</span>
-              <span className="font-display text-3xl font-semibold leading-none text-neon">.</span>
+            <RouterLink to="/" className="inline-flex items-center" aria-label="Nummo — início">
+              <img src="/logo-nummo.svg" alt="Nummo" width={193} height={32} className="h-8 w-auto" />
             </RouterLink>
             <p className="mt-5 max-w-xs text-pretty text-base font-medium text-foreground/90">
               Pagamentos na velocidade do seu negócio.

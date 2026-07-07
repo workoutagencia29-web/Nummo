@@ -967,7 +967,7 @@ function DevSection() {
                 <div
                   key={f.t}
                   className="flex items-center gap-3 rounded-2xl px-5 py-4"
-                  style={{ background: "#2F6BFF", boxShadow: "6px 6px 14px #2657cd, -6px -6px 14px #4a86ff" }}
+                  style={{ background: "#2F6BFF", boxShadow: "6px 6px 14px #2657cd, -6px -6px 14px #3f7cf3" }}
                 >
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>

@@ -383,6 +383,7 @@ function Hero() {
                 href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
                 target="_blank"
                 rel="noopener noreferrer"
+                className="!border-[#F6F9FC] !bg-[#F6F9FC] !text-[#2F6BFF] hover:!border-[#F6F9FC] hover:!bg-[#F6F9FC]"
               >
                 Falar com o gerente
               </GhostButton>

@@ -611,10 +611,16 @@ function Bento() {
 
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2" step={200}>
           {/* Big card */}
-          <div className="noise relative col-span-1 row-span-2 overflow-hidden rounded-2xl bg-neon p-8 text-[#F6F9FC] shadow-[0_18px_50px_-20px_rgba(47,107,255,0.6)] md:col-span-3">
+          <div
+            className="noise relative col-span-1 row-span-2 overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] md:col-span-3"
+            style={{ background: "#2F6BFF", boxShadow: "20px 20px 44px #2555cc, -20px -20px 44px #4f8bff" }}
+          >
             <div className="flex h-full flex-col justify-between gap-10">
               <div>
-                <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-white/20 text-[#F6F9FC]">
+                <div
+                  className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
+                  style={{ background: "#2F6BFF", boxShadow: "inset 3px 3px 6px #2555cc, inset -3px -3px 6px #4f8bff" }}
+                >
                   <Wallet className="size-5" />
                 </div>
                 <h3 className="font-display text-3xl font-medium tracking-tight">
@@ -626,7 +632,10 @@ function Bento() {
               </div>
 
               {/* Visual flow */}
-              <div className="relative flex h-44 flex-col justify-center rounded-xl border border-white/20 bg-white/10 p-5">
+              <div
+                className="relative flex h-44 flex-col justify-center rounded-2xl p-5"
+                style={{ background: "#2F6BFF", boxShadow: "inset 6px 6px 14px #2555cc, inset -6px -6px 14px #4f8bff" }}
+              >
                 <div className="flex items-center justify-between">
                   <div className="text-center">
                     <div className="grid size-12 place-items-center rounded-lg bg-white/15 text-[#F6F9FC]">
@@ -696,14 +705,20 @@ function BentoCard({
   icon: React.ReactNode; title: string; text: string; className?: string; compact?: boolean; wide?: boolean;
 }) {
   return (
-    <div className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}>
-      <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-neon/10 text-neon transition-colors group-hover:bg-neon group-hover:text-[#F6F9FC]">
+    <div
+      className={`relative overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
+      style={{ background: "#2F6BFF", boxShadow: "16px 16px 32px #2555cc, -16px -16px 32px #4f8bff" }}
+    >
+      <div
+        className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
+        style={{ background: "#2F6BFF", boxShadow: "inset 3px 3px 6px #2555cc, inset -3px -3px 6px #4f8bff" }}
+      >
         <span className="[&>svg]:size-5">{icon}</span>
       </div>
       <h3 className={`font-display ${compact ? "text-lg" : "text-2xl"} font-medium tracking-tight`}>
         {title}
       </h3>
-      <p className={`mt-3 ${wide ? "" : "max-w-sm"} text-sm text-muted-foreground`}>{text}</p>
+      <p className={`mt-3 ${wide ? "" : "max-w-sm"} text-sm text-[#F6F9FC]/75`}>{text}</p>
     </div>
   );
 }

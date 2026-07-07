@@ -115,12 +115,14 @@ export function GhostButton({ children, className = "", size = "md", href, targe
   );
 }
 
-function SectionEyebrow({ kicker, title, sub }: { kicker: string; title: React.ReactNode; sub?: string }) {
+function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.ReactNode; sub?: string }) {
   return (
     <div className="mb-16 max-w-3xl">
-      <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
-        / {kicker}
-      </div>
+      {kicker && (
+        <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
+          / {kicker}
+        </div>
+      )}
       <h2 className="text-balance text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
         {title}
       </h2>
@@ -976,7 +978,6 @@ function Security() {
               (mesmo puxão pra esquerda), cards empilhados */}
           <div className="lg:-ml-12 xl:-ml-24">
             <SectionEyebrow
-              kicker="Segurança"
               title="Construído como um cofre. Operado como um foguete."
             />
             <Stagger className="grid gap-4">

@@ -706,7 +706,7 @@ function PaymentMethods() {
     { name: "Débito", desc: "Aprovação online com taxas reduzidas.", icon: <CreditCard /> },
     { name: "Boleto", desc: "Emissão e conciliação automática.", icon: <Wallet /> },
     { name: "Apple/Google Pay", desc: "Checkout sem fricção em qualquer dispositivo.", icon: <Smartphone /> },
-    { name: "Recorrência", desc: "Cobranças automáticas, retentativa inteligente.", icon: <InfinityIcon /> },
+    { name: "Assinaturas", desc: "Cobranças automáticas, retentativa inteligente.", icon: <InfinityIcon /> },
   ];
   return (
     <section className="py-32">

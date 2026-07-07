@@ -143,10 +143,19 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 }
 
 @utility card-elevated {
-  background: linear-gradient(180deg, #FFFFFF 0%, #EAF0FC 100%);
-  border: 1px solid rgba(47, 107, 255, 0.14);
+  background: #2F6BFF;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 1px 3px rgba(13, 27, 57, 0.05), 0 12px 30px -18px rgba(47, 107, 255, 0.28);
+  color: #F6F9FC;
+  box-shadow: 0 1px 3px rgba(13, 27, 57, 0.05), 0 16px 36px -18px rgba(47, 107, 255, 0.5);
+}
+
+/* Dentro dos cards azuis, os tokens de cor viram claros —
+   assim todo texto/ícone/borda interno fica branco automaticamente. */
+.card-elevated {
+  --foreground: #F6F9FC;
+  --muted-foreground: rgba(246, 249, 252, 0.75);
+  --neon: #F6F9FC;
 }
 
 /* ---------- animations ---------- */

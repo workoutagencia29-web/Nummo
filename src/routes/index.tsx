@@ -989,13 +989,13 @@ function Security() {
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div
-                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-foreground/10 bg-white p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-white/20 bg-neon p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
                 >
-                  {/* glow suave via blur (adaptado do rosa da flevopay p/ nosso azul) */}
-                  <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-neon/30 blur-[80px]" />
+                  {/* glow suave via blur (branco sobre o azul do card) */}
+                  <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-white/25 blur-[80px]" />
                   <span
-                    style={{ WebkitTextStroke: "0.03em var(--neon)", paintOrder: "stroke fill" }}
-                    className={`relative text-left font-display text-5xl font-bold leading-[0.9] tracking-tight text-neon sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
+                    style={{ WebkitTextStroke: "0.03em #F6F9FC", paintOrder: "stroke fill" }}
+                    className={`relative text-left font-display text-5xl font-bold leading-[0.9] tracking-tight text-[#F6F9FC] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
                   >
                     {p.card}
                   </span>

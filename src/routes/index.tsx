@@ -989,7 +989,7 @@ function Security() {
   return (
     <section id="seguranca" className="relative overflow-hidden py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col gap-24">
+        <div className="flex flex-col gap-32">
           {pairs.map((p) => {
             return (
               <div key={p.num} className="grid items-stretch gap-6 lg:grid-cols-2">

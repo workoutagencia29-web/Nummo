@@ -158,6 +158,23 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   --neon: #F6F9FC;
 }
 
+/* Recorte azul (DevSection + Segurança): fundo azul, texto claro,
+   e os cards voltam a ser brancos com texto navy pra contrastar. */
+.band-blue {
+  --foreground: #F6F9FC;
+  --muted-foreground: rgba(246, 249, 252, 0.78);
+  --neon: #F6F9FC;
+  color: #F6F9FC;
+}
+.band-blue .card-elevated {
+  background: #FFFFFF;
+  border-color: rgba(13, 27, 57, 0.08);
+  color: #0D1B39;
+  --foreground: #0D1B39;
+  --muted-foreground: #59617A;
+  --neon: #2F6BFF;
+}
+
 /* ---------- animations ---------- */
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes pulse-soft { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }

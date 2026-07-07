@@ -212,8 +212,10 @@ function Landing() {
         <Reveal><PaymentMethods /></Reveal>
         <Reveal><Rates /></Reveal>
         <Reveal><HowItWorks /></Reveal>
-        <Reveal><DevSection /></Reveal>
-        <Security />
+        <div className="band-blue bg-[#2F6BFF]">
+          <Reveal><DevSection /></Reveal>
+          <Security />
+        </div>
         <Reveal><Testimonials /></Reveal>
         <Reveal><Faq /></Reveal>
         <Reveal><FinalCta /></Reveal>
@@ -905,7 +907,7 @@ function DevSection() {
           <div>
             <NeonChip>Para desenvolvedores</NeonChip>
             <h2 className="mt-6 text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-              API que dev <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">ama</span>.
+              API que dev <span className="italic text-[#C7D8FF]">ama</span>.
             </h2>
             <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground">
               REST, webhooks idempotentes, SDKs oficiais em Node, Python, PHP, Go e Ruby.
@@ -918,7 +920,7 @@ function DevSection() {
                 { icon: <Lock />, t: "OAuth 2.0 + chaves" },
                 { icon: <Cpu />, t: "API" },
               ].map((f) => (
-                <div key={f.t} className="flex items-center gap-3 rounded-lg border border-foreground/5 bg-foreground/[0.02] px-4 py-3">
+                <div key={f.t} className="flex items-center gap-3 rounded-lg border border-white/15 bg-white/10 px-4 py-3">
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>
                 </div>
@@ -988,13 +990,13 @@ function Security() {
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div
-                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-white/20 bg-neon p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-[#0D1B39]/10 bg-white p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
                 >
-                  {/* glow suave via blur (branco sobre o azul do card) */}
-                  <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-white/25 blur-[80px]" />
+                  {/* glow azul suave via blur sobre o card branco */}
+                  <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-[#2F6BFF]/25 blur-[80px]" />
                   <span
-                    style={{ WebkitTextStroke: "0.03em #F6F9FC", paintOrder: "stroke fill" }}
-                    className={`relative text-left font-display text-5xl font-bold leading-[0.9] tracking-tight text-[#F6F9FC] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
+                    style={{ WebkitTextStroke: "0.03em #2F6BFF", paintOrder: "stroke fill" }}
+                    className={`relative text-left font-display text-5xl font-bold leading-[0.9] tracking-tight text-[#2F6BFF] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
                   >
                     {p.card}
                   </span>

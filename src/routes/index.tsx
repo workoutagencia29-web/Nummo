@@ -998,7 +998,7 @@ function Security() {
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div
-                  className={`card-elevated relative flex min-h-[220px] items-center justify-start overflow-hidden p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0a0e16] p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
                 >
                   {/* glow suave via blur (adaptado do rosa da flevopay p/ nosso azul) */}
                   <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-neon/30 blur-[80px]" />

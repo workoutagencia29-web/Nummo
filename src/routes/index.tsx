@@ -288,7 +288,7 @@ export function Nav() {
       <div className="relative mx-auto max-w-6xl">
         <div className="relative flex h-16 items-center justify-between gap-3 rounded-full border border-white/10 bg-surface/45 pl-6 pr-2.5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150">
           <RouterLink to="/" className="flex items-center" aria-label="Nummo — início">
-            <img src="/logo-nummo.svg" alt="Nummo" width={133} height={22} className="h-[22px] w-auto" />
+            <img src="/logo-nummo.svg" alt="Nummo" width={121} height={20} className="h-[20px] w-auto" />
           </RouterLink>
           <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 lg:flex">
             {NAV_ITEMS.map((item) => (
@@ -1152,7 +1152,7 @@ export function Footer() {
           {/* Marca */}
           <div>
             <RouterLink to="/" className="inline-flex items-center" aria-label="Nummo — início">
-              <img src="/logo-nummo.svg" alt="Nummo" width={157} height={26} className="h-[26px] w-auto" />
+              <img src="/logo-nummo.svg" alt="Nummo" width={145} height={24} className="h-[24px] w-auto" />
             </RouterLink>
             <p className="mt-5 max-w-xs text-pretty text-base font-medium text-foreground/90">
               Pagamentos na velocidade do seu negócio.

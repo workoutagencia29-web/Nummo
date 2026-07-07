@@ -77,23 +77,21 @@ export function PrimaryButton({
 }) {
   const sizeCls = size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm";
 
-  const cls = `cta-btn group font-semibold ${sizeCls} ${className}`;
+  const cls = `group inline-flex items-center justify-center gap-2 rounded-full bg-neon font-semibold text-white transition-colors hover:bg-[#2559d8] ${sizeCls} ${className}`;
 
   if (href) {
     return (
       <a href={href} target={target} rel={rel} className={cls}>
-        <span className="cta-dots" aria-hidden="true" />
-        <span className="cta-text">{children}</span>
-        <ArrowRight className="relative z-10 size-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
+        <span>{children}</span>
+        <ArrowRight className="size-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
       </a>
     );
   }
 
   return (
     <button onClick={onClick} className={cls}>
-      <span className="cta-dots" aria-hidden="true" />
-      <span className="cta-text">{children}</span>
-      <ArrowRight className="relative z-10 size-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
+      <span>{children}</span>
+      <ArrowRight className="size-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
     </button>
   );
 }
@@ -372,10 +370,6 @@ function Hero() {
                 seu negócio.
               </span>
             </h1>
-
-            <div className="relative my-7 h-px w-full">
-              <div className="absolute left-0 top-0 h-px w-[1200px] bg-gradient-to-r from-transparent via-neon/40 to-transparent" />
-            </div>
 
             <div className="mt-[108px] flex flex-wrap items-center gap-4">
               <PrimaryButton

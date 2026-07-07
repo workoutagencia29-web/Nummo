@@ -606,7 +606,7 @@ function Bento() {
         <SectionEyebrow
           kicker="Produtos"
           title="Produtos que simplificam sua operação hoje e escalam amanhã."
-          sub="Um ecossistema completo de pagamentos construído para sua empresa."
+          sub="Um ecossistema construído e pensado para sua empresa."
         />
 
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2" step={200}>

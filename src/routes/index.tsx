@@ -702,7 +702,7 @@ function BentoCard({
 function PaymentMethods() {
   const methods = [
     { name: "Pix", desc: "Aprovação instantânea.", icon: <Pix /> },
-    { name: "Crédito", desc: "Visa, Master, Elo, Amex, Hiper, Diners.", icon: <CreditCard /> },
+    { name: "Crédito", desc: "Visa, Master, Elo, Amex, Hiper.", icon: <CreditCard /> },
     { name: "Débito", desc: "Aprovação online com taxas reduzidas.", icon: <CreditCard /> },
     { name: "Boleto", desc: "Emissão e conciliação automática.", icon: <Wallet /> },
     { name: "Apple/Google Pay", desc: "Checkout sem fricção em qualquer dispositivo.", icon: <Smartphone /> },

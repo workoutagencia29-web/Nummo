@@ -98,7 +98,7 @@ export function PrimaryButton({
 
 export function GhostButton({ children, className = "", size = "md", href, target, rel }: { children: React.ReactNode; className?: string; size?: "md" | "lg"; href?: string; target?: string; rel?: string }) {
   const sizeCls = size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm";
-  const cls = `inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] ${sizeCls} font-medium text-foreground/90 backdrop-blur transition-colors hover:border-white/20 hover:bg-white/[0.06] ${className}`;
+  const cls = `inline-flex items-center justify-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.03] ${sizeCls} font-medium text-foreground/90 backdrop-blur transition-colors hover:border-foreground/20 hover:bg-foreground/[0.06] ${className}`;
   if (href) {
     return (
       <a href={href} target={target} rel={rel} className={cls}>
@@ -249,7 +249,7 @@ function ScrollRail() {
   }, []);
   return (
     <div className="pointer-events-none fixed right-0 top-0 z-40 hidden h-screen lg:block">
-      <div className="relative h-full w-[3px] bg-white/10">
+      <div className="relative h-full w-[3px] bg-foreground/10">
         <div
           ref={thumbRef}
           className="absolute right-0 top-0 h-20 w-[3px] rounded-full bg-neon shadow-[0_0_14px_1px_oklch(0.581_0.229_263.9_/_0.9)] will-change-transform"
@@ -287,9 +287,9 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-50 px-4 pt-4">
       <div className="relative mx-auto max-w-6xl">
-        <div className="relative flex h-16 items-center justify-between gap-3 rounded-full border border-white/10 bg-surface/45 pl-6 pr-2.5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150">
+        <div className="relative flex h-16 items-center justify-between gap-3 rounded-full border border-foreground/10 bg-surface/45 pl-6 pr-2.5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150">
           <RouterLink to="/" className="flex items-center" aria-label="Nummo — início">
-            <img src="/logo-nummo.svg" alt="Nummo" width={121} height={20} className="h-[20px] w-auto" />
+            <img src="/logo-nummo-dark.svg" alt="Nummo" width={121} height={20} className="h-[20px] w-auto" />
           </RouterLink>
           <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 lg:flex">
             {NAV_ITEMS.map((item) => (
@@ -316,7 +316,7 @@ export function Nav() {
               aria-expanded={open}
               aria-controls="mobile-nav"
               onClick={() => setOpen((v) => !v)}
-              className="grid size-10 place-items-center rounded-full text-foreground transition-colors hover:bg-white/5 lg:hidden"
+              className="grid size-10 place-items-center rounded-full text-foreground transition-colors hover:bg-foreground/5 lg:hidden"
             >
               {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
             </button>
@@ -324,7 +324,7 @@ export function Nav() {
         </div>
 
         {open && (
-          <div id="mobile-nav" className="mt-2 overflow-hidden rounded-3xl border border-white/10 bg-surface/80 p-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl lg:hidden">
+          <div id="mobile-nav" className="mt-2 overflow-hidden rounded-3xl border border-foreground/10 bg-surface/80 p-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl lg:hidden">
             <nav className="flex flex-col">
               {NAV_ITEMS.map((item) => (
                 <a
@@ -334,14 +334,14 @@ export function Nav() {
                     navScroll(e, item.h, item.off);
                     setOpen(false);
                   }}
-                  className="rounded-2xl px-4 py-3 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+                  className="rounded-2xl px-4 py-3 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
                 >
                   {item.l}
                 </a>
               ))}
             </nav>
-            <div className="mt-1 border-t border-white/10 p-2">
-              <button type="button" className="block w-full rounded-2xl px-4 py-2.5 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground">
+            <div className="mt-1 border-t border-foreground/10 p-2">
+              <button type="button" className="block w-full rounded-2xl px-4 py-2.5 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground">
                 Entrar
               </button>
             </div>
@@ -441,7 +441,7 @@ function LiveTransactions() {
         {items.map((t) => (
           <div
             key={t.k}
-            className="flex items-center justify-between gap-3 rounded-md border border-white/5 bg-white/[0.02] px-3 py-2.5 text-xs"
+            className="flex items-center justify-between gap-3 rounded-md border border-foreground/5 bg-foreground/[0.02] px-3 py-2.5 text-xs"
           >
             <span className="flex min-w-0 items-center gap-2">
               <span className="grid size-4 shrink-0 place-items-center rounded-full bg-[#28C840]/15 text-[#28C840]">
@@ -465,7 +465,7 @@ function HeroVisual() {
 
       <div className="card-elevated relative noise overflow-hidden p-1">
         {/* Window chrome */}
-        <div className="flex items-center justify-between border-b border-white/5 px-5 py-3">
+        <div className="flex items-center justify-between border-b border-foreground/5 px-5 py-3">
           <div className="flex items-center gap-1.5">
             <span className="size-2.5 rounded-full bg-[#FF5F57]" />
             <span className="size-2.5 rounded-full bg-[#FEBC2E]" />
@@ -493,7 +493,7 @@ function HeroVisual() {
           </div>
 
           {/* Chart */}
-          <div className="relative h-28 rounded-lg border border-white/5 bg-black/30 p-3">
+          <div className="relative h-28 rounded-lg border border-foreground/5 bg-black/30 p-3">
             <div className="relative size-full">
               <svg viewBox="0 0 300 80" className="size-full" preserveAspectRatio="none">
                 <defs>
@@ -609,15 +609,15 @@ function Bento() {
               </div>
 
               {/* Visual flow */}
-              <div className="relative flex h-44 flex-col justify-center rounded-xl border border-white/5 bg-black/40 p-5">
+              <div className="relative flex h-44 flex-col justify-center rounded-xl border border-foreground/10 bg-secondary p-5">
                 <div className="flex items-center justify-between">
                   <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-white/5 text-foreground">
+                    <div className="grid size-12 place-items-center rounded-lg bg-foreground/5 text-foreground">
                       <CreditCard className="size-5" />
                     </div>
                     <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Venda</div>
                   </div>
-                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/10">
+                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-foreground/10">
                     <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-neon to-transparent" />
                   </div>
                   <div className="text-center">
@@ -626,11 +626,11 @@ function Bento() {
                     </div>
                     <div className="mt-2 font-mono text-[10px] uppercase text-neon">Nummo</div>
                   </div>
-                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/10">
+                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-foreground/10">
                     <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-neon to-transparent [animation-delay:1.2s]" />
                   </div>
                   <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-white/5 text-foreground">
+                    <div className="grid size-12 place-items-center rounded-lg bg-foreground/5 text-foreground">
                       <Wallet className="size-5" />
                     </div>
                     <div className="mt-2 font-mono text-[10px] uppercase text-muted-foreground">Conta</div>
@@ -680,7 +680,7 @@ function BentoCard({
 }) {
   return (
     <div className={`card-elevated group relative overflow-hidden p-8 transition-colors hover:border-neon/30 ${className}`}>
-      <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-white/5 text-foreground transition-colors group-hover:bg-neon/15 group-hover:text-neon">
+      <div className="mb-5 inline-flex size-10 items-center justify-center rounded-lg bg-foreground/5 text-foreground transition-colors group-hover:bg-neon/15 group-hover:text-neon">
         <span className="[&>svg]:size-5">{icon}</span>
       </div>
       <h3 className={`font-display ${compact ? "text-lg" : "text-2xl"} font-medium tracking-tight`}>
@@ -918,7 +918,7 @@ function DevSection() {
                 { icon: <Lock />, t: "OAuth 2.0 + chaves" },
                 { icon: <Cpu />, t: "API" },
               ].map((f) => (
-                <div key={f.t} className="flex items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-4 py-3">
+                <div key={f.t} className="flex items-center gap-3 rounded-lg border border-foreground/5 bg-foreground/[0.02] px-4 py-3">
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>
                 </div>
@@ -934,7 +934,7 @@ function DevSection() {
             {/* Glow azul + branco (igual ao hero), respirando */}
             <div className="pointer-events-none absolute -inset-8 animate-glow-breathe bg-gradient-to-br from-neon/20 via-transparent to-white/15 blur-3xl" />
             <div className="card-elevated noise relative overflow-hidden">
-              <div className="flex items-center justify-between border-b border-white/5 px-5 py-3">
+              <div className="flex items-center justify-between border-b border-foreground/5 px-5 py-3">
                 <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
                   <Code2 className="size-3.5" /> create-charge.ts
                 </div>
@@ -988,7 +988,7 @@ function Security() {
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div
-                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0a0e16] p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-foreground/10 bg-white p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
                 >
                   {/* glow suave via blur (adaptado do rosa da flevopay p/ nosso azul) */}
                   <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-neon/30 blur-[80px]" />
@@ -1051,7 +1051,7 @@ function Testimonials() {
               <blockquote className="flex-1 text-pretty text-base leading-relaxed text-foreground/90">
                 "{q.quote}"
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-white/5 pt-6">
+              <figcaption className="mt-6 flex items-center gap-3 border-t border-foreground/5 pt-6">
                 <img
                   src={q.photo}
                   alt={q.name}
@@ -1059,7 +1059,7 @@ function Testimonials() {
                   height={40}
                   loading="lazy"
                   decoding="async"
-                  className="size-10 shrink-0 rounded-full object-cover ring-1 ring-white/10"
+                  className="size-10 shrink-0 rounded-full object-cover ring-1 ring-foreground/10"
                 />
                 <div>
                   <div className="text-sm font-medium">{q.name}</div>
@@ -1108,7 +1108,7 @@ function Faq() {
                   id={`faq-panel-${i}`}
                   role="region"
                   aria-labelledby={`faq-btn-${i}`}
-                  className="border-t border-white/5 px-6 py-5 text-sm text-muted-foreground"
+                  className="border-t border-foreground/5 px-6 py-5 text-sm text-muted-foreground"
                 >
                   {it.a}
                 </div>
@@ -1189,7 +1189,7 @@ export function Footer() {
           {/* Marca */}
           <div>
             <RouterLink to="/" className="inline-flex items-center" aria-label="Nummo — início">
-              <img src="/logo-nummo.svg" alt="Nummo" width={145} height={24} className="h-[24px] w-auto" />
+              <img src="/logo-nummo-dark.svg" alt="Nummo" width={145} height={24} className="h-[24px] w-auto" />
             </RouterLink>
             <p className="mt-5 max-w-xs text-pretty text-base font-medium text-foreground/90">
               Pagamentos na velocidade do seu negócio.
@@ -1211,7 +1211,7 @@ export function Footer() {
                   target={s.href.startsWith("http") ? "_blank" : undefined}
                   rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   aria-label={s.label}
-                  className="grid size-9 place-items-center rounded-full border border-white/10 bg-white/[0.02] text-muted-foreground transition-colors hover:border-neon/40 hover:bg-neon-soft hover:text-neon"
+                  className="grid size-9 place-items-center rounded-full border border-foreground/10 bg-foreground/[0.02] text-muted-foreground transition-colors hover:border-neon/40 hover:bg-neon-soft hover:text-neon"
                 >
                   <span className="[&>svg]:size-4">{s.icon}</span>
                 </a>

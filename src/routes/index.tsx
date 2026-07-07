@@ -727,13 +727,26 @@ function PaymentMethods() {
           {/* 4 cards à esquerda */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {methods.map((m) => (
-              <div key={m.name} className="card-elevated h-full p-6">
-                <div className="inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
+              <div
+                key={m.name}
+                className="h-full rounded-[28px] p-6"
+                style={{
+                  background: "#F6F9FC",
+                  boxShadow: "14px 14px 28px #d3dbea, -14px -14px 28px #ffffff",
+                }}
+              >
+                <div
+                  className="inline-flex size-11 items-center justify-center rounded-xl text-[#2F6BFF]"
+                  style={{
+                    background: "#F6F9FC",
+                    boxShadow: "inset 3px 3px 6px #d3dbea, inset -3px -3px 6px #ffffff",
+                  }}
+                >
                   <span className="[&>svg]:size-5">{m.icon}</span>
                 </div>
-                <div className="mt-8 h-px w-12 bg-neon" />
-                <h3 className="mt-6 font-display text-xl font-medium tracking-tight">{m.name}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{m.desc}</p>
+                <div className="mt-8 h-px w-12" style={{ background: "#2F6BFF" }} />
+                <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-[#2F6BFF]">{m.name}</h3>
+                <p className="mt-2 text-sm text-[#2F6BFF]/70">{m.desc}</p>
               </div>
             ))}
           </div>

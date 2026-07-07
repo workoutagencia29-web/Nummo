@@ -77,13 +77,13 @@ export function PrimaryButton({
 }) {
   const sizeCls = size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm";
 
-  const cls = `group inline-flex items-center justify-center gap-2 rounded-full bg-neon font-semibold text-white transition-colors hover:bg-[#2559d8] ${sizeCls} ${className}`;
+  const cls = `group inline-flex items-center justify-center gap-2 rounded-full bg-neon font-semibold text-[#F6F9FC] transition-colors hover:bg-[#2559d8] ${sizeCls} ${className}`;
 
   if (href) {
     return (
       <a href={href} target={target} rel={rel} className={cls}>
         <span>{children}</span>
-        <ArrowRight className="size-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
+        <ArrowRight className="size-4 shrink-0 text-[#F6F9FC] transition-transform group-hover:translate-x-0.5" />
       </a>
     );
   }
@@ -91,7 +91,7 @@ export function PrimaryButton({
   return (
     <button onClick={onClick} className={cls}>
       <span>{children}</span>
-      <ArrowRight className="size-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
+      <ArrowRight className="size-4 shrink-0 text-[#F6F9FC] transition-transform group-hover:translate-x-0.5" />
     </button>
   );
 }
@@ -361,10 +361,10 @@ function Hero() {
             <h1 className="text-balance text-[52px] font-medium leading-[0.95] tracking-tight max-[360px]:text-[42px] md:text-[78px] lg:text-[94px]">
               Pagamentos
               <br />
-              <span className="text-muted-foreground/50">na velocidade</span>
+              <span className="text-[#F6F9FC]">na velocidade</span>
               <br />
               do{" "}
-              <span className="italic text-[#0C1730]">
+              <span className="italic text-[#F6F9FC]">
                 seu negócio.
               </span>
             </h1>

@@ -175,6 +175,16 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   --neon: #2F6BFF;
 }
 
+/* Janela de código: fundo navy escuro com o código em tons claros. */
+.band-blue .card-elevated.code-window {
+  background: #0D1B39;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #F6F9FC;
+  --foreground: #F6F9FC;
+  --muted-foreground: rgba(246, 249, 252, 0.6);
+  --neon: #84A9FF;
+}
+
 /* ---------- animations ---------- */
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes pulse-soft { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }

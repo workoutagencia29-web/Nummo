@@ -935,7 +935,7 @@ function DevSection() {
           <div className="relative min-w-0">
             {/* Glow azul + branco (igual ao hero), respirando */}
             <div className="pointer-events-none absolute -inset-8 animate-glow-breathe bg-gradient-to-br from-neon/20 via-transparent to-white/15 blur-3xl" />
-            <div className="card-elevated noise relative overflow-hidden">
+            <div className="card-elevated code-window noise relative overflow-hidden">
               <div className="flex items-center justify-between border-b border-foreground/5 px-5 py-3">
                 <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
                   <Code2 className="size-3.5" /> create-charge.ts

@@ -905,8 +905,7 @@ function DevSection() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <div>
-            <NeonChip>Para desenvolvedores</NeonChip>
-            <h2 className="mt-6 text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
+            <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
               API que dev <span className="italic text-[#C7D8FF]">ama</span>.
             </h2>
             <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground">

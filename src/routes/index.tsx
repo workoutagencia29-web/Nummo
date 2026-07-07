@@ -358,13 +358,13 @@ function Hero() {
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
         <div className="items-start">
           <div className="mt-16 animate-float-up lg:mt-8">
-            <h1 className="text-balance text-[52px] font-extrabold leading-[0.95] tracking-tight max-[360px]:text-[42px] md:text-[78px] lg:text-[94px]">
+            <h1 className="text-balance text-[52px] font-bold leading-[0.95] tracking-[-0.005em] max-[360px]:text-[42px] md:text-[78px] lg:text-[94px]">
               Pagamentos
               <br />
               <span className="text-[#F6F9FC]">na velocidade</span>
               <br />
               do{" "}
-              <span className="italic text-[#F6F9FC]">
+              <span className="text-[#F6F9FC]">
                 seu negócio.
               </span>
             </h1>

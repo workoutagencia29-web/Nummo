@@ -6,7 +6,6 @@ import {
   Instagram, Linkedin, Youtube, Menu, X, Sparkles,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
-import { DottedSurface } from "../components/dotted-surface";
 
 function TikTok() {
   return (
@@ -356,7 +355,7 @@ export function Nav() {
 function Hero() {
   return (
     <section className="relative -mt-[5rem] flex min-h-svh items-center overflow-hidden">
-      <DottedSurface />
+      <div className="absolute inset-0 grid-bg opacity-50" />
       <div className="absolute inset-x-0 top-0 h-[700px] radial-glow" />
 
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">

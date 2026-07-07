@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 import { TiltCard } from "../components/tilt-card";
+import { StackedCards3D } from "../components/stacked-cards-3d";
 
 function TikTok() {
   return (
@@ -738,8 +739,12 @@ function PaymentMethods() {
             ))}
           </div>
 
-          {/* espaço reservado à direita (conteúdo futuro) */}
-          <div aria-hidden />
+          {/* elemento à direita: cards 3D empilhados */}
+          <div className="flex items-center justify-center overflow-hidden py-8 lg:py-0">
+            <div className="scale-[0.78] sm:scale-90 lg:scale-100">
+              <StackedCards3D />
+            </div>
+          </div>
         </div>
       </div>
     </section>

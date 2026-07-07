@@ -356,7 +356,7 @@ function Hero() {
   return (
     <section className="relative -mt-[5rem] flex min-h-svh items-center overflow-hidden bg-[#2F6BFF]">
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-4">
+        <div className="items-start">
           <div className="mt-16 animate-float-up lg:mt-8">
             <h1 className="text-balance text-[46px] font-bold leading-[0.95] tracking-[-0.005em] text-[#F6F9FC] max-[360px]:text-[38px] md:text-[68px] lg:text-[82px]">
               Pagamentos
@@ -388,17 +388,6 @@ function Hero() {
                 Falar com o gerente
               </GhostButton>
             </div>
-          </div>
-
-          <div className="relative flex animate-float-up justify-center [animation-delay:200ms] lg:justify-end">
-            <img
-              src="/hero-pessoa.png"
-              alt="Pessoa usando o app da Nummo no celular"
-              width={620}
-              height={620}
-              className="w-full max-w-sm select-none object-contain drop-shadow-[0_30px_60px_rgba(6,10,14,0.35)] sm:max-w-md lg:max-w-lg"
-              draggable={false}
-            />
           </div>
         </div>
       </div>

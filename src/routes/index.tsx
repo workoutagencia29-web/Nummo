@@ -355,8 +355,6 @@ export function Nav() {
 function Hero() {
   return (
     <section className="relative -mt-[5rem] flex min-h-svh items-center overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-50" />
-
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
         <div className="items-start">
           <div className="mt-16 animate-float-up lg:mt-8">

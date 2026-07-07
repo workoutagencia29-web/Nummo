@@ -367,10 +367,11 @@ function Hero() {
               do seu negócio.
             </h1>
 
-            <div className="mt-[108px] flex flex-wrap items-center gap-4">
+            <div className="mt-[108px] grid max-w-lg grid-cols-1 gap-4 sm:grid-cols-2">
               <PrimaryButton
                 size="lg"
                 href="https://app.usenummo.com.br/dashboard/register"
+                className="w-full"
               >
                 Criar Conta
               </PrimaryButton>
@@ -380,7 +381,7 @@ function Hero() {
                 href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="!border-[#F6F9FC] !bg-[#F6F9FC] !text-[#2F6BFF] hover:!border-[#F6F9FC] hover:!bg-[#F6F9FC]"
+                className="w-full !border-[#F6F9FC] !bg-[#F6F9FC] !text-[#2F6BFF] hover:!border-[#F6F9FC] hover:!bg-[#F6F9FC]"
               >
                 Falar com o gerente
               </GhostButton>

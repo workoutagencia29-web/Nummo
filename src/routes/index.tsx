@@ -1,8 +1,8 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, ArrowUpRight, Check, ChevronDown, Cpu, CreditCard,
-  Fingerprint, Link, Layers, Lock, Smartphone, TrendingUp,
-  Wallet, Zap, BarChart3, Code2, ShieldCheck, Infinity as InfinityIcon,
+  Link, Layers, Lock, Smartphone, TrendingUp,
+  Wallet, Zap, BarChart3, Code2, Infinity as InfinityIcon,
   Instagram, Linkedin, Youtube, Menu, X, Sparkles,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
@@ -962,33 +962,63 @@ function DevSection() {
 }
 
 function Security() {
-  const items = [
-    { icon: <ShieldCheck />, title: "PCI-DSS v4.0", text: "Certificação Level 1, o nível mais alto da indústria." },
-    { icon: <Fingerprint />, title: "Tokenização", text: "Dados sensíveis nunca trafegam pela sua aplicação." },
-    { icon: <Lock />, title: "3DS 2.0 nativo", text: "Autenticação forte sem fricção desnecessária no checkout." },
+  const pairs = [
+    {
+      num: "01",
+      card: "PCI-DSS v4.0",
+      title: "Segurança e conformidade",
+      text: "Seguimos o padrão global de segurança da indústria de pagamentos para proteger dados sensíveis em toda a jornada. Mais conformidade, mais controle e mais confiança para sua operação crescer blindada.",
+      cardLeft: true,
+    },
+    {
+      num: "02",
+      card: "Tokenização",
+      title: "Dados protegidos em cada etapa",
+      text: "Os dados do cartão são convertidos em tokens, reduzindo a exposição de informações sensíveis durante as transações. Mais proteção para o seller, mais segurança para o cliente e menos risco operacional.",
+      cardLeft: false,
+    },
+    {
+      num: "03",
+      card: "3DS 2.0 nativo",
+      title: "Autenticação inteligente",
+      text: "Uma camada extra de autenticação integrada ao checkout para validar transações com mais segurança e menos fricção. Reduza fraudes, aumente a confiança e preserve a conversão da sua operação.",
+      cardLeft: true,
+    },
   ];
-  return (
-    <section className="relative overflow-hidden py-32">
-      <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
-          {/* Coluna esquerda — vazia por enquanto (conteúdo futuro) */}
-          <div aria-hidden="true" className="hidden lg:block" />
 
-          {/* Coluna direita — conteúdo alinhado ao texto da seção Taxas
-              (mesmo puxão pra esquerda), cards empilhados */}
-          <div className="lg:-ml-12 xl:-ml-24">
-            <div className="grid gap-4">
-              {items.map((i) => (
-                <div key={i.title} className="card-elevated p-6">
-                  <div className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
-                    <span className="[&>svg]:size-5">{i.icon}</span>
-                  </div>
-                  <h3 className="font-display text-lg font-medium tracking-tight">{i.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{i.text}</p>
+  return (
+    <section id="seguranca" className="relative overflow-hidden py-32">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex flex-col gap-6">
+          {pairs.map((p) => {
+            return (
+              <div key={p.num} className="grid items-stretch gap-6 lg:grid-cols-2">
+                {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
+                    no desktop alterna o lado via order */}
+                <div
+                  className={`card-elevated relative flex min-h-[220px] items-end overflow-hidden p-8 md:p-10 ${p.cardLeft ? "" : "lg:order-2"}`}
+                >
+                  {/* glow (adaptado do rosa da flevopay para o nosso azul) */}
+                  <div className="pointer-events-none absolute right-0 top-0 h-3/4 w-3/4 bg-[radial-gradient(circle_at_top_right,rgba(47,107,255,0.28),transparent_65%)]" />
+                  <span className="relative font-display text-4xl font-semibold leading-none tracking-tight text-neon md:text-5xl">
+                    {p.card}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
+
+                <div className={`flex flex-col justify-center py-2 ${p.cardLeft ? "" : "lg:order-1"}`}>
+                  <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
+                    {p.num}
+                  </div>
+                  <h3 className="text-balance font-display text-3xl font-medium leading-[1.1] tracking-tight md:text-4xl">
+                    {p.title}
+                  </h3>
+                  <p className="mt-5 max-w-md text-pretty text-base leading-relaxed text-muted-foreground">
+                    {p.text}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

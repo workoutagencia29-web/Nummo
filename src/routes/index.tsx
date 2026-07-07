@@ -6,6 +6,7 @@ import {
   Instagram, Linkedin, Youtube, Menu, X, Sparkles,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
+import { TiltCard } from "../components/tilt-card";
 
 function TikTok() {
   return (
@@ -807,11 +808,13 @@ function HowItWorks() {
         />
         <Stagger className="grid gap-4 md:grid-cols-4">
           {steps.map((s) => (
-            <div key={s.n} className="card-elevated p-6">
-              <div className="font-mono text-xs text-neon">{s.n}</div>
-              <div className="mt-8 h-px w-12 bg-neon" />
-              <h3 className="mt-6 font-display text-xl font-medium tracking-tight">{s.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
+            <div key={s.n} className="h-full">
+              <TiltCard className="card-elevated h-full p-6">
+                <div className="font-mono text-xs text-neon">{s.n}</div>
+                <div className="mt-8 h-px w-12 bg-neon" />
+                <h3 className="mt-6 font-display text-xl font-medium tracking-tight">{s.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
+              </TiltCard>
             </div>
           ))}
         </Stagger>

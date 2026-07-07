@@ -968,21 +968,29 @@ function Security() {
   return (
     <section className="relative overflow-hidden py-32">
       <div className="relative mx-auto max-w-7xl px-6">
-        <SectionEyebrow
-          kicker="Segurança"
-          title="Construído como um cofre. Operado como um foguete."
-        />
-        <Stagger className="grid gap-4 md:grid-cols-3">
-          {items.map((i) => (
-            <div key={i.title} className="card-elevated p-6">
-              <div className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
-                <span className="[&>svg]:size-5">{i.icon}</span>
-              </div>
-              <h3 className="font-display text-lg font-medium tracking-tight">{i.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{i.text}</p>
-            </div>
-          ))}
-        </Stagger>
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
+          {/* Coluna esquerda — vazia por enquanto (conteúdo futuro) */}
+          <div aria-hidden="true" className="hidden lg:block" />
+
+          {/* Coluna direita — conteúdo espremido à direita, cards empilhados */}
+          <div>
+            <SectionEyebrow
+              kicker="Segurança"
+              title="Construído como um cofre. Operado como um foguete."
+            />
+            <Stagger className="grid gap-4">
+              {items.map((i) => (
+                <div key={i.title} className="card-elevated p-6">
+                  <div className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
+                    <span className="[&>svg]:size-5">{i.icon}</span>
+                  </div>
+                  <h3 className="font-display text-lg font-medium tracking-tight">{i.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{i.text}</p>
+                </div>
+              ))}
+            </Stagger>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -613,13 +613,13 @@ function Bento() {
           {/* Big card */}
           <div
             className="noise relative col-span-1 row-span-2 overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] md:col-span-3"
-            style={{ background: "#2F6BFF", boxShadow: "20px 20px 44px #2555cc, -20px -20px 44px #4f8bff" }}
+            style={{ background: "#2F6BFF", boxShadow: "0 22px 44px -22px rgba(15,40,120,0.5)" }}
           >
             <div className="flex h-full flex-col justify-between gap-10">
               <div>
                 <div
                   className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
-                  style={{ background: "#2F6BFF", boxShadow: "inset 3px 3px 6px #2555cc, inset -3px -3px 6px #4f8bff" }}
+                  style={{ background: "#2F6BFF", boxShadow: "inset 2px 2px 4px #2857cc, inset -2px -2px 4px #3c78ff" }}
                 >
                   <Wallet className="size-5" />
                 </div>
@@ -634,7 +634,7 @@ function Bento() {
               {/* Visual flow */}
               <div
                 className="relative flex h-44 flex-col justify-center rounded-2xl p-5"
-                style={{ background: "#2F6BFF", boxShadow: "inset 6px 6px 14px #2555cc, inset -6px -6px 14px #4f8bff" }}
+                style={{ background: "#2F6BFF", boxShadow: "inset 4px 4px 10px #2857cc, inset -4px -4px 10px #3c78ff" }}
               >
                 <div className="flex items-center justify-between">
                   <div className="text-center">
@@ -707,11 +707,11 @@ function BentoCard({
   return (
     <div
       className={`relative overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
-      style={{ background: "#2F6BFF", boxShadow: "16px 16px 32px #2555cc, -16px -16px 32px #4f8bff" }}
+      style={{ background: "#2F6BFF", boxShadow: "0 16px 32px -18px rgba(15,40,120,0.45)" }}
     >
       <div
         className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
-        style={{ background: "#2F6BFF", boxShadow: "inset 3px 3px 6px #2555cc, inset -3px -3px 6px #4f8bff" }}
+        style={{ background: "#2F6BFF", boxShadow: "inset 2px 2px 4px #2857cc, inset -2px -2px 4px #3c78ff" }}
       >
         <span className="[&>svg]:size-5">{icon}</span>
       </div>

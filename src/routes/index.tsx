@@ -77,7 +77,7 @@ export function PrimaryButton({
 }) {
   const sizeCls = size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm";
 
-  const cls = `group inline-flex items-center justify-center gap-2 rounded-full bg-neon font-semibold text-[#F6F9FC] transition-colors hover:bg-[#2559d8] ${sizeCls} ${className}`;
+  const cls = `group inline-flex items-center justify-center gap-2 rounded-full bg-[#0D1B39] font-semibold text-[#F6F9FC] transition-colors hover:bg-[#16264d] ${sizeCls} ${className}`;
 
   if (href) {
     return (
@@ -308,7 +308,7 @@ export function Nav() {
             <button type="button"  onClick={() => window.location.href = "https://app.usenummo.com.br/dashboard/login"} className="hidden px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block">
               Entrar
             </button>
-            <button type="button" className="rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition-transform hover:scale-[1.02]" onClick={() => window.location.href = "https://app.usenummo.com.br/dashboard/register"}>
+            <button type="button" className="rounded-full bg-[#0D1B39] px-4 py-2 text-sm font-semibold text-[#F6F9FC] transition-transform hover:scale-[1.02]" onClick={() => window.location.href = "https://app.usenummo.com.br/dashboard/register"}>
               Criar conta
             </button>
             <button
@@ -371,7 +371,6 @@ function Hero() {
               <PrimaryButton
                 size="lg"
                 href="https://app.usenummo.com.br/dashboard/register"
-                className="!bg-[#0C1730] hover:!bg-[#0a1428]"
               >
                 Criar Conta
               </PrimaryButton>
@@ -934,7 +933,7 @@ function DevSection() {
               ))}
             </div>
             <div className="mt-10">
-              <GhostButton>Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
+              <GhostButton className="!border-[#0D1B39] !bg-[#0D1B39] !text-[#F6F9FC] hover:!border-[#16264d] hover:!bg-[#16264d]">Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
             </div>
           </div>
 

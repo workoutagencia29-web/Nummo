@@ -977,11 +977,9 @@ function Security() {
           {/* Coluna direita — conteúdo alinhado ao texto da seção Taxas
               (mesmo puxão pra esquerda), cards empilhados */}
           <div className="lg:-ml-12 xl:-ml-24">
-            <Reveal>
-              <SectionEyebrow
-                title="Construído como um cofre. Operado como um foguete."
-              />
-            </Reveal>
+            <SectionEyebrow
+              title="Construído como um cofre. Operado como um foguete."
+            />
             <div className="grid gap-4">
               {items.map((i) => (
                 <div key={i.title} className="card-elevated p-6">

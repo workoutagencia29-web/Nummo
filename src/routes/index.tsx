@@ -1,8 +1,8 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, ArrowUpRight, Check, ChevronDown, Cpu, CreditCard,
-  Link, Layers, Lock, Smartphone, TrendingUp,
-  Wallet, Zap, BarChart3, Code2, Infinity as InfinityIcon,
+  Link, Layers, Lock, TrendingUp,
+  Wallet, Zap, BarChart3, Code2,
   Instagram, Linkedin, Youtube, Menu, X, Sparkles,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
@@ -711,11 +711,9 @@ function BentoCard({
 function PaymentMethods() {
   const methods = [
     { name: "Pix", desc: "Aprovação instantânea.", icon: <Pix /> },
-    { name: "Crédito", desc: "Visa, Master, Elo, Amex, Hiper.", icon: <CreditCard /> },
-    { name: "Débito", desc: "Aprovação online com taxas reduzidas.", icon: <CreditCard /> },
+    { name: "Cartões", desc: "Crédito e débito — Visa, Master, Elo, Amex, Hiper.", icon: <CreditCard /> },
     { name: "Boleto", desc: "Emissão e conciliação automática.", icon: <Wallet /> },
-    { name: "Apple/Google Pay", desc: "Checkout sem fricção em qualquer dispositivo.", icon: <Smartphone /> },
-    { name: "Assinaturas", desc: "Cobranças automáticas, retentativa inteligente.", icon: <InfinityIcon /> },
+    { name: "API Pix", desc: "Cobranças Pix direto pela sua API.", icon: <Code2 /> },
   ];
   return (
     <section className="py-32">
@@ -725,19 +723,23 @@ function PaymentMethods() {
           title="Venda onde e como quiser."
           sub="Suporte completo aos meios de pagamento que o brasileiro usa de verdade."
         />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {methods.map((m) => (
-            <div key={m.name} className="h-full">
-              <TiltCard className="card-elevated h-full p-6">
+        <div className="grid gap-10 lg:grid-cols-2">
+          {/* 4 cards à esquerda */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {methods.map((m) => (
+              <div key={m.name} className="card-elevated h-full p-6">
                 <div className="inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
                   <span className="[&>svg]:size-5">{m.icon}</span>
                 </div>
                 <div className="mt-8 h-px w-12 bg-neon" />
                 <h3 className="mt-6 font-display text-xl font-medium tracking-tight">{m.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{m.desc}</p>
-              </TiltCard>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
+
+          {/* espaço reservado à direita (conteúdo futuro) */}
+          <div aria-hidden />
         </div>
       </div>
     </section>

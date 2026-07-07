@@ -967,7 +967,7 @@ function Security() {
       num: "01",
       card: "PCI-DSS v4.0",
       title: "Segurança e conformidade",
-      text: "Seguimos o padrão global de segurança da indústria de pagamentos para proteger dados sensíveis em toda a jornada. Mais conformidade, mais controle e mais confiança para sua operação crescer blindada.",
+      text: "Proteção de dados sensíveis com o padrão global de segurança dos pagamentos. Mais conformidade, controle e confiança para toda a operação.",
       cardLeft: true,
     },
     {
@@ -975,7 +975,7 @@ function Security() {
       card: "Tokenização",
       upper: true,
       title: "Dados protegidos em cada etapa",
-      text: "Os dados do cartão são convertidos em tokens, reduzindo a exposição de informações sensíveis durante as transações. Mais proteção para o seller, mais segurança para o cliente e menos risco operacional.",
+      text: "Os dados do cartão viram tokens, reduzindo sua exposição durante cada transação. Mais proteção para o seller e menos risco operacional.",
       cardLeft: false,
     },
     {
@@ -983,7 +983,7 @@ function Security() {
       card: "3DS 2.0 nativo",
       upper: true,
       title: "Autenticação inteligente",
-      text: "Uma camada extra de autenticação integrada ao checkout para validar transações com mais segurança e menos fricção. Reduza fraudes, aumente a confiança e preserve a conversão da sua operação.",
+      text: "Autenticação extra integrada ao checkout para validar pagamentos com inteligência. Reduza fraudes sem criar fricção e perder conversão.",
       cardLeft: true,
     },
   ];

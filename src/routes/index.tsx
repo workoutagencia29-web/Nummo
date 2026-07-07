@@ -604,7 +604,7 @@ function Bento() {
     <section id="plataforma" className="relative py-32">
       <div className="mx-auto max-w-7xl px-6">
         <SectionEyebrow
-          kicker="Plataforma"
+          kicker="Produtos"
           title="Tudo o que sua operação precisa, em um só lugar."
           sub="Um ecossistema completo de pagamentos construído para sua empresa."
         />

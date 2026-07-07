@@ -994,7 +994,7 @@ function Security() {
         <div className="flex flex-col gap-32">
           {pairs.map((p) => {
             return (
-              <div key={p.num} className="grid items-stretch gap-6 lg:grid-cols-2">
+              <div key={p.num} className="grid items-center gap-6 lg:grid-cols-2">
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div

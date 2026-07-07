@@ -1,8 +1,8 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, ArrowUpRight, Check, ChevronDown, Cpu, CreditCard,
-  Link, Layers, Lock, Smartphone, TrendingUp,
-  Wallet, Zap, BarChart3, Code2, Infinity as InfinityIcon,
+  Fingerprint, Link, Layers, Lock, Smartphone, TrendingUp,
+  Wallet, Zap, BarChart3, Code2, ShieldCheck, Infinity as InfinityIcon,
   Instagram, Linkedin, Youtube, Menu, X, Sparkles,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
@@ -214,6 +214,7 @@ function Landing() {
         <Reveal><Rates /></Reveal>
         <Reveal><HowItWorks /></Reveal>
         <Reveal><DevSection /></Reveal>
+        <Reveal><Security /></Reveal>
         <Reveal><Testimonials /></Reveal>
         <Reveal><Faq /></Reveal>
         <Reveal><FinalCta /></Reveal>
@@ -951,6 +952,44 @@ function DevSection() {
                 <CodeTyping />
               </pre>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Security() {
+  const items = [
+    { icon: <ShieldCheck />, title: "PCI-DSS v4.0", text: "Certificação Level 1, o nível mais alto da indústria." },
+    { icon: <Fingerprint />, title: "Tokenização", text: "Dados sensíveis nunca trafegam pela sua aplicação." },
+    { icon: <Lock />, title: "3DS 2.0 nativo", text: "Autenticação forte sem fricção desnecessária no checkout." },
+  ];
+  return (
+    <section className="relative overflow-hidden py-32">
+      <div className="relative mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
+          {/* Coluna esquerda — vazia por enquanto (conteúdo futuro) */}
+          <div aria-hidden="true" className="hidden lg:block" />
+
+          {/* Coluna direita — conteúdo alinhado ao texto da seção Taxas
+              (mesmo puxão pra esquerda), cards empilhados */}
+          <div className="lg:-ml-12 xl:-ml-24">
+            <SectionEyebrow
+              kicker="Segurança"
+              title="Construído como um cofre. Operado como um foguete."
+            />
+            <Stagger className="grid gap-4">
+              {items.map((i) => (
+                <div key={i.title} className="card-elevated p-6">
+                  <div className="mb-5 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
+                    <span className="[&>svg]:size-5">{i.icon}</span>
+                  </div>
+                  <h3 className="font-display text-lg font-medium tracking-tight">{i.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{i.text}</p>
+                </div>
+              ))}
+            </Stagger>
           </div>
         </div>
       </div>

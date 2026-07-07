@@ -74,7 +74,9 @@ export function TiltCard({
   };
 
   const transform = useMotionTemplate`perspective(1000px) rotateX(${srx}deg) rotateY(${sry}deg)`;
-  const glareBg = useMotionTemplate`radial-gradient(circle at ${gx}% ${gy}%, var(--foreground), transparent 50%)`;
+  // Raio fixo (não escala com a largura do card) para o glow ficar
+  // consistente/fraco em todos os cards, independente do tamanho.
+  const glareBg = useMotionTemplate`radial-gradient(circle 95px at ${gx}% ${gy}%, var(--foreground), transparent)`;
 
   return (
     <motion.div

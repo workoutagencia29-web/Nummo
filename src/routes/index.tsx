@@ -605,7 +605,7 @@ function Bento() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionEyebrow
           kicker="Produtos"
-          title="Tudo o que sua operação precisa, em um só lugar."
+          title="Produtos que simplificam sua operação hoje e escalam amanhã."
           sub="Um ecossistema completo de pagamentos construído para sua empresa."
         />
 

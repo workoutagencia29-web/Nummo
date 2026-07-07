@@ -1142,12 +1142,8 @@ function Faq() {
 function FinalCta() {
   return (
     <section className="relative overflow-hidden py-32">
-      <div className="absolute inset-x-0 top-1/2 h-[500px] -translate-y-1/2 radial-glow" />
-
       <div className="relative mx-auto max-w-4xl px-6 text-center">
-        <NeonChip>Comece em 3 minutos</NeonChip>
-
-        <h2 className="mt-8 text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight md:text-7xl">
+        <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight md:text-7xl">
           Vender nunca foi{" "}
           <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">
             tão simples.

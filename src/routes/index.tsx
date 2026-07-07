@@ -972,8 +972,9 @@ function Security() {
           {/* Coluna esquerda — vazia por enquanto (conteúdo futuro) */}
           <div aria-hidden="true" className="hidden lg:block" />
 
-          {/* Coluna direita — conteúdo espremido à direita, cards empilhados */}
-          <div>
+          {/* Coluna direita — conteúdo alinhado ao texto da seção Taxas
+              (mesmo puxão pra esquerda), cards empilhados */}
+          <div className="lg:-ml-12 xl:-ml-24">
             <SectionEyebrow
               kicker="Segurança"
               title="Construído como um cofre. Operado como um foguete."

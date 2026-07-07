@@ -121,7 +121,7 @@ function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.
           / {kicker}
         </div>
       )}
-      <h2 className="text-balance text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
+      <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
         {title}
       </h2>
       {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-muted-foreground">{sub}</p>}
@@ -358,7 +358,7 @@ function Hero() {
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
         <div className="items-start">
           <div className="mt-16 animate-float-up lg:mt-8">
-            <h1 className="text-balance text-[52px] font-medium leading-[0.95] tracking-tight max-[360px]:text-[42px] md:text-[78px] lg:text-[94px]">
+            <h1 className="text-balance text-[52px] font-extrabold leading-[0.95] tracking-tight max-[360px]:text-[42px] md:text-[78px] lg:text-[94px]">
               Pagamentos
               <br />
               <span className="text-[#F6F9FC]">na velocidade</span>
@@ -756,7 +756,7 @@ function Rates() {
           {/* Texto */}
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">
             <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Taxas</div>
-            <h2 className="text-balance text-5xl font-medium leading-[1.05] tracking-tight md:text-6xl">
+            <h2 className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
               Seu negócio não precisa caber em uma{" "}
               <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
                 taxa padrão.
@@ -904,7 +904,7 @@ function DevSection() {
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <div>
             <NeonChip>Para desenvolvedores</NeonChip>
-            <h2 className="mt-6 text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
+            <h2 className="mt-6 text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
               API que dev <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">ama</span>.
             </h2>
             <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground">
@@ -1004,7 +1004,7 @@ function Security() {
                   <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
                     {p.num}
                   </div>
-                  <h3 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-[64px]">
+                  <h3 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-[64px]">
                     {p.title}
                   </h3>
                   <p className="mt-5 max-w-md text-pretty text-base leading-relaxed text-muted-foreground">
@@ -1129,7 +1129,7 @@ function FinalCta() {
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <NeonChip>Comece em 3 minutos</NeonChip>
 
-        <h2 className="mt-8 text-balance font-display text-5xl font-medium leading-[1.02] tracking-tight md:text-7xl">
+        <h2 className="mt-8 text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight md:text-7xl">
           Vender nunca foi{" "}
           <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">
             tão simples.

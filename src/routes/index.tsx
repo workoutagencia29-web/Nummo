@@ -1014,7 +1014,7 @@ function Security() {
                   <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
                     {p.num}
                   </div>
-                  <h3 className="text-balance font-display text-3xl font-medium leading-[1.1] tracking-tight md:text-4xl">
+                  <h3 className="text-balance font-display text-4xl font-medium leading-[1.1] tracking-tight md:text-5xl">
                     {p.title}
                   </h3>
                   <p className="mt-5 max-w-md text-pretty text-base leading-relaxed text-muted-foreground">

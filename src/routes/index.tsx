@@ -354,7 +354,7 @@ export function Nav() {
 
 function Hero() {
   return (
-    <section className="relative -mt-[5rem] flex min-h-svh items-center overflow-hidden">
+    <section className="relative -mt-[5rem] flex min-h-svh items-center overflow-hidden bg-[#2F6BFF]">
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
         <div className="items-start">
           <div className="mt-16 animate-float-up lg:mt-8">
@@ -364,7 +364,7 @@ function Hero() {
               <span className="text-muted-foreground/50">na velocidade</span>
               <br />
               do{" "}
-              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">
+              <span className="italic text-[#0C1730]">
                 seu negócio.
               </span>
             </h1>
@@ -373,6 +373,7 @@ function Hero() {
               <PrimaryButton
                 size="lg"
                 href="https://app.usenummo.com.br/dashboard/register"
+                className="!bg-[#0C1730] hover:!bg-[#0a1428]"
               >
                 Criar Conta
               </PrimaryButton>

@@ -957,14 +957,18 @@ function DevSection() {
               REST, webhooks idempotentes, SDKs oficiais em Node, Python, PHP, Go e Ruby.
               Documentação interativa e suporte técnico que entende código.
             </p>
-            <div className="mt-8 grid grid-cols-2 gap-3 max-w-md">
+            <div className="mt-8 grid max-w-md grid-cols-2 gap-4">
               {[
                 { icon: <Code2 />, t: "SDKs oficiais" },
                 { icon: <BarChart3 />, t: "Webhooks 99.97%" },
                 { icon: <Lock />, t: "OAuth 2.0 + chaves" },
                 { icon: <Cpu />, t: "API" },
               ].map((f) => (
-                <div key={f.t} className="flex items-center gap-3 rounded-lg border border-white/15 bg-white/10 px-4 py-3">
+                <div
+                  key={f.t}
+                  className="flex items-center gap-3 rounded-2xl px-5 py-4"
+                  style={{ background: "#2F6BFF", boxShadow: "6px 6px 14px #2657cd, -6px -6px 14px #4a86ff" }}
+                >
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>
                 </div>

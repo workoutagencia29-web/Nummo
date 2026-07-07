@@ -716,13 +716,14 @@ function PaymentMethods() {
           title="Venda onde e como quiser."
           sub="Suporte completo aos meios de pagamento que o brasileiro usa de verdade."
         />
-        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/5 bg-white/5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {methods.map((m) => (
-            <div key={m.name} className="bg-background p-8">
-              <div className="mb-6 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
+            <div key={m.name} className="card-elevated p-6">
+              <div className="inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
                 <span className="[&>svg]:size-5">{m.icon}</span>
               </div>
-              <h3 className="font-display text-xl font-medium tracking-tight">{m.name}</h3>
+              <div className="mt-6 h-px w-12 bg-neon" />
+              <h3 className="mt-6 font-display text-xl font-medium tracking-tight">{m.name}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{m.desc}</p>
             </div>
           ))}

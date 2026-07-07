@@ -718,14 +718,14 @@ function PaymentMethods() {
         />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {methods.map((m) => (
-            <div key={m.name} className="card-elevated p-6">
+            <TiltCard key={m.name} className="card-elevated p-6">
               <div className="inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
                 <span className="[&>svg]:size-5">{m.icon}</span>
               </div>
               <div className="mt-6 h-px w-12 bg-neon" />
               <h3 className="mt-6 font-display text-xl font-medium tracking-tight">{m.name}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{m.desc}</p>
-            </div>
+            </TiltCard>
           ))}
         </div>
       </div>

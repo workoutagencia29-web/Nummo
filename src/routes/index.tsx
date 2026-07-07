@@ -358,10 +358,9 @@ function Hero() {
   return (
     <section className="relative -mt-[5rem] flex min-h-svh items-center overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-50" />
-      <div className="absolute inset-x-0 top-0 h-[700px] radial-glow" />
 
       <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
-        <div className="grid items-start gap-12 lg:grid-cols-[1.4fr_1fr]">
+        <div className="items-start">
           <div className="mt-16 animate-float-up lg:mt-8">
             <h1 className="text-balance text-[52px] font-medium leading-[0.95] tracking-tight max-[360px]:text-[42px] md:text-[78px] lg:text-[94px]">
               Pagamentos
@@ -396,8 +395,6 @@ function Hero() {
               </GhostButton>
             </div>
           </div>
-
-          <HeroVisual />
         </div>
       </div>
     </section>

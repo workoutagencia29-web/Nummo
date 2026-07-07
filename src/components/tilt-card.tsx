@@ -82,15 +82,17 @@ export function TiltCard({
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ transform, transformStyle: "preserve-3d" }}
-      className={`relative overflow-hidden will-change-transform ${className}`}
+      className={`group relative overflow-hidden will-change-transform ${className}`}
     >
       {children}
 
+      {/* Brilho que segue o mouse: escondido em repouso, fade-in no hover e
+          fade-out ao sair — via CSS (group-hover + transition), robusto. */}
       {glare && enabled ? (
         <motion.div
           aria-hidden
           style={{ background: glareBg }}
-          className="pointer-events-none absolute inset-0 opacity-[0.06]"
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-[0.06]"
         />
       ) : null}
     </motion.div>

@@ -796,12 +796,12 @@ function HowItWorks() {
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
         <SectionEyebrow
-          kicker="Como funciona"
+          kicker="Integrações"
           title={
             <>
-              Transforme minutos de configuração em{" "}
+              Tudo o que sua operação precisa,{" "}
               <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
-                anos de crescimento.
+                conectado em um só lugar.
               </span>
             </>
           }

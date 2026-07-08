@@ -23,13 +23,13 @@ function B({ children }: { children: React.ReactNode }) {
 function PrivacidadePage() {
   return (
     <>
-      <Nav />
+      <Nav solid />
       <main id="conteudo">
         {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
             <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Privacidade</div>
-            <h1 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">Privacidade</h1>
+            <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Privacidade</h1>
             <p className="mt-3 text-muted-foreground">
               Sua privacidade é prioridade. Saiba como a Nummo coleta, utiliza, armazena e protege os seus dados pessoais, e quais são os seus direitos — sempre com clareza e sem letra miúda.
             </p>

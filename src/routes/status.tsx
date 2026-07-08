@@ -56,11 +56,11 @@ function UptimeBars({ idx }: { idx: number }) {
 function StatusPage() {
   return (
     <>
-      <Nav />
+      <Nav solid />
       <main id="conteudo" className="mx-auto max-w-4xl px-6 py-20 md:py-28">
         <div className="lg:-ml-24 xl:-ml-40">
           <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Status</div>
-          <h1 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">Status do sistema</h1>
+          <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Status do sistema</h1>
           <p className="mt-3 text-muted-foreground">Acompanhe, em tempo real, a disponibilidade e o desempenho de todos os serviços da Nummo — API, Checkout, Links de Pagamento, PIX, cartões, boleto, dashboard e saques. Transparência total para você operar com segurança e previsibilidade.</p>
         </div>
 
@@ -79,7 +79,7 @@ function StatusPage() {
         <h2 className="mb-4 mt-14 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">Serviços</h2>
         <div className="space-y-3">
           {SERVICES.map((s, i) => (
-            <div key={s.name} className="card-elevated p-5">
+            <div key={s.name} className="card-elevated p-5" style={{ background: "#0D1B39" }}>
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2.5">
                   <span className="size-2 rounded-full" style={{ backgroundColor: GREEN }} />
@@ -103,7 +103,7 @@ function StatusPage() {
         <h2 className="mb-4 mt-14 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">Incidentes recentes</h2>
         <div className="space-y-3">
           {INCIDENTS.map((it) => (
-            <div key={it.title} className="card-elevated p-5">
+            <div key={it.title} className="card-elevated p-5" style={{ background: "#0D1B39" }}>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="font-medium">{it.title}</span>
                 <span className="rounded-full px-2.5 py-1 text-[11px] font-medium" style={{ backgroundColor: "rgba(34,197,94,0.15)", color: GREEN }}>

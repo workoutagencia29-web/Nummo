@@ -33,19 +33,16 @@ const VALUES = [
 function SobrePage() {
   return (
     <>
-      <Nav />
+      <Nav solid />
       <main id="conteudo">
         {/* Missão & história */}
         <section className="relative overflow-hidden pt-20 pb-12 md:pt-28 md:pb-14">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-[500px] radial-glow" />
           <div className="relative mx-auto max-w-4xl px-6">
             <div className="lg:-ml-24 xl:-ml-40">
               <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Sobre</div>
-              <h1 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
+              <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
                 Construindo a infraestrutura de pagamentos da{" "}
-                <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
-                  nova economia.
-                </span>
+                <span className="text-[#0D1B39]">nova economia.</span>
               </h1>
               <p className="mt-3 text-muted-foreground">
                 A Nummo nasceu da união entre uma amizade de longa data, experiência real de mercado e uma ambição clara: tornar pagamentos mais simples, previsíveis e eficientes para empresas brasileiras.
@@ -95,8 +92,15 @@ function SobrePage() {
             </h2>
             <div className="mt-10 grid gap-4 md:grid-cols-2">
               {VALUES.map((v) => (
-                <div key={v.title} className="card-elevated p-6">
-                  <div className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
+                <div
+                  key={v.title}
+                  className="card-elevated p-6"
+                  style={{ background: "#0D1B39", boxShadow: "0 16px 32px -18px rgba(9,16,32,0.5)" }}
+                >
+                  <div
+                    className="mb-4 inline-flex size-11 items-center justify-center rounded-xl text-[#F6F9FC]"
+                    style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
+                  >
                     <span className="[&>svg]:size-5">{v.icon}</span>
                   </div>
                   <h3 className="font-display text-xl font-medium tracking-tight">{v.title}</h3>
@@ -109,15 +113,14 @@ function SobrePage() {
 
         {/* CTA final */}
         <section className="relative overflow-hidden py-24 md:py-32">
-          <div className="pointer-events-none absolute inset-x-0 top-1/2 h-[400px] -translate-y-1/2 radial-glow" />
           <div className="relative mx-auto max-w-3xl px-6 text-center">
-            <h2 className="text-balance font-display text-4xl font-medium tracking-tight md:text-5xl">
+            <h2 className="text-balance font-display text-4xl font-extrabold tracking-tight md:text-5xl">
               Vamos crescer juntos.
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">Crie sua conta em minutos ou fale com um especialista.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <PrimaryButton size="lg">Criar conta grátis</PrimaryButton>
-              <GhostButton size="lg" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Falar com o gerente</GhostButton>
+              <GhostButton size="lg" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap">Falar com especialista</GhostButton>
             </div>
           </div>
         </section>

@@ -30,13 +30,13 @@ const TOPICS = [
 function CompliancePage() {
   return (
     <>
-      <Nav />
+      <Nav solid />
       <main id="conteudo">
         {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
             <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Compliance</div>
-            <h1 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
+            <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
               Confiança que se{" "}
               <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">comprova.</span>
             </h1>

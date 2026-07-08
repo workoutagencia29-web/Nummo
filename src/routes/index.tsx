@@ -117,14 +117,14 @@ function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.
   return (
     <div className="mb-16 max-w-3xl">
       {kicker && (
-        <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
+        <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-[#0D1B39]">
           / {kicker}
         </div>
       )}
       <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
         {title}
       </h2>
-      {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-muted-foreground">{sub}</p>}
+      {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-[#0D1B39]">{sub}</p>}
     </div>
   );
 }
@@ -133,70 +133,13 @@ function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
 
-function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === "undefined") {
-      el.classList.add("in");
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          el.classList.add("in");
-          io.disconnect();
-        }
-      },
-      { threshold: 0, rootMargin: "0px 0px -12% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <div ref={ref} className="reveal" style={delay ? { transitionDelay: `${delay}ms` } : undefined}>
-      {children}
-    </div>
-  );
+// Animações de surgimento desativadas no site principal — pass-through.
+function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
+  return <>{children}</>;
 }
 
-function Stagger({ children, className = "", step = 240 }: { children: React.ReactNode; className?: string; step?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const kids = Array.from(el.children) as HTMLElement[];
-    if (typeof IntersectionObserver === "undefined") {
-      kids.forEach((k) => k.classList.add("in"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          kids.forEach((k, i) => {
-            k.style.transitionDelay = `${i * step}ms`;
-            k.classList.add("in");
-          });
-          io.disconnect();
-        }
-      },
-      { threshold: 0, rootMargin: "0px 0px -35% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [step]);
-  return (
-    <div ref={ref} className={className}>
-      {Children.map(children, (child) =>
-        isValidElement(child)
-          ? cloneElement(child as React.ReactElement<{ className?: string }>, {
-              className: `${(child.props as { className?: string }).className ?? ""} reveal-child`,
-            })
-          : child,
-      )}
-    </div>
-  );
+function Stagger({ children, className = "" }: { children: React.ReactNode; className?: string; step?: number }) {
+  return <div className={className}>{children}</div>;
 }
 
 function Landing() {
@@ -212,7 +155,7 @@ function Landing() {
         <Reveal><PaymentMethods /></Reveal>
         <Reveal><Rates /></Reveal>
         <Reveal><HowItWorks /></Reveal>
-        <div className="band-blue bg-[#2F6BFF]">
+        <div className="band-blue bg-[#0D1B39]">
           <Reveal><DevSection /></Reveal>
           <Security />
         </div>
@@ -277,133 +220,184 @@ function navScroll(e: React.MouseEvent<HTMLAnchorElement>, hash: string, off = -
 }
 
 const NAV_ITEMS = [
-  { l: "Produto", h: "plataforma", off: -50 },
+  { l: "Produtos", h: "plataforma", off: 0 },
   { l: "Taxas", h: "taxas", off: -140 },
-  { l: "Para Devs", h: "para-devs", off: 0 },
+  { l: "Desenvolvedores", h: "para-devs", off: 0 },
   { l: "FAQ", h: "faq", off: -90 },
 ];
 
-export function Nav() {
+export function Nav({ solid = false }: { solid?: boolean }) {
   const [open, setOpen] = useState(false);
+
+  // Navbar no TOPO da página (position: absolute) — fica sobre o Hero escuro
+  // e sai da tela ao rolar (não acompanha o scroll). Só aparece sobre o Hero,
+  // então usamos sempre o estilo overlay (transparente + branco).
+  const overlay = true;
+
+  const scrollTop = (e: React.MouseEvent) => {
+    // Fora da home: deixa o link "/" navegar normalmente pra página inicial.
+    if (window.location.pathname !== "/") return;
+    e.preventDefault();
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (t: number) => void } }).__lenis;
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4">
-      <div className="relative mx-auto max-w-6xl">
-        <div className="relative flex h-16 items-center justify-between gap-3 rounded-full border border-foreground/10 bg-surface/45 pl-6 pr-2.5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150">
-          <RouterLink to="/" className="flex items-center" aria-label="Nummo — início">
-            <img src="/logo-nummo-dark.svg" alt="Nummo" width={121} height={20} className="h-[20px] w-auto" />
-          </RouterLink>
-          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 lg:flex">
+    <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""}`}>
+      <div className="relative flex h-20 items-center px-6 lg:px-8">
+        <a href="/" onClick={scrollTop} className="flex shrink-0 items-center" aria-label="Nummo — início">
+          <img
+            src={overlay ? "/logo-nummo.svg" : "/logo-nummo-dark.svg"}
+            alt="Nummo"
+            width={145}
+            height={24}
+            className="h-6 w-auto select-none md:h-7"
+            draggable={false}
+          />
+        </a>
+
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.l}
+              href={item.h ? `/#${item.h}` : "#"}
+              onClick={(e) => navScroll(e, item.h, item.off)}
+              className={`whitespace-nowrap text-[15px] font-medium tracking-wide transition-colors ${
+                overlay ? "text-white/90 hover:text-white" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {item.l}
+            </a>
+          ))}
+        </nav>
+
+        <div className="ml-auto hidden shrink-0 items-center gap-3 lg:flex">
+          <a
+            href="https://app.usenummo.com.br/dashboard/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex h-10 items-center justify-center rounded-full px-5 text-[15px] font-semibold transition ${
+              overlay
+                ? "border border-white/25 bg-white/10 text-white backdrop-blur-[1.5px] hover:bg-white/15"
+                : "border border-border bg-[#F6F9FC] text-foreground hover:bg-muted"
+            }`}
+          >
+            Entrar
+          </a>
+          <a
+            href="https://app.usenummo.com.br/dashboard/register"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-10 items-center justify-center rounded-full bg-[#2F6BFF] px-5 text-[15px] font-semibold text-white transition hover:bg-[#0052CC]"
+          >
+            Criar Conta
+          </a>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className={`ml-auto rounded-md p-2 lg:hidden ${overlay ? "text-white" : "text-foreground"}`}
+          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </div>
+
+      {open && (
+        <div id="mobile-nav" className="border-t border-border bg-[#F6F9FC] lg:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.l}
                 href={item.h ? `/#${item.h}` : "#"}
-                onClick={(e) => navScroll(e, item.h, item.off)}
-                className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+                onClick={(e) => {
+                  navScroll(e, item.h, item.off);
+                  setOpen(false);
+                }}
+                className="rounded-md px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
               >
                 {item.l}
               </a>
             ))}
-          </nav>
-          <div className="flex items-center gap-1.5">
-            <button type="button"  onClick={() => window.location.href = "https://app.usenummo.com.br/dashboard/login"} className="hidden px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block">
-              Entrar
-            </button>
-            <button type="button" className="rounded-full bg-[#0D1B39] px-4 py-2 text-sm font-semibold text-[#F6F9FC] transition-transform hover:scale-[1.02]" onClick={() => window.location.href = "https://app.usenummo.com.br/dashboard/register"}>
-              Criar conta
-            </button>
-            <button
-              type="button"
-              aria-label={open ? "Fechar menu" : "Abrir menu"}
-              aria-expanded={open}
-              aria-controls="mobile-nav"
-              onClick={() => setOpen((v) => !v)}
-              className="grid size-10 place-items-center rounded-full text-foreground transition-colors hover:bg-foreground/5 lg:hidden"
-            >
-              {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
-            </button>
-          </div>
-        </div>
-
-        {open && (
-          <div id="mobile-nav" className="mt-2 overflow-hidden rounded-3xl border border-foreground/10 bg-surface/80 p-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)] backdrop-blur-2xl lg:hidden">
-            <nav className="flex flex-col">
-              {NAV_ITEMS.map((item) => (
-                <a
-                  key={item.l}
-                  href={item.h ? `/#${item.h}` : "#"}
-                  onClick={(e) => {
-                    navScroll(e, item.h, item.off);
-                    setOpen(false);
-                  }}
-                  className="rounded-2xl px-4 py-3 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
-                >
-                  {item.l}
-                </a>
-              ))}
-            </nav>
-            <div className="mt-1 border-t border-foreground/10 p-2">
-              <button type="button" className="block w-full rounded-2xl px-4 py-2.5 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground">
+            <div className="flex gap-2 pt-2">
+              <a
+                href="https://app.usenummo.com.br/dashboard/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 rounded-full border border-border bg-[#F6F9FC] py-2.5 text-center text-sm font-semibold text-foreground"
+              >
                 Entrar
-              </button>
+              </a>
+              <a
+                href="https://app.usenummo.com.br/dashboard/register"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 rounded-full bg-[#2F6BFF] py-2.5 text-center text-sm font-semibold text-white"
+              >
+                Criar Conta
+              </a>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 }
 
 function Hero() {
   return (
-    <section className="relative -mt-[5rem] flex min-h-svh items-center overflow-hidden bg-[#2F6BFF]">
-      <div className="relative mx-auto w-full max-w-7xl px-6 py-10">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-4">
-          <div className="mt-16 animate-float-up lg:mt-8">
-            <h1 className="whitespace-nowrap text-[38px] font-bold leading-[1] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[32px] md:text-[58px] lg:text-[72px]">
-              Pagamentos
+    <section className="relative flex min-h-svh items-center overflow-hidden text-white">
+      {/* Fundo cinematográfico (copiado do nummo-premium-flow) */}
+      <div className="absolute inset-0">
+        <img
+          src="/hero-bg.jpg"
+          alt=""
+          aria-hidden
+          width={1920}
+          height={1280}
+          className="absolute inset-0 h-full w-full scale-105 object-cover object-center"
+        />
+        {/* camadas de overlay para legibilidade + profundidade */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050B1E]/70 via-[#050B1E]/35 to-[#050B1E]/95" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,11,30,0.55)_70%)]" />
+        <div className="absolute inset-0 grid-bg opacity-[0.05]" />
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#050B1E]/90 to-transparent" />
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-10">
+        <div className="items-start">
+          <div className="mt-16 lg:mt-8">
+            <h1 className="-translate-y-[180px] text-center text-[38px] font-bold leading-[1] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[32px] md:whitespace-nowrap md:text-[42px] lg:text-[52px] xl:text-[58px]">
+              <span className="inline-block -translate-y-2 text-[49px] max-[360px]:text-[41px] md:text-[55px] lg:text-[67px] xl:text-[75px]">
+                Infraestrutura financeira
+              </span>
               <br />
-              na velocidade
-              <br />
-              do seu negócio.
+              <span className="font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
             </h1>
 
+            {/* TESTE: botões do hero removidos temporariamente
             <div className="mt-[108px] grid max-w-lg grid-cols-1 gap-4 sm:grid-cols-2">
               <PrimaryButton
                 size="lg"
                 href="https://app.usenummo.com.br/dashboard/register"
-                className="w-full"
+                className="w-full !bg-[#2F6BFF] hover:!bg-[#2559d8]"
               >
                 Criar Conta
               </PrimaryButton>
-
-              <GhostButton
-                size="lg"
+              <a
                 href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full !border-[#F6F9FC] !bg-[#F6F9FC] !text-[#2F6BFF] hover:!border-[#F6F9FC] hover:!bg-[#F6F9FC]"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 px-8 py-4 text-base font-medium text-white backdrop-blur-[1.5px] transition hover:bg-white/15"
               >
-                Falar com o gerente
-              </GhostButton>
+                Falar com Especialista
+              </a>
             </div>
-          </div>
-
-          <div className="relative flex animate-float-up justify-center [animation-delay:200ms] lg:justify-end">
-            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
-              {/* sombra/glow de fundo pra dar profundidade */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 translate-y-10 scale-90 rounded-[2.5rem] bg-[#060A0E]/55 blur-[70px]"
-              />
-              <img
-                src="/hero-pessoa.png"
-                alt="Pessoa usando o app da Nummo no celular"
-                width={620}
-                height={620}
-                className="relative w-full select-none object-contain drop-shadow-[0_24px_40px_rgba(6,10,14,0.4)]"
-                draggable={false}
-              />
-            </div>
+            */}
           </div>
         </div>
       </div>
@@ -605,7 +599,7 @@ function Bento() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionEyebrow
           kicker="Produtos"
-          title="Produtos que simplificam sua operação hoje e escalam amanhã."
+          title={<span className="text-[#0D1B39]">Produtos que simplificam sua operação hoje e escalam amanhã.</span>}
           sub="Um ecossistema construído e pensado para sua empresa."
         />
 
@@ -613,13 +607,13 @@ function Bento() {
           {/* Big card */}
           <div
             className="noise relative col-span-1 row-span-2 overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] md:col-span-3"
-            style={{ background: "#2F6BFF", boxShadow: "0 22px 44px -22px rgba(15,40,120,0.5)" }}
+            style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}
           >
             <div className="flex h-full flex-col justify-between gap-10">
               <div>
                 <div
                   className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
-                  style={{ background: "#2F6BFF", boxShadow: "inset 2px 2px 4px #2857cc, inset -2px -2px 4px #3c78ff" }}
+                  style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
                 >
                   <Wallet className="size-5" />
                 </div>
@@ -634,7 +628,7 @@ function Bento() {
               {/* Visual flow */}
               <div
                 className="relative flex h-44 flex-col justify-center rounded-2xl p-5"
-                style={{ background: "#2F6BFF", boxShadow: "inset 4px 4px 10px #2857cc, inset -4px -4px 10px #3c78ff" }}
+                style={{ background: "#0D1B39", boxShadow: "inset 4px 4px 10px #080f22, inset -4px -4px 10px #12264a" }}
               >
                 <div className="flex items-center justify-between">
                   <div className="text-center">
@@ -707,11 +701,11 @@ function BentoCard({
   return (
     <div
       className={`relative overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
-      style={{ background: "#2F6BFF", boxShadow: "0 16px 32px -18px rgba(15,40,120,0.45)" }}
+      style={{ background: "#0D1B39", boxShadow: "0 16px 32px -18px rgba(9,16,32,0.5)" }}
     >
       <div
         className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
-        style={{ background: "#2F6BFF", boxShadow: "inset 2px 2px 4px #2857cc, inset -2px -2px 4px #3c78ff" }}
+        style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
       >
         <span className="[&>svg]:size-5">{icon}</span>
       </div>
@@ -726,8 +720,8 @@ function BentoCard({
 function PaymentMethods() {
   const methods = [
     { name: "Pix", desc: "Aprovação instantânea.", icon: <Pix /> },
-    { name: "Cartões", desc: "Crédito e débito — Visa, Master, Elo, Amex, Hiper.", icon: <CreditCard /> },
-    { name: "Boleto", desc: "Emissão e conciliação automática.", icon: <Wallet /> },
+    { name: "Cartões", desc: "Visa, Mastercard, Elo, Amex.", icon: <CreditCard /> },
+    { name: "Boleto", desc: "Emissão automatica.", icon: <Wallet /> },
     { name: "API Pix", desc: "Cobranças Pix direto pela sua API.", icon: <Code2 /> },
   ];
   return (
@@ -735,7 +729,7 @@ function PaymentMethods() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionEyebrow
           kicker="Métodos"
-          title="Venda onde e como quiser."
+          title={<span className="text-[#0D1B39]">Venda onde e <span className="bg-gradient-to-r from-[#0D1B39] to-[#2F6BFF] bg-clip-text text-transparent">como quiser.</span></span>}
           sub="Na Nummo você tem acesso aos meios de pagamentos que o brasileiro usa de verdade."
         />
         <div className="grid gap-10 lg:grid-cols-2">
@@ -751,7 +745,7 @@ function PaymentMethods() {
                 }}
               >
                 <div
-                  className="inline-flex size-11 items-center justify-center rounded-xl text-[#2F6BFF]"
+                  className="inline-flex size-11 items-center justify-center rounded-xl text-[#0D1B39]"
                   style={{
                     background: "#F6F9FC",
                     boxShadow: "inset 3px 3px 6px #d3dbea, inset -3px -3px 6px #ffffff",
@@ -759,15 +753,31 @@ function PaymentMethods() {
                 >
                   <span className="[&>svg]:size-5">{m.icon}</span>
                 </div>
-                <div className="mt-8 h-px w-12" style={{ background: "#2F6BFF" }} />
-                <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-[#2F6BFF]">{m.name}</h3>
-                <p className="mt-2 text-sm text-[#2F6BFF]/70">{m.desc}</p>
+                <div className="mt-8 h-px w-12" style={{ background: "#0D1B39" }} />
+                <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-[#0D1B39]">{m.name}</h3>
+                <p className="mt-2 text-sm text-[#0D1B39]/70">{m.desc}</p>
               </div>
             ))}
           </div>
 
-          {/* espaço reservado à direita (conteúdo futuro) */}
-          <div aria-hidden />
+          {/* mockup do dashboard à direita */}
+          <div className="flex items-center justify-center lg:justify-end">
+            <div className="relative w-full max-w-md lg:max-w-lg">
+              {/* sombra/glow de fundo pra dar profundidade (igual ao Hero) */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 translate-y-10 scale-90 rounded-[2.5rem] bg-[#060A0E]/55 blur-[70px]"
+              />
+              <img
+                src="/metodos-dashboard.png"
+                alt="Dashboard da Nummo — saldo disponível e vendas ao vivo"
+                width={1080}
+                height={1080}
+                className="relative w-full select-none object-contain drop-shadow-[0_24px_40px_rgba(6,10,14,0.4)]"
+                draggable={false}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -802,19 +812,16 @@ function Rates() {
 
           {/* Texto */}
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Taxas</div>
-            <h2 className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-              Seu negócio não precisa caber em uma{" "}
-              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
-                taxa padrão.
-              </span>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Taxas</div>
+            <h2 className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
+              Seu negócio não precisa caber em uma taxa padrão.
             </h2>
-            <p className="mt-6 text-pretty text-xl text-muted-foreground">
+            <p className="mt-6 text-pretty text-xl text-[#0D1B39]">
               Temos <span className="font-semibold text-foreground">5 planos</span> de taxas definidos conforme o perfil da sua operação.
               E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
               suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-foreground">nova fase</span>.
             </p>
-            <p className="mt-6 text-pretty text-base text-muted-foreground">
+            <p className="mt-6 text-pretty text-base text-[#0D1B39]">
               Comece com o plano ideal hoje — e{" "}
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-neon transition-colors hover:text-foreground">negocie condições ainda melhores</a>{" "}
               quando sua operação pedir.
@@ -828,34 +835,31 @@ function Rates() {
 
 function HowItWorks() {
   const steps = [
-    { n: "01", title: "Crie sua conta", text: "100% online, sem papelada. Aprovação em até 24h." },
-    { n: "02", title: "Integre em minutos", text: "Use nosso checkout pronto, link de pagamento ou API REST." },
-    { n: "03", title: "Comece a vender", text: "Aceite Pix, débito, crédito e boleto desde o primeiro dia." },
-    { n: "04", title: "Receba na hora", text: "Liquidez D+0 no Pix, em minutos no seu banco." },
+    { n: "01", logo: "/logos/kwai.svg", alt: "Kwai", label: "Kwai for Business" },
+    { n: "02", logo: "/logos/meta.svg", alt: "Meta", label: "Meta" },
+    { n: "03", logo: "/logos/tiktok.svg", alt: "TikTok", label: "TikTok Ads" },
+    { n: "04", logo: null, alt: "UTMify", label: "UTMify" },
   ];
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionEyebrow
-          kicker="Integrações"
-          title={
-            <>
-              Tudo o que sua operação precisa,{" "}
-              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">
-                conectado em um só lugar.
-              </span>
-            </>
-          }
-        />
+        <div className="-translate-y-16">
+          <SectionEyebrow
+            kicker="Integrações"
+            title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <span className="bg-gradient-to-r from-[#0D1B39] to-[#2F6BFF] bg-clip-text text-transparent">em um só lugar.</span></span>}
+          />
+        </div>
         <Stagger className="grid gap-4 md:grid-cols-4">
           {steps.map((s) => (
             <div key={s.n} className="h-full">
-              <TiltCard className="card-elevated h-full p-6">
-                <div className="font-mono text-xs text-neon">{s.n}</div>
-                <div className="mt-8 h-px w-12 bg-neon" />
-                <h3 className="mt-6 font-display text-xl font-medium tracking-tight">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
-              </TiltCard>
+              <div className="card-elevated flex h-full min-h-[208px] flex-col items-center justify-center p-6" style={{ boxShadow: "none", background: "#0D1B39" }}>
+                {s.logo && (
+                  <div className="flex h-12 items-center justify-center">
+                    <img src={s.logo} alt={s.alt} className="h-11 w-auto object-contain" draggable={false} />
+                  </div>
+                )}
+                {s.label && <span className="mt-5 font-display text-lg font-medium tracking-tight text-[#F6F9FC]">{s.label}</span>}
+              </div>
             </div>
           ))}
         </Stagger>
@@ -948,10 +952,10 @@ function DevSection() {
   return (
     <section id="para-devs" className="overflow-x-clip py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div className="grid translate-y-[30px] grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <div>
             <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-              API que dev <span className="italic text-[#C7D8FF]">ama</span>.
+              API que dev <span className="text-[#F6F9FC]">ama</span>.
             </h2>
             <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground">
               REST, webhooks idempotentes, SDKs oficiais em Node, Python, PHP, Go e Ruby.
@@ -967,7 +971,7 @@ function DevSection() {
                 <div
                   key={f.t}
                   className="flex items-center gap-3 rounded-2xl px-5 py-4"
-                  style={{ background: "#2F6BFF", boxShadow: "6px 6px 14px #2657cd, -6px -6px 14px #3f7cf3" }}
+                  style={{ background: "#0D1B39", boxShadow: "6px 6px 14px #080f22, -6px -6px 14px #12264a" }}
                 >
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>
@@ -975,18 +979,21 @@ function DevSection() {
               ))}
             </div>
             <div className="mt-10">
-              <GhostButton className="!border-[#0D1B39] !bg-[#0D1B39] !text-[#F6F9FC] hover:!border-[#16264d] hover:!bg-[#16264d]">Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
+              <GhostButton className="!border-[#2F6BFF] !bg-[#2F6BFF] !text-[#F6F9FC] hover:!border-[#2559d8] hover:!bg-[#2559d8]">Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
             </div>
           </div>
 
           {/* Code window */}
           <div className="relative min-w-0">
-            {/* Glow azul + branco (igual ao hero), respirando */}
-            <div className="pointer-events-none absolute -inset-8 animate-glow-breathe bg-gradient-to-br from-neon/20 via-transparent to-white/15 blur-3xl" />
-            <div className="card-elevated code-window noise relative overflow-hidden">
+            <div className="card-elevated code-window noise relative overflow-hidden" style={{ background: "#0D1B39", border: "none", boxShadow: "8px 8px 20px #080f22, -8px -8px 20px #12264a" }}>
               <div className="flex items-center justify-between border-b border-foreground/5 px-5 py-3">
-                <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                  <Code2 className="size-3.5" /> create-charge.ts
+                <div className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1.5" aria-hidden>
+                    <span className="size-3 rounded-full bg-[#ff5f57]" />
+                    <span className="size-3 rounded-full bg-[#febc2e]" />
+                    <span className="size-3 rounded-full bg-[#28c840]" />
+                  </div>
+                  <span className="flex items-center gap-2"><Code2 className="size-3.5" /> create-charge.ts</span>
                 </div>
                 <span className="font-mono text-[10px] uppercase tracking-widest text-neon">live</span>
               </div>
@@ -1038,20 +1045,19 @@ function Security() {
                 {/* Card — DOM sempre antes do texto (mobile agrupa card+texto);
                     no desktop alterna o lado via order */}
                 <div
-                  className={`relative flex min-h-[220px] items-center justify-start overflow-hidden rounded-2xl border border-[#0D1B39]/10 bg-white p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  className={`relative flex min-h-[220px] items-center justify-center overflow-hidden rounded-2xl p-6 md:p-8 ${p.cardLeft ? "" : "lg:order-2"}`}
+                  style={{ background: "#0D1B39", boxShadow: "8px 8px 20px #080f22, -8px -8px 20px #12264a" }}
                 >
-                  {/* glow azul suave via blur sobre o card branco */}
-                  <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-[#2F6BFF]/25 blur-[80px]" />
                   <span
                     style={{ WebkitTextStroke: "0.03em #2F6BFF", paintOrder: "stroke fill" }}
-                    className={`relative text-left font-display text-5xl font-bold leading-[0.9] tracking-tight text-[#2F6BFF] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
+                    className={`relative text-center font-display text-5xl font-bold leading-[0.9] tracking-tight text-[#2F6BFF] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
                   >
                     {p.card}
                   </span>
                 </div>
 
-                <div className={`flex flex-col justify-center py-2 ${p.cardLeft ? "" : "lg:order-1"}`}>
-                  <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-neon">
+                <div className={`flex flex-col justify-center py-2 ${p.cardLeft ? "lg:pl-6" : "lg:order-1"}`}>
+                  <div className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.3em] text-neon">
                     {p.num}
                   </div>
                   <h3 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-[64px]">
@@ -1074,34 +1080,36 @@ function Testimonials() {
   const t = [
     {
       quote: "Migramos da concorrente e economizamos R$ 38 mil no primeiro mês só em taxas. A API é cirúrgica.",
-      name: "Rafael Mendes", role: "CTO, Lojas Norte", photo: "/depoimentos/1.jpg",
+      name: "Rafael Mendes", role: "Chief Technology Officer", photo: "/depoimentos/1.jpg",
     },
     {
       quote: "D+0 mudou o jogo do nosso fluxo de caixa. Conseguimos escalar na velocidade que sempre sonhamos.",
-      name: "Bruno Carvalho", role: "CEO, Café Dois Mundos", photo: "/depoimentos/2.jpg",
+      name: "Bruno Carvalho", role: "Chief Executive Officer", photo: "/depoimentos/2.jpg",
     },
     {
       quote: "Mais do que suporte, tenho um parceiro estratégico que entende minhas necessidades e oferece o acompanhamento que preciso para operar com segurança.",
-      name: "Lucas Hayashi", role: "Dev Lead, MercadoFit", photo: "/depoimentos/3.jpg",
+      name: "Lucas Hayashi", role: "Dev Lead", photo: "/depoimentos/3.jpg",
     },
   ];
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionEyebrow
-          kicker="Quem usa"
-          title="Sellers que não voltam atrás."
-        />
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#2F6BFF] md:text-6xl">
+          Clientes que não voltam atrás
+        </h2>
         <Stagger className="grid gap-4 md:grid-cols-3">
           {t.map((q) => (
-            <figure key={q.name} className="card-elevated flex flex-col p-8">
+            <figure key={q.name} className="card-elevated flex flex-col p-8" style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}>
               <svg className="mb-6 size-7 text-neon" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
               </svg>
               <blockquote className="flex-1 text-pretty text-base leading-relaxed text-foreground/90">
                 "{q.quote}"
               </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-foreground/5 pt-6">
+              <figcaption
+                className="mt-6 flex items-center gap-3 rounded-2xl p-4"
+                style={{ background: "#0D1B39", boxShadow: "inset 5px 5px 10px #060b18, inset -5px -5px 10px #142a50" }}
+              >
                 <img
                   src={q.photo}
                   alt={q.name}
@@ -1109,7 +1117,7 @@ function Testimonials() {
                   height={40}
                   loading="lazy"
                   decoding="async"
-                  className="size-10 shrink-0 rounded-full object-cover ring-1 ring-foreground/10"
+                  className="size-10 shrink-0 rounded-full object-cover ring-1 ring-white/10"
                 />
                 <div>
                   <div className="text-sm font-medium">{q.name}</div>
@@ -1136,10 +1144,12 @@ function Faq() {
   return (
     <section id="faq" className="py-32">
       <div className="mx-auto max-w-3xl px-6">
-        <SectionEyebrow kicker="FAQ" title="Perguntas frequentes." />
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#2F6BFF] md:text-6xl">
+          Perguntas frequentes
+        </h2>
         <Stagger className="space-y-3">
           {items.map((it, i) => (
-            <div key={i} className="card-elevated overflow-hidden">
+            <div key={i} className="card-elevated overflow-hidden" style={{ background: "#0D1B39" }}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 id={`faq-btn-${i}`}
@@ -1153,16 +1163,18 @@ function Faq() {
                   className={`size-4 shrink-0 text-muted-foreground transition-transform ${open === i ? "rotate-180" : ""}`}
                 />
               </button>
-              {open === i && (
-                <div
-                  id={`faq-panel-${i}`}
-                  role="region"
-                  aria-labelledby={`faq-btn-${i}`}
-                  className="border-t border-foreground/5 px-6 py-5 text-sm text-muted-foreground"
-                >
-                  {it.a}
+              <div
+                id={`faq-panel-${i}`}
+                role="region"
+                aria-labelledby={`faq-btn-${i}`}
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${open === i ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+              >
+                <div className="overflow-hidden">
+                  <div className="border-t border-foreground/5 px-6 py-5 text-sm text-muted-foreground">
+                    {it.a}
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </Stagger>
@@ -1176,19 +1188,17 @@ function FinalCta() {
     <section className="relative overflow-hidden py-32">
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight md:text-7xl">
-          Vender nunca foi{" "}
-          <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text italic text-transparent">
-            tão simples.
-          </span>
+          <span className="text-[#0D1B39]">Vender nunca foi tão simples.</span>
         </h2>
 
-        <p className="mt-6 text-lg text-muted-foreground">
+        <p className="mt-6 text-lg text-[#0D1B39]">
           Sem mensalidade. Sem fidelidade. Sem surpresa.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <PrimaryButton
             href="https://app.usenummo.com.br/dashboard/register"
+            className="w-[230px]"
           >
             Criar Conta
           </PrimaryButton>
@@ -1197,8 +1207,9 @@ function FinalCta() {
             href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
             target="_blank"
             rel="noopener noreferrer"
+            className="w-[230px] whitespace-nowrap !border-[#2F6BFF] !bg-[#2F6BFF] !text-[#F6F9FC] hover:!border-[#2559d8] hover:!bg-[#2559d8]"
           >
-            Falar com o gerente
+            Falar com especialista
           </GhostButton>
         </div>
       </div>
@@ -1268,7 +1279,7 @@ export function Footer() {
           {/* Colunas de links */}
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {[
-              { t: "Produto", l: ["Pix", "Cartões", "Boleto", "API"] },
+              { t: "Produtos", l: ["Checkout Builder", "Marketplace", "Co-Produção", "Rec. de Vendas"] },
               { t: "Empresa", l: ["Sobre", "Parceiros", "E-mail", "WhatsApp"] },
               { t: "Recursos", l: ["Documentação", "Status", "Changelog", "Integrações"] },
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
@@ -1313,7 +1324,7 @@ export function Footer() {
 
         {/* Selos de confiança / pagamento */}
         <div className="mt-16 flex flex-col items-start gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-xs text-muted-foreground">© 2026 Nummo — CNPJ 63.320.977/0001-06</span>
+          <span className="text-xs text-muted-foreground">© 2026 Nummo — Todos os direitos reservados.</span>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {[
               { name: "Pix", href: "https://www.bcb.gov.br/estabilidadefinanceira/pix" },

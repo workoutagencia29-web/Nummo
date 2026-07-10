@@ -4,6 +4,7 @@ import {
   Link, Layers, Lock, TrendingUp,
   Wallet, Zap, BarChart3, Code2,
   Instagram, Linkedin, Youtube, Menu, X, Sparkles,
+  AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 import { TiltCard } from "../components/tilt-card";
@@ -244,7 +245,9 @@ export function Nav({ solid = false }: { solid?: boolean }) {
   };
 
   return (
-    <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""}`}>
+    <>
+      {solid && <ScrollRail />}
+      <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""}`}>
       <div className="relative flex h-20 items-center px-6 lg:px-8">
         <a href="/" onClick={scrollTop} className="flex shrink-0 items-center" aria-label="Nummo — início">
           <img
@@ -344,7 +347,8 @@ export function Nav({ solid = false }: { solid?: boolean }) {
           </div>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 }
 
@@ -615,50 +619,59 @@ function Bento() {
                   className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
                   style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
                 >
-                  <Wallet className="size-5" />
+                  <Sparkles className="size-5" />
                 </div>
                 <h3 className="font-display text-3xl font-medium tracking-tight">
-                  Recebimento na hora,<br />sem antecipação cara.
+                  Checkout Builder com IA
                 </h3>
-                <p className="mt-4 max-w-sm text-[#F6F9FC]/75">
-                  Liquidez D+0, sem custo extra. Seu dinheiro pinga na conta segundos depois da venda.
+                <p className="mt-4 text-[#F6F9FC]/75">
+                  A IA da Nummo analisa seu checkout, dá uma nota e mostra o que trava suas vendas, sugerindo melhorias em cada etapa.
                 </p>
-              </div>
 
-              {/* Visual flow */}
-              <div
-                className="relative flex h-44 flex-col justify-center rounded-2xl p-5"
-                style={{ background: "#0D1B39", boxShadow: "inset 4px 4px 10px #080f22, inset -4px -4px 10px #12264a" }}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-white/15 text-[#F6F9FC]">
-                      <CreditCard className="size-5" />
-                    </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-[#F6F9FC]/70">Venda</div>
+                <div className="mt-5 grid translate-y-[7px] gap-2.5 lg:grid-cols-2">
+                  {/* Recomendações da IA */}
+                  <div className="space-y-2">
+                    {[
+                      { title: "Pixel de rastreamento ativo", pts: 6, desc: "Cadastre um pixel (Meta/GTM) ativo na aba Pixel de Conversão.", tab: "Pixel de Conversão" },
+                      { title: "Suporte (SAC) visível", pts: 3, desc: "Preencha e-mail e WhatsApp do SAC em Informações Gerais.", tab: "Informações Gerais" },
+                      { title: "Página de vendas informada", pts: 2, desc: "Informe a URL da página de vendas em Informações Gerais.", tab: "Informações Gerais" },
+                    ].map((r) => (
+                      <div key={r.title} className="rounded-lg border border-white/10 p-2.5">
+                        <div className="flex items-center gap-1.5">
+                          <AlertTriangle className="size-3 shrink-0 text-[#2F6BFF]" />
+                          <span className="text-[11px] font-semibold text-[#F6F9FC]">{r.title}</span>
+                          <span className="text-[9px] text-[#F6F9FC]/40">+{r.pts}pts</span>
+                        </div>
+                        <p className="mt-1 text-[10px] leading-snug text-[#F6F9FC]/55">{r.desc}</p>
+                        <div className="mt-2 inline-flex rounded-md border border-[#2F6BFF]/30 bg-[#2F6BFF]/12 px-2 py-0.5 text-[9px] font-semibold text-[#6E9BFF]">
+                          Configure na aba "{r.tab}"
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/25">
-                    <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-white to-transparent" />
+
+                  {/* Grade de componentes */}
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { icon: <Type />, label: "Texto" },
+                      { icon: <Image />, label: "Imagem" },
+                      { icon: <Check />, label: "Vantagens" },
+                      { icon: <ShieldCheck />, label: "Selo" },
+                      { icon: <Layers />, label: "Header" },
+                      { icon: <List />, label: "Lista" },
+                      { icon: <Zap />, label: "Cronômetro" },
+                      { icon: <Star />, label: "Depoimento" },
+                      { icon: <Video />, label: "Vídeo" },
+                      { icon: <Users />, label: "Facebook" },
+                      { icon: <Globe />, label: "Mapa" },
+                      { icon: <Zap />, label: "Botão" },
+                    ].map((c) => (
+                      <div key={c.label} className="flex flex-col items-center justify-center gap-1 rounded-lg border border-white/10 py-2.5">
+                        <span className="text-[#F6F9FC]/70 [&>svg]:size-4">{c.icon}</span>
+                        <span className="text-[9px] text-[#F6F9FC]/70">{c.label}</span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-white/25 text-[#F6F9FC]">
-                      <Zap className="size-5" />
-                    </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-[#F6F9FC]">Nummo</div>
-                  </div>
-                  <div className="relative mx-3 h-px flex-1 overflow-hidden bg-white/25">
-                    <div className="absolute inset-0 animate-beam bg-gradient-to-r from-transparent via-white to-transparent [animation-delay:1.2s]" />
-                  </div>
-                  <div className="text-center">
-                    <div className="grid size-12 place-items-center rounded-lg bg-white/15 text-[#F6F9FC]">
-                      <Wallet className="size-5" />
-                    </div>
-                    <div className="mt-2 font-mono text-[10px] uppercase text-[#F6F9FC]/70">Conta</div>
-                  </div>
-                </div>
-                <div className="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-[#F6F9FC]">
-                  <span className="size-1.5 animate-pulse-soft rounded-full bg-white" />
-                  liquidação em ~700ms
                 </div>
               </div>
             </div>
@@ -669,16 +682,16 @@ function Bento() {
             className="md:col-span-3"
             wide
             icon={<Sparkles />}
-            title="Checkout Builder com IA"
-            text="A IA nativa da Nummo analisa seu checkout e atribui uma nota com base em comportamento de compra, conversão e padrões de alta performance. Ela identifica pontos que podem estar travando suas vendas. Depois, sugere melhorias estratégicas e ajustes cirúrgicos em cada etapa."
+            title="Recuperação de vendas"
+            text="A IA da Nummo recupera sozinha o que você perderia: cartões recusados são reprocessados com retry inteligente, e checkouts abandonados, Pix e boletos não pagos voltam com mensagens automáticas. Tudo em segundo plano, virando faturamento recuperado."
           />
 
           {/* Bottom right two */}
           <BentoCard
             className="md:col-span-2"
             icon={<Layers />}
-            title="Split de pagamentos"
-            text="Distribua valores entre múltiplos recebedores em uma única transação."
+            title="Marketplace"
+            text="Cadastre vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio. Tudo em uma só estrutura."
           />
           <BentoCard
             className="md:col-span-1"
@@ -834,35 +847,42 @@ function Rates() {
 }
 
 function HowItWorks() {
-  const steps = [
-    { n: "01", logo: "/logos/kwai.svg", alt: "Kwai", label: "Kwai for Business" },
-    { n: "02", logo: "/logos/meta.svg", alt: "Meta", label: "Meta" },
-    { n: "03", logo: "/logos/tiktok.svg", alt: "TikTok", label: "TikTok Ads" },
-    { n: "04", logo: null, alt: "UTMify", label: "UTMify" },
+  const logos = [
+    { src: "/logos/kwai.png", alt: "Kwai" },
+    { src: "/logos/meta.png", alt: "Meta" },
+    { src: "/logos/tiktok.png", alt: "TikTok Ads" },
+    { src: "/logos/utmify.png", alt: "UTMify" },
+    { src: "/logos/google-ads.webp", alt: "Google Ads" },
+    { src: "/logos/notazz.png", alt: "Notazz" },
+    { src: "/logos/astron.png", alt: "Astron" },
   ];
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="-translate-y-16">
+        <div className="-translate-y-[82px]">
           <SectionEyebrow
             kicker="Integrações"
             title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <span className="bg-gradient-to-r from-[#0D1B39] to-[#2F6BFF] bg-clip-text text-transparent">em um só lugar.</span></span>}
+            sub="Conecte anúncios, trackers e emissão de notas à Nummo e centralize sua operação em um só fluxo."
           />
         </div>
-        <Stagger className="grid gap-4 md:grid-cols-4">
-          {steps.map((s) => (
-            <div key={s.n} className="h-full">
-              <div className="card-elevated flex h-full min-h-[208px] flex-col items-center justify-center p-6" style={{ boxShadow: "none", background: "#0D1B39" }}>
-                {s.logo && (
-                  <div className="flex h-12 items-center justify-center">
-                    <img src={s.logo} alt={s.alt} className="h-11 w-auto object-contain" draggable={false} />
+        {/* Marquee infinito (loop contínuo para a direita) */}
+        <div
+          className="group relative overflow-hidden"
+          style={{ maskImage: "linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%)" }}
+        >
+          <div className="flex w-max animate-marquee-right group-hover:[animation-play-state:paused]">
+            {[...logos, ...logos].map((l, i) => (
+              <div key={i} className="mr-4 w-[260px] shrink-0">
+                <div className="card-elevated flex min-h-[180px] items-center justify-center p-8" style={{ boxShadow: "none", background: "#0D1B39" }}>
+                  <div className="flex size-28 items-center justify-center rounded-2xl" style={{ background: "#0D1B39", boxShadow: "inset 5px 5px 10px #060b18, inset -5px -5px 10px #142a50" }}>
+                    <img src={l.src} alt={l.alt} className="h-16 w-16 shrink-0 object-contain" draggable={false} />
                   </div>
-                )}
-                {s.label && <span className="mt-5 font-display text-lg font-medium tracking-tight text-[#F6F9FC]">{s.label}</span>}
+                </div>
               </div>
-            </div>
-          ))}
-        </Stagger>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -1094,13 +1114,13 @@ function Testimonials() {
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#2F6BFF] md:text-6xl">
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
           Clientes que não voltam atrás
         </h2>
-        <Stagger className="grid gap-4 md:grid-cols-3">
+        <Stagger className="grid translate-y-5 gap-4 md:grid-cols-3">
           {t.map((q) => (
             <figure key={q.name} className="card-elevated flex flex-col p-8" style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}>
-              <svg className="mb-6 size-7 text-neon" viewBox="0 0 24 24" fill="currentColor">
+              <svg className="mb-6 size-7 text-[#2F6BFF]" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
               </svg>
               <blockquote className="flex-1 text-pretty text-base leading-relaxed text-foreground/90">
@@ -1144,7 +1164,7 @@ function Faq() {
   return (
     <section id="faq" className="py-32">
       <div className="mx-auto max-w-3xl px-6">
-        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#2F6BFF] md:text-6xl">
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
           Perguntas frequentes
         </h2>
         <Stagger className="space-y-3">
@@ -1236,9 +1256,8 @@ const FOOTER_LINKS: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden px-6 pb-10 pt-20">
-      {/* Linha de destaque + glow sutil no topo */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon/50 to-transparent" />
+    <footer className="relative overflow-hidden bg-[#0D1B39] px-6 pb-10 pt-20 text-[#F6F9FC]">
+      {/* Glow sutil no topo */}
       <div className="pointer-events-none absolute inset-x-0 -top-40 h-72 radial-glow opacity-60" />
 
       <div className="relative mx-auto max-w-7xl">
@@ -1246,12 +1265,9 @@ export function Footer() {
           {/* Marca */}
           <div>
             <RouterLink to="/" className="inline-flex items-center" aria-label="Nummo — início">
-              <img src="/logo-nummo-dark.svg" alt="Nummo" width={145} height={24} className="h-[24px] w-auto" />
+              <img src="/logo-nummo.svg" alt="Nummo" width={145} height={24} className="h-[24px] w-auto" />
             </RouterLink>
-            <p className="mt-5 max-w-xs text-pretty text-base font-medium text-foreground/90">
-              Pagamentos na velocidade do seu negócio.
-            </p>
-            <p className="mt-2 max-w-xs text-sm text-muted-foreground">
+            <p className="mt-5 max-w-xs text-sm text-[#F6F9FC]/55">
               A infraestrutura de pagamentos para a nova economia brasileira.
             </p>
             {/* Redes sociais */}
@@ -1268,7 +1284,7 @@ export function Footer() {
                   target={s.href.startsWith("http") ? "_blank" : undefined}
                   rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   aria-label={s.label}
-                  className="grid size-9 place-items-center rounded-full border border-foreground/10 bg-foreground/[0.02] text-muted-foreground transition-colors hover:border-neon/40 hover:bg-neon-soft hover:text-neon"
+                  className="grid size-9 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60 transition-colors hover:border-[#2F6BFF]/50 hover:bg-[#2F6BFF]/15 hover:text-[#2F6BFF]"
                 >
                   <span className="[&>svg]:size-4">{s.icon}</span>
                 </a>
@@ -1285,14 +1301,14 @@ export function Footer() {
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
             ].map((col) => (
               <div key={col.t}>
-                <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-[#F6F9FC]/45">
                   {col.t}
                 </div>
                 <ul className="space-y-2.5">
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];
                     const ext = FOOTER_LINKS[i];
-                    const cls = "text-sm text-foreground/80 transition-colors hover:text-neon";
+                    const cls = "text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#2F6BFF]";
                     return (
                       <li key={i}>
                         {to ? (
@@ -1309,7 +1325,7 @@ export function Footer() {
                             {i}
                           </a>
                         ) : (
-                          <span className="text-sm text-foreground/80">
+                          <span className="text-sm text-[#F6F9FC]/70">
                             {i}
                           </span>
                         )}
@@ -1324,7 +1340,7 @@ export function Footer() {
 
         {/* Selos de confiança / pagamento */}
         <div className="mt-16 flex flex-col items-start gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-xs text-muted-foreground">© 2026 Nummo — Todos os direitos reservados.</span>
+          <span className="text-xs text-[#F6F9FC]/50">© 2026 Nummo — Todos os direitos reservados.</span>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {[
               { name: "Pix", href: "https://www.bcb.gov.br/estabilidadefinanceira/pix" },
@@ -1338,7 +1354,7 @@ export function Footer() {
                 href={m.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-display text-sm font-semibold tracking-tight text-muted-foreground/60 transition-colors hover:text-foreground/80"
+                className="font-display text-sm font-semibold tracking-tight text-[#F6F9FC]/40 transition-colors hover:text-[#F6F9FC]/80"
               >
                 {m.name}
               </a>

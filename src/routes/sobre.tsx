@@ -119,8 +119,8 @@ function SobrePage() {
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">Crie sua conta em minutos ou fale com um especialista.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <PrimaryButton size="lg">Criar conta grátis</PrimaryButton>
-              <GhostButton size="lg" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap">Falar com especialista</GhostButton>
+              <PrimaryButton size="lg" className="!bg-[#0D1B39] hover:!bg-[#0a1530]">Criar conta grátis</PrimaryButton>
+              <GhostButton size="lg" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap !border-[#2F6BFF] !bg-[#2F6BFF] !text-white hover:!border-[#2559d8] hover:!bg-[#2559d8]">Falar com especialista</GhostButton>
             </div>
           </div>
         </section>

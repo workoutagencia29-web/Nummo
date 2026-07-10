@@ -20,7 +20,7 @@ export function PlaceholderPage({ eyebrow, title, subtitle }: { eyebrow?: string
           <div className="relative mx-auto max-w-4xl px-6">
             <div className="lg:-ml-24 xl:-ml-40">
               {eyebrow && (
-                <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ {eyebrow}</div>
+                <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ {eyebrow}</div>
               )}
               <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
                 {title}

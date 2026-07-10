@@ -35,10 +35,9 @@ function CompliancePage() {
         {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Compliance</div>
-            <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-              Confiança que se{" "}
-              <span className="bg-gradient-to-r from-[#84A9FF] via-[#2F6BFF] to-[#1B3FC4] bg-clip-text text-transparent">comprova.</span>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Compliance</div>
+            <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
+              Confiança que se comprova.
             </h1>
             <p className="mt-3 text-muted-foreground">
               Segurança, regulação e proteção de dados no centro de tudo o que a Nummo faz. Conheça os nossos compromissos de conformidade e as práticas que mantêm a sua operação protegida.
@@ -61,12 +60,19 @@ function CompliancePage() {
             </div>
             <div className="mt-14 grid gap-4 md:grid-cols-2">
               {TOPICS.map((t) => (
-                <div key={t.title} className="card-elevated p-6">
-                  <div className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-neon/10 text-neon">
+                <div
+                  key={t.title}
+                  className="relative overflow-hidden rounded-[28px] p-8 text-[#F6F9FC]"
+                  style={{ background: "#0D1B39", boxShadow: "0 16px 32px -18px rgba(9,16,32,0.5)" }}
+                >
+                  <div
+                    className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
+                    style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
+                  >
                     <span className="[&>svg]:size-5">{t.icon}</span>
                   </div>
-                  <h2 className="font-display text-xl font-medium tracking-tight">{t.title}</h2>
-                  <p className="mt-2 text-sm text-muted-foreground">{t.desc}</p>
+                  <h2 className="font-display text-2xl font-medium tracking-tight">{t.title}</h2>
+                  <p className="mt-3 text-sm text-[#F6F9FC]/75">{t.desc}</p>
                 </div>
               ))}
             </div>

@@ -59,7 +59,7 @@ function StatusPage() {
       <Nav solid />
       <main id="conteudo" className="mx-auto max-w-4xl px-6 py-20 md:py-28">
         <div className="lg:-ml-24 xl:-ml-40">
-          <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Status</div>
+          <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Status</div>
           <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Status do sistema</h1>
           <p className="mt-3 text-muted-foreground">Acompanhe, em tempo real, a disponibilidade e o desempenho de todos os serviços da Nummo — API, Checkout, Links de Pagamento, PIX, cartões, boleto, dashboard e saques. Transparência total para você operar com segurança e previsibilidade.</p>
         </div>

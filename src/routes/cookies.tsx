@@ -9,7 +9,7 @@ function CookiesPage() {
         {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Cookies</div>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Cookies</div>
             <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Cookies do site da Nummo</h1>
             <p className="mt-3 text-muted-foreground">
               Entenda quais cookies a Nummo utiliza, para que servem e como você pode aceitar, recusar ou gerenciar cada um deles a qualquer momento — com total controle e transparência.

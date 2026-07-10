@@ -28,7 +28,7 @@ function TermosPage() {
         {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Termos</div>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Termos</div>
             <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Termos e Condições da Nummo</h1>
             <p className="mt-3 text-muted-foreground">
               As regras que regem o uso da plataforma, dos produtos e dos serviços da Nummo. Leia com atenção para entender seus direitos e responsabilidades ao usar a Nummo.

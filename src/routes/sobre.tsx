@@ -39,7 +39,7 @@ function SobrePage() {
         <section className="relative overflow-hidden pt-20 pb-12 md:pt-28 md:pb-14">
           <div className="relative mx-auto max-w-4xl px-6">
             <div className="lg:-ml-24 xl:-ml-40">
-              <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Sobre</div>
+              <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Sobre</div>
               <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
                 Construindo a infraestrutura de pagamentos da{" "}
                 <span className="text-[#0D1B39]">nova economia.</span>

@@ -55,7 +55,7 @@ function ChangelogPage() {
         {/* Head — igual ao da /status (tamanho + posição) */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-neon">/ Changelog</div>
+            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Changelog</div>
             <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Novidades Nummo</h1>
             <p className="mt-3 text-muted-foreground">Acompanhe tudo o que estamos construindo, lançando e aprimorando na Nummo. Aqui você encontra novas funcionalidades, melhorias de performance, atualizações de segurança, integrações e evoluções feitas para deixar sua operação cada vez mais rápida, estável e eficiente.</p>
           </div>

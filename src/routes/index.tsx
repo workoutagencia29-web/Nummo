@@ -862,15 +862,20 @@ function Rates() {
 }
 
 function HowItWorks() {
-  const logos: { alt: string; src?: string; node?: React.ReactNode }[] = [
-    { src: "/logos/meta.png", alt: "Meta" },
-    { src: "/logos/google-ads.webp", alt: "Google Ads" },
-    { node: <TikTok />, alt: "TikTok Ads" },
-    { src: "/logos/kwai.png", alt: "Kwai" },
-    { src: "/logos/utmify.png", alt: "UTMify" },
-    { src: "/logos/notazz.png", alt: "Notazz" },
-    { src: "/logos/astron.png", alt: "Astron" },
+  const integrations: { alt: string; src?: string; node?: React.ReactNode; tone: "color" | "mono" | "node" }[] = [
+    { src: "/logos/meta.png", alt: "Meta Ads", tone: "color" },
+    { src: "/logos/google-ads.webp", alt: "Google Ads", tone: "color" },
+    { node: <TikTok />, alt: "TikTok Ads", tone: "node" },
+    { src: "/logos/kwai.png", alt: "Kwai Ads", tone: "color" },
+    { src: "/logos/utmify.png", alt: "UTMify", tone: "mono" },
+    { src: "/logos/notazz.png", alt: "Notazz", tone: "color" },
+    { src: "/logos/astron.png", alt: "Astron", tone: "color" },
   ];
+
+  // Neumorfismo modo claro — mesma família dos cards de Métodos, escalada para o tile (razão 1:2, luz topo-esquerda).
+  const tileRaised = "10px 10px 20px #d3dbea, -10px -10px 20px #ffffff";
+  const socketInset = "inset 3px 3px 6px #d3dbea, inset -3px -3px 6px #ffffff";
+
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -881,27 +886,69 @@ function HowItWorks() {
             sub="Conecte anúncios, trackers e emissão de notas à Nummo e centralize sua operação em um só fluxo."
           />
         </div>
-        {/* Marquee infinito (loop contínuo para a direita) */}
+
+        {/* Trilho de encaixe: soquetes neumórficos claros deslizando sob a luz fixa (topo-esquerda).
+            overflow-hidden + máscara horizontal; a fileira leva py-12 p/ não cortar a sombra "raised". */}
         <div
-          className="group relative overflow-hidden"
-          style={{ maskImage: "linear-gradient(to right, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)" }}
+          className="group relative -mt-4 overflow-hidden"
+          style={{
+            maskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
+          }}
         >
-          <div className="flex w-max animate-marquee-right py-6 group-hover:[animation-play-state:paused]">
-            {[...logos, ...logos].map((l, i) => (
+          <div className="flex w-max animate-marquee-right py-12 group-hover:[animation-play-state:paused]">
+            {[...integrations, ...integrations].map((l, i) => (
+              // TILE elevado claro — receita dos cards de Métodos, escalada (10/10/20)
               <div
                 key={i}
-                className="group/card mr-4 flex h-[112px] w-[172px] shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-b from-[#16264a] to-[#0D1B39] px-6 shadow-[0_18px_40px_-20px_rgba(6,10,20,0.85)] transition duration-300 hover:-translate-y-1 hover:border-[#2F6BFF]/40"
+                className="group/tile mr-5 flex h-[116px] w-[164px] shrink-0 items-center justify-center rounded-[28px] p-4 sm:h-[132px] sm:w-[188px]"
+                style={{ background: "#F6F9FC", boxShadow: tileRaised }}
               >
-                {l.node ? (
-                  <span className="text-white [&>svg]:h-10 [&>svg]:w-10">{l.node}</span>
-                ) : (
-                  <img
-                    src={l.src}
-                    alt={l.alt}
-                    className="h-10 w-auto max-w-[108px] object-contain opacity-90 transition-opacity duration-300 group-hover/card:opacity-100"
-                    draggable={false}
-                  />
-                )}
+                {/* SOQUETE afundado — o "encaixe" onde cada integração pluga (rounded-xl = ícone dos Métodos) */}
+                <div
+                  className="flex h-full w-full items-center justify-center rounded-xl px-5"
+                  style={{ background: "#F6F9FC", boxShadow: socketInset }}
+                >
+                  {l.tone === "node" ? (
+                    // TikTok: <TikTok/> inline em NAVY via currentColor (nunca branco — branco some no claro).
+                    <span
+                      role="img"
+                      aria-label={l.alt}
+                      className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-8 [&>svg]:w-8"
+                    >
+                      {l.node}
+                    </span>
+                  ) : l.tone === "mono" ? (
+                    // UTMify (wordmark branco) pintado em navy exato #0D1B39 via CSS mask (mesma cor do TikTok).
+                    <span
+                      role="img"
+                      aria-label={l.alt}
+                      className="block opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
+                      style={{
+                        height: "32px",
+                        width: "116px",
+                        background: "#0D1B39",
+                        WebkitMaskImage: `url(${l.src})`,
+                        maskImage: `url(${l.src})`,
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                      }}
+                    />
+                  ) : (
+                    // Coloridos intactos — reconhecibilidade de marca > monocromia.
+                    <img
+                      src={l.src}
+                      alt={l.alt}
+                      className="max-h-8 w-auto max-w-[116px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
+                      draggable={false}
+                      loading="lazy"
+                    />
+                  )}
+                </div>
               </div>
             ))}
           </div>

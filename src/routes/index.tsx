@@ -7,7 +7,6 @@ import {
   AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
-import { TiltCard } from "../components/tilt-card";
 
 function TikTok() {
   return (
@@ -290,22 +289,28 @@ const RAIL_THUMB = 80; // altura do trecho azul (px) = h-20
 function ScrollRail() {
   const thumbRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    let raf = 0;
-    let last = -1;
-    const loop = () => {
+    // A barra só existe no desktop (lg:block). No mobile nem registra o listener.
+    if (typeof window === "undefined" || !window.matchMedia("(min-width: 1024px)").matches) return;
+    let ticking = false;
+    const update = () => {
       const el = thumbRef.current;
       if (el) {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-        if (p !== last) {
-          el.style.transform = `translateY(${p * (window.innerHeight - RAIL_THUMB)}px)`;
-          last = p;
-        }
+        el.style.transform = `translateY(${p * (window.innerHeight - RAIL_THUMB)}px)`;
       }
-      raf = requestAnimationFrame(loop);
+      ticking = false;
     };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
   return (
     <div className="pointer-events-none fixed right-0 top-0 z-40 hidden h-screen lg:block">

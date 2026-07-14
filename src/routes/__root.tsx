@@ -111,6 +111,9 @@ function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Só no desktop (ponteiro fino). No touch, o scroll nativo + o fallback
+    // scrollIntoView das âncoras já cobrem — evita 1 rAF eterno no mobile.
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
     let id = requestAnimationFrame(function raf(time: number) {

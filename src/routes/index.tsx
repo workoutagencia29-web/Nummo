@@ -1319,11 +1319,11 @@ export function Footer() {
                 <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-[#F6F9FC]/45">
                   {col.t}
                 </div>
-                <ul className="space-y-2.5">
+                <ul className="space-y-1">
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];
                     const ext = FOOTER_LINKS[i];
-                    const cls = "text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#2F6BFF]";
+                    const cls = "inline-block py-1.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#2F6BFF]";
                     return (
                       <li key={i}>
                         {to ? (
@@ -1340,7 +1340,7 @@ export function Footer() {
                             {i}
                           </a>
                         ) : (
-                          <span className="text-sm text-[#F6F9FC]/70">
+                          <span className="inline-block py-1.5 text-sm text-[#F6F9FC]/70">
                             {i}
                           </span>
                         )}

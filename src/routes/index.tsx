@@ -375,20 +375,20 @@ function Hero() {
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-10">
         <div className="items-start">
           <div className="mt-16 lg:mt-8">
-            <h1 className="-translate-y-[180px] text-center text-[38px] font-bold leading-[1] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[32px] md:whitespace-nowrap md:text-[42px] lg:text-[52px] xl:text-[58px]">
-              <span className="inline-block -translate-y-2 text-[49px] max-[360px]:text-[41px] md:text-[55px] lg:text-[67px] xl:text-[75px]">
+            <h1 className="text-center text-[38px] font-bold leading-[1] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[32px] md:whitespace-nowrap md:text-[42px] lg:-translate-y-[180px] lg:text-[52px] xl:text-[58px]">
+              <span className="inline-block -translate-y-2 text-[40px] max-[360px]:text-[34px] md:text-[55px] lg:text-[67px] xl:text-[75px]">
                 Infraestrutura financeira
               </span>
               <br />
               <span className="font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
             </h1>
 
-            {/* TESTE: botões do hero removidos temporariamente
-            <div className="mt-[108px] grid max-w-lg grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
+            <div className="mx-auto mt-10 flex w-full max-w-sm flex-col gap-3 lg:hidden">
               <PrimaryButton
                 size="lg"
                 href="https://app.usenummo.com.br/dashboard/register"
-                className="w-full !bg-[#2F6BFF] hover:!bg-[#2559d8]"
+                className="w-full justify-center !bg-[#2F6BFF] hover:!bg-[#2559d8]"
               >
                 Criar Conta
               </PrimaryButton>
@@ -401,7 +401,6 @@ function Hero() {
                 Falar com Especialista
               </a>
             </div>
-            */}
           </div>
         </div>
       </div>

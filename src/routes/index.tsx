@@ -872,9 +872,10 @@ function HowItWorks() {
     { src: "/logos/astron.png", alt: "Astron", tone: "color" },
   ];
 
-  // Neumorfismo modo claro — mesma família dos cards de Métodos, escalada para o tile (razão 1:2, luz topo-esquerda).
-  const tileRaised = "10px 10px 20px #d3dbea, -10px -10px 20px #ffffff";
-  const socketInset = "inset 3px 3px 6px #d3dbea, inset -3px -3px 6px #ffffff";
+  // Neumorfismo modo claro — família dos cards de Métodos, com mais profundidade/contraste
+  // (sombra escura mais funda #c7d1e4) + filete de luz no topo p/ definir a borda.
+  const tileRaised = "14px 14px 30px #c7d1e4, -12px -12px 26px #ffffff, inset 0 1px 0 #ffffff";
+  const socketInset = "inset 5px 5px 10px #c7d1e4, inset -4px -4px 9px #ffffff";
 
   return (
     <section className="py-32">
@@ -901,12 +902,12 @@ function HowItWorks() {
               // TILE elevado claro — receita dos cards de Métodos, escalada (10/10/20)
               <div
                 key={i}
-                className="group/tile mr-5 flex h-[116px] w-[164px] shrink-0 items-center justify-center rounded-[28px] p-4 sm:h-[132px] sm:w-[188px]"
+                className="group/tile mr-6 flex h-[152px] w-[176px] shrink-0 flex-col items-center justify-center gap-3 rounded-[28px] p-3.5 sm:h-[168px] sm:w-[200px]"
                 style={{ background: "#F6F9FC", boxShadow: tileRaised }}
               >
                 {/* SOQUETE afundado — o "encaixe" onde cada integração pluga (rounded-xl = ícone dos Métodos) */}
                 <div
-                  className="flex h-full w-full items-center justify-center rounded-xl px-5"
+                  className="flex h-[74px] w-full items-center justify-center rounded-xl px-5 sm:h-[86px]"
                   style={{ background: "#F6F9FC", boxShadow: socketInset }}
                 >
                   {l.tone === "node" ? (
@@ -914,7 +915,7 @@ function HowItWorks() {
                     <span
                       role="img"
                       aria-label={l.alt}
-                      className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-8 [&>svg]:w-8"
+                      className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-11 [&>svg]:w-11"
                     >
                       {l.node}
                     </span>
@@ -925,8 +926,8 @@ function HowItWorks() {
                       aria-label={l.alt}
                       className="block opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
                       style={{
-                        height: "32px",
-                        width: "116px",
+                        height: "40px",
+                        width: "128px",
                         background: "#0D1B39",
                         WebkitMaskImage: `url(${l.src})`,
                         maskImage: `url(${l.src})`,
@@ -943,12 +944,15 @@ function HowItWorks() {
                     <img
                       src={l.src}
                       alt={l.alt}
-                      className="max-h-8 w-auto max-w-[116px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
+                      className="max-h-11 w-auto max-w-[128px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
                       draggable={false}
                       loading="lazy"
                     />
                   )}
                 </div>
+                <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#0D1B39]/55">
+                  {l.alt}
+                </span>
               </div>
             ))}
           </div>

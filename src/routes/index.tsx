@@ -1,6 +1,6 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
-  ArrowRight, ArrowUpRight, Check, ChevronDown, Cpu, CreditCard,
+  ArrowRight, ArrowUpRight, Check, ChevronDown, Copy, Cpu, CreditCard,
   Link, Layers, Lock, TrendingUp,
   Wallet, Zap, BarChart3, Code2,
   Instagram, Linkedin, Youtube, Menu, X, Sparkles,
@@ -815,11 +815,8 @@ function PaymentMethods() {
             {methods.map((m) => (
               <div
                 key={m.name}
-                className="h-full rounded-[28px] p-6"
-                style={{
-                  background: "#F6F9FC",
-                  boxShadow: "14px 14px 28px #d3dbea, -14px -14px 28px #ffffff",
-                }}
+                className="nm-press-light h-full rounded-[28px] p-6"
+                style={{ background: "#F6F9FC" }}
               >
                 <div
                   className="inline-flex size-11 items-center justify-center rounded-xl text-[#0D1B39]"
@@ -1029,6 +1026,41 @@ const CODE_TOKENS: [string, string][] = [
   ["// → { id: 'ch_4nL...', status: 'paid', net: 14951 }", "c"],
 ];
 
+// Texto puro do snippet (para copiar).
+const CODE_TEXT = CODE_TOKENS.map((t) => t[0]).join("");
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  const onCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      // Fallback p/ contextos sem Clipboard API (ex.: aba sem foco / http)
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch { /* noop */ }
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  };
+  return (
+    <button
+      type="button"
+      onClick={onCopy}
+      aria-label={copied ? "Código copiado" : "Copiar código"}
+      className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+    >
+      {copied ? <Check className="size-3.5 text-[#28C840]" /> : <Copy className="size-3.5" />}
+      {copied ? "Copiado" : "Copiar"}
+    </button>
+  );
+}
+
 function CodeTyping() {
   const ref = useRef<HTMLElement | null>(null);
   const [count, setCount] = useState(0);
@@ -1113,8 +1145,8 @@ function DevSection() {
               ].map((f) => (
                 <div
                   key={f.t}
-                  className="flex items-center gap-3 rounded-2xl px-5 py-4"
-                  style={{ background: "#0D1B39", boxShadow: "6px 6px 14px #080f22, -6px -6px 14px #12264a" }}
+                  className="nm-press-dark flex items-center gap-3 rounded-2xl px-5 py-4"
+                  style={{ background: "#0D1B39" }}
                 >
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>
@@ -1138,7 +1170,10 @@ function DevSection() {
                   </div>
                   <span className="flex items-center gap-2"><Code2 className="size-3.5" /> create-charge.ts</span>
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-neon">live</span>
+                <div className="flex items-center gap-3">
+                  <CopyButton text={CODE_TEXT} />
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-neon">live</span>
+                </div>
               </div>
               <pre className="overflow-x-auto p-6 font-mono text-[13px] leading-relaxed">
                 <CodeTyping />

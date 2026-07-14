@@ -238,6 +238,26 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   }
 }
 
+/* ---------- estados de pressão neumórficos (hover levanta, active afunda) ---------- */
+.nm-press-light,
+.nm-press-dark {
+  transition:
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nm-press-light { box-shadow: 14px 14px 28px #d3dbea, -14px -14px 28px #ffffff; }
+.nm-press-dark { box-shadow: 6px 6px 14px #080f22, -6px -6px 14px #12264a; }
+@media (hover: hover) {
+  .nm-press-light:hover { box-shadow: 18px 18px 40px #cdd7e8, -16px -16px 34px #ffffff; transform: translateY(-3px); }
+  .nm-press-dark:hover { box-shadow: 9px 9px 22px #070c1a, -9px -9px 22px #16295a; transform: translateY(-3px); }
+}
+.nm-press-light:active { box-shadow: inset 6px 6px 12px #d3dbea, inset -6px -6px 12px #ffffff; transform: translateY(0); }
+.nm-press-dark:active { box-shadow: inset 4px 4px 9px #080f22, inset -4px -4px 9px #12264a; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .nm-press-light, .nm-press-dark { transition: none; }
+  .nm-press-light:hover, .nm-press-dark:hover { transform: none; }
+}
+
 /* ---------- botão CTA animado (Criar conta grátis) ---------- */
 .cta-btn {
   position: relative;

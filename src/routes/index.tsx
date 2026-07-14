@@ -192,6 +192,71 @@ function Stagger({ children, className = "", step = 90 }: { children: React.Reac
   );
 }
 
+// Número que anima de 0 até o alvo ao entrar na viewport (respeita reduced-motion).
+function CountUp({ to, decimals = 0, prefix = "", suffix = "", duration = 1700 }: { to: number; decimals?: number; prefix?: string; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const done = useRef(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) { setVal(to); return; }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !done.current) {
+          done.current = true;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setVal(to * eased);
+            if (p < 1) requestAnimationFrame(tick);
+            else setVal(to);
+          };
+          requestAnimationFrame(tick);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [to, duration]);
+  const display = decimals > 0 ? val.toFixed(decimals).replace(".", ",") : Math.round(val).toLocaleString("pt-BR");
+  return <span ref={ref}>{prefix}{display}{suffix}</span>;
+}
+
+// Faixa de métricas de escala (números REAIS fornecidos pelo cliente).
+function ScaleMetrics() {
+  const metrics = [
+    { node: <CountUp to={100} prefix="R$ " suffix="M+" />, label: "processados" },
+    { node: <CountUp to={149} suffix="+" />, label: "empresas ativas" },
+    { node: <CountUp to={99.8} decimals={1} suffix="%" />, label: "de uptime" },
+  ];
+  return (
+    <section className="bg-background py-16 sm:py-20">
+      <div className="mx-auto max-w-5xl px-6">
+        <div
+          className="grid grid-cols-1 divide-y divide-black/[0.08] rounded-[28px] p-2 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+          style={{ background: "#F6F9FC", boxShadow: "14px 14px 28px #d3dbea, -14px -14px 28px #ffffff" }}
+        >
+          {metrics.map((m) => (
+            <div key={m.label} className="px-6 py-8 text-center">
+              <div className="font-display text-4xl font-extrabold tracking-tight text-[#0D1B39] sm:text-5xl">
+                {m.node}
+              </div>
+              <div className="mt-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-[#0D1B39]/55">
+                {m.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Landing() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
@@ -201,6 +266,7 @@ function Landing() {
       <Nav />
       <main id="conteudo">
         <Hero />
+        <Reveal><ScaleMetrics /></Reveal>
         <Reveal><Bento /></Reveal>
         <Reveal><PaymentMethods /></Reveal>
         <Reveal><Rates /></Reveal>

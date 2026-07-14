@@ -30,13 +30,13 @@ export const WHATSAPP_URL = "https://wa.me/5511912002801";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Nummo — O hub de pagamentos do futuro" },
+      { title: "Nummo — Infraestrutura financeira para empresas que não querem limites" },
       { name: "description", content: "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar." },
-      { property: "og:title", content: "Nummo — Pagamentos sem atrito" },
-      { property: "og:description", content: "Hub de pagamentos brasileiro com liquidez D+0, API moderna e segurança PCI-DSS v4.0." },
+      { property: "og:title", content: "Nummo — Infraestrutura financeira para empresas que não querem limites" },
+      { property: "og:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
       { property: "og:url", content: "https://usenummo.com.br/" },
-      { name: "twitter:title", content: "Nummo — Pagamentos sem atrito" },
-      { name: "twitter:description", content: "Hub de pagamentos brasileiro com liquidez D+0, API moderna e segurança PCI-DSS v4.0." },
+      { name: "twitter:title", content: "Nummo — Infraestrutura financeira para empresas que não querem limites" },
+      { name: "twitter:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
     ],
     links: [{ rel: "canonical", href: "https://usenummo.com.br/" }],
   }),
@@ -435,7 +435,7 @@ function Hero() {
         <div className="lg:mt-8">
           {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto) */}
           <div className="animate-hero-in [animation-delay:120ms]">
-            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] md:whitespace-nowrap md:text-[42px] lg:-translate-y-[180px] lg:text-center lg:text-[52px] xl:text-[58px]">
+            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] md:whitespace-nowrap md:text-[42px] lg:text-center lg:text-[52px] xl:text-[58px]">
               <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[67px] xl:text-[75px]">
                 Infraestrutura financeira
               </span>
@@ -445,12 +445,12 @@ function Hero() {
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:hidden">
+          <p className="animate-hero-in mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:mx-auto lg:max-w-2xl lg:text-center lg:text-lg lg:text-white/85">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
           {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-          <div className="animate-hero-in mt-8 flex flex-col items-start gap-3 [animation-delay:760ms] lg:hidden">
+          <div className="animate-hero-in mt-8 flex flex-col items-start gap-3 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-center">
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"

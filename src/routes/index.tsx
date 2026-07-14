@@ -384,21 +384,24 @@ function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 lg:py-10">
         <div className="lg:mt-8">
-          <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] md:whitespace-nowrap md:text-[42px] lg:-translate-y-[180px] lg:text-center lg:text-[52px] xl:text-[58px]">
-            <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[67px] xl:text-[75px]">
-              Infraestrutura financeira
-            </span>
-            <br />
-            <span className="font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
-          </h1>
+          {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto) */}
+          <div className="animate-hero-in">
+            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] md:whitespace-nowrap md:text-[42px] lg:-translate-y-[180px] lg:text-center lg:text-[52px] xl:text-[58px]">
+              <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[67px] xl:text-[75px]">
+                Infraestrutura financeira
+              </span>
+              <br />
+              <span className="font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
+            </h1>
+          </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 lg:hidden">
+          <p className="animate-hero-in mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:140ms] lg:hidden">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
           {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-          <div className="mt-8 flex flex-col items-start gap-3 lg:hidden">
+          <div className="animate-hero-in mt-8 flex flex-col items-start gap-3 [animation-delay:260ms] lg:hidden">
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"

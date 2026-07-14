@@ -204,6 +204,13 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 @keyframes glow-breathe { 0%, 100% { opacity: 0.72; transform: scale(1); } 50% { opacity: 0.95; transform: scale(1.03); } }
 @utility animate-glow-breathe { animation: glow-breathe 7s ease-in-out infinite; }
 
+/* Entrada do hero (fade + subida suave, estilo Linear/Stripe) */
+@keyframes hero-in { 0% { opacity: 0; transform: translateY(24px); } 100% { opacity: 1; transform: translateY(0); } }
+@utility animate-hero-in { animation: hero-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-in { animation: none; }
+}
+
 /* ---------- reveal ao rolar (entrada das seções) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {

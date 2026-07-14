@@ -25,7 +25,7 @@ function Pix() {
   );
 }
 
-export const WHATSAPP_URL = "https://api.whatsapp.com/message/ZOX6JAZW427OB1?autoload=1&app_absent=0";
+export const WHATSAPP_URL = "https://wa.me/5511912002801";
 
 export const Route = createFileRoute("/")({
   head: () => ({

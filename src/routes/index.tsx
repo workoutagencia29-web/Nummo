@@ -534,7 +534,7 @@ function Hero() {
               href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/[0.08] px-8 py-4 text-base font-medium text-white backdrop-blur-[2px] transition hover:bg-white/[0.14]"
+              className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/15 px-8 py-4 text-base font-medium text-white transition hover:bg-white/20"
             >
               Falar com Especialista
             </a>

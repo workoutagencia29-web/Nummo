@@ -10,6 +10,9 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+    // Prefetch dos chunks de rota ao passar o mouse (desktop) / tocar (mobile):
+    // a página de destino chega antes do clique.
+    defaultPreload: "intent",
   });
 
   return router;

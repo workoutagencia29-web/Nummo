@@ -474,9 +474,10 @@ function Hero() {
       <div className="absolute inset-0">
         {/* Fundo desktop */}
         <img
-          src="/hero-bg.jpg"
+          src="/hero-bg.webp"
           alt=""
           aria-hidden
+          fetchPriority="high"
           width={1920}
           height={1280}
           className="absolute inset-0 hidden h-full w-full scale-105 object-cover object-center lg:block"
@@ -485,7 +486,7 @@ function Hero() {
         <div
           aria-hidden
           className="absolute inset-0 bg-no-repeat lg:hidden"
-          style={{ backgroundImage: "url(/hero-bg.jpg)", backgroundSize: "auto 168%", backgroundPosition: "50% 75%" }}
+          style={{ backgroundImage: "url(/hero-bg.webp)", backgroundSize: "auto 168%", backgroundPosition: "50% 75%" }}
         />
         {/* Overlay desktop (original) */}
         <div className="absolute inset-0 hidden bg-gradient-to-b from-[#050B1E]/70 via-[#050B1E]/35 to-[#050B1E]/95 lg:block" />
@@ -909,10 +910,12 @@ function PaymentMethods() {
                 className="pointer-events-none absolute inset-0 translate-y-10 scale-90 rounded-[2.5rem] bg-[#060A0E]/55 blur-[70px]"
               />
               <img
-                src="/metodos-dashboard.png"
+                src="/metodos-dashboard.webp"
                 alt="Dashboard da Nummo — saldo disponível e vendas ao vivo"
                 width={1080}
                 height={1080}
+                loading="lazy"
+                decoding="async"
                 className="relative w-full select-none object-contain drop-shadow-[0_24px_40px_rgba(6,10,14,0.4)]"
                 draggable={false}
               />
@@ -975,13 +978,13 @@ function Rates() {
 
 function HowItWorks() {
   const integrations: { alt: string; src?: string; node?: React.ReactNode; tone: "color" | "mono" | "node" }[] = [
-    { src: "/logos/meta.png", alt: "Meta Ads", tone: "color" },
+    { src: "/logos/meta.webp", alt: "Meta Ads", tone: "color" },
     { src: "/logos/google-ads.webp", alt: "Google Ads", tone: "color" },
     { node: <TikTok />, alt: "TikTok Ads", tone: "node" },
-    { src: "/logos/kwai.png", alt: "Kwai Ads", tone: "color" },
+    { src: "/logos/kwai.webp", alt: "Kwai Ads", tone: "color" },
     { src: "/logos/utmify.png", alt: "UTMify", tone: "mono" },
-    { src: "/logos/notazz.png", alt: "Notazz", tone: "color" },
-    { src: "/logos/astron.png", alt: "Astron", tone: "color" },
+    { src: "/logos/notazz.webp", alt: "Notazz", tone: "color" },
+    { src: "/logos/astron.webp", alt: "Astron", tone: "color" },
   ];
 
   // Neumorfismo modo claro — família dos cards de Métodos, com mais profundidade/contraste

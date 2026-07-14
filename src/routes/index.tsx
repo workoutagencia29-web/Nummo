@@ -862,12 +862,12 @@ function Rates() {
 }
 
 function HowItWorks() {
-  const logos = [
-    { src: "/logos/kwai.png", alt: "Kwai" },
+  const logos: { alt: string; src?: string; node?: React.ReactNode }[] = [
     { src: "/logos/meta.png", alt: "Meta" },
-    { src: "/logos/tiktok.png", alt: "TikTok Ads" },
-    { src: "/logos/utmify.png", alt: "UTMify" },
     { src: "/logos/google-ads.webp", alt: "Google Ads" },
+    { node: <TikTok />, alt: "TikTok Ads" },
+    { src: "/logos/kwai.png", alt: "Kwai" },
+    { src: "/logos/utmify.png", alt: "UTMify" },
     { src: "/logos/notazz.png", alt: "Notazz" },
     { src: "/logos/astron.png", alt: "Astron" },
   ];
@@ -884,16 +884,24 @@ function HowItWorks() {
         {/* Marquee infinito (loop contínuo para a direita) */}
         <div
           className="group relative overflow-hidden"
-          style={{ maskImage: "linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%)" }}
+          style={{ maskImage: "linear-gradient(to right, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0, black 48px, black calc(100% - 48px), transparent 100%)" }}
         >
-          <div className="flex w-max animate-marquee-right group-hover:[animation-play-state:paused]">
+          <div className="flex w-max animate-marquee-right py-6 group-hover:[animation-play-state:paused]">
             {[...logos, ...logos].map((l, i) => (
-              <div key={i} className="mr-4 w-[260px] shrink-0">
-                <div className="card-elevated flex min-h-[180px] items-center justify-center p-8" style={{ boxShadow: "none", background: "#0D1B39" }}>
-                  <div className="flex size-28 items-center justify-center rounded-2xl" style={{ background: "#0D1B39", boxShadow: "inset 5px 5px 10px #060b18, inset -5px -5px 10px #142a50" }}>
-                    <img src={l.src} alt={l.alt} className="h-16 w-16 shrink-0 object-contain" draggable={false} />
-                  </div>
-                </div>
+              <div
+                key={i}
+                className="group/card mr-4 flex h-[112px] w-[172px] shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-b from-[#16264a] to-[#0D1B39] px-6 shadow-[0_18px_40px_-20px_rgba(6,10,20,0.85)] transition duration-300 hover:-translate-y-1 hover:border-[#2F6BFF]/40"
+              >
+                {l.node ? (
+                  <span className="text-white [&>svg]:h-10 [&>svg]:w-10">{l.node}</span>
+                ) : (
+                  <img
+                    src={l.src}
+                    alt={l.alt}
+                    className="h-10 w-auto max-w-[108px] object-contain opacity-90 transition-opacity duration-300 group-hover/card:opacity-100"
+                    draggable={false}
+                  />
+                )}
               </div>
             ))}
           </div>

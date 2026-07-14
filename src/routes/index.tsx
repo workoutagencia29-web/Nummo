@@ -354,78 +354,66 @@ export function Nav({ solid = false }: { solid?: boolean }) {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh items-center overflow-hidden text-white">
+    <section className="relative flex min-h-svh items-end overflow-hidden text-white lg:items-center">
       {/* Fundo cinematográfico (copiado do nummo-premium-flow) */}
       <div className="absolute inset-0">
+        {/* Fundo desktop */}
         <img
           src="/hero-bg.jpg"
           alt=""
           aria-hidden
           width={1920}
           height={1280}
-          className="absolute inset-0 h-full w-full scale-105 object-cover object-center"
+          className="absolute inset-0 hidden h-full w-full scale-105 object-cover object-center lg:block"
         />
-        {/* camadas de overlay para legibilidade + profundidade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050B1E]/70 via-[#050B1E]/35 to-[#050B1E]/95" />
-        {/* Scrim extra só no mobile/tablet — dá contraste pro texto saltar do fundo */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050B1E]/85 via-[#050B1E]/60 to-[#050B1E]/97 lg:hidden" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,11,30,0.55)_70%)]" />
+        {/* Fundo mobile/tablet — enquadrado na executiva (corta o teto escuro, estilo Stark) */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-no-repeat lg:hidden"
+          style={{ backgroundImage: "url(/hero-bg.jpg)", backgroundSize: "auto 168%", backgroundPosition: "50% 75%" }}
+        />
+        {/* Overlay desktop (original) */}
+        <div className="absolute inset-0 hidden bg-gradient-to-b from-[#050B1E]/70 via-[#050B1E]/35 to-[#050B1E]/95 lg:block" />
+        {/* Overlay mobile — rosto visível em cima, escuro embaixo p/ o texto (estilo Stark/Revolut) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050B1E] via-[#050B1E]/40 to-[#050B1E]/5 lg:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050B1E]/50 via-transparent to-transparent lg:hidden" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,11,30,0.45)_78%)]" />
         <div className="absolute inset-0 grid-bg opacity-[0.05]" />
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#050B1E]/90 to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-10">
-        <div className="items-start">
-          <div className="mt-12 lg:mt-8">
-            {/* Badge — só no mobile/tablet */}
-            <div className="mb-6 flex justify-center lg:hidden">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[12px] font-medium tracking-wide text-white/85 backdrop-blur">
-                <span className="relative flex size-1.5">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#2F6BFF] opacity-70" />
-                  <span className="relative inline-flex size-1.5 rounded-full bg-[#2F6BFF]" />
-                </span>
-                Hub de pagamentos brasileiro
-              </span>
-            </div>
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 lg:py-10">
+        <div className="lg:mt-8">
+          <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] md:whitespace-nowrap md:text-[42px] lg:-translate-y-[180px] lg:text-center lg:text-[52px] xl:text-[58px]">
+            <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[67px] xl:text-[75px]">
+              Infraestrutura financeira
+            </span>
+            <br />
+            <span className="font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
+          </h1>
 
-            <h1 className="text-center text-[32px] font-bold leading-[1] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] md:whitespace-nowrap md:text-[42px] lg:-translate-y-[180px] lg:text-[52px] xl:text-[58px]">
-              <span className="inline-block -translate-y-2 text-[40px] max-[360px]:text-[34px] md:text-[55px] lg:text-[67px] xl:text-[75px]">
-                Infraestrutura financeira
-              </span>
-              <br />
-              <span className="font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
-            </h1>
+          {/* Subtítulo — só no mobile/tablet */}
+          <p className="mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 lg:hidden">
+            Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
+          </p>
 
-            {/* Subtítulo — só no mobile/tablet */}
-            <p className="mx-auto mt-6 max-w-sm text-center text-[15px] leading-relaxed text-white/70 lg:hidden">
-              Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
-            </p>
-
-            {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-            <div className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-3 lg:hidden">
-              <PrimaryButton
-                size="lg"
-                href="https://app.usenummo.com.br/dashboard/register"
-                className="w-full justify-center !bg-[#2F6BFF] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.75)] hover:!bg-[#2559d8]"
-              >
-                Criar Conta
-              </PrimaryButton>
-              <a
-                href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-8 py-4 text-base font-medium text-white backdrop-blur-[2px] transition hover:bg-white/[0.14]"
-              >
-                Falar com Especialista
-              </a>
-            </div>
-
-            {/* Selos de confiança — só no mobile/tablet */}
-            <div className="mx-auto mt-8 flex max-w-sm flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] font-medium uppercase tracking-wider text-white/45 lg:hidden">
-              <span className="inline-flex items-center gap-1.5"><ShieldCheck className="size-3.5 text-[#2F6BFF]" /> PCI-DSS v4.0</span>
-              <span className="inline-flex items-center gap-1.5"><Zap className="size-3.5 text-[#2F6BFF]" /> Liquidez D+0</span>
-              <span className="inline-flex items-center gap-1.5"><Code2 className="size-3.5 text-[#2F6BFF]" /> API-first</span>
-            </div>
+          {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
+          <div className="mt-8 flex flex-col items-start gap-3 lg:hidden">
+            <PrimaryButton
+              size="lg"
+              href="https://app.usenummo.com.br/dashboard/register"
+              className="min-w-[220px] justify-center !bg-[#2F6BFF] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#2559d8]"
+            >
+              Criar Conta
+            </PrimaryButton>
+            <a
+              href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/[0.08] px-8 py-4 text-base font-medium text-white backdrop-blur-[2px] transition hover:bg-white/[0.14]"
+            >
+              Falar com Especialista
+            </a>
           </div>
         </div>
       </div>

@@ -134,13 +134,62 @@ function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
 
-// Animações de surgimento desativadas no site principal — pass-through.
-function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
-  return <>{children}</>;
+// Reveal ao rolar: aplica .in ao entrar na viewport (CSS + gate de prefers-reduced-motion já prontos em styles.css).
+function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          el.classList.add("in");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="reveal" style={delay ? { transitionDelay: `${delay}ms` } : undefined}>
+      {children}
+    </div>
+  );
 }
 
-function Stagger({ children, className = "" }: { children: React.ReactNode; className?: string; step?: number }) {
-  return <div className={className}>{children}</div>;
+// Stagger: cada filho vira .reveal-child e recebe .in em sequência ao entrar na viewport.
+function Stagger({ children, className = "", step = 90 }: { children: React.ReactNode; className?: string; step?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          Array.from(el.children).forEach((k, i) => {
+            window.setTimeout(() => k.classList.add("in"), i * step);
+          });
+          io.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -6% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [step]);
+  return (
+    <div ref={ref} className={className}>
+      {Children.map(children, (child) =>
+        isValidElement(child)
+          ? cloneElement(child as React.ReactElement<{ className?: string }>, {
+              className: `${(child.props as { className?: string }).className ?? ""} reveal-child`.trim(),
+            })
+          : child,
+      )}
+    </div>
+  );
 }
 
 function Landing() {
@@ -749,7 +798,7 @@ function PaymentMethods() {
   const methods = [
     { name: "Pix", desc: "Aprovação instantânea.", icon: <Pix /> },
     { name: "Cartões", desc: "Visa, Mastercard, Elo, Amex.", icon: <CreditCard /> },
-    { name: "Boleto", desc: "Emissão automatica.", icon: <Wallet /> },
+    { name: "Boleto", desc: "Emissão automática.", icon: <Wallet /> },
     { name: "API Pix", desc: "Cobranças Pix direto pela sua API.", icon: <Code2 /> },
   ];
   return (
@@ -1073,7 +1122,7 @@ function DevSection() {
               ))}
             </div>
             <div className="mt-10">
-              <GhostButton className="!border-[#2F6BFF] !bg-[#2F6BFF] !text-[#F6F9FC] hover:!border-[#2559d8] hover:!bg-[#2559d8]">Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
+              <GhostButton href="/documentacao" className="!border-[#2F6BFF] !bg-[#2F6BFF] !text-[#F6F9FC] hover:!border-[#2559d8] hover:!bg-[#2559d8]">Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
             </div>
           </div>
 

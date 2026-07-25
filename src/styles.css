@@ -11,6 +11,43 @@
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/jbmono-400.woff2") format("woff2"); }
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/jbmono-500.woff2") format("woff2"); }
 
+/* ---------- Preloader (tela de carregamento) ---------- */
+#app-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  background: #050B1E;
+  opacity: 1;
+  transition: opacity 0.55s ease;
+}
+#app-loader.app-loader-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.app-loader-logo {
+  height: 26px;
+  width: auto;
+  animation: app-loader-pulse 1.6s ease-in-out infinite;
+}
+.app-loader-spinner {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  border: 3px solid rgba(246, 249, 252, 0.14);
+  border-top-color: #2F6BFF;
+  animation: app-loader-spin 0.8s linear infinite;
+}
+@keyframes app-loader-spin { to { transform: rotate(360deg); } }
+@keyframes app-loader-pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .app-loader-spinner, .app-loader-logo { animation: none; }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

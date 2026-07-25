@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet, Link, createRootRouteWithContext, useRouter, useRouterState, HeadContent, Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Lenis from "lenis";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -132,11 +132,25 @@ function RootComponent() {
     if (lenis) lenis.scrollTo(0, { immediate: true });
     else window.scrollTo(0, 0);
   }, [pathname]);
+  // Preloader: aparece no 1º paint (SSR) e some com fade após a hidratação.
+  const [loaderHide, setLoaderHide] = useState(false);
+  const [loaderGone, setLoaderGone] = useState(false);
+  useEffect(() => {
+    const t1 = setTimeout(() => setLoaderHide(true), 400);
+    const t2 = setTimeout(() => setLoaderGone(true), 950);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background font-sans text-foreground">
         <Outlet />
       </div>
+      {!loaderGone && (
+        <div id="app-loader" className={loaderHide ? "app-loader-hidden" : ""} aria-hidden="true">
+          <img src="/logo-nummo.svg" alt="" width={150} height={25} className="app-loader-logo" />
+          <span className="app-loader-spinner" />
+        </div>
+      )}
       <Analytics />
       <SpeedInsights />
     </QueryClientProvider>

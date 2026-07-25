@@ -231,6 +231,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
     mix-blend-mode: overlay;
   }
 }
+/* No mobile a textura (0.04) é imperceptível, mas o mix-blend-mode custa paint
+   durante o scroll — desliga em telas pequenas para aliviar o celular. */
+@media (max-width: 767px) {
+  .noise::after { display: none; }
+}
 
 @utility neon-ring {
   box-shadow:

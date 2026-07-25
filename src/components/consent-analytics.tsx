@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+
+// Code-split: os libs de analytics só entram no bundle (e na rede) após o "Aceitar".
+const Analytics = lazy(() => import("@vercel/analytics/react").then((m) => ({ default: m.Analytics })));
+const SpeedInsights = lazy(() => import("@vercel/speed-insights/react").then((m) => ({ default: m.SpeedInsights })));
 
 const KEY = "nummo-cookie-consent";
 
@@ -41,10 +43,10 @@ export function ConsentAnalytics() {
   return (
     <>
       {choice === "granted" && (
-        <>
+        <Suspense fallback={null}>
           <Analytics />
           <SpeedInsights />
-        </>
+        </Suspense>
       )}
 
       {choice === null && (

@@ -1,9 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  Outlet, Link, createRootRouteWithContext, useRouter, useRouterState, HeadContent, Scripts,
+  Outlet, Link, createRootRoute, useRouter, useRouterState, HeadContent, Scripts,
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
-import Lenis from "lenis";
 import { ConsentAnalytics } from "../components/consent-analytics";
 
 import appCss from "../styles.css?url";
@@ -72,7 +70,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -134,29 +132,37 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // Só no desktop (ponteiro fino). No touch, o scroll nativo + o fallback
-    // scrollIntoView das âncoras já cobrem — evita 1 rAF eterno no mobile.
+    // Só no desktop (ponteiro fino). No touch, o scroll nativo já cobre — e o
+    // Lenis (~8KB) é importado sob demanda aqui, ficando fora do bundle mobile.
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
-    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
-    let id = requestAnimationFrame(function raf(time: number) {
-      lenis.raf(time);
-      id = requestAnimationFrame(raf);
+    let raf = 0;
+    let lenis: { raf: (t: number) => void; destroy: () => void } | undefined;
+    let cancelled = false;
+    void import("lenis").then(({ default: Lenis }) => {
+      if (cancelled) return;
+      const instance = new Lenis({ duration: 1.2, smoothWheel: true });
+      lenis = instance;
+      (window as unknown as { __lenis?: unknown }).__lenis = instance;
+      const loop = (time: number) => {
+        instance.raf(time);
+        raf = requestAnimationFrame(loop);
+      };
+      raf = requestAnimationFrame(loop);
     });
     return () => {
-      cancelAnimationFrame(id);
-      lenis.destroy();
-      (window as unknown as { __lenis?: Lenis }).__lenis = undefined;
+      cancelled = true;
+      if (raf) cancelAnimationFrame(raf);
+      lenis?.destroy();
+      (window as unknown as { __lenis?: unknown }).__lenis = undefined;
     };
   }, []);
   // Ao trocar de rota, volta pro topo (Lenis controla o scroll, então o
   // scrollRestoration nativo não zera sozinho).
   useEffect(() => {
-    const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (t: number, o?: { immediate?: boolean }) => void } }).__lenis;
     if (lenis) lenis.scrollTo(0, { immediate: true });
     else window.scrollTo(0, 0);
   }, [pathname]);
@@ -169,7 +175,7 @@ function RootComponent() {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORG_JSONLD }} />
       <div className="min-h-screen bg-background font-sans text-foreground">
         <Outlet />
@@ -189,6 +195,6 @@ function RootComponent() {
         </div>
       )}
       <ConsentAnalytics />
-    </QueryClientProvider>
+    </>
   );
 }

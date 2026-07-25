@@ -1,9 +1,9 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, ArrowUpRight, Check, ChevronDown, Copy, Cpu, CreditCard,
-  Link, Layers, Lock, TrendingUp,
+  Link, Layers, Lock,
   Wallet, Zap, BarChart3, Code2,
-  Instagram, Linkedin, Youtube, Menu, X, Sparkles,
+  Instagram, Menu, X, Sparkles,
   AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
@@ -29,12 +29,12 @@ export const WHATSAPP_URL = "https://wa.me/5511912002801";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Nummo — Infraestrutura financeira para empresas que não querem limites" },
+      { title: "Nummo — Pagamentos Pix, cartão e boleto com liquidez D+0" },
       { name: "description", content: "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar." },
-      { property: "og:title", content: "Nummo — Infraestrutura financeira para empresas que não querem limites" },
+      { property: "og:title", content: "Nummo — Pagamentos Pix, cartão e boleto com liquidez D+0" },
       { property: "og:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
       { property: "og:url", content: "https://usenummo.com.br/" },
-      { name: "twitter:title", content: "Nummo — Infraestrutura financeira para empresas que não querem limites" },
+      { name: "twitter:title", content: "Nummo — Pagamentos Pix, cartão e boleto com liquidez D+0" },
       { name: "twitter:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
     ],
     links: [{ rel: "canonical", href: "https://usenummo.com.br/" }],
@@ -45,18 +45,6 @@ export const Route = createFileRoute("/")({
 /* ------------------------------------------------------------------ */
 /* Reusable atoms                                                      */
 /* ------------------------------------------------------------------ */
-
-function NeonChip({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-neon/30 bg-neon-soft px-3 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-neon">
-      <span className="relative flex size-1.5">
-        <span className="absolute inline-flex size-full animate-ping rounded-full bg-neon opacity-70" />
-        <span className="relative inline-flex size-1.5 rounded-full bg-neon" />
-      </span>
-      {children}
-    </span>
-  );
-}
 
 export function PrimaryButton({
   children,
@@ -164,11 +152,12 @@ function Stagger({ children, className = "", step = 90 }: { children: React.Reac
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const timers: ReturnType<typeof window.setTimeout>[] = [];
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           Array.from(el.children).forEach((k, i) => {
-            window.setTimeout(() => k.classList.add("in"), i * step);
+            timers.push(window.setTimeout(() => k.classList.add("in"), i * step));
           });
           io.disconnect();
         }
@@ -176,7 +165,7 @@ function Stagger({ children, className = "", step = 90 }: { children: React.Reac
       { threshold: 0.1, rootMargin: "0px 0px -6% 0px" },
     );
     io.observe(el);
-    return () => io.disconnect();
+    return () => { io.disconnect(); timers.forEach(clearTimeout); };
   }, [step]);
   return (
     <div ref={ref} className={className}>
@@ -194,7 +183,9 @@ function Stagger({ children, className = "", step = 90 }: { children: React.Reac
 // Número que anima de 0 até o alvo ao entrar na viewport (respeita reduced-motion).
 function CountUp({ to, decimals = 0, prefix = "", suffix = "", duration = 1700 }: { to: number; decimals?: number; prefix?: string; suffix?: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [val, setVal] = useState(0);
+  // Inicia no valor final: o SSR/1º paint já emite o número real (não "0").
+  // No cliente, ao entrar na viewport, zera e anima até o alvo.
+  const [val, setVal] = useState(to);
   const done = useRef(false);
   useEffect(() => {
     const el = ref.current;
@@ -205,6 +196,7 @@ function CountUp({ to, decimals = 0, prefix = "", suffix = "", duration = 1700 }
       (entries) => {
         if (entries[0].isIntersecting && !done.current) {
           done.current = true;
+          setVal(0);
           const start = performance.now();
           const tick = (now: number) => {
             const p = Math.min(1, (now - start) / duration);
@@ -237,7 +229,7 @@ function ScaleMetrics() {
     <section className="bg-background py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-6">
         <div
-          className="grid grid-cols-1 divide-y divide-black/[0.08] rounded-[28px] p-2 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+          className="grid grid-cols-1 divide-y divide-[#d3dbea] rounded-[28px] p-2 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
           style={{ background: "#F6F9FC", boxShadow: "14px 14px 28px #d3dbea, -14px -14px 28px #ffffff" }}
         >
           {metrics.map((m) => (
@@ -245,7 +237,7 @@ function ScaleMetrics() {
               <div className="font-display text-4xl font-extrabold tracking-tight text-[#0D1B39] sm:text-5xl">
                 {m.node}
               </div>
-              <div className="mt-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-[#0D1B39]/55">
+              <div className="mt-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-[#0D1B39]/70">
                 {m.label}
               </div>
             </div>
@@ -280,6 +272,7 @@ function Landing() {
       </main>
       <Footer />
       <ScrollRail />
+      <StickyCta />
     </div>
   );
 }
@@ -317,10 +310,42 @@ function ScrollRail() {
       <div className="relative h-full w-[3px] bg-foreground/10">
         <div
           ref={thumbRef}
-          className="absolute right-0 top-0 h-20 w-[3px] rounded-full bg-neon shadow-[0_0_14px_1px_oklch(0.581_0.229_263.9_/_0.9)] will-change-transform"
+          className="absolute right-0 top-0 h-20 w-[3px] rounded-full bg-neon shadow-[0_0_14px_1px_rgba(47,107,255,0.9)] will-change-transform"
         />
       </div>
     </div>
+  );
+}
+
+/* CTA flutuante: aparece quando o hero sai da viewport (não há CTA fixo no miolo da página). */
+function StickyCta() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let ticking = false;
+    const update = () => {
+      setShow(window.scrollY > window.innerHeight * 0.9);
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <a
+      href="https://app.usenummo.com.br/dashboard/register"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-hidden={!show}
+      tabIndex={show ? 0 : -1}
+      className={`fixed bottom-5 right-5 z-40 hidden items-center gap-2 rounded-full bg-[#2559d8] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#1f4fc4] lg:inline-flex ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}
+      style={{ boxShadow: "0 14px 34px -10px rgba(47,107,255,0.7)" }}
+    >
+      Criar Conta <ArrowRight className="size-4" />
+    </a>
   );
 }
 
@@ -412,7 +437,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
             href="https://app.usenummo.com.br/dashboard/register"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-10 items-center justify-center rounded-full bg-[#2F6BFF] px-5 text-[15px] font-semibold text-white transition hover:bg-[#0052CC]"
+            className="inline-flex h-10 items-center justify-center rounded-full bg-[#2559d8] px-5 text-[15px] font-semibold text-white transition hover:bg-[#0052CC]"
           >
             Criar Conta
           </a>
@@ -421,7 +446,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className={`ml-auto rounded-md p-2 lg:hidden ${overlay ? "text-white" : "text-foreground"}`}
+          className={`ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"}`}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -459,7 +484,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
                 href="https://app.usenummo.com.br/dashboard/register"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 rounded-full bg-[#2F6BFF] py-2.5 text-center text-sm font-semibold text-white"
+                className="flex-1 rounded-full bg-[#2559d8] py-2.5 text-center text-sm font-semibold text-white"
               >
                 Criar Conta
               </a>
@@ -507,7 +532,7 @@ function Hero() {
         <div className="lg:mt-8">
           {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto) */}
           <div className="animate-hero-in [animation-delay:120ms]">
-            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] md:whitespace-nowrap md:text-[42px] lg:text-center lg:text-[52px] xl:text-[58px]">
+            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-center lg:text-[52px] xl:text-[58px]">
               <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[67px] xl:text-[75px]">
                 Infraestrutura financeira
               </span>
@@ -526,7 +551,7 @@ function Hero() {
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"
-              className="min-w-[220px] justify-center !bg-[#2F6BFF] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#2559d8]"
+              className="min-w-[220px] justify-center !bg-[#2559d8] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#1f4fc4]"
             >
               Criar Conta
             </PrimaryButton>
@@ -538,194 +563,6 @@ function Hero() {
             >
               Falar com Especialista
             </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function LiveTransactions() {
-  const SALES = [
-    { name: "PIX • João P.", value: "R$ 129,90" },
-    { name: "Crédito 3x • Loja Norte", value: "R$ 540,00" },
-    { name: "Débito • Mercado X", value: "R$ 89,90" },
-    { name: "PIX • Ana Souza", value: "R$ 245,00" },
-    { name: "Crédito 6x • TechStore", value: "R$ 398,00" },
-    { name: "PIX • Carlos M.", value: "R$ 47,50" },
-    { name: "Débito • Café Centro", value: "R$ 18,00" },
-    { name: "Crédito • Boutique Sul", value: "R$ 689,00" },
-    { name: "PIX • Maria F.", value: "R$ 320,00" },
-    { name: "Boleto • Atacado BR", value: "R$ 512,00" },
-  ];
-  const VISIBLE = 4;
-  const [items, setItems] = useState(() => SALES.slice(0, VISIBLE).map((s, i) => ({ ...s, k: i })));
-  const [animKey, setAnimKey] = useState(0);
-  const next = useRef(VISIBLE);
-  useEffect(() => {
-    let tickT: ReturnType<typeof setTimeout>;
-    let trimT: ReturnType<typeof setTimeout>;
-    const schedule = () => {
-      const delay = 5000 + Math.random() * 5000; // 5–10s, mais natural
-      tickT = setTimeout(() => {
-        setItems((prev) => {
-          const s = SALES[next.current % SALES.length];
-          const item = { ...s, k: next.current };
-          next.current += 1;
-          return [item, ...prev]; // 5 itens durante a animação; a última sai por baixo
-        });
-        setAnimKey((k) => k + 1); // dispara a esteira (translateY suave)
-        // depois da animação, remove a que saiu (já fora da área visível)
-        trimT = setTimeout(() => setItems((prev) => prev.slice(0, VISIBLE)), 1300);
-        schedule();
-      }, delay);
-    };
-    schedule();
-    return () => {
-      clearTimeout(tickT);
-      clearTimeout(trimT);
-    };
-  }, []);
-  return (
-    <div className="h-[176px] overflow-hidden">
-      <div key={animKey} className="flex animate-conveyor flex-col gap-2">
-        {items.map((t) => (
-          <div
-            key={t.k}
-            className="flex items-center justify-between gap-3 rounded-md border border-foreground/5 bg-foreground/[0.02] px-3 py-2.5 text-xs"
-          >
-            <span className="flex min-w-0 items-center gap-2">
-              <span className="grid size-4 shrink-0 place-items-center rounded-full bg-[#28C840]/15 text-[#28C840]">
-                <Check className="size-2.5" />
-              </span>
-              <span className="truncate text-foreground/80">{t.name}</span>
-            </span>
-            <span className="whitespace-nowrap font-mono font-medium text-foreground">+ {t.value}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function HeroVisual() {
-  return (
-    <div className="relative animate-float-up [animation-delay:200ms]">
-      {/* Glow halo */}
-      <div className="absolute -inset-8 bg-gradient-to-br from-neon/20 via-transparent to-white/15 blur-3xl" />
-
-      <div className="card-elevated relative noise overflow-hidden p-1">
-        {/* Window chrome */}
-        <div className="flex items-center justify-between border-b border-foreground/5 px-5 py-3">
-          <div className="flex items-center gap-1.5">
-            <span className="size-2.5 rounded-full bg-[#FF5F57]" />
-            <span className="size-2.5 rounded-full bg-[#FEBC2E]" />
-            <span className="size-2.5 rounded-full bg-[#28C840]" />
-          </div>
-          <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            app.nummo.com / overview
-          </span>
-          <Cpu className="size-3.5 text-muted-foreground" />
-        </div>
-
-        <div className="space-y-5 p-6">
-          {/* Big number */}
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              Saldo disponível
-            </div>
-            <div className="mt-2 flex items-baseline gap-1">
-              <span className="font-display text-5xl font-medium tracking-tight">R$ 248.910</span>
-              <span className="font-mono text-base text-neon">,42</span>
-            </div>
-            <div className="mt-1 inline-flex items-center gap-1.5 text-xs text-neon">
-              <TrendingUp className="size-3.5" /> +18,2% vs. mês anterior
-            </div>
-          </div>
-
-          {/* Chart */}
-          <div className="relative h-28 rounded-lg border border-foreground/5 bg-black/30 p-3">
-            <div className="relative size-full">
-              <svg viewBox="0 0 300 80" className="size-full" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="oklch(0.581 0.229 263.9)" stopOpacity="0.45" />
-                    <stop offset="100%" stopColor="oklch(0.581 0.229 263.9)" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M0,56 C25,56 30,46 50,46 C70,46 80,53 100,52 C120,51 130,35 150,36 C170,37 180,43 200,40 C220,37 230,24 250,25 C270,26 285,18 300,16 L300,80 L0,80 Z"
-                  fill="url(#g)"
-                />
-                <path
-                  d="M0,56 C25,56 30,46 50,46 C70,46 80,53 100,52 C120,51 130,35 150,36 C170,37 180,43 200,40 C220,37 230,24 250,25 C270,26 285,18 300,16"
-                  fill="none"
-                  stroke="oklch(0.581 0.229 263.9)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
-              {/* bolinha no fim da linha */}
-              <span
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: "100%", top: "20%" }}
-              >
-                <span className="relative flex size-2.5">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-neon opacity-60" />
-                  <span className="relative inline-flex size-2.5 rounded-full bg-neon shadow-[0_0_10px_var(--neon)]" />
-                </span>
-              </span>
-            </div>
-          </div>
-
-          {/* Live transactions */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              <span>Transações ao vivo</span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="size-1.5 animate-pulse-soft rounded-full bg-[#FF3B30]" /> ao vivo
-              </span>
-            </div>
-            <LiveTransactions />
-          </div>
-        </div>
-      </div>
-
-      {/* Floating badge */}
-      <div className="absolute -bottom-6 -left-6 card-elevated noise hidden p-4 sm:block">
-        <div className="flex items-center gap-3">
-          <div className="grid size-10 place-items-center rounded-full bg-neon/15 text-neon">
-            <Zap className="size-5" />
-          </div>
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              Liquidez
-            </div>
-            <div className="font-display text-xl font-semibold">D+0</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LogoMarquee() {
-  const logos = ["VISA", "MASTERCARD", "ELO", "AMEX", "HIPERCARD", "PIX", "BOLETO", "APPLE PAY", "GOOGLE PAY"];
-  return (
-    <section className="py-10">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
-          <div className="flex w-max animate-marquee gap-16">
-            {[...logos, ...logos].map((l, i) => (
-              <span
-                key={i}
-                className="whitespace-nowrap font-display text-2xl font-semibold tracking-tight text-muted-foreground/60"
-              >
-                {l}
-              </span>
-            ))}
           </div>
         </div>
       </div>
@@ -746,7 +583,7 @@ function Bento() {
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2" step={200}>
           {/* Big card */}
           <div
-            className="noise relative col-span-1 row-span-2 overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] md:col-span-3"
+            className="noise relative col-span-1 row-span-2 overflow-hidden rounded-[28px] p-6 text-[#F6F9FC] md:col-span-3 md:p-8"
             style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}
           >
             <div className="flex h-full flex-col justify-between gap-10">
@@ -776,7 +613,7 @@ function Bento() {
                         <div className="flex items-center gap-1.5">
                           <AlertTriangle className="size-3 shrink-0 text-[#2F6BFF]" />
                           <span className="text-[11px] font-semibold text-[#F6F9FC]">{r.title}</span>
-                          <span className="text-[9px] text-[#F6F9FC]/40">+{r.pts}pts</span>
+                          <span className="text-[9px] text-[#F6F9FC]/70">+{r.pts}pts</span>
                         </div>
                         <p className="mt-1 text-[10px] leading-snug text-[#F6F9FC]/55">{r.desc}</p>
                         <div className="mt-2 inline-flex rounded-md border border-[#2F6BFF]/30 bg-[#2F6BFF]/12 px-2 py-0.5 text-[9px] font-semibold text-[#6E9BFF]">
@@ -961,7 +798,7 @@ function Rates() {
           {/* Texto */}
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">
             <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Taxas</div>
-            <h2 className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
+            <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
               Seu negócio não precisa caber em uma taxa padrão.
             </h2>
             <p className="mt-6 text-pretty text-xl text-[#0D1B39]">
@@ -971,9 +808,20 @@ function Rates() {
             </p>
             <p className="mt-6 text-pretty text-base text-[#0D1B39]">
               Comece com o plano ideal hoje — e{" "}
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-neon transition-colors hover:text-foreground">negocie condições ainda melhores</a>{" "}
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#0052CC] underline-offset-2 transition-colors hover:text-foreground hover:underline">negocie condições ainda melhores</a>{" "}
               quando sua operação pedir.
             </p>
+            <div className="mt-8 flex flex-wrap gap-2.5">
+              {["Sem mensalidade", "Sem fidelidade", "Taxa só sobre venda aprovada"].map((c) => (
+                <span
+                  key={c}
+                  className="rounded-full px-4 py-2 text-sm font-medium text-[#0D1B39]"
+                  style={{ background: "#F6F9FC", boxShadow: "inset 4px 4px 8px #d3dbea, inset -4px -4px 8px #ffffff" }}
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -1000,7 +848,7 @@ function HowItWorks() {
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="-translate-y-[82px]">
+        <div className="lg:-translate-y-[82px]">
           <SectionEyebrow
             kicker="Integrações"
             title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <span className="bg-gradient-to-r from-[#0D1B39] to-[#2F6BFF] bg-clip-text text-transparent">em um só lugar.</span></span>}
@@ -1070,7 +918,7 @@ function HowItWorks() {
                     />
                   )}
                 </div>
-                <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#0D1B39]/55">
+                <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#0D1B39]/70">
                   {l.alt}
                 </span>
               </div>
@@ -1213,7 +1061,7 @@ function DevSection() {
             <div className="mt-8 grid max-w-md grid-cols-2 gap-4">
               {[
                 { icon: <Code2 />, t: "SDKs oficiais" },
-                { icon: <BarChart3 />, t: "Webhooks 99.97%" },
+                { icon: <BarChart3 />, t: "Webhooks idempotentes" },
                 { icon: <Lock />, t: "OAuth 2.0 + chaves" },
                 { icon: <Cpu />, t: "API" },
               ].map((f) => (
@@ -1228,7 +1076,7 @@ function DevSection() {
               ))}
             </div>
             <div className="mt-10">
-              <GhostButton href="/documentacao" className="!border-[#2F6BFF] !bg-[#2F6BFF] !text-[#F6F9FC] hover:!border-[#2559d8] hover:!bg-[#2559d8]">Ver documentação <ArrowUpRight className="size-4" /></GhostButton>
+              <GhostButton href="https://wa.me/5511912002801?text=Olá!%20Sou%20desenvolvedor(a)%20e%20quero%20conhecer%20a%20API%20e%20a%20documentação%20da%20Nummo." target="_blank" rel="noopener noreferrer" className="!border-[#2559d8] !bg-[#2559d8] !text-[#F6F9FC] hover:!border-[#1f4fc4] hover:!bg-[#1f4fc4]">Falar com o time técnico <ArrowUpRight className="size-4" /></GhostButton>
             </div>
           </div>
 
@@ -1264,7 +1112,7 @@ function Security() {
   const pairs = [
     {
       num: "01",
-      card: "PCI-DSS v4.0",
+      card: "PCI-DSS Level 1",
       title: "Segurança e conformidade",
       text: "Proteção de dados sensíveis com o padrão global de segurança dos pagamentos. Mais conformidade, controle e confiança para toda a operação.",
       cardLeft: true,
@@ -1290,6 +1138,7 @@ function Security() {
   return (
     <section id="seguranca" className="relative overflow-hidden py-32">
       <div className="mx-auto max-w-7xl px-6">
+        <h2 className="sr-only">Segurança e conformidade</h2>
         <div className="flex flex-col gap-32">
           {pairs.map((p) => {
             return (
@@ -1302,7 +1151,7 @@ function Security() {
                 >
                   <span
                     style={{ WebkitTextStroke: "0.03em #2F6BFF", paintOrder: "stroke fill" }}
-                    className={`relative text-center font-display text-5xl font-bold leading-[0.9] tracking-tight text-[#2F6BFF] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
+                    className={`relative text-center font-display text-4xl font-bold leading-[0.9] tracking-tight text-[#2F6BFF] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
                   >
                     {p.card}
                   </span>
@@ -1312,7 +1161,7 @@ function Security() {
                   <div className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.3em] text-neon">
                     {p.num}
                   </div>
-                  <h3 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-[64px]">
+                  <h3 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
                     {p.title}
                   </h3>
                   <p className="mt-5 max-w-md text-pretty text-base leading-relaxed text-muted-foreground">
@@ -1331,7 +1180,7 @@ function Security() {
 function Testimonials() {
   const t = [
     {
-      quote: "Migramos da concorrente e economizamos R$ 38 mil no primeiro mês só em taxas. A API é cirúrgica.",
+      quote: "Migramos da concorrente e reduzimos de forma relevante o custo em taxas logo no primeiro mês. A API é cirúrgica.",
       name: "Rafael Mendes", role: "Chief Technology Officer", photo: "/depoimentos/1.jpg",
     },
     {
@@ -1360,7 +1209,7 @@ function Testimonials() {
               </blockquote>
               <figcaption
                 className="mt-6 flex items-center gap-3 rounded-2xl p-4"
-                style={{ background: "#0D1B39", boxShadow: "inset 5px 5px 10px #060b18, inset -5px -5px 10px #142a50" }}
+                style={{ background: "#0D1B39", boxShadow: "inset 5px 5px 10px #080f22, inset -5px -5px 10px #12264a" }}
               >
                 <img
                   src={q.photo}
@@ -1384,17 +1233,31 @@ function Testimonials() {
   );
 }
 
+const FAQ_ITEMS = [
+  { q: "Preciso ter CNPJ para abrir conta?", a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta normalmente em até 24h, sujeita à análise cadastral e de segurança (KYC)." },
+  { q: "Quanto custa começar?", a: "Criar conta é gratuito — sem mensalidade e sem fidelidade. As taxas incidem apenas sobre vendas aprovadas e são descontadas automaticamente no momento da transação." },
+  { q: "Como funciona o D+0?", a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda." },
+  { q: "Quanto tempo leva para sacar?", a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
+  { q: "É seguro?", a: "Nós possuímos um sistema de segurança avançada para proteger cada transação. Sua operação conta com segurança PCI-DSS Level 1 e 3DS 2.0 — padrões reconhecidos de segurança para dados de cartão — além de uma camada antifraude com inteligência artificial, que analisa transações em tempo real para identificar comportamentos suspeitos, reduzir fraudes e evitar chargebacks." },
+];
+
+// JSON-LD FAQPage — habilita rich results na busca (conteúdo já existe no acordeão).
+const FAQ_JSONLD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+});
+
 function Faq() {
-  const items = [
-    { q: "Preciso ter CNPJ para abrir conta?", a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta em até 24h." },
-    { q: "Quanto custa começar?", a: "Na Nummo, você pode criar sua conta e começar a vender gratuitamente. Nossa plataforma oferece ferramentas para impulsionar suas vendas, sem custos, sem mensalidade, sem pegadinha. As taxas são aplicadas apenas sobre vendas aprovadas, descontadas no momento da transação. O que está esperando para vir para a Nummo?" },
-    { q: "Como funciona o D+0?", a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda." },
-    { q: "Quanto tempo leva para sacar?", a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
-    { q: "É seguro?", a: "Nós possuímos um sistema de segurança avançada para proteger cada transação. Sua operação conta com segurança PCI-DSS Level 1 e 3DS 2.0 — o mais alto padrão de segurança para dados de cartão — além de uma camada antifraude com inteligência artificial, que analisa transações em tempo real para identificar comportamentos suspeitos, reduzir fraudes e evitar chargebacks." },
-  ];
+  const items = FAQ_ITEMS;
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section id="faq" className="py-32">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
       <div className="mx-auto max-w-3xl px-6">
         <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
           Perguntas frequentes
@@ -1450,7 +1313,7 @@ function FinalCta() {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <PrimaryButton
             href="https://app.usenummo.com.br/dashboard/register"
-            className="w-[230px]"
+            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4]"
           >
             Criar Conta
           </PrimaryButton>
@@ -1459,7 +1322,7 @@ function FinalCta() {
             href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[230px] whitespace-nowrap !border-[#2F6BFF] !bg-[#2F6BFF] !text-[#F6F9FC] hover:!border-[#2559d8] hover:!bg-[#2559d8]"
+            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC]"
           >
             Falar com especialista
           </GhostButton>
@@ -1506,9 +1369,6 @@ export function Footer() {
             <div className="mt-7 flex items-center gap-2.5">
               {[
                 { icon: <Instagram />, label: "Instagram", href: "https://www.instagram.com/use.nummo" },
-                { icon: <Linkedin />, label: "LinkedIn", href: "#" },
-                { icon: <TikTok />, label: "TikTok", href: "#" },
-                { icon: <Youtube />, label: "YouTube", href: "#" },
               ].map((s) => (
                 <a
                   key={s.label}
@@ -1516,7 +1376,7 @@ export function Footer() {
                   target={s.href.startsWith("http") ? "_blank" : undefined}
                   rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   aria-label={s.label}
-                  className="grid size-9 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60 transition-colors hover:border-[#2F6BFF]/50 hover:bg-[#2F6BFF]/15 hover:text-[#2F6BFF]"
+                  className="grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60 transition-colors hover:border-[#2F6BFF]/50 hover:bg-[#2F6BFF]/15 hover:text-[#2F6BFF]"
                 >
                   <span className="[&>svg]:size-4">{s.icon}</span>
                 </a>
@@ -1533,14 +1393,14 @@ export function Footer() {
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
             ].map((col) => (
               <div key={col.t}>
-                <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-[#F6F9FC]/45">
+                <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-[#F6F9FC]/55">
                   {col.t}
                 </div>
                 <ul className="space-y-1">
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];
                     const ext = FOOTER_LINKS[i];
-                    const cls = "inline-block py-1.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#2F6BFF]";
+                    const cls = "inline-block py-2.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#2F6BFF]";
                     return (
                       <li key={i}>
                         {to ? (
@@ -1557,7 +1417,7 @@ export function Footer() {
                             {i}
                           </a>
                         ) : (
-                          <span className="inline-block py-1.5 text-sm text-[#F6F9FC]/70">
+                          <span className="inline-block py-2.5 text-sm text-[#F6F9FC]/70">
                             {i}
                           </span>
                         )}
@@ -1586,7 +1446,7 @@ export function Footer() {
                 href={m.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-display text-sm font-semibold tracking-tight text-[#F6F9FC]/40 transition-colors hover:text-[#F6F9FC]/80"
+                className="font-display text-sm font-semibold tracking-tight text-[#F6F9FC]/55 transition-colors hover:text-[#F6F9FC]/90"
               >
                 {m.name}
               </a>

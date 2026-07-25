@@ -4,11 +4,30 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import Lenis from "lenis";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+import { ConsentAnalytics } from "../components/consent-analytics";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+
+// JSON-LD site-wide: identidade de marca legível por máquina (Organization + WebSite).
+const ORG_JSONLD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: "Nummo",
+      url: "https://usenummo.com.br/",
+      logo: "https://usenummo.com.br/favicon.png",
+      sameAs: ["https://www.instagram.com/use.nummo"],
+    },
+    {
+      "@type": "WebSite",
+      name: "Nummo",
+      url: "https://usenummo.com.br/",
+      inLanguage: "pt-BR",
+    },
+  ],
+});
 
 
 function NotFoundComponent() {
@@ -58,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Nummo — O hub de pagamentos do futuro" },
+      { title: "Nummo — Infraestrutura financeira para o seu negócio" },
       { name: "description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
-      { property: "og:title", content: "Nummo — O hub de pagamentos do futuro" },
+      { property: "og:title", content: "Nummo — Infraestrutura financeira para o seu negócio" },
       { property: "og:description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Nummo — O hub de pagamentos do futuro" },
+      { name: "twitter:title", content: "Nummo — Infraestrutura financeira para o seu negócio" },
       { name: "twitter:description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
       { property: "og:image", content: "https://usenummo.com.br/og-image.png" },
       { property: "og:image:width", content: "1200" },
@@ -73,6 +92,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:alt", content: "Nummo — Pagamentos na velocidade do seu negócio." },
       { name: "twitter:image", content: "https://usenummo.com.br/og-image.png" },
+      { name: "twitter:image:alt", content: "Nummo — Pagamentos na velocidade do seu negócio." },
+      { property: "og:site_name", content: "Nummo" },
       { name: "theme-color", content: "#060a0e" },
     ],
     links: [
@@ -96,7 +117,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
-      <head><HeadContent /></head>
+      <head>
+        <HeadContent />
+        {/* Sem JS: neutraliza o opacity:0 das seções reveladas por scroll,
+            garantindo que o conteúdo apareça (crawlers e usuários sem JS). */}
+        <noscript>
+          <style dangerouslySetInnerHTML={{ __html: ".reveal,.reveal-child{opacity:1!important;transform:none!important}" }} />
+        </noscript>
+      </head>
       <body>
         {children}
         <Scripts />
@@ -142,6 +170,7 @@ function RootComponent() {
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORG_JSONLD }} />
       <div className="min-h-screen bg-background font-sans text-foreground">
         <Outlet />
       </div>
@@ -159,8 +188,7 @@ function RootComponent() {
           </div>
         </div>
       )}
-      <Analytics />
-      <SpeedInsights />
+      <ConsentAnalytics />
     </QueryClientProvider>
   );
 }

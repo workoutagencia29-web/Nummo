@@ -311,6 +311,14 @@ function PrivacidadePage() {
             <P>A versão mais atual desta Política estará disponível em{" "}
               <a href="https://www.usenummo.com.br" className="text-neon underline-offset-2 hover:underline">www.usenummo.com.br</a>.
             </P>
+
+            <H2>17. Encarregado (DPO) e canais de contato</H2>
+            <P>A Nummo mantém um Encarregado pela Proteção de Dados (DPO), responsável por receber comunicações dos titulares e da Autoridade Nacional de Proteção de Dados (ANPD).</P>
+            <P>Para exercer seus direitos, esclarecer dúvidas sobre esta Política ou tratar de qualquer assunto relacionado a dados pessoais, entre em contato pelo e-mail{" "}
+              <a href="mailto:suporte@usenummo.com.br" className="text-neon underline-offset-2 hover:underline">suporte@usenummo.com.br</a>{" "}
+              ou pelo{" "}
+              <a href="https://wa.me/5511912002801" target="_blank" rel="noopener noreferrer" className="text-neon underline-offset-2 hover:underline">nosso WhatsApp oficial</a>.
+            </P>
           </div>
         </div>
       </main>
@@ -324,11 +332,11 @@ export const Route = createFileRoute("/privacidade")({
     meta: [
       { title: "Privacidade — Nummo" },
       { name: "description", content: "Política de Privacidade da Nummo: como coletamos, usamos, armazenamos e protegemos seus dados pessoais, em conformidade com a LGPD." },
-      { name: "robots", content: "noindex" },
       { property: "og:title", content: "Privacidade — Nummo" },
       { property: "og:description", content: "Política de Privacidade da Nummo: como coletamos, usamos, armazenamos e protegemos seus dados pessoais, em conformidade com a LGPD." },
       { property: "og:url", content: "https://usenummo.com.br/privacidade" },
     ],
+    links: [{ rel: "canonical", href: "https://usenummo.com.br/privacidade" }],
   }),
   component: PrivacidadePage,
 });

@@ -286,11 +286,11 @@ export const Route = createFileRoute("/termos")({
     meta: [
       { title: "Termos — Nummo" },
       { name: "description", content: "Termos e Condições da Nummo: regras de uso da plataforma, dos produtos e dos serviços, pagamentos, saques, chargebacks e responsabilidades." },
-      { name: "robots", content: "noindex" },
       { property: "og:title", content: "Termos — Nummo" },
       { property: "og:description", content: "Termos e Condições da Nummo: regras de uso da plataforma, dos produtos e dos serviços, pagamentos, saques, chargebacks e responsabilidades." },
       { property: "og:url", content: "https://usenummo.com.br/termos" },
     ],
+    links: [{ rel: "canonical", href: "https://usenummo.com.br/termos" }],
   }),
   component: TermosPage,
 });

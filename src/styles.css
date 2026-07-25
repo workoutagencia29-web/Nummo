@@ -28,6 +28,14 @@
   opacity: 0;
   pointer-events: none;
 }
+/* Rede de segurança 100% CSS: se a hidratação do React falhar ou demorar,
+   o loader some sozinho (não depende dos timers do React) e libera a página. */
+#app-loader {
+  animation: app-loader-autohide 0.5s ease 2.2s forwards;
+}
+@keyframes app-loader-autohide {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
 
 /* Fundo animado — auroras azuis flutuando + grade sutil */
 .app-loader-bg { position: absolute; inset: 0; overflow: hidden; }
@@ -209,7 +217,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 }
 
 @utility radial-glow {
-  background: radial-gradient(60% 60% at 50% 0%, oklch(0.581 0.229 263.9 / 0.18), transparent 70%);
+  background: radial-gradient(60% 60% at 50% 0%, rgba(47, 107, 255, 0.18), transparent 70%);
 }
 
 @utility noise {
@@ -338,7 +346,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .nm-press-dark { box-shadow: 6px 6px 14px #080f22, -6px -6px 14px #12264a; }
 @media (hover: hover) {
   .nm-press-light:hover { box-shadow: 18px 18px 40px #cdd7e8, -16px -16px 34px #ffffff; transform: translateY(-3px); }
-  .nm-press-dark:hover { box-shadow: 9px 9px 22px #070c1a, -9px -9px 22px #16295a; transform: translateY(-3px); }
+  .nm-press-dark:hover { box-shadow: 9px 9px 22px #080f22, -9px -9px 22px #12264a; transform: translateY(-3px); }
 }
 .nm-press-light:active { box-shadow: inset 6px 6px 12px #d3dbea, inset -6px -6px 12px #ffffff; transform: translateY(0); }
 .nm-press-dark:active { box-shadow: inset 4px 4px 9px #080f22, inset -4px -4px 9px #12264a; transform: translateY(0); }

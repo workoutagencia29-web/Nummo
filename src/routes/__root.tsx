@@ -136,8 +136,8 @@ function RootComponent() {
   const [loaderHide, setLoaderHide] = useState(false);
   const [loaderGone, setLoaderGone] = useState(false);
   useEffect(() => {
-    const t1 = setTimeout(() => setLoaderHide(true), 400);
-    const t2 = setTimeout(() => setLoaderGone(true), 950);
+    const t1 = setTimeout(() => setLoaderHide(true), 650);
+    const t2 = setTimeout(() => setLoaderGone(true), 1300);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
   return (
@@ -147,8 +147,16 @@ function RootComponent() {
       </div>
       {!loaderGone && (
         <div id="app-loader" className={loaderHide ? "app-loader-hidden" : ""} aria-hidden="true">
-          <img src="/logo-nummo.svg" alt="" width={150} height={25} className="app-loader-logo" />
-          <span className="app-loader-spinner" />
+          <div className="app-loader-bg">
+            <span className="app-loader-glow app-loader-glow-1" />
+            <span className="app-loader-glow app-loader-glow-2" />
+            <span className="app-loader-glow app-loader-glow-3" />
+            <span className="app-loader-grid" />
+          </div>
+          <div className="app-loader-content">
+            <img src="/logo-nummo.svg" alt="" width={230} height={38} className="app-loader-logo" />
+            <span className="app-loader-spinner" />
+          </div>
         </div>
       )}
       <Analytics />

@@ -17,35 +17,78 @@
   inset: 0;
   z-index: 9999;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 22px;
-  background: #050B1E;
+  overflow: hidden;
+  background: radial-gradient(125% 125% at 50% 38%, #0a1a3c 0%, #050B1E 58%, #03060f 100%);
   opacity: 1;
-  transition: opacity 0.55s ease;
+  transition: opacity 0.6s ease;
 }
 #app-loader.app-loader-hidden {
   opacity: 0;
   pointer-events: none;
 }
+
+/* Fundo animado — auroras azuis flutuando + grade sutil */
+.app-loader-bg { position: absolute; inset: 0; overflow: hidden; }
+.app-loader-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  will-change: transform, opacity;
+}
+.app-loader-glow-1 {
+  width: 460px; height: 460px; top: 6%; left: 16%;
+  background: radial-gradient(circle, rgba(47, 107, 255, 0.55), transparent 68%);
+  animation: loader-drift-1 8s ease-in-out infinite;
+}
+.app-loader-glow-2 {
+  width: 400px; height: 400px; bottom: 4%; right: 14%;
+  background: radial-gradient(circle, rgba(110, 155, 255, 0.45), transparent 68%);
+  animation: loader-drift-2 10s ease-in-out infinite;
+}
+.app-loader-glow-3 {
+  width: 320px; height: 320px; top: 44%; left: 56%;
+  background: radial-gradient(circle, rgba(47, 107, 255, 0.35), transparent 70%);
+  animation: loader-drift-3 12s ease-in-out infinite;
+}
+.app-loader-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(246, 249, 252, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 249, 252, 0.045) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(circle at 50% 46%, #000 0%, transparent 66%);
+  mask-image: radial-gradient(circle at 50% 46%, #000 0%, transparent 66%);
+}
+
+/* Conteúdo — logo + spinner */
+.app-loader-content {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 34px;
+}
 .app-loader-logo {
-  height: 26px;
-  width: auto;
-  animation: app-loader-pulse 1.6s ease-in-out infinite;
+  height: 40px; width: auto;
+  filter: drop-shadow(0 0 26px rgba(47, 107, 255, 0.4));
+  animation: app-loader-pulse 2s ease-in-out infinite;
 }
 .app-loader-spinner {
-  width: 26px;
-  height: 26px;
-  border-radius: 9999px;
-  border: 3px solid rgba(246, 249, 252, 0.14);
-  border-top-color: #2F6BFF;
-  animation: app-loader-spin 0.8s linear infinite;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: conic-gradient(from 90deg, transparent 6%, rgba(47, 107, 255, 0.14) 42%, #2F6BFF 92%, transparent 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px));
+  filter: drop-shadow(0 0 12px rgba(47, 107, 255, 0.55));
+  animation: app-loader-spin 0.95s linear infinite;
 }
+
 @keyframes app-loader-spin { to { transform: rotate(360deg); } }
-@keyframes app-loader-pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+@keyframes app-loader-pulse { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.045); } }
+@keyframes loader-drift-1 { 0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; } 50% { transform: translate(70px, -50px) scale(1.25); opacity: 0.78; } }
+@keyframes loader-drift-2 { 0%, 100% { transform: translate(0, 0) scale(1.1); opacity: 0.45; } 50% { transform: translate(-60px, 45px) scale(0.9); opacity: 0.7; } }
+@keyframes loader-drift-3 { 0%, 100% { transform: translate(0, 0) scale(0.9); opacity: 0.3; } 50% { transform: translate(-45px, -32px) scale(1.15); opacity: 0.55; } }
 @media (prefers-reduced-motion: reduce) {
-  .app-loader-spinner, .app-loader-logo { animation: none; }
+  .app-loader-spinner { animation-duration: 1.5s; }
+  .app-loader-logo, .app-loader-glow { animation: none; }
 }
 
 @custom-variant dark (&:is(.dark *));

@@ -39,6 +39,16 @@ export default defineConfig({
       "/fonts/**": {
         headers: { "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800" },
       },
+      // Imagens do /public (não hasheadas) — cache forte c/ revalidação p/ visitas repetidas.
+      "/logos/**": {
+        headers: { "Cache-Control": "public, max-age=604800, stale-while-revalidate=2592000" },
+      },
+      "/depoimentos/**": {
+        headers: { "Cache-Control": "public, max-age=604800, stale-while-revalidate=2592000" },
+      },
+      "/*.webp": {
+        headers: { "Cache-Control": "public, max-age=604800, stale-while-revalidate=2592000" },
+      },
     },
   },
 });

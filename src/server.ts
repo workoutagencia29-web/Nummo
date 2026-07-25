@@ -26,7 +26,9 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   if (!contentType.includes("application/json")) return response;
 
   const body = await response.clone().text();
-  if (!body.includes('"unhandled":true') || !body.includes('"message":"HTTPError"')) {
+  // Captura TODO 500 "unhandled" (não só message="HTTPError") para não vazar
+  // texto interno de exceção ao cliente — sempre serve a error-page estática.
+  if (!body.includes('"unhandled":true')) {
     return response;
   }
 

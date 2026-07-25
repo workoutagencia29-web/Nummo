@@ -24,8 +24,8 @@ export default defineConfig({
     routeRules: {
       "/**": {
         headers: {
-          "Content-Security-Policy-Report-Only":
-            "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://vitals.vercel-insights.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests",
+          "Content-Security-Policy":
+            "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://vitals.vercel-insights.com https://cloudflareinsights.com; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests",
           "X-Frame-Options": "DENY",
           "X-Content-Type-Options": "nosniff",
           "Referrer-Policy": "strict-origin-when-cross-origin",

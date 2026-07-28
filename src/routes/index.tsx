@@ -477,12 +477,12 @@ function Hero() {
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in -translate-y-8 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:mx-auto lg:max-w-2xl lg:text-center lg:text-lg lg:text-white/85">
+          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:mx-auto lg:max-w-2xl lg:text-center lg:text-lg lg:text-white/85">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
           {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-          <div className="animate-hero-in mt-8 flex flex-col items-start gap-3 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-center">
+          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-center">
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"

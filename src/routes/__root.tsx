@@ -186,7 +186,6 @@ function RootComponent() {
             <span className="app-loader-glow app-loader-glow-1" />
             <span className="app-loader-glow app-loader-glow-2" />
             <span className="app-loader-glow app-loader-glow-3" />
-            <span className="app-loader-grid" />
           </div>
           <div className="app-loader-content">
             <img src="/logo-nummo.svg" alt="" width={230} height={38} className="app-loader-logo" />

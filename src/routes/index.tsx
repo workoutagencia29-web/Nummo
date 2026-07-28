@@ -180,74 +180,6 @@ function Stagger({ children, className = "", step = 90 }: { children: React.Reac
   );
 }
 
-// Número que anima de 0 até o alvo ao entrar na viewport (respeita reduced-motion).
-function CountUp({ to, decimals = 0, prefix = "", suffix = "", duration = 1700 }: { to: number; decimals?: number; prefix?: string; suffix?: string; duration?: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  // Inicia no valor final: o SSR/1º paint já emite o número real (não "0").
-  // No cliente, ao entrar na viewport, zera e anima até o alvo.
-  const [val, setVal] = useState(to);
-  const done = useRef(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setVal(to); return; }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !done.current) {
-          done.current = true;
-          setVal(0);
-          const start = performance.now();
-          const tick = (now: number) => {
-            const p = Math.min(1, (now - start) / duration);
-            const eased = 1 - Math.pow(1 - p, 3);
-            setVal(to * eased);
-            if (p < 1) requestAnimationFrame(tick);
-            else setVal(to);
-          };
-          requestAnimationFrame(tick);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.4 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [to, duration]);
-  const display = decimals > 0 ? val.toFixed(decimals).replace(".", ",") : Math.round(val).toLocaleString("pt-BR");
-  return <span ref={ref}>{prefix}{display}{suffix}</span>;
-}
-
-// Faixa de métricas de escala (números REAIS fornecidos pelo cliente).
-function ScaleMetrics() {
-  const metrics = [
-    { node: <CountUp to={100} prefix="R$ " suffix="M+" />, label: "processados" },
-    { node: <CountUp to={149} suffix="+" />, label: "empresas ativas" },
-    { node: <CountUp to={99.8} decimals={1} suffix="%" />, label: "de uptime" },
-  ];
-  return (
-    <section className="bg-background py-16 sm:py-20">
-      <div className="mx-auto max-w-5xl px-6">
-        <div
-          className="grid grid-cols-1 divide-y divide-[#d3dbea] rounded-[28px] p-2 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
-          style={{ background: "#F6F9FC", boxShadow: "14px 14px 28px #d3dbea, -14px -14px 28px #ffffff" }}
-        >
-          {metrics.map((m) => (
-            <div key={m.label} className="px-6 py-8 text-center">
-              <div className="font-display text-4xl font-extrabold tracking-tight text-[#0D1B39] sm:text-5xl">
-                {m.node}
-              </div>
-              <div className="mt-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-[#0D1B39]/70">
-                {m.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Landing() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
@@ -257,7 +189,6 @@ function Landing() {
       <Nav />
       <main id="conteudo">
         <Hero />
-        <Reveal><ScaleMetrics /></Reveal>
         <Reveal><Bento /></Reveal>
         <Reveal><PaymentMethods /></Reveal>
         <Reveal><Rates /></Reveal>
@@ -811,17 +742,6 @@ function Rates() {
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#0052CC] underline-offset-2 transition-colors hover:text-foreground hover:underline">negocie condições ainda melhores</a>{" "}
               quando sua operação pedir.
             </p>
-            <div className="mt-8 flex flex-wrap gap-2.5">
-              {["Sem mensalidade", "Sem fidelidade", "Taxa só sobre venda aprovada"].map((c) => (
-                <span
-                  key={c}
-                  className="rounded-full px-4 py-2 text-sm font-medium text-[#0D1B39]"
-                  style={{ background: "#F6F9FC", boxShadow: "inset 4px 4px 8px #d3dbea, inset -4px -4px 8px #ffffff" }}
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -829,8 +749,75 @@ function Rates() {
   );
 }
 
+type Integration = { alt: string; src?: string; node?: React.ReactNode; tone: "color" | "mono" | "node" };
+
+// Neumorfismo modo claro — família dos cards de Métodos, com mais profundidade/contraste
+// (sombra escura mais funda #c7d1e4) + filete de luz no topo p/ definir a borda.
+const TILE_RAISED = "14px 14px 30px #c7d1e4, -12px -12px 26px #ffffff, inset 0 1px 0 #ffffff";
+const SOCKET_INSET = "inset 5px 5px 10px #c7d1e4, inset -4px -4px 9px #ffffff";
+
+// TILE elevado claro — receita dos cards de Métodos, escalada (10/10/20)
+function IntegrationTile({ l }: { l: Integration }) {
+  return (
+    <div
+      className="group/tile mr-6 flex h-[152px] w-[176px] shrink-0 flex-col items-center justify-center gap-3 rounded-[28px] p-3.5 sm:h-[168px] sm:w-[200px]"
+      style={{ background: "#F6F9FC", boxShadow: TILE_RAISED }}
+    >
+      {/* SOQUETE afundado — o "encaixe" onde cada integração pluga (rounded-xl = ícone dos Métodos).
+          Quadrado e justo na logo: sem sobra horizontal, o card é que dá o respiro em volta. */}
+      <div
+        className="flex h-[86px] w-[86px] items-center justify-center rounded-xl sm:h-[96px] sm:w-[96px]"
+        style={{ background: "#F6F9FC", boxShadow: SOCKET_INSET }}
+      >
+        {l.tone === "node" ? (
+          // TikTok: <TikTok/> inline em NAVY via currentColor (nunca branco — branco some no claro).
+          <span
+            role="img"
+            aria-label={l.alt}
+            className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-[52px] [&>svg]:w-[52px]"
+          >
+            {l.node}
+          </span>
+        ) : l.tone === "mono" ? (
+          // UTMify (wordmark branco) pintado em navy exato #0D1B39 via CSS mask (mesma cor do TikTok).
+          <span
+            role="img"
+            aria-label={l.alt}
+            className="block opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
+            style={{
+              height: "52px",
+              width: "62px",
+              background: "#0D1B39",
+              WebkitMaskImage: `url(${l.src})`,
+              maskImage: `url(${l.src})`,
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+            }}
+          />
+        ) : (
+          // Coloridos intactos — reconhecibilidade de marca > monocromia.
+          <img
+            src={l.src}
+            alt={l.alt}
+            className="max-h-[52px] w-auto max-w-[62px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
+            draggable={false}
+            loading="lazy"
+          />
+        )}
+      </div>
+      <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#0D1B39]/70">
+        {l.alt}
+      </span>
+    </div>
+  );
+}
+
 function HowItWorks() {
-  const integrations: { alt: string; src?: string; node?: React.ReactNode; tone: "color" | "mono" | "node" }[] = [
+  const integrations: Integration[] = [
     { src: "/logos/meta.webp", alt: "Meta Ads", tone: "color" },
     { src: "/logos/google-ads.webp", alt: "Google Ads", tone: "color" },
     { node: <TikTok />, alt: "TikTok Ads", tone: "node" },
@@ -839,14 +826,11 @@ function HowItWorks() {
     { src: "/logos/notazz.webp", alt: "Notazz", tone: "color" },
     { src: "/logos/astron.webp", alt: "Astron", tone: "color" },
   ];
-
-  // Neumorfismo modo claro — família dos cards de Métodos, com mais profundidade/contraste
-  // (sombra escura mais funda #c7d1e4) + filete de luz no topo p/ definir a borda.
-  const tileRaised = "14px 14px 30px #c7d1e4, -12px -12px 26px #ffffff, inset 0 1px 0 #ffffff";
-  const socketInset = "inset 5px 5px 10px #c7d1e4, inset -4px -4px 9px #ffffff";
+  // Fileira de baixo rotacionada: evita o efeito "espelho" com a de cima.
+  const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
 
   return (
-    <section className="py-32">
+    <section className="pb-[72px] pt-32">
       <div className="mx-auto max-w-7xl px-6">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow
@@ -856,72 +840,24 @@ function HowItWorks() {
           />
         </div>
 
-        {/* Trilho de encaixe: soquetes neumórficos claros deslizando sob a luz fixa (topo-esquerda).
-            overflow-hidden + máscara horizontal; a fileira leva py-12 p/ não cortar a sombra "raised". */}
+        {/* Esteira de encaixe: duas fileiras encostadas em sentidos opostos (→ em cima, ← embaixo),
+            lendo como uma correia contínua. overflow-hidden + máscara horizontal; o padding externo
+            das fileiras existe p/ não cortar a sombra "raised" no topo e na base. */}
         <div
-          className="group relative -mt-4 overflow-hidden"
+          className="group relative -mt-[136px] translate-y-9 overflow-hidden"
           style={{
             maskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
             WebkitMaskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
           }}
         >
-          <div className="flex w-max animate-marquee-right py-12 group-hover:[animation-play-state:paused]">
+          <div className="flex w-max animate-marquee-right pb-3 pt-10 group-hover:[animation-play-state:paused]">
             {[...integrations, ...integrations].map((l, i) => (
-              // TILE elevado claro — receita dos cards de Métodos, escalada (10/10/20)
-              <div
-                key={i}
-                className="group/tile mr-6 flex h-[152px] w-[176px] shrink-0 flex-col items-center justify-center gap-3 rounded-[28px] p-3.5 sm:h-[168px] sm:w-[200px]"
-                style={{ background: "#F6F9FC", boxShadow: tileRaised }}
-              >
-                {/* SOQUETE afundado — o "encaixe" onde cada integração pluga (rounded-xl = ícone dos Métodos) */}
-                <div
-                  className="flex h-[74px] w-full items-center justify-center rounded-xl px-5 sm:h-[86px]"
-                  style={{ background: "#F6F9FC", boxShadow: socketInset }}
-                >
-                  {l.tone === "node" ? (
-                    // TikTok: <TikTok/> inline em NAVY via currentColor (nunca branco — branco some no claro).
-                    <span
-                      role="img"
-                      aria-label={l.alt}
-                      className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-11 [&>svg]:w-11"
-                    >
-                      {l.node}
-                    </span>
-                  ) : l.tone === "mono" ? (
-                    // UTMify (wordmark branco) pintado em navy exato #0D1B39 via CSS mask (mesma cor do TikTok).
-                    <span
-                      role="img"
-                      aria-label={l.alt}
-                      className="block opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
-                      style={{
-                        height: "40px",
-                        width: "128px",
-                        background: "#0D1B39",
-                        WebkitMaskImage: `url(${l.src})`,
-                        maskImage: `url(${l.src})`,
-                        WebkitMaskRepeat: "no-repeat",
-                        maskRepeat: "no-repeat",
-                        WebkitMaskPosition: "center",
-                        maskPosition: "center",
-                        WebkitMaskSize: "contain",
-                        maskSize: "contain",
-                      }}
-                    />
-                  ) : (
-                    // Coloridos intactos — reconhecibilidade de marca > monocromia.
-                    <img
-                      src={l.src}
-                      alt={l.alt}
-                      className="max-h-11 w-auto max-w-[128px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
-                      draggable={false}
-                      loading="lazy"
-                    />
-                  )}
-                </div>
-                <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#0D1B39]/70">
-                  {l.alt}
-                </span>
-              </div>
+              <IntegrationTile key={i} l={l} />
+            ))}
+          </div>
+          <div className="flex w-max animate-marquee pb-10 pt-3 group-hover:[animation-play-state:paused]">
+            {[...bottomRow, ...bottomRow].map((l, i) => (
+              <IntegrationTile key={i} l={l} />
             ))}
           </div>
         </div>

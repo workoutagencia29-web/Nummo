@@ -470,7 +470,9 @@ function Hero() {
                 Infraestrutura financeira
               </span>
               <br />
-              <span className="font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
+              {/* inline-block é pré-requisito do translate: transform não se aplica a inline puro.
+                  Sobe só a 2ª linha p/ colar na 1ª, sem mexer na altura do h1. */}
+              <span className="inline-block -translate-y-1.5 font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
             </h1>
           </div>
 

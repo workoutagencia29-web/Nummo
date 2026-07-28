@@ -461,8 +461,10 @@ function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 lg:py-10">
         <div className="lg:mt-8">
-          {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto) */}
-          <div className="animate-hero-in [animation-delay:120ms]">
+          {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto).
+              -translate-y sobe título e subtítulo sem tocar no layout (os botões ficam no lugar);
+              usa a prop `translate`, que compõe com o `transform` da animação em vez de sobrescrevê-lo. */}
+          <div className="animate-hero-in -translate-y-6 [animation-delay:120ms]">
             <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-center lg:text-[52px] xl:text-[58px]">
               <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[67px] xl:text-[75px]">
                 Infraestrutura financeira
@@ -473,7 +475,7 @@ function Hero() {
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:mx-auto lg:max-w-2xl lg:text-center lg:text-lg lg:text-white/85">
+          <p className="animate-hero-in -translate-y-6 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:mx-auto lg:max-w-2xl lg:text-center lg:text-lg lg:text-white/85">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 

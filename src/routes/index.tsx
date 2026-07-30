@@ -773,7 +773,7 @@ function Rates() {
           <SaleNotifications />
 
           {/* Texto */}
-          <div className="lg:-ml-24 lg:-translate-y-12 xl:-ml-[180px]">
+          <div className="lg:-ml-24 lg:-translate-y-12 xl:-ml-[170px]">
             <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Taxas</div>
             <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
               Seu negócio não precisa caber em uma taxa padrão.

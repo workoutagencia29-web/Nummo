@@ -203,7 +203,6 @@ function Landing() {
       </main>
       <Footer />
       <ScrollRail />
-      <StickyCta />
     </div>
   );
 }
@@ -245,38 +244,6 @@ function ScrollRail() {
         />
       </div>
     </div>
-  );
-}
-
-/* CTA flutuante: aparece quando o hero sai da viewport (não há CTA fixo no miolo da página). */
-function StickyCta() {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    let ticking = false;
-    const update = () => {
-      setShow(window.scrollY > window.innerHeight * 0.9);
-      ticking = false;
-    };
-    const onScroll = () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <a
-      href="https://app.usenummo.com.br/dashboard/register"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-hidden={!show}
-      tabIndex={show ? 0 : -1}
-      className={`fixed bottom-5 right-5 z-40 hidden items-center gap-2 rounded-full bg-[#2559d8] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#1f4fc4] lg:inline-flex ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}
-      style={{ boxShadow: "0 14px 34px -10px rgba(47,107,255,0.7)" }}
-    >
-      Criar Conta <ArrowRight className="size-4" />
-    </a>
   );
 }
 

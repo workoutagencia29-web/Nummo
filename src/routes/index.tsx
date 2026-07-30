@@ -709,26 +709,9 @@ function Rates() {
     <section id="taxas" className="relative overflow-x-clip py-32">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
-          {/* Cartão (novo design) */}
-          <div className="flex justify-center drop-shadow-[0_30px_50px_rgba(0,0,0,0.6)] lg:justify-start">
-            <img
-              src="/cartao-nummo.webp"
-              alt="Cartão Nummo"
-              width={1400}
-              height={781}
-              loading="lazy"
-              decoding="async"
-              className="w-full max-w-none lg:-ml-12 lg:translate-y-8 xl:-ml-24"
-              style={{
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, #000 0%, #000 46%, rgba(0,0,0,0.85) 54%, rgba(0,0,0,0.58) 61%, rgba(0,0,0,0.3) 67%, rgba(0,0,0,0.1) 72%, transparent 77%)",
-                maskImage:
-                  "linear-gradient(to bottom, #000 0%, #000 46%, rgba(0,0,0,0.85) 54%, rgba(0,0,0,0.58) 61%, rgba(0,0,0,0.3) 67%, rgba(0,0,0,0.1) 72%, transparent 77%)",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-              }}
-            />
-          </div>
+          {/* Coluna do cartão — imagem removida a pedido; div mantido só como
+              espaçador do grid p/ o texto seguir na mesma posição à direita. */}
+          <div aria-hidden />
 
           {/* Texto */}
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">
@@ -742,7 +725,7 @@ function Rates() {
               suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-foreground">nova fase</span>.
             </p>
             <p className="mt-6 text-pretty text-base text-[#0D1B39]">
-              Comece com o plano ideal hoje — e{" "}
+              Comece com o plano ideal hoje e{" "}
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#0052CC] underline-offset-2 transition-colors hover:text-foreground hover:underline">negocie condições ainda melhores</a>{" "}
               quando sua operação pedir.
             </p>

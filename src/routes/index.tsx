@@ -707,19 +707,34 @@ function PaymentMethods() {
 // Notificações de venda no estilo iOS 17/18 (banner translúcido, ícone squircle
 // do app, título em negrito + horário à direita, corpo abaixo). Componente
 // autocontido: preenche a coluna esquerda da seção Taxas sem tocar em mais nada.
+// Arranjo em cascata "embaralhada": cada card recebe um deslocamento horizontal
+// (off), rotação (rot), escala, opacidade e blur próprios — os do fundo ficam
+// menores/translúcidos/desfocados (profundidade), com um card central em foco.
+// Posicionamento absoluto num container de altura fixa (< coluna do texto),
+// então NÃO altera o fluxo nem a altura da página.
 function SaleNotifications() {
   const items = [
-    { time: "agora", value: "R$ 149,90", detail: "Pix" },
-    { time: "2 min", value: "R$ 1.290,00", detail: "Cartão · 3x" },
-    { time: "5 min", value: "R$ 89,90", detail: "Pix" },
+    { time: "agora", value: "R$ 149,90", detail: "Pix", top: 2, off: 36, w: 300, rot: -3, scale: 0.95, op: 0.8, blur: 1.2, z: 10 },
+    { time: "1 min", value: "R$ 1.290,00", detail: "Cartão · 3x", top: 74, off: -28, w: 336, rot: 2.5, scale: 1, op: 0.96, blur: 0, z: 30 },
+    { time: "2 min", value: "R$ 89,90", detail: "Pix", top: 158, off: 52, w: 318, rot: -1.5, scale: 1.03, op: 1, blur: 0, z: 40 },
+    { time: "4 min", value: "R$ 4.500,00", detail: "Cartão · 12x", top: 246, off: -12, w: 322, rot: 3, scale: 0.99, op: 0.93, blur: 0, z: 20 },
+    { time: "6 min", value: "R$ 320,00", detail: "Boleto", top: 324, off: 42, w: 290, rot: -2.5, scale: 0.92, op: 0.72, blur: 1.7, z: 5 },
   ];
   return (
-    <div className="hidden lg:flex lg:-translate-y-10 lg:justify-center">
-      <div className="flex w-full max-w-[400px] flex-col gap-3">
+    <div className="hidden lg:flex lg:-translate-y-6 lg:justify-center">
+      <div className="relative h-[416px] w-full max-w-[440px]">
         {items.map((n, i) => (
           <div
             key={i}
-            className="flex items-start gap-3 rounded-[22px] border border-white/70 bg-white/70 px-4 py-3.5 shadow-[0_18px_44px_-14px_rgba(13,27,57,0.30)] backdrop-blur-xl"
+            className="absolute left-1/2 top-0 flex items-start gap-3 rounded-[22px] border border-white/70 bg-white/75 px-4 py-3.5 shadow-[0_20px_48px_-14px_rgba(13,27,57,0.32)] backdrop-blur-xl"
+            style={{
+              width: n.w,
+              top: n.top,
+              zIndex: n.z,
+              opacity: n.op,
+              filter: n.blur ? `blur(${n.blur}px)` : undefined,
+              transform: `translateX(calc(-50% + ${n.off}px)) rotate(${n.rot}deg) scale(${n.scale})`,
+            }}
           >
             {/* Ícone do app (squircle azul + anel branco, coerente com o favicon) */}
             <div className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[12px] bg-gradient-to-br from-[#2F6BFF] to-[#1E4FD6] shadow-[0_4px_10px_rgba(47,107,255,0.45)]">

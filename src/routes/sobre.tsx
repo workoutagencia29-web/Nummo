@@ -113,7 +113,7 @@ function SobrePage() {
 
         {/* CTA final */}
         <section className="relative overflow-hidden py-24 md:py-32">
-          <div className="relative mx-auto max-w-3xl -translate-y-[15px] px-6 text-center">
+          <div className="relative mx-auto max-w-3xl -translate-y-[25px] px-6 text-center">
             <h2 className="text-balance font-display text-4xl font-extrabold tracking-tight md:text-5xl">
               Vamos crescer juntos.
             </h2>

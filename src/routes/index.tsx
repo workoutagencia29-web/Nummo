@@ -691,41 +691,77 @@ function SaleNotifications() {
     { time: "4 min", value: "R$ 4.500,00", detail: "Cartão", top: 250, off: -12, rot: 3, op: 0.93, blur: 0, z: 20 },
     { time: "6 min", value: "R$ 320,00", detail: "Boleto", top: 332, off: 42, rot: -2.5, op: 0.72, blur: 1.7, z: 5 },
   ];
+  // Ordem de aparição (índices dos cards): topo → base → 2ª de baixo → 2ª de cima → meio.
+  const ORDER = [0, 4, 3, 1, 2];
+  const STEP = 0.16; // s entre cada notificação
+
+  const ref = useRef<HTMLDivElement>(null);
+  // "armed" esconde os cards antes de entrarem em cena (setado no cliente, com a
+  // seção ainda fora da viewport → sem flash); "play" dispara a animação escalonada.
+  // Sem JS ou com reduced-motion os cards ficam visíveis e estáticos (fallback).
+  const [armed, setArmed] = useState(false);
+  const [play, setPlay] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setArmed(true);
+    const io = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting) { setPlay(true); io.disconnect(); } },
+      { threshold: 0.3 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="hidden lg:flex lg:-translate-x-36 lg:-translate-y-6 lg:justify-center">
+    <div ref={ref} className="hidden lg:flex lg:-translate-x-36 lg:-translate-y-6 lg:justify-center">
       <div className="relative h-[416px] w-full max-w-[440px]">
-        {items.map((n, i) => (
-          <div
-            key={i}
-            className="absolute left-1/2 top-0 flex items-center gap-3 rounded-[22px] border border-white/70 bg-white/75 px-4 shadow-[0_20px_48px_-14px_rgba(13,27,57,0.32)] backdrop-blur-xl"
-            style={{
-              width: CARD_W,
-              height: CARD_H,
-              top: n.top,
-              zIndex: n.z,
-              opacity: n.op,
-              filter: n.blur ? `blur(${n.blur}px)` : undefined,
-              transform: `translateX(calc(-50% + ${n.off}px)) rotate(${n.rot}deg)`,
-            }}
-          >
-            {/* Ícone do app (squircle azul + anel branco, coerente com o favicon) */}
-            <div className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[12px] bg-gradient-to-br from-[#2F6BFF] to-[#1E4FD6] shadow-[0_4px_10px_rgba(47,107,255,0.45)]">
-              <svg width="21" height="21" viewBox="0 0 40 40" aria-hidden="true">
-                <circle cx="20" cy="20" r="12.5" fill="none" stroke="#fff" strokeWidth="7" />
-              </svg>
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="text-[15px] font-semibold tracking-[-0.01em] text-[#0D1B39]">Venda aprovada</span>
-                <span className="shrink-0 text-[12px] font-medium text-[#0D1B39]/40">{n.time}</span>
+        {items.map((n, i) => {
+          const step = ORDER.indexOf(i);
+          // Card interno: só ele anima (opacidade + subida). A opacidade final de
+          // profundidade fica no wrapper, então a animação 0→1 não a sobrescreve.
+          const cardStyle: React.CSSProperties = { width: CARD_W, height: CARD_H };
+          if (play) cardStyle.animation = `notifIn 0.62s cubic-bezier(0.22,1,0.36,1) ${step * STEP}s both`;
+          else if (armed) cardStyle.opacity = 0;
+          return (
+            <div
+              key={i}
+              className="absolute left-1/2 top-0"
+              style={{
+                top: n.top,
+                zIndex: n.z,
+                opacity: n.op,
+                filter: n.blur ? `blur(${n.blur}px)` : undefined,
+                transform: `translateX(calc(-50% + ${n.off}px)) rotate(${n.rot}deg)`,
+              }}
+            >
+              <div
+                className="flex items-center gap-3 rounded-[22px] border border-white/70 bg-white/75 px-4 shadow-[0_20px_48px_-14px_rgba(13,27,57,0.32)] backdrop-blur-xl"
+                style={cardStyle}
+              >
+                {/* Ícone do app (squircle azul + anel branco, coerente com o favicon) */}
+                <div className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[12px] bg-gradient-to-br from-[#2F6BFF] to-[#1E4FD6] shadow-[0_4px_10px_rgba(47,107,255,0.45)]">
+                  <svg width="21" height="21" viewBox="0 0 40 40" aria-hidden="true">
+                    <circle cx="20" cy="20" r="12.5" fill="none" stroke="#fff" strokeWidth="7" />
+                  </svg>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline justify-between gap-2">
+                    <span className="text-[15px] font-semibold tracking-[-0.01em] text-[#0D1B39]">Venda aprovada</span>
+                    <span className="shrink-0 text-[12px] font-medium text-[#0D1B39]/40">{n.time}</span>
+                  </div>
+                  <p className="mt-0.5 text-[14px] leading-snug text-[#0D1B39]/65">
+                    <span className="font-semibold text-[#0D1B39]/85">{n.value}</span> recebidos · {n.detail}
+                  </p>
+                </div>
               </div>
-              <p className="mt-0.5 text-[14px] leading-snug text-[#0D1B39]/65">
-                <span className="font-semibold text-[#0D1B39]/85">{n.value}</span> recebidos · {n.detail}
-              </p>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+      {/* Keyframe escopado (não mexe no styles.css global) */}
+      <style>{`@keyframes notifIn { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: none; } }`}</style>
     </div>
   );
 }

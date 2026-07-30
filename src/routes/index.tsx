@@ -1334,11 +1334,14 @@ const FOOTER_LINKS: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#0D1B39] px-6 pb-10 pt-20 text-[#F6F9FC]">
-      {/* Glow sutil no topo */}
-      <div className="pointer-events-none absolute inset-x-0 -top-40 h-72 radial-glow opacity-60" />
+    <footer className="relative bg-background px-[5%] text-[#F6F9FC] sm:px-[7%]">
+      {/* Fundo em "meio-card": navy da marca, cantos superiores arredondados e
+          recuo lateral (o espaço vazio nas laterais é o fundo da própria página). */}
+      <div className="relative overflow-hidden rounded-t-[32px] border-x border-t border-white/[0.07] bg-[#0D1B39] px-6 pb-10 pt-16 sm:rounded-t-[44px] sm:px-10">
+        {/* Glow sutil no topo */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-44 radial-glow opacity-50" />
 
-      <div className="relative mx-auto max-w-7xl">
+        <div className="relative mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_3fr]">
           {/* Marca */}
           <div>
@@ -1435,6 +1438,7 @@ export function Footer() {
               </a>
             ))}
           </div>
+        </div>
         </div>
       </div>
     </footer>

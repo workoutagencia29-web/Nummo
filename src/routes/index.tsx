@@ -713,12 +713,16 @@ function PaymentMethods() {
 // Posicionamento absoluto num container de altura fixa (< coluna do texto),
 // então NÃO altera o fluxo nem a altura da página.
 function SaleNotifications() {
+  // Todos os cards têm a MESMA largura e altura (tamanho de um banner do iPhone).
+  // A variação fica só na posição (top/off), rotação e profundidade (opacidade/blur).
+  const CARD_W = 340;
+  const CARD_H = 76;
   const items = [
-    { time: "agora", value: "R$ 149,90", detail: "Pix", top: 2, off: 36, w: 300, rot: -3, scale: 0.95, op: 0.8, blur: 1.2, z: 10 },
-    { time: "1 min", value: "R$ 1.290,00", detail: "Cartão · 3x", top: 74, off: -28, w: 336, rot: 2.5, scale: 1, op: 0.96, blur: 0, z: 30 },
-    { time: "2 min", value: "R$ 89,90", detail: "Pix", top: 158, off: 52, w: 318, rot: -1.5, scale: 1.03, op: 1, blur: 0, z: 40 },
-    { time: "4 min", value: "R$ 4.500,00", detail: "Cartão", top: 246, off: -12, w: 300, rot: 3, scale: 0.99, op: 0.93, blur: 0, z: 20 },
-    { time: "6 min", value: "R$ 320,00", detail: "Boleto", top: 324, off: 42, w: 290, rot: -2.5, scale: 0.92, op: 0.72, blur: 1.7, z: 5 },
+    { time: "agora", value: "R$ 149,90", detail: "Pix", top: 4, off: 36, rot: -3, op: 0.8, blur: 1.2, z: 10 },
+    { time: "1 min", value: "R$ 1.290,00", detail: "Cartão · 3x", top: 82, off: -28, rot: 2.5, op: 0.96, blur: 0, z: 30 },
+    { time: "2 min", value: "R$ 89,90", detail: "Pix", top: 164, off: 52, rot: -1.5, op: 1, blur: 0, z: 40 },
+    { time: "4 min", value: "R$ 4.500,00", detail: "Cartão", top: 250, off: -12, rot: 3, op: 0.93, blur: 0, z: 20 },
+    { time: "6 min", value: "R$ 320,00", detail: "Boleto", top: 332, off: 42, rot: -2.5, op: 0.72, blur: 1.7, z: 5 },
   ];
   return (
     <div className="hidden lg:flex lg:-translate-y-6 lg:justify-center">
@@ -726,14 +730,15 @@ function SaleNotifications() {
         {items.map((n, i) => (
           <div
             key={i}
-            className="absolute left-1/2 top-0 flex items-start gap-3 rounded-[22px] border border-white/70 bg-white/75 px-4 py-3.5 shadow-[0_20px_48px_-14px_rgba(13,27,57,0.32)] backdrop-blur-xl"
+            className="absolute left-1/2 top-0 flex items-center gap-3 rounded-[22px] border border-white/70 bg-white/75 px-4 shadow-[0_20px_48px_-14px_rgba(13,27,57,0.32)] backdrop-blur-xl"
             style={{
-              width: n.w,
+              width: CARD_W,
+              height: CARD_H,
               top: n.top,
               zIndex: n.z,
               opacity: n.op,
               filter: n.blur ? `blur(${n.blur}px)` : undefined,
-              transform: `translateX(calc(-50% + ${n.off}px)) rotate(${n.rot}deg) scale(${n.scale})`,
+              transform: `translateX(calc(-50% + ${n.off}px)) rotate(${n.rot}deg)`,
             }}
           >
             {/* Ícone do app (squircle azul + anel branco, coerente com o favicon) */}

@@ -719,8 +719,7 @@ function SaleNotifications() {
         {items.map((n, i) => (
           <div
             key={i}
-            className="sale-notif flex items-start gap-3 rounded-[22px] border border-white/70 bg-white/70 px-4 py-3.5 shadow-[0_18px_44px_-14px_rgba(13,27,57,0.30)] backdrop-blur-xl"
-            style={{ animationDelay: `${i * 0.9}s` }}
+            className="flex items-start gap-3 rounded-[22px] border border-white/70 bg-white/70 px-4 py-3.5 shadow-[0_18px_44px_-14px_rgba(13,27,57,0.30)] backdrop-blur-xl"
           >
             {/* Ícone do app (squircle azul + anel branco, coerente com o favicon) */}
             <div className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[12px] bg-gradient-to-br from-[#2F6BFF] to-[#1E4FD6] shadow-[0_4px_10px_rgba(47,107,255,0.45)]">
@@ -740,13 +739,6 @@ function SaleNotifications() {
           </div>
         ))}
       </div>
-      {/* Float sutil, escopado a este componente (não mexe no styles.css global).
-          Respeita prefers-reduced-motion. */}
-      <style>{`
-        @keyframes saleNotifFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        .sale-notif { animation: saleNotifFloat 5.5s ease-in-out infinite; will-change: transform; }
-        @media (prefers-reduced-motion: reduce) { .sale-notif { animation: none; } }
-      `}</style>
     </div>
   );
 }

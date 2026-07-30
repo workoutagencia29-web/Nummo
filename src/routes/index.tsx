@@ -704,14 +704,61 @@ function PaymentMethods() {
   );
 }
 
+// Notificações de venda no estilo iOS 17/18 (banner translúcido, ícone squircle
+// do app, título em negrito + horário à direita, corpo abaixo). Componente
+// autocontido: preenche a coluna esquerda da seção Taxas sem tocar em mais nada.
+function SaleNotifications() {
+  const items = [
+    { time: "agora", value: "R$ 149,90", detail: "Pix" },
+    { time: "2 min", value: "R$ 1.290,00", detail: "Cartão · 3x" },
+    { time: "5 min", value: "R$ 89,90", detail: "Pix" },
+  ];
+  return (
+    <div className="hidden lg:flex lg:-translate-y-10 lg:justify-center">
+      <div className="flex w-full max-w-[400px] flex-col gap-3">
+        {items.map((n, i) => (
+          <div
+            key={i}
+            className="sale-notif flex items-start gap-3 rounded-[22px] border border-white/70 bg-white/70 px-4 py-3.5 shadow-[0_18px_44px_-14px_rgba(13,27,57,0.30)] backdrop-blur-xl"
+            style={{ animationDelay: `${i * 0.9}s` }}
+          >
+            {/* Ícone do app (squircle azul + anel branco, coerente com o favicon) */}
+            <div className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[12px] bg-gradient-to-br from-[#2F6BFF] to-[#1E4FD6] shadow-[0_4px_10px_rgba(47,107,255,0.45)]">
+              <svg width="21" height="21" viewBox="0 0 40 40" aria-hidden="true">
+                <circle cx="20" cy="20" r="12.5" fill="none" stroke="#fff" strokeWidth="7" />
+              </svg>
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[15px] font-semibold tracking-[-0.01em] text-[#0D1B39]">Venda aprovada</span>
+                <span className="shrink-0 text-[12px] font-medium text-[#0D1B39]/40">{n.time}</span>
+              </div>
+              <p className="mt-0.5 text-[14px] leading-snug text-[#0D1B39]/65">
+                <span className="font-semibold text-[#0D1B39]/85">{n.value}</span> recebidos · {n.detail}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Float sutil, escopado a este componente (não mexe no styles.css global).
+          Respeita prefers-reduced-motion. */}
+      <style>{`
+        @keyframes saleNotifFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .sale-notif { animation: saleNotifFloat 5.5s ease-in-out infinite; will-change: transform; }
+        @media (prefers-reduced-motion: reduce) { .sale-notif { animation: none; } }
+      `}</style>
+    </div>
+  );
+}
+
 function Rates() {
   return (
     <section id="taxas" className="relative overflow-x-clip py-32">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
-          {/* Coluna do cartão — imagem removida a pedido; div mantido só como
-              espaçador do grid p/ o texto seguir na mesma posição à direita. */}
-          <div aria-hidden />
+          {/* Coluna antes ocupada pelo cartão: notificações de venda no estilo iOS.
+              Ocultas no mobile (a coluna já ficava vazia lá) p/ não alterar o layout. */}
+          <SaleNotifications />
 
           {/* Texto */}
           <div className="lg:-ml-12 lg:-translate-y-12 xl:-ml-24">

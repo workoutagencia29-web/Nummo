@@ -3,7 +3,7 @@ import {
   ArrowRight, Check, ChevronDown, Copy, Cpu, CreditCard,
   Link, Layers, Lock,
   Wallet, Zap, BarChart3, Code2,
-  Instagram, Menu, X, Sparkles,
+  Instagram, Youtube, Linkedin, Menu, X, Sparkles,
   AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
@@ -1351,22 +1351,40 @@ export function Footer() {
             <p className="mt-5 max-w-xs text-sm text-[#F6F9FC]/55">
               A infraestrutura de pagamentos para a nova economia brasileira.
             </p>
-            {/* Redes sociais */}
+            {/* Redes sociais — Instagram é link; os demais ainda não têm canal,
+                então ficam como botões visuais SEM função (não são <a>). */}
             <div className="mt-7 flex items-center gap-2.5">
               {[
                 { icon: <Instagram />, label: "Instagram", href: "https://www.instagram.com/use.nummo" },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target={s.href.startsWith("http") ? "_blank" : undefined}
-                  rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  aria-label={s.label}
-                  className="grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60 transition-colors hover:border-[#2F6BFF]/50 hover:bg-[#2F6BFF]/15 hover:text-[#2F6BFF]"
-                >
-                  <span className="[&>svg]:size-4">{s.icon}</span>
-                </a>
-              ))}
+                { icon: <TikTok />, label: "TikTok" },
+                { icon: <Youtube />, label: "YouTube" },
+                { icon: <Linkedin />, label: "LinkedIn" },
+              ].map((s) => {
+                const base =
+                  "grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60";
+                return s.href ? (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className={`${base} transition-colors hover:border-[#2F6BFF]/50 hover:bg-[#2F6BFF]/15 hover:text-[#2F6BFF]`}
+                  >
+                    <span className="[&>svg]:size-4">{s.icon}</span>
+                  </a>
+                ) : (
+                  <span
+                    key={s.label}
+                    role="img"
+                    aria-label={`${s.label} (em breve)`}
+                    title="Em breve"
+                    className={`${base} cursor-default`}
+                  >
+                    <span className="[&>svg]:size-4">{s.icon}</span>
+                  </span>
+                );
+              })}
             </div>
           </div>
 

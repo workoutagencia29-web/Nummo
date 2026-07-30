@@ -29,12 +29,12 @@ export const WHATSAPP_URL = "https://wa.me/5511912002801";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Nummo — Pagamentos Pix, cartão e boleto com liquidez D+0" },
+      { title: "Nummo | A infraestrutura de pagamentos para a nova economia brasileira." },
       { name: "description", content: "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar." },
-      { property: "og:title", content: "Nummo — Pagamentos Pix, cartão e boleto com liquidez D+0" },
+      { property: "og:title", content: "Nummo | A infraestrutura de pagamentos para a nova economia brasileira." },
       { property: "og:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
       { property: "og:url", content: "https://usenummo.com.br/" },
-      { name: "twitter:title", content: "Nummo — Pagamentos Pix, cartão e boleto com liquidez D+0" },
+      { name: "twitter:title", content: "Nummo | A infraestrutura de pagamentos para a nova economia brasileira." },
       { name: "twitter:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
     ],
     links: [{ rel: "canonical", href: "https://usenummo.com.br/" }],

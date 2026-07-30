@@ -1334,7 +1334,7 @@ const FOOTER_LINKS: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="relative bg-background px-3 text-[#F6F9FC] sm:px-[3%]">
+    <footer className="relative bg-background px-3 text-[#F6F9FC] sm:px-[1.5%]">
       {/* Fundo em "meio-card": navy da marca, cantos superiores arredondados e
           recuo lateral (o espaço vazio nas laterais é o fundo da própria página). */}
       <div className="relative overflow-hidden rounded-t-[32px] border-x border-t border-white/[0.07] bg-[#0D1B39] px-6 pb-10 pt-16 sm:rounded-t-[44px] sm:px-10">

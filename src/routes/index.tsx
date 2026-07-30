@@ -1111,6 +1111,7 @@ function Security() {
       num: "03",
       card: "3DS 2.0 nativo",
       upper: true,
+      oneLine: true,
       title: "Autenticação inteligente",
       text: "Autenticação extra integrada ao checkout para validar pagamentos com inteligência. Reduza fraudes sem criar fricção e perder conversão.",
       cardLeft: true,
@@ -1133,7 +1134,7 @@ function Security() {
                 >
                   <span
                     style={{ WebkitTextStroke: "0.03em #2F6BFF", paintOrder: "stroke fill" }}
-                    className={`relative text-center font-display text-4xl font-bold leading-[0.9] tracking-tight text-[#2F6BFF] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""}`}
+                    className={`relative text-center font-display text-4xl font-bold leading-[0.9] tracking-tight text-[#2F6BFF] sm:text-6xl md:text-7xl ${p.upper ? "uppercase" : ""} ${p.oneLine ? "lg:whitespace-nowrap lg:text-[52px] xl:text-[68px]" : ""}`}
                   >
                     {p.card}
                   </span>

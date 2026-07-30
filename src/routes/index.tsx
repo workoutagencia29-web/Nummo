@@ -1052,8 +1052,8 @@ function DevSection() {
               ].map((f) => (
                 <div
                   key={f.t}
-                  className="nm-press-dark flex items-center gap-3 rounded-2xl px-5 py-4"
-                  style={{ background: "#0D1B39" }}
+                  className="flex items-center gap-3 rounded-2xl px-5 py-4"
+                  style={{ background: "#0D1B39", boxShadow: "6px 6px 14px #080f22, -6px -6px 14px #12264a" }}
                 >
                   <span className="text-neon [&>svg]:size-4">{f.icon}</span>
                   <span className="text-sm font-medium">{f.t}</span>

@@ -725,7 +725,7 @@ function SaleNotifications() {
     { time: "6 min", value: "R$ 320,00", detail: "Boleto", top: 332, off: 42, rot: -2.5, op: 0.72, blur: 1.7, z: 5 },
   ];
   return (
-    <div className="hidden lg:flex lg:-translate-x-20 lg:-translate-y-6 lg:justify-center">
+    <div className="hidden lg:flex lg:-translate-x-36 lg:-translate-y-6 lg:justify-center">
       <div className="relative h-[416px] w-full max-w-[440px]">
         {items.map((n, i) => (
           <div

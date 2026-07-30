@@ -782,7 +782,7 @@ function Rates() {
               Seu negócio não precisa caber em uma taxa padrão.
             </h2>
             <p className="mt-6 text-pretty text-xl text-[#0D1B39]">
-              Temos <span className="font-semibold text-foreground">5 planos</span> de taxas definidos conforme o perfil da sua operação.
+              Temos <span className="font-semibold text-foreground">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa.
               E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
               suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-foreground">nova fase</span>.
             </p>

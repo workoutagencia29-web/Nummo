@@ -1046,7 +1046,7 @@ function DevSection() {
             <div className="mt-8 grid max-w-md grid-cols-2 gap-4">
               {[
                 { icon: <Code2 />, t: "SDKs oficiais" },
-                { icon: <BarChart3 />, t: "Webhooks idempotentes" },
+                { icon: <BarChart3 />, t: "Webhooks" },
                 { icon: <Lock />, t: "OAuth 2.0 + chaves" },
                 { icon: <Cpu />, t: "API" },
               ].map((f) => (

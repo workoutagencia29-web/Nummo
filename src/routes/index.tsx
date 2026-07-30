@@ -717,7 +717,7 @@ function SaleNotifications() {
     { time: "agora", value: "R$ 149,90", detail: "Pix", top: 2, off: 36, w: 300, rot: -3, scale: 0.95, op: 0.8, blur: 1.2, z: 10 },
     { time: "1 min", value: "R$ 1.290,00", detail: "Cartão · 3x", top: 74, off: -28, w: 336, rot: 2.5, scale: 1, op: 0.96, blur: 0, z: 30 },
     { time: "2 min", value: "R$ 89,90", detail: "Pix", top: 158, off: 52, w: 318, rot: -1.5, scale: 1.03, op: 1, blur: 0, z: 40 },
-    { time: "4 min", value: "R$ 4.500,00", detail: "Cartão · 12x", top: 246, off: -12, w: 322, rot: 3, scale: 0.99, op: 0.93, blur: 0, z: 20 },
+    { time: "4 min", value: "R$ 4.500,00", detail: "Cartão", top: 246, off: -12, w: 300, rot: 3, scale: 0.99, op: 0.93, blur: 0, z: 20 },
     { time: "6 min", value: "R$ 320,00", detail: "Boleto", top: 324, off: 42, w: 290, rot: -2.5, scale: 0.92, op: 0.72, blur: 1.7, z: 5 },
   ];
   return (

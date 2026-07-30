@@ -1371,7 +1371,7 @@ export function Footer() {
           </div>
 
           {/* Colunas de links */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 xl:translate-x-[83px]">
             {[
               { t: "Produtos", l: ["Checkout Builder", "Marketplace", "Co-Produção", "Rec. de Vendas"] },
               { t: "Empresa", l: ["Sobre", "Parceiros", "E-mail", "WhatsApp"] },

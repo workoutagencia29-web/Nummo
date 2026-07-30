@@ -1063,7 +1063,7 @@ function DevSection() {
           </div>
 
           {/* Code window */}
-          <div className="relative min-w-0">
+          <div className="relative min-w-0 lg:translate-y-12">
             <div className="card-elevated code-window noise relative overflow-hidden" style={{ background: "#0D1B39", border: "none", boxShadow: "8px 8px 20px #080f22, -8px -8px 20px #12264a" }}>
               <div className="flex items-center justify-between border-b border-foreground/5 px-5 py-3">
                 <div className="flex items-center gap-3 font-mono text-xs text-muted-foreground">

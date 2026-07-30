@@ -1,6 +1,6 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
-  ArrowRight, ArrowUpRight, Check, ChevronDown, Copy, Cpu, CreditCard,
+  ArrowRight, Check, ChevronDown, Copy, Cpu, CreditCard,
   Link, Layers, Lock,
   Wallet, Zap, BarChart3, Code2,
   Instagram, Menu, X, Sparkles,
@@ -1059,9 +1059,6 @@ function DevSection() {
                   <span className="text-sm font-medium">{f.t}</span>
                 </div>
               ))}
-            </div>
-            <div className="mt-10">
-              <GhostButton href="https://wa.me/5511912002801?text=Olá!%20Sou%20desenvolvedor(a)%20e%20quero%20conhecer%20a%20API%20e%20a%20documentação%20da%20Nummo." target="_blank" rel="noopener noreferrer" className="!border-[#2559d8] !bg-[#2559d8] !text-[#F6F9FC] hover:!border-[#1f4fc4] hover:!bg-[#1f4fc4]">Falar com o time técnico <ArrowUpRight className="size-4" /></GhostButton>
             </div>
           </div>
 

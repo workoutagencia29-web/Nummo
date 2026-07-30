@@ -1284,7 +1284,7 @@ function Faq() {
 function FinalCta() {
   return (
     <section className="relative overflow-hidden py-32">
-      <div className="relative mx-auto max-w-4xl -translate-y-[40px] px-6 text-center">
+      <div className="relative mx-auto max-w-4xl -translate-y-[45px] px-6 text-center">
         <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight md:text-7xl">
           <span className="text-[#0D1B39]">Vender nunca foi tão simples.</span>
         </h2>

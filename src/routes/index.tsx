@@ -647,21 +647,20 @@ function PaymentMethods() {
 
           {/* mockup do dashboard à direita */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-md lg:max-w-lg">
-              {/* sombra/glow de fundo pra dar profundidade (igual ao Hero) */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 translate-y-10 scale-90 rounded-[2.5rem] bg-[#060A0E]/55 blur-[70px]"
-              />
+            <div className="relative w-full max-w-md -translate-x-[10px] -translate-y-[54px] scale-110 lg:max-w-lg">
               <img
-                src="/metodos-dashboard.webp"
-                alt="Dashboard da Nummo — saldo disponível e vendas ao vivo"
-                width={1080}
-                height={1080}
+                src="/metodos-dashboard-2.png"
+                alt="Dashboard da Nummo — saldo disponível e desempenho de vendas"
+                width={2160}
+                height={2160}
                 loading="lazy"
                 decoding="async"
-                className="relative w-full select-none object-contain drop-shadow-[0_24px_40px_rgba(6,10,14,0.4)]"
+                className="relative w-full select-none object-contain"
                 draggable={false}
+                style={{
+                  WebkitMaskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
+                  maskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
+                }}
               />
             </div>
           </div>
@@ -1034,7 +1033,7 @@ function DevSection() {
   return (
     <section id="para-devs" className="overflow-x-clip py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid translate-y-[30px] grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div className="grid translate-y-[20px] grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <div>
             <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
               API que dev <span className="text-[#F6F9FC]">ama</span>.
@@ -1437,7 +1436,7 @@ export function Footer() {
         {/* Selos de confiança / pagamento */}
         <div className="mt-16 flex flex-col items-start gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-xs text-[#F6F9FC]/50">© 2026 Nummo — Todos os direitos reservados.</span>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <div className="flex -translate-x-[16px] flex-wrap items-center gap-x-6 gap-y-2">
             {[
               { name: "Pix", href: "https://www.bcb.gov.br/estabilidadefinanceira/pix" },
               { name: "Visa", href: "https://www.visa.com.br" },

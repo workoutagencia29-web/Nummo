@@ -5,6 +5,7 @@ import {
   Wallet, Zap, BarChart3, Code2,
   Instagram, Youtube, Linkedin, Menu, X, Sparkles,
   AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
+  RefreshCw,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 
@@ -109,10 +110,10 @@ function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.
           / {kicker}
         </div>
       )}
-      <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
+      <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[30px] md:text-[56px]">
         {title}
       </h2>
-      {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-[#0D1B39]">{sub}</p>}
+      {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[15px]">{sub}</p>}
     </div>
   );
 }
@@ -144,6 +145,24 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       {children}
     </div>
   );
+}
+
+// Entrada deslizando da borda direita até a posição final (usado no mockup dos Métodos).
+function SlideInRight({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) { el.classList.add("in"); io.disconnect(); }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <div ref={ref} className={`slide-in-right ${className}`}>{children}</div>;
 }
 
 // Stagger: cada filho vira .reveal-child e recebe .in em sequência ao entrar na viewport.
@@ -211,16 +230,26 @@ function Landing() {
 const RAIL_THUMB = 80; // altura do trecho azul (px) = h-20
 function ScrollRail() {
   const thumbRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     // A barra só existe no desktop (lg:block). No mobile nem registra o listener.
     if (typeof window === "undefined" || !window.matchMedia("(min-width: 1024px)").matches) return;
     let ticking = false;
     const update = () => {
+      // Divisão foto/branco = fim do hero (1ª seção). A barra começa a contar a partir daí.
+      const hero = document.querySelector("section");
+      const startY = hero ? hero.offsetHeight : window.innerHeight;
       const el = thumbRef.current;
       if (el) {
         const max = document.documentElement.scrollHeight - window.innerHeight;
-        const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        const range = Math.max(1, max - startY);
+        const p = Math.min(1, Math.max(0, (window.scrollY - startY) / range));
         el.style.transform = `translateY(${p * (window.innerHeight - RAIL_THUMB)}px)`;
+      }
+      // Só aparece depois do hero (foto): quando o fim da 1ª seção passa pelo topo.
+      const rail = railRef.current;
+      if (rail) {
+        rail.style.opacity = window.scrollY >= startY - 8 ? "1" : "0";
       }
       ticking = false;
     };
@@ -236,7 +265,7 @@ function ScrollRail() {
     };
   }, []);
   return (
-    <div className="pointer-events-none fixed right-0 top-0 z-40 hidden h-screen lg:block">
+    <div ref={railRef} className="pointer-events-none fixed right-0 top-0 z-40 hidden h-screen opacity-0 transition-opacity duration-300 lg:block">
       <div className="relative h-full w-[3px] bg-foreground/10">
         <div
           ref={thumbRef}
@@ -264,10 +293,10 @@ function navScroll(e: React.MouseEvent<HTMLAnchorElement>, hash: string, off = -
 }
 
 const NAV_ITEMS = [
-  { l: "Produtos", h: "plataforma", off: 0 },
+  { l: "Produtos", h: "plataforma", off: 70 },
   { l: "Taxas", h: "taxas", off: -140 },
   { l: "Desenvolvedores", h: "para-devs", off: 0 },
-  { l: "FAQ", h: "faq", off: -90 },
+  { l: "FAQ", h: "faq", off: 80 },
 ];
 
 export function Nav({ solid = false }: { solid?: boolean }) {
@@ -290,9 +319,9 @@ export function Nav({ solid = false }: { solid?: boolean }) {
   return (
     <>
       {solid && <ScrollRail />}
-      <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""}`}>
+      <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""} ${open ? "bg-gradient-to-b from-white/12 to-white/[0.04] backdrop-blur-2xl backdrop-saturate-[2] lg:bg-none lg:backdrop-blur-none lg:backdrop-saturate-100" : ""}`}>
       <div className="relative flex h-20 items-center px-6 lg:px-8">
-        <a href="/" onClick={scrollTop} className="flex shrink-0 items-center" aria-label="Nummo — início">
+        <a href="/" onClick={scrollTop} className={`flex shrink-0 items-center ${open ? "max-lg:hidden" : ""}`} aria-label="Nummo — início">
           <img
             src={overlay ? "/logo-nummo.svg" : "/logo-nummo-dark.svg"}
             alt="Nummo"
@@ -344,7 +373,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className={`ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"}`}
+          className={`ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"} ${open ? "max-lg:!text-[#0D1B39]" : ""}`}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -354,7 +383,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       </div>
 
       {open && (
-        <div id="mobile-nav" className="border-t border-border bg-[#F6F9FC] lg:hidden">
+        <div id="mobile-nav" className="-mt-[72px] lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {NAV_ITEMS.map((item) => (
               <a
@@ -374,7 +403,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
                 href="https://app.usenummo.com.br/dashboard/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 rounded-full border border-border bg-[#F6F9FC] py-2.5 text-center text-sm font-semibold text-foreground"
+                className="flex-1 rounded-full border border-white/25 bg-white/15 py-2.5 text-center text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
               >
                 Entrar
               </a>
@@ -414,7 +443,7 @@ function Hero() {
         <div
           aria-hidden
           className="absolute inset-0 bg-no-repeat lg:hidden"
-          style={{ backgroundImage: "url(/hero-bg.webp)", backgroundSize: "auto 168%", backgroundPosition: "50% 75%" }}
+          style={{ backgroundImage: "url(/hero-bg.webp)", backgroundSize: "auto 115%", backgroundPosition: "76% 26%" }}
         />
         {/* Overlay desktop (original) */}
         <div className="absolute inset-0 hidden bg-gradient-to-b from-[#050B1E]/70 via-[#050B1E]/35 to-[#050B1E]/95 lg:block" />
@@ -432,28 +461,28 @@ function Hero() {
               -translate-y sobe título e subtítulo sem tocar no layout (os botões ficam no lugar);
               usa a prop `translate`, que compõe com o `transform` da animação em vez de sobrescrevê-lo. */}
           <div className="animate-hero-in -translate-y-8 [animation-delay:120ms]">
-            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-center lg:text-[52px] xl:text-[58px]">
-              <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[67px] xl:text-[75px]">
+            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
+              <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
                 Infraestrutura financeira
               </span>
               <br />
               {/* inline-block é pré-requisito do translate: transform não se aplica a inline puro.
                   Sobe só a 2ª linha p/ colar na 1ª, sem mexer na altura do h1. */}
-              <span className="inline-block -translate-y-1.5 font-medium">para empresas que <span className="bg-gradient-to-r from-[#F6F9FC] to-[#2F6BFF] bg-clip-text text-transparent">não querem limites.</span></span>
+              <span className="inline-block -translate-y-1.5 font-medium">para empresas que não <br />querem limites.</span>
             </h1>
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:mx-auto lg:max-w-2xl lg:text-center lg:text-lg lg:text-white/85">
+          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
           {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-center">
+          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 max-sm:w-full max-sm:flex-row max-sm:items-stretch max-sm:gap-2 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-start">
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"
-              className="min-w-[220px] justify-center !bg-[#2559d8] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#1f4fc4]"
+              className="h-[56px] w-[240px] justify-center !bg-[#2559d8] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:!px-3 max-sm:!text-sm"
             >
               Criar Conta
             </PrimaryButton>
@@ -461,7 +490,7 @@ function Hero() {
               href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/15 px-8 py-4 text-base font-medium text-white transition hover:bg-white/20"
+              className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/15 px-8 text-base font-medium text-white transition hover:bg-white/20 max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:whitespace-nowrap max-sm:px-2 max-sm:text-[13px]"
             >
               Falar com Especialista
             </a>
@@ -476,13 +505,16 @@ function Bento() {
   return (
     <section id="plataforma" className="relative py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionEyebrow
-          kicker="Produtos"
-          title={<span className="text-[#0D1B39]">Produtos que simplificam sua operação hoje e escalam amanhã.</span>}
-          sub="Um ecossistema construído e pensado para sua empresa."
-        />
+        <div className="mb-16 text-center max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
+          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px]">
+            <span className="lg:whitespace-nowrap">Produtos que simplificam sua operação hoje</span>
+            <br />
+            e escalam amanhã.
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[15px] lg:-translate-y-[10px]">Um ecossistema construído e pensado para sua empresa.</p>
+        </div>
 
-        <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2" step={200}>
+        <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2 lg:-translate-y-[40px]" step={200}>
           {/* Big card */}
           <div
             className="noise relative col-span-1 row-span-2 overflow-hidden rounded-[28px] p-6 text-[#F6F9FC] md:col-span-3 md:p-8"
@@ -556,7 +588,7 @@ function Bento() {
           <BentoCard
             className="md:col-span-3"
             wide
-            icon={<Sparkles />}
+            icon={<RefreshCw />}
             title="Recuperação de vendas"
             text="A IA da Nummo recupera sozinha o que você perderia: cartões recusados são reprocessados com retry inteligente, e checkouts abandonados, Pix e boletos não pagos voltam com mensagens automáticas. Tudo em segundo plano, virando faturamento recuperado."
           />
@@ -614,10 +646,9 @@ function PaymentMethods() {
   ];
   return (
     <section className="py-32">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[50px]">
         <SectionEyebrow
-          kicker="Métodos"
-          title={<span className="text-[#0D1B39]">Venda onde e <span className="bg-gradient-to-r from-[#0D1B39] to-[#2F6BFF] bg-clip-text text-transparent">como quiser.</span></span>}
+          title={<span className="text-[#0D1B39]">Venda onde e <span className="text-[#0D1B39]">como quiser.</span></span>}
           sub="Na Nummo você tem acesso aos meios de pagamentos que o brasileiro usa de verdade."
         />
         <div className="grid gap-10 lg:grid-cols-2">
@@ -647,7 +678,8 @@ function PaymentMethods() {
 
           {/* mockup do dashboard à direita */}
           <div className="flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-md -translate-x-[10px] -translate-y-[54px] scale-110 lg:max-w-lg">
+            <SlideInRight className="w-full max-w-md lg:max-w-lg">
+            <div className="relative w-full lg:-translate-y-[54px] lg:scale-110">
               <img
                 src="/metodos-dashboard-2.png"
                 alt="Dashboard da Nummo — saldo disponível e desempenho de vendas"
@@ -663,6 +695,7 @@ function PaymentMethods() {
                 }}
               />
             </div>
+            </SlideInRight>
           </div>
         </div>
       </div>
@@ -714,8 +747,8 @@ function SaleNotifications() {
   }, []);
 
   return (
-    <div ref={ref} className="hidden lg:flex lg:-translate-x-36 lg:-translate-y-6 lg:justify-center">
-      <div className="relative h-[416px] w-full max-w-[440px]">
+    <div ref={ref} className="flex justify-center max-sm:order-last max-sm:-translate-x-[10px] sm:hidden lg:flex lg:-translate-x-[160px] lg:-translate-y-6 lg:justify-center">
+      <div className="relative h-[416px] w-full max-w-[440px] max-sm:scale-[0.8]">
         {items.map((n, i) => {
           const step = ORDER.indexOf(i);
           // Card interno: só ele anima (opacidade + subida). A opacidade final de
@@ -768,26 +801,26 @@ function SaleNotifications() {
 function Rates() {
   return (
     <section id="taxas" className="relative overflow-x-clip py-32">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[48px]">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
           {/* Coluna antes ocupada pelo cartão: notificações de venda no estilo iOS.
               Ocultas no mobile (a coluna já ficava vazia lá) p/ não alterar o layout. */}
           <SaleNotifications />
 
           {/* Texto */}
-          <div className="lg:-ml-24 lg:-translate-y-12 xl:-ml-[170px]">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Taxas</div>
-            <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
-              Seu negócio não precisa caber em uma taxa padrão.
+          <div className="lg:-ml-24 lg:-translate-x-[20px] lg:-translate-y-12 xl:-ml-[170px]">
+            <div className="invisible mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]" aria-hidden="true">/ Taxas</div>
+            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px] lg:whitespace-nowrap">
+              Seu negócio não precisa <br className="hidden lg:inline" />caber em uma <br className="hidden lg:inline" />taxa padrão.
             </h2>
-            <p className="mt-6 text-pretty text-xl text-[#0D1B39]">
-              Temos <span className="font-semibold text-foreground">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa.
+            <p className="mt-6 text-pretty text-xl text-[#0D1B39] max-sm:text-[15px]">
+              Temos <span className="font-semibold text-[#2F6BFF]">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa.
               E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
-              suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-foreground">nova fase</span>.
+              suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-[#2F6BFF]">nova fase</span>.
             </p>
-            <p className="mt-6 text-pretty text-base text-[#0D1B39]">
+            <p className="mt-6 text-pretty text-base text-[#0D1B39] max-sm:text-[13px]">
               Comece com o plano ideal hoje e{" "}
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#0052CC] underline-offset-2 transition-colors hover:text-foreground hover:underline">negocie condições ainda melhores</a>{" "}
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#2F6BFF] underline-offset-2 transition-colors hover:text-foreground hover:underline">negocie condições ainda melhores</a>{" "}
               quando sua operação pedir.
             </p>
           </div>
@@ -857,7 +890,7 @@ function IntegrationTile({ l }: { l: Integration }) {
           />
         )}
       </div>
-      <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-[#0D1B39]/70">
+      <span className="translate-y-[2px] font-mono text-[10.5px] font-bold uppercase tracking-[0.14em] text-[#0D1B39]/70">
         {l.alt}
       </span>
     </div>
@@ -878,13 +911,12 @@ function HowItWorks() {
   const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
 
   return (
-    <section className="pb-[72px] pt-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="pb-[57px] pt-32">
+      <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[38px]">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow
-            kicker="Integrações"
-            title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <span className="bg-gradient-to-r from-[#0D1B39] to-[#2F6BFF] bg-clip-text text-transparent">em um só lugar.</span></span>}
-            sub="Conecte anúncios, trackers e emissão de notas à Nummo e centralize sua operação em um só fluxo."
+            title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <span className="text-[#0D1B39]">em um só lugar.</span></span>}
+            sub="Conecte anúncios, trackers e emissão de notas, e etc à Nummo e centralize sua operação em um só fluxo."
           />
         </div>
 
@@ -892,7 +924,7 @@ function HowItWorks() {
             lendo como uma correia contínua. overflow-hidden + máscara horizontal; o padding externo
             das fileiras existe p/ não cortar a sombra "raised" no topo e na base. */}
         <div
-          className="group relative -mt-[136px] translate-y-9 overflow-hidden"
+          className="group relative -mt-[136px] translate-y-9 overflow-hidden max-sm:translate-y-[61px]"
           style={{
             maskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
             WebkitMaskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
@@ -1033,12 +1065,12 @@ function DevSection() {
   return (
     <section id="para-devs" className="overflow-x-clip py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid translate-y-[20px] grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:-translate-y-[10px]">
           <div>
-            <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
+            <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[30px] md:text-6xl">
               API que dev <span className="text-[#F6F9FC]">ama</span>.
             </h2>
-            <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground">
+            <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground max-sm:text-[15px]">
               REST, webhooks idempotentes, SDKs oficiais em Node, Python, PHP, Go e Ruby.
               Documentação interativa e suporte técnico que entende código.
             </p>
@@ -1118,8 +1150,8 @@ function Security() {
   ];
 
   return (
-    <section id="seguranca" className="relative overflow-hidden py-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="seguranca" className="relative overflow-hidden py-16">
+      <div className="invisible mx-auto h-[120px] max-w-7xl overflow-hidden px-6" aria-hidden="true">
         <h2 className="sr-only">Segurança e conformidade</h2>
         <div className="flex flex-col gap-32">
           {pairs.map((p) => {
@@ -1177,7 +1209,7 @@ function Testimonials() {
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px]">
           Clientes que não voltam atrás
         </h2>
         <Stagger className="grid translate-y-5 gap-4 md:grid-cols-3">
@@ -1218,9 +1250,11 @@ function Testimonials() {
 const FAQ_ITEMS = [
   { q: "Preciso ter CNPJ para abrir conta?", a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta normalmente em até 24h, sujeita à análise cadastral e de segurança (KYC)." },
   { q: "Quanto custa começar?", a: "Criar conta é gratuito — sem mensalidade e sem fidelidade. As taxas incidem apenas sobre vendas aprovadas e são descontadas automaticamente no momento da transação." },
+  { q: "Como funciona a área de membros da Nummo?", a: "Hospede seu curso gratuitamente na área de membros da Nummo. O armazenamento e a exibição dos seus vídeos também estão inclusos, sem nenhum custo adicional." },
+  { q: "Como funciona o programa de afiliados da Nummo?", a: "Na Nummo, você pode divulgar seu produto no marketplace para atrair novos afiliados ou convidar parceiros diretamente por meio de um link personalizado." },
+  { q: "É possível adicionar coprodutores aos meus produtos?", a: "Sim. Você pode incluir quantos coprodutores precisar e configurar a divisão das comissões diretamente pela plataforma da Nummo." },
   { q: "Como funciona o D+0?", a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda." },
   { q: "Quanto tempo leva para sacar?", a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
-  { q: "É seguro?", a: "Nós possuímos um sistema de segurança avançada para proteger cada transação. Sua operação conta com segurança PCI-DSS Level 1 e 3DS 2.0 — padrões reconhecidos de segurança para dados de cartão — além de uma camada antifraude com inteligência artificial, que analisa transações em tempo real para identificar comportamentos suspeitos, reduzir fraudes e evitar chargebacks." },
 ];
 
 // JSON-LD FAQPage — habilita rich results na busca (conteúdo já existe no acordeão).
@@ -1240,8 +1274,8 @@ function Faq() {
   return (
     <section id="faq" className="py-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
-      <div className="mx-auto max-w-3xl px-6">
-        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
+      <div className="mx-auto max-w-[1000px] px-6">
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px]">
           Perguntas frequentes
         </h2>
         <Stagger className="space-y-3">
@@ -1283,12 +1317,12 @@ function Faq() {
 function FinalCta() {
   return (
     <section className="relative overflow-hidden py-32">
-      <div className="relative mx-auto max-w-4xl -translate-y-[45px] px-6 text-center">
+      <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
         <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight md:text-7xl">
           <span className="text-[#0D1B39]">Vender nunca foi tão simples.</span>
         </h2>
 
-        <p className="mt-6 text-lg text-[#0D1B39]">
+        <p className="mt-6 text-lg text-[#0D1B39] max-sm:text-[15px]">
           Sem mensalidade. Sem fidelidade. Sem surpresa.
         </p>
 
@@ -1436,7 +1470,7 @@ export function Footer() {
         {/* Selos de confiança / pagamento */}
         <div className="mt-16 flex flex-col items-start gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-xs text-[#F6F9FC]/50">© 2026 Nummo — Todos os direitos reservados.</span>
-          <div className="flex -translate-x-[16px] flex-wrap items-center gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 lg:-translate-x-[16px]">
             {[
               { name: "Pix", href: "https://www.bcb.gov.br/estabilidadefinanceira/pix" },
               { name: "Visa", href: "https://www.visa.com.br" },

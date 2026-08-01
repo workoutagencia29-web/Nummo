@@ -328,6 +328,28 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
     opacity: 1;
     transform: none;
   }
+
+  /* mockup dos Métodos: fade suave em todas as telas; o deslize da borda direita
+     só no desktop (no mobile a coluna é estreita e o translateX transbordaria). */
+  .slide-in-right {
+    opacity: 0;
+    transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .slide-in-right.in {
+    opacity: 1;
+  }
+  @media (min-width: 1024px) {
+    .slide-in-right {
+      transform: translateX(40px);
+      transition:
+        opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slide-in-right.in {
+      transform: translateX(0);
+    }
+  }
 }
 
 /* ---------- estados de pressão neumórficos (hover levanta, active afunda) ---------- */

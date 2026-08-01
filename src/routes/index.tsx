@@ -327,9 +327,19 @@ export function Nav({ solid = false }: { solid?: boolean }) {
             alt="Nummo"
             width={145}
             height={24}
-            className="h-6 w-auto select-none md:h-7"
+            className={`h-6 w-auto select-none md:h-7 ${!solid ? "max-sm:hidden" : ""}`}
             draggable={false}
           />
+          {!solid && (
+            <img
+              src="/logo-nummo-dark.svg"
+              alt="Nummo"
+              width={145}
+              height={24}
+              className="hidden h-6 w-auto select-none max-sm:block md:h-7"
+              draggable={false}
+            />
+          )}
         </a>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
@@ -373,7 +383,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className={`ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"} ${open ? "max-lg:!text-[#0D1B39]" : ""}`}
+          className={`ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"} ${open ? "max-lg:!text-[#0D1B39]" : ""} ${!solid ? "max-sm:!text-[#0D1B39]" : ""}`}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -403,7 +413,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
                 href="https://app.usenummo.com.br/dashboard/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 rounded-full border border-white/25 bg-white/15 py-2.5 text-center text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
+                className="flex-1 rounded-full border border-white/25 bg-white/15 py-2.5 text-center text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 max-sm:border-[#0D1B39]/20 max-sm:bg-transparent max-sm:text-[#0D1B39]"
               >
                 Entrar
               </a>
@@ -426,7 +436,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh items-end overflow-hidden text-white lg:items-center">
+    <section className="relative flex min-h-svh items-end overflow-hidden text-white max-sm:items-center max-sm:bg-[#F6F9FC] max-sm:text-[#0D1B39] lg:items-center">
       {/* Fundo cinematográfico (copiado do nummo-premium-flow) */}
       <div className="absolute inset-0">
         {/* Fundo desktop */}
@@ -442,27 +452,27 @@ function Hero() {
         {/* Fundo mobile/tablet — enquadrado na executiva (corta o teto escuro, estilo Stark) */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-no-repeat lg:hidden"
+          className="absolute inset-0 bg-no-repeat max-sm:hidden lg:hidden"
           style={{ backgroundImage: "url(/hero-bg.webp)", backgroundSize: "auto 115%", backgroundPosition: "76% 26%" }}
         />
         {/* Overlay desktop (original) */}
         <div className="absolute inset-0 hidden bg-gradient-to-b from-[#050B1E]/70 via-[#050B1E]/35 to-[#050B1E]/95 lg:block" />
         {/* Overlay mobile — rosto visível em cima, escuro embaixo p/ o texto (estilo Stark/Revolut) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050B1E] via-[#050B1E]/40 to-[#050B1E]/5 lg:hidden" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050B1E]/50 via-transparent to-transparent lg:hidden" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,11,30,0.45)_78%)]" />
-        <div className="absolute inset-0 grid-bg opacity-[0.05]" />
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#050B1E]/90 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050B1E] via-[#050B1E]/40 to-[#050B1E]/5 max-sm:hidden lg:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050B1E]/50 via-transparent to-transparent max-sm:hidden lg:hidden" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,11,30,0.45)_78%)] max-sm:hidden" />
+        <div className="absolute inset-0 grid-bg opacity-[0.05] max-sm:hidden" />
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#050B1E]/90 to-transparent max-sm:hidden" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 lg:py-10">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 max-sm:-translate-y-8 max-sm:pb-0 lg:py-10">
         <div className="lg:mt-8">
           {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto).
               -translate-y sobe título e subtítulo sem tocar no layout (os botões ficam no lugar);
               usa a prop `translate`, que compõe com o `transform` da animação em vez de sobrescrevê-lo. */}
           <div className="animate-hero-in -translate-y-8 [animation-delay:120ms]">
-            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
-              <span className="inline-block text-[40px] leading-[0.98] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
+            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-sm:text-center max-sm:text-[#0D1B39] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
+              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[48px] max-sm:text-[48px] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
                 Infraestrutura financeira
               </span>
               <br />
@@ -473,7 +483,7 @@ function Hero() {
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
+          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 max-sm:mx-auto max-sm:text-center max-sm:text-[#0D1B39]/70 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
@@ -490,7 +500,7 @@ function Hero() {
               href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/15 px-8 text-base font-medium text-white transition hover:bg-white/20 max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:whitespace-nowrap max-sm:px-2 max-sm:text-[13px]"
+              className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/15 px-8 text-base font-medium text-white transition hover:bg-white/20 max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:whitespace-nowrap max-sm:border-[#0D1B39]/20 max-sm:bg-transparent max-sm:px-2 max-sm:text-[13px] max-sm:text-[#0D1B39]"
             >
               Falar com Especialista
             </a>

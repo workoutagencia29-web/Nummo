@@ -645,7 +645,7 @@ function PaymentMethods() {
     { name: "API Pix", desc: "Cobranças Pix direto pela sua API.", icon: <Code2 /> },
   ];
   return (
-    <section className="py-32">
+    <section className="py-32 max-sm:pt-6 max-sm:pb-10">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[50px]">
         <SectionEyebrow
           title={<span className="text-[#0D1B39]">Venda onde e <span className="text-[#0D1B39]">como quiser.</span></span>}
@@ -800,7 +800,7 @@ function SaleNotifications() {
 
 function Rates() {
   return (
-    <section id="taxas" className="relative overflow-x-clip py-32">
+    <section id="taxas" className="relative overflow-x-clip py-32 max-sm:pt-[50px] max-sm:pb-10">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[48px]">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
           {/* Coluna antes ocupada pelo cartão: notificações de venda no estilo iOS.
@@ -911,7 +911,7 @@ function HowItWorks() {
   const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
 
   return (
-    <section className="pb-[57px] pt-32">
+    <section className="pb-[57px] pt-32 max-sm:pt-11">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[38px]">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow

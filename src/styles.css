@@ -371,6 +371,12 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   .nm-press-light, .nm-press-dark { transition: none; }
   .nm-press-light:hover, .nm-press-dark:hover { transform: none; }
 }
+/* Só no mobile (phones): remove a animação de toque dos cards de meios de pagamento.
+   Tablet e desktop mantêm o efeito press/hover normalmente. */
+@media (max-width: 639px) {
+  .nm-press-light { transition: none; }
+  .nm-press-light:active { box-shadow: 14px 14px 28px #d3dbea, -14px -14px 28px #ffffff; transform: none; }
+}
 
 /* ---------- cursor de digitação (janela de código) ---------- */
 @keyframes caret-blink { 0%, 49% { opacity: 1; } 50%, 99% { opacity: 0; } 100% { opacity: 1; } }

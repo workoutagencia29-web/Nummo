@@ -472,13 +472,13 @@ function Hero() {
               usa a prop `translate`, que compõe com o `transform` da animação em vez de sobrescrevê-lo. */}
           <div className="animate-hero-in -translate-y-8 max-sm:translate-y-[46px] [animation-delay:120ms]">
             <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-sm:text-center max-sm:text-[#0D1B39] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
-              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[28px] max-sm:text-[48px] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
+              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[8px] max-sm:text-[48px] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
                 Infraestrutura financeira
               </span>
               <br />
               {/* inline-block é pré-requisito do translate: transform não se aplica a inline puro.
                   Sobe só a 2ª linha p/ colar na 1ª, sem mexer na altura do h1. */}
-              <span className="inline-block -translate-y-1.5 font-medium">para empresas que não <br />querem limites.</span>
+              <span className="inline-block -translate-y-1.5 font-medium max-sm:text-[28px]">para empresas <br className="hidden max-sm:inline" />que não <br className="max-sm:hidden" />querem limites.</span>
             </h1>
           </div>
 

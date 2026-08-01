@@ -470,9 +470,9 @@ function Hero() {
           {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto).
               -translate-y sobe título e subtítulo sem tocar no layout (os botões ficam no lugar);
               usa a prop `translate`, que compõe com o `transform` da animação em vez de sobrescrevê-lo. */}
-          <div className="animate-hero-in -translate-y-8 [animation-delay:120ms]">
+          <div className="animate-hero-in -translate-y-8 max-sm:translate-y-[46px] [animation-delay:120ms]">
             <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-sm:text-center max-sm:text-[#0D1B39] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
-              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[48px] max-sm:text-[48px] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
+              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[28px] max-sm:text-[48px] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
                 Infraestrutura financeira
               </span>
               <br />
@@ -483,12 +483,12 @@ function Hero() {
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 max-sm:mx-auto max-sm:text-center max-sm:text-[#0D1B39]/70 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
+          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 max-sm:mx-auto max-sm:translate-y-[62px] max-sm:text-center max-sm:text-[#0D1B39]/70 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
           {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 max-sm:w-full max-sm:flex-row max-sm:items-stretch max-sm:gap-2 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-start">
+          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 max-sm:w-full max-sm:translate-y-[140px] max-sm:flex-row max-sm:items-stretch max-sm:gap-2 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-start">
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"

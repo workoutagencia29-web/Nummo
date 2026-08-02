@@ -1424,7 +1424,7 @@ export function Footer() {
             </p>
             {/* Redes sociais — Instagram é link; os demais ainda não têm canal,
                 então ficam como botões visuais SEM função (não são <a>). */}
-            <div className="mt-7 flex items-center gap-2.5 max-sm:mt-0 max-sm:ml-auto max-sm:translate-x-[10px] max-sm:gap-2">
+            <div className="mt-7 flex items-center gap-2.5 max-sm:mt-0 max-sm:ml-auto max-sm:-translate-x-[6px] max-sm:gap-2">
               {[
                 { icon: <Instagram />, label: "Instagram", href: "https://www.instagram.com/use.nummo" },
                 { icon: <TikTok />, label: "TikTok" },
@@ -1432,7 +1432,7 @@ export function Footer() {
                 { icon: <Linkedin />, label: "LinkedIn" },
               ].map((s) => {
                 const base =
-                  "grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60 max-sm:size-9";
+                  "grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60 max-sm:size-8";
                 return s.href ? (
                   <a
                     key={s.label}
@@ -1442,7 +1442,7 @@ export function Footer() {
                     aria-label={s.label}
                     className={`${base} transition-colors hover:border-[#2F6BFF]/50 hover:bg-[#2F6BFF]/15 hover:text-[#2F6BFF]`}
                   >
-                    <span className="[&>svg]:size-4 max-sm:[&>svg]:size-3.5">{s.icon}</span>
+                    <span className="[&>svg]:size-4 max-sm:[&>svg]:size-3">{s.icon}</span>
                   </a>
                 ) : (
                   <span
@@ -1452,7 +1452,7 @@ export function Footer() {
                     title="Em breve"
                     className={`${base} cursor-default`}
                   >
-                    <span className="[&>svg]:size-4 max-sm:[&>svg]:size-3.5">{s.icon}</span>
+                    <span className="[&>svg]:size-4 max-sm:[&>svg]:size-3">{s.icon}</span>
                   </span>
                 );
               })}

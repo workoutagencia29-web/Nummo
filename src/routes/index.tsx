@@ -516,7 +516,7 @@ function Hero() {
           </p>
 
           {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 max-sm:w-full max-sm:translate-y-[180px] max-sm:flex-row max-sm:items-stretch max-sm:gap-2 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-start">
+          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 max-sm:w-full max-sm:translate-y-[200px] max-sm:flex-row max-sm:items-stretch max-sm:gap-2 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-start">
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"

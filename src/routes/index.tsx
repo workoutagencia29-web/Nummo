@@ -319,7 +319,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       };
     }
     setMenuShown(false);
-    const t = setTimeout(() => setMenuMounted(false), 320);
+    const t = setTimeout(() => setMenuMounted(false), 520);
     return () => clearTimeout(t);
   }, [open]);
 
@@ -345,11 +345,11 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       {menuMounted && (
         <div
           aria-hidden
-          className={`absolute inset-0 bg-gradient-to-b from-white/12 to-white/[0.04] backdrop-blur-2xl backdrop-saturate-[2] transition-opacity duration-300 ease-out lg:hidden ${menuShown ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 bg-gradient-to-b from-white/12 to-white/[0.04] backdrop-blur-2xl backdrop-saturate-[2] transition-opacity duration-500 ease-in-out lg:hidden ${menuShown ? "opacity-100" : "opacity-0"}`}
         />
       )}
       <div className="relative flex h-20 items-center px-6 lg:px-8">
-        <a href="/" onClick={scrollTop} className={`flex shrink-0 items-center transition-opacity duration-300 ease-out ${menuMounted ? "max-lg:pointer-events-none max-lg:opacity-0" : ""}`} aria-label="Nummo — início">
+        <a href="/" onClick={scrollTop} className={`flex shrink-0 items-center transition-opacity duration-500 ease-in-out ${menuMounted ? "max-lg:pointer-events-none max-lg:opacity-0" : ""}`} aria-label="Nummo — início">
           <img
             src={overlay ? "/logo-nummo.svg" : "/logo-nummo-dark.svg"}
             alt="Nummo"
@@ -421,7 +421,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
       </div>
 
       {menuMounted && (
-        <div id="mobile-nav" className={`relative -mt-[72px] transition-opacity duration-300 ease-out lg:hidden ${menuShown ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+        <div id="mobile-nav" className={`relative -mt-[72px] transition-opacity duration-500 ease-in-out lg:hidden ${menuShown ? "opacity-100" : "pointer-events-none opacity-0"}`}>
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {NAV_ITEMS.map((item) => (
               <a
@@ -693,25 +693,25 @@ function PaymentMethods() {
         />
         <div className="grid gap-10 lg:grid-cols-2">
           {/* 4 cards à esquerda */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-4 max-sm:gap-3">
             {methods.map((m) => (
               <div
                 key={m.name}
-                className="nm-press-light h-full rounded-[28px] p-6"
+                className="nm-press-light h-full rounded-[28px] p-6 max-sm:rounded-[22px] max-sm:p-4"
                 style={{ background: "#F6F9FC" }}
               >
                 <div
-                  className="inline-flex size-11 items-center justify-center rounded-xl text-[#0D1B39]"
+                  className="inline-flex size-11 items-center justify-center rounded-xl text-[#0D1B39] max-sm:size-9 max-sm:rounded-lg"
                   style={{
                     background: "#F6F9FC",
                     boxShadow: "inset 3px 3px 6px #d3dbea, inset -3px -3px 6px #ffffff",
                   }}
                 >
-                  <span className="[&>svg]:size-5">{m.icon}</span>
+                  <span className="[&>svg]:size-5 max-sm:[&>svg]:size-4">{m.icon}</span>
                 </div>
-                <div className="mt-8 h-px w-12" style={{ background: "#0D1B39" }} />
-                <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-[#0D1B39]">{m.name}</h3>
-                <p className="mt-2 text-sm text-[#0D1B39]/70">{m.desc}</p>
+                <div className="mt-8 h-px w-12 max-sm:mt-4 max-sm:w-10" style={{ background: "#0D1B39" }} />
+                <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-[#0D1B39] max-sm:mt-3 max-sm:text-[17px]">{m.name}</h3>
+                <p className="mt-2 text-sm text-[#0D1B39]/70 max-sm:mt-1.5 max-sm:text-[10px]">{m.desc}</p>
               </div>
             ))}
           </div>
@@ -719,7 +719,7 @@ function PaymentMethods() {
           {/* mockup do dashboard à direita */}
           <div className="flex items-center justify-center lg:justify-end">
             <SlideInRight className="w-full max-w-md lg:max-w-lg">
-            <div className="relative w-full lg:-translate-y-[54px] lg:scale-110">
+            <div className="relative w-full max-sm:-translate-y-8 max-sm:scale-90 lg:-translate-y-[54px] lg:scale-110">
               <img
                 src="/metodos-dashboard-2.png"
                 alt="Dashboard da Nummo — saldo disponível e desempenho de vendas"
@@ -788,7 +788,7 @@ function SaleNotifications() {
 
   return (
     <div ref={ref} className="flex justify-center max-sm:order-last max-sm:-translate-x-[10px] sm:hidden lg:flex lg:-translate-x-[160px] lg:-translate-y-6 lg:justify-center">
-      <div className="relative h-[416px] w-full max-w-[440px] max-sm:scale-[0.8]">
+      <div className="relative h-[416px] w-full max-w-[440px] max-sm:origin-top max-sm:scale-[0.8]">
         {items.map((n, i) => {
           const step = ORDER.indexOf(i);
           // Card interno: só ele anima (opacidade + subida). A opacidade final de
@@ -840,9 +840,9 @@ function SaleNotifications() {
 
 function Rates() {
   return (
-    <section id="taxas" className="relative overflow-x-clip py-32 max-sm:pt-[50px] max-sm:pb-10">
+    <section id="taxas" className="relative overflow-x-clip py-32 max-sm:pt-[2px] max-sm:pb-10">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[48px]">
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.6fr_1fr]">
+        <div className="grid grid-cols-1 items-center gap-14 max-sm:gap-[83px] lg:grid-cols-[1.6fr_1fr]">
           {/* Coluna antes ocupada pelo cartão: notificações de venda no estilo iOS.
               Ocultas no mobile (a coluna já ficava vazia lá) p/ não alterar o layout. */}
           <SaleNotifications />
@@ -853,12 +853,12 @@ function Rates() {
             <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px] lg:whitespace-nowrap">
               Seu negócio não precisa <br className="hidden lg:inline" />caber em uma <br className="hidden lg:inline" />taxa padrão.
             </h2>
-            <p className="mt-6 text-pretty text-xl text-[#0D1B39] max-sm:text-[15px]">
+            <p className="mt-6 text-pretty text-xl text-[#0D1B39] max-sm:text-[13px]">
               Temos <span className="font-semibold text-[#2F6BFF]">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa.
               E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
               suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-[#2F6BFF]">nova fase</span>.
             </p>
-            <p className="mt-6 text-pretty text-base text-[#0D1B39] max-sm:text-[13px]">
+            <p className="mt-6 text-pretty text-base text-[#0D1B39] max-sm:text-[11px]">
               Comece com o plano ideal hoje e{" "}
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#2F6BFF] underline-offset-2 transition-colors hover:text-foreground hover:underline">negocie condições ainda melhores</a>{" "}
               quando sua operação pedir.
@@ -881,13 +881,13 @@ const SOCKET_INSET = "inset 5px 5px 10px #c7d1e4, inset -4px -4px 9px #ffffff";
 function IntegrationTile({ l }: { l: Integration }) {
   return (
     <div
-      className="group/tile mr-6 flex h-[152px] w-[176px] shrink-0 flex-col items-center justify-center gap-3 rounded-[28px] p-3.5 sm:h-[168px] sm:w-[200px]"
+      className="group/tile mr-6 flex h-[152px] w-[176px] shrink-0 flex-col items-center justify-center gap-3 rounded-[28px] p-3.5 max-sm:mr-3 max-sm:h-[104px] max-sm:w-[120px] max-sm:gap-1.5 max-sm:rounded-[18px] max-sm:p-2.5 sm:h-[168px] sm:w-[200px]"
       style={{ background: "#F6F9FC", boxShadow: TILE_RAISED }}
     >
       {/* SOQUETE afundado — o "encaixe" onde cada integração pluga (rounded-xl = ícone dos Métodos).
           Quadrado e justo na logo: sem sobra horizontal, o card é que dá o respiro em volta. */}
       <div
-        className="flex h-[86px] w-[86px] items-center justify-center rounded-xl sm:h-[96px] sm:w-[96px]"
+        className="flex h-[86px] w-[86px] items-center justify-center rounded-xl max-sm:h-[58px] max-sm:w-[58px] max-sm:rounded-lg sm:h-[96px] sm:w-[96px]"
         style={{ background: "#F6F9FC", boxShadow: SOCKET_INSET }}
       >
         {l.tone === "node" ? (
@@ -895,7 +895,7 @@ function IntegrationTile({ l }: { l: Integration }) {
           <span
             role="img"
             aria-label={l.alt}
-            className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-[52px] [&>svg]:w-[52px]"
+            className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-[52px] [&>svg]:w-[52px] max-sm:[&>svg]:h-[35px] max-sm:[&>svg]:w-[35px]"
           >
             {l.node}
           </span>
@@ -904,10 +904,8 @@ function IntegrationTile({ l }: { l: Integration }) {
           <span
             role="img"
             aria-label={l.alt}
-            className="block opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
+            className="block h-[52px] w-[62px] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:h-[35px] max-sm:w-[42px]"
             style={{
-              height: "52px",
-              width: "62px",
               background: "#0D1B39",
               WebkitMaskImage: `url(${l.src})`,
               maskImage: `url(${l.src})`,
@@ -924,13 +922,13 @@ function IntegrationTile({ l }: { l: Integration }) {
           <img
             src={l.src}
             alt={l.alt}
-            className="max-h-[52px] w-auto max-w-[62px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100"
+            className="max-h-[52px] w-auto max-w-[62px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:max-h-[35px] max-sm:max-w-[42px]"
             draggable={false}
             loading="lazy"
           />
         )}
       </div>
-      <span className="translate-y-[2px] font-mono text-[10.5px] font-bold uppercase tracking-[0.14em] text-[#0D1B39]/70">
+      <span className="translate-y-[2px] font-mono text-[10.5px] font-bold uppercase tracking-[0.14em] text-[#0D1B39]/70 max-sm:text-[8px]">
         {l.alt}
       </span>
     </div>
@@ -951,7 +949,7 @@ function HowItWorks() {
   const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
 
   return (
-    <section className="pb-[57px] pt-32 max-sm:pt-11">
+    <section className="pb-[57px] pt-32 max-sm:pt-[2px]">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[38px]">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow

@@ -543,14 +543,14 @@ function Bento() {
   return (
     <section id="plataforma" className="relative py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-16 text-center max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
+        <div className="mb-16 text-center max-sm:mb-[8px] max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
           <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
             <span className="lg:whitespace-nowrap">Produtos que simplificam <br className="hidden max-sm:inline" />sua operação hoje<span className="hidden max-sm:inline"> e</span></span>
             <br className="max-sm:hidden" />
             <br className="hidden max-sm:inline" />
             <span className="max-sm:hidden">e </span>escalam amanhã.
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px] lg:-translate-y-[10px]">Um ecossistema construído e pensado <br className="hidden max-sm:inline" />para sua empresa.</p>
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px] lg:-translate-y-[10px]">Um ecossistema construído e pensado para <br className="hidden max-sm:inline" />sua empresa.</p>
         </div>
 
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2 lg:-translate-y-[40px]" step={200}>
@@ -1356,7 +1356,7 @@ function FinalCta() {
   return (
     <section className="relative overflow-hidden py-32">
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
-        <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight md:text-7xl">
+        <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight max-sm:text-[44px] md:text-7xl">
           <span className="text-[#0D1B39]">Vender nunca foi tão simples.</span>
         </h2>
 
@@ -1364,10 +1364,10 @@ function FinalCta() {
           Sem mensalidade. Sem fidelidade. Sem surpresa.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4 max-sm:flex-nowrap max-sm:gap-2">
           <PrimaryButton
             href="https://app.usenummo.com.br/dashboard/register"
-            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4]"
+            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]"
           >
             Criar Conta
           </PrimaryButton>
@@ -1376,7 +1376,7 @@ function FinalCta() {
             href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC]"
+            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]"
           >
             Falar com especialista
           </GhostButton>
@@ -1405,26 +1405,26 @@ const FOOTER_LINKS: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="relative bg-background px-3 text-[#F6F9FC] sm:px-[1.5%]">
+    <footer className="relative bg-background px-3 text-[#F6F9FC] max-sm:px-0 sm:px-[1.5%]">
       {/* Fundo em "meio-card": navy da marca, cantos superiores arredondados e
           recuo lateral (o espaço vazio nas laterais é o fundo da própria página). */}
-      <div className="relative overflow-hidden rounded-t-[32px] border-x border-t border-white/[0.07] bg-[#0D1B39] px-6 pb-10 pt-16 sm:rounded-t-[44px] sm:px-10">
+      <div className="relative overflow-hidden rounded-t-[32px] border-x border-t border-white/[0.07] bg-[#0D1B39] px-6 pb-10 pt-16 max-sm:rounded-t-none max-sm:border-x-0 sm:rounded-t-[44px] sm:px-10">
         {/* Glow sutil no topo */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-44 radial-glow opacity-50" />
 
         <div className="relative mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-[1.5fr_3fr]">
           {/* Marca */}
-          <div>
-            <RouterLink to="/" className="inline-flex items-center" aria-label="Nummo — início">
+          <div className="max-sm:flex max-sm:items-center max-sm:gap-4 max-sm:-translate-y-[16px]">
+            <RouterLink to="/" className="inline-flex items-center max-sm:shrink-0" aria-label="Nummo — início">
               <img src="/logo-nummo.svg" alt="Nummo" width={145} height={24} className="h-[24px] w-auto" />
             </RouterLink>
-            <p className="mt-5 max-w-xs text-sm text-[#F6F9FC]/55">
+            <p className="mt-5 max-w-xs text-sm text-[#F6F9FC]/55 max-sm:hidden">
               A infraestrutura de pagamentos para a nova economia brasileira.
             </p>
             {/* Redes sociais — Instagram é link; os demais ainda não têm canal,
                 então ficam como botões visuais SEM função (não são <a>). */}
-            <div className="mt-7 flex items-center gap-2.5">
+            <div className="mt-7 flex items-center gap-2.5 max-sm:mt-0 max-sm:ml-auto max-sm:translate-x-[10px] max-sm:gap-2">
               {[
                 { icon: <Instagram />, label: "Instagram", href: "https://www.instagram.com/use.nummo" },
                 { icon: <TikTok />, label: "TikTok" },
@@ -1432,7 +1432,7 @@ export function Footer() {
                 { icon: <Linkedin />, label: "LinkedIn" },
               ].map((s) => {
                 const base =
-                  "grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60";
+                  "grid size-11 place-items-center rounded-full border border-white/12 bg-white/[0.03] text-[#F6F9FC]/60 max-sm:size-9";
                 return s.href ? (
                   <a
                     key={s.label}
@@ -1442,7 +1442,7 @@ export function Footer() {
                     aria-label={s.label}
                     className={`${base} transition-colors hover:border-[#2F6BFF]/50 hover:bg-[#2F6BFF]/15 hover:text-[#2F6BFF]`}
                   >
-                    <span className="[&>svg]:size-4">{s.icon}</span>
+                    <span className="[&>svg]:size-4 max-sm:[&>svg]:size-3.5">{s.icon}</span>
                   </a>
                 ) : (
                   <span
@@ -1452,7 +1452,7 @@ export function Footer() {
                     title="Em breve"
                     className={`${base} cursor-default`}
                   >
-                    <span className="[&>svg]:size-4">{s.icon}</span>
+                    <span className="[&>svg]:size-4 max-sm:[&>svg]:size-3.5">{s.icon}</span>
                   </span>
                 );
               })}
@@ -1460,7 +1460,7 @@ export function Footer() {
           </div>
 
           {/* Colunas de links */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 xl:translate-x-[83px]">
+          <div className="grid grid-cols-2 gap-8 max-sm:text-center sm:grid-cols-4 xl:translate-x-[83px]">
             {[
               { t: "Produtos", l: ["Checkout Builder", "Marketplace", "Co-Produção", "Rec. de Vendas"] },
               { t: "Empresa", l: ["Sobre", "Parceiros", "E-mail", "WhatsApp"] },
@@ -1475,7 +1475,7 @@ export function Footer() {
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];
                     const ext = FOOTER_LINKS[i];
-                    const cls = "inline-block py-2.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#2F6BFF]";
+                    const cls = "inline-block py-2.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#2F6BFF] max-sm:text-[13px]";
                     return (
                       <li key={i}>
                         {to ? (
@@ -1492,7 +1492,7 @@ export function Footer() {
                             {i}
                           </a>
                         ) : (
-                          <span className="inline-block py-2.5 text-sm text-[#F6F9FC]/70">
+                          <span className="inline-block py-2.5 text-sm text-[#F6F9FC]/70 max-sm:text-[13px]">
                             {i}
                           </span>
                         )}
@@ -1506,9 +1506,9 @@ export function Footer() {
         </div>
 
         {/* Selos de confiança / pagamento */}
-        <div className="mt-16 flex flex-col items-start gap-5 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-xs text-[#F6F9FC]/50">© 2026 Nummo — Todos os direitos reservados.</span>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 lg:-translate-x-[16px]">
+        <div className="mt-16 flex flex-col items-start gap-5 pt-8 max-sm:flex-col-reverse max-sm:items-center sm:flex-row sm:items-center sm:justify-between">
+          <span className="text-xs text-[#F6F9FC]/50 max-sm:text-center">© 2026 Nummo — Todos os direitos reservados.</span>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 max-sm:-translate-y-[10px] max-sm:justify-center lg:-translate-x-[16px]">
             {[
               { name: "Pix", href: "https://www.bcb.gov.br/estabilidadefinanceira/pix" },
               { name: "Visa", href: "https://www.visa.com.br" },

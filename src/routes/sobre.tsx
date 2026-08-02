@@ -118,9 +118,9 @@ function SobrePage() {
               Vamos crescer juntos.
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">Crie sua conta em minutos ou fale com um especialista.</p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <PrimaryButton href="https://app.usenummo.com.br/register" className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4]">Criar conta grátis</PrimaryButton>
-              <GhostButton href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC]">Falar com especialista</GhostButton>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 max-sm:flex-nowrap max-sm:gap-2">
+              <PrimaryButton href="https://app.usenummo.com.br/register" className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]">Criar conta grátis</PrimaryButton>
+              <GhostButton href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]">Falar com especialista</GhostButton>
             </div>
           </div>
         </section>

@@ -102,7 +102,7 @@ export function GhostButton({ children, className = "", size = "md", href, targe
   );
 }
 
-function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.ReactNode; sub?: string }) {
+function SectionEyebrow({ kicker, title, sub, titleClassName = "" }: { kicker?: string; title: React.ReactNode; sub?: string; titleClassName?: string }) {
   return (
     <div className="mb-16 max-w-3xl">
       {kicker && (
@@ -110,10 +110,10 @@ function SectionEyebrow({ kicker, title, sub }: { kicker?: string; title: React.
           / {kicker}
         </div>
       )}
-      <h2 className="text-balance text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[30px] md:text-[56px]">
+      <h2 className={`text-balance text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[27px] md:text-[56px] ${titleClassName}`}>
         {title}
       </h2>
-      {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[15px]">{sub}</p>}
+      {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px]">{sub}</p>}
     </div>
   );
 }
@@ -302,6 +302,27 @@ const NAV_ITEMS = [
 export function Nav({ solid = false }: { solid?: boolean }) {
   const [open, setOpen] = useState(false);
 
+  // Fade in/out suave do menu mobile: mantém o menu montado durante o fade-out.
+  const [menuMounted, setMenuMounted] = useState(false);
+  const [menuShown, setMenuShown] = useState(false);
+  useEffect(() => {
+    if (open) {
+      setMenuMounted(true);
+      // 2x rAF garante que o estado opacity-0 pinte antes de transicionar p/ opacity-100.
+      let raf2 = 0;
+      const raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => setMenuShown(true));
+      });
+      return () => {
+        cancelAnimationFrame(raf1);
+        cancelAnimationFrame(raf2);
+      };
+    }
+    setMenuShown(false);
+    const t = setTimeout(() => setMenuMounted(false), 320);
+    return () => clearTimeout(t);
+  }, [open]);
+
   // Navbar no TOPO da página (position: absolute) — fica sobre o Hero escuro
   // e sai da tela ao rolar (não acompanha o scroll). Só aparece sobre o Hero,
   // então usamos sempre o estilo overlay (transparente + branco).
@@ -319,9 +340,16 @@ export function Nav({ solid = false }: { solid?: boolean }) {
   return (
     <>
       {solid && <ScrollRail />}
-      <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""} ${open ? "bg-gradient-to-b from-white/12 to-white/[0.04] backdrop-blur-2xl backdrop-saturate-[2] lg:bg-none lg:backdrop-blur-none lg:backdrop-saturate-100" : ""}`}>
+      <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""}`}>
+      {/* Vidro do menu mobile — camada separada p/ fazer fade in/out suave */}
+      {menuMounted && (
+        <div
+          aria-hidden
+          className={`absolute inset-0 bg-gradient-to-b from-white/12 to-white/[0.04] backdrop-blur-2xl backdrop-saturate-[2] transition-opacity duration-300 ease-out lg:hidden ${menuShown ? "opacity-100" : "opacity-0"}`}
+        />
+      )}
       <div className="relative flex h-20 items-center px-6 lg:px-8">
-        <a href="/" onClick={scrollTop} className={`flex shrink-0 items-center ${open ? "max-lg:hidden" : ""}`} aria-label="Nummo — início">
+        <a href="/" onClick={scrollTop} className={`flex shrink-0 items-center transition-opacity duration-300 ease-out ${menuMounted ? "max-lg:pointer-events-none max-lg:opacity-0" : ""}`} aria-label="Nummo — início">
           <img
             src={overlay ? "/logo-nummo.svg" : "/logo-nummo-dark.svg"}
             alt="Nummo"
@@ -383,17 +411,17 @@ export function Nav({ solid = false }: { solid?: boolean }) {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className={`ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"} ${open ? "max-lg:!text-[#0D1B39]" : ""} ${!solid ? "max-sm:!text-[#0D1B39]" : ""}`}
-          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          className={`relative z-20 ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"} ${menuMounted ? "max-lg:!text-[#0D1B39]" : ""} ${!solid ? "max-sm:!text-[#0D1B39]" : ""}`}
+          aria-label={menuMounted ? "Fechar menu" : "Abrir menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {menuMounted ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {open && (
-        <div id="mobile-nav" className="-mt-[72px] lg:hidden">
+      {menuMounted && (
+        <div id="mobile-nav" className={`relative -mt-[72px] transition-opacity duration-300 ease-out lg:hidden ${menuShown ? "opacity-100" : "pointer-events-none opacity-0"}`}>
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {NAV_ITEMS.map((item) => (
               <a
@@ -516,12 +544,13 @@ function Bento() {
     <section id="plataforma" className="relative py-32">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-16 text-center max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
-          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px]">
-            <span className="lg:whitespace-nowrap">Produtos que simplificam sua operação hoje</span>
-            <br />
-            e escalam amanhã.
+          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
+            <span className="lg:whitespace-nowrap">Produtos que simplificam <br className="hidden max-sm:inline" />sua operação hoje<span className="hidden max-sm:inline"> e</span></span>
+            <br className="max-sm:hidden" />
+            <br className="hidden max-sm:inline" />
+            <span className="max-sm:hidden">e </span>escalam amanhã.
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[15px] lg:-translate-y-[10px]">Um ecossistema construído e pensado para sua empresa.</p>
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px] lg:-translate-y-[10px]">Um ecossistema construído e pensado <br className="hidden max-sm:inline" />para sua empresa.</p>
         </div>
 
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2 lg:-translate-y-[40px]" step={200}>
@@ -658,6 +687,7 @@ function PaymentMethods() {
     <section className="py-32 max-sm:pt-6 max-sm:pb-10">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[50px]">
         <SectionEyebrow
+          titleClassName="max-sm:!text-[27px]"
           title={<span className="text-[#0D1B39]">Venda onde e <span className="text-[#0D1B39]">como quiser.</span></span>}
           sub="Na Nummo você tem acesso aos meios de pagamentos que o brasileiro usa de verdade."
         />
@@ -820,7 +850,7 @@ function Rates() {
           {/* Texto */}
           <div className="lg:-ml-24 lg:-translate-x-[20px] lg:-translate-y-12 xl:-ml-[170px]">
             <div className="invisible mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]" aria-hidden="true">/ Taxas</div>
-            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px] lg:whitespace-nowrap">
+            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px] lg:whitespace-nowrap">
               Seu negócio não precisa <br className="hidden lg:inline" />caber em uma <br className="hidden lg:inline" />taxa padrão.
             </h2>
             <p className="mt-6 text-pretty text-xl text-[#0D1B39] max-sm:text-[15px]">
@@ -1077,10 +1107,10 @@ function DevSection() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:-translate-y-[10px]">
           <div>
-            <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[30px] md:text-6xl">
+            <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[27px] md:text-6xl">
               API que dev <span className="text-[#F6F9FC]">ama</span>.
             </h2>
-            <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground max-sm:text-[15px]">
+            <p className="mt-6 max-w-md text-pretty text-lg text-muted-foreground max-sm:text-[13px]">
               REST, webhooks idempotentes, SDKs oficiais em Node, Python, PHP, Go e Ruby.
               Documentação interativa e suporte técnico que entende código.
             </p>
@@ -1219,7 +1249,7 @@ function Testimonials() {
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px]">
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
           Clientes que não voltam atrás
         </h2>
         <Stagger className="grid translate-y-5 gap-4 md:grid-cols-3">
@@ -1285,7 +1315,7 @@ function Faq() {
     <section id="faq" className="py-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
       <div className="mx-auto max-w-[1000px] px-6">
-        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[30px] md:text-[56px]">
+        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
           Perguntas frequentes
         </h2>
         <Stagger className="space-y-3">
@@ -1332,7 +1362,7 @@ function FinalCta() {
           <span className="text-[#0D1B39]">Vender nunca foi tão simples.</span>
         </h2>
 
-        <p className="mt-6 text-lg text-[#0D1B39] max-sm:text-[15px]">
+        <p className="mt-6 text-lg text-[#0D1B39] max-sm:text-[13px]">
           Sem mensalidade. Sem fidelidade. Sem surpresa.
         </p>
 

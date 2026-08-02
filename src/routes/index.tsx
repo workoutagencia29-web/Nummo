@@ -788,7 +788,7 @@ function SaleNotifications() {
 
   return (
     <div ref={ref} className="flex justify-center max-sm:order-last max-sm:-translate-x-[10px] sm:hidden lg:flex lg:-translate-x-[160px] lg:-translate-y-6 lg:justify-center">
-      <div className="relative h-[416px] w-full max-w-[440px] max-sm:origin-top max-sm:scale-[0.8]">
+      <div className="relative h-[416px] w-full max-w-[440px] max-sm:h-[366px] max-sm:origin-top max-sm:scale-[0.68]">
         {items.map((n, i) => {
           const step = ORDER.indexOf(i);
           // Card interno: só ele anima (opacidade + subida). A opacidade final de
@@ -949,7 +949,7 @@ function HowItWorks() {
   const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
 
   return (
-    <section className="pb-[57px] pt-32 max-sm:pt-[2px]">
+    <section className="pb-[57px] pt-32 max-sm:pt-[2px] max-sm:pb-[85px]">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[38px]">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow
@@ -962,7 +962,7 @@ function HowItWorks() {
             lendo como uma correia contínua. overflow-hidden + máscara horizontal; o padding externo
             das fileiras existe p/ não cortar a sombra "raised" no topo e na base. */}
         <div
-          className="group relative -mt-[136px] translate-y-9 overflow-hidden max-sm:translate-y-[61px]"
+          className="group relative -mt-[136px] translate-y-9 overflow-hidden max-sm:-mt-[101px] max-sm:translate-y-[61px]"
           style={{
             maskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
             WebkitMaskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",

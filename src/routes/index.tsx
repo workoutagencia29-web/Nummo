@@ -1103,7 +1103,7 @@ function DevSection() {
   return (
     <section id="para-devs" className="overflow-x-clip py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:-translate-y-[10px]">
+        <div className="invisible grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:-translate-y-[10px]">
           <div>
             <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[27px] md:text-6xl">
               API que dev <span className="text-[#F6F9FC]">ama</span>.
@@ -1250,17 +1250,18 @@ function Testimonials() {
         <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
           Clientes que não voltam atrás
         </h2>
-        <Stagger className="grid translate-y-5 gap-4 md:grid-cols-3">
+        <Stagger className="grid translate-y-5 gap-4 max-sm:flex max-sm:flex-wrap max-sm:justify-between max-sm:gap-x-0 max-sm:gap-y-4 md:grid-cols-3">
           {t.map((q) => (
-            <figure key={q.name} className="card-elevated flex flex-col p-8" style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}>
-              <svg className="mb-6 size-7 text-[#2F6BFF]" viewBox="0 0 24 24" fill="currentColor">
+            <div key={q.name} className="max-sm:w-[48.5%] @container">
+            <figure className="card-elevated flex h-full flex-col p-8 max-sm:w-full max-sm:p-[9.4cqw]" style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}>
+              <svg className="mb-6 size-7 text-[#2F6BFF] max-sm:mb-[7cqw] max-sm:size-[8.2cqw]" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
               </svg>
-              <blockquote className="flex-1 text-pretty text-base leading-relaxed text-foreground/90">
+              <blockquote className="flex-1 text-pretty text-base leading-relaxed text-foreground/90 max-sm:text-[4.7cqw] max-sm:leading-relaxed">
                 "{q.quote}"
               </blockquote>
               <figcaption
-                className="mt-6 flex items-center gap-3 rounded-2xl p-4"
+                className="mt-6 flex items-center gap-3 rounded-2xl p-4 max-sm:mt-[7cqw] max-sm:gap-[3.5cqw] max-sm:rounded-[4.7cqw] max-sm:p-[4.7cqw]"
                 style={{ background: "#0D1B39", boxShadow: "inset 5px 5px 10px #080f22, inset -5px -5px 10px #12264a" }}
               >
                 <img
@@ -1270,14 +1271,15 @@ function Testimonials() {
                   height={40}
                   loading="lazy"
                   decoding="async"
-                  className="size-10 shrink-0 rounded-full object-cover ring-1 ring-white/10"
+                  className="size-10 shrink-0 rounded-full object-cover ring-1 ring-white/10 max-sm:size-[11.8cqw]"
                 />
                 <div>
-                  <div className="text-sm font-medium">{q.name}</div>
-                  <div className="text-xs text-muted-foreground">{q.role}</div>
+                  <div className="text-sm font-medium max-sm:text-[4.3cqw]">{q.name}</div>
+                  <div className="text-xs text-muted-foreground max-sm:text-[3.6cqw]">{q.role}</div>
                 </div>
               </figcaption>
             </figure>
+            </div>
           ))}
         </Stagger>
       </div>
@@ -1310,7 +1312,7 @@ function Faq() {
   const items = FAQ_ITEMS;
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="py-32">
+    <section id="faq" className="py-32 max-sm:pt-[44px]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
       <div className="mx-auto max-w-[1000px] px-6">
         <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">

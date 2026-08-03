@@ -102,9 +102,9 @@ export function GhostButton({ children, className = "", size = "md", href, targe
   );
 }
 
-function SectionEyebrow({ kicker, title, sub, titleClassName = "" }: { kicker?: string; title: React.ReactNode; sub?: string; titleClassName?: string }) {
+function SectionEyebrow({ kicker, title, sub, titleClassName = "", center = false }: { kicker?: string; title: React.ReactNode; sub?: string; titleClassName?: string; center?: boolean }) {
   return (
-    <div className="mb-16 max-w-3xl">
+    <div className={`mb-16 ${center ? "mx-auto max-w-[1220px] text-center" : "max-w-3xl"}`}>
       {kicker && (
         <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-[#0D1B39]">
           / {kicker}
@@ -113,7 +113,7 @@ function SectionEyebrow({ kicker, title, sub, titleClassName = "" }: { kicker?: 
       <h2 className={`text-balance text-4xl font-extrabold leading-[1.05] tracking-tight max-sm:text-[27px] md:text-[56px] ${titleClassName}`}>
         {title}
       </h2>
-      {sub && <p className="mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px]">{sub}</p>}
+      {sub && <p className={`mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px] ${center ? "mx-auto" : ""}`}>{sub}</p>}
     </div>
   );
 }
@@ -212,7 +212,37 @@ function Landing() {
         <Reveal><PaymentMethods /></Reveal>
         <Reveal><Rates /></Reveal>
         <Reveal><HowItWorks /></Reveal>
-        <div className="band-blue bg-[#0D1B39]">
+        <div className="band-blue relative bg-[#0D1B39]">
+          {/* Título centralizado na faixa azul */}
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-start justify-center px-6 pt-24 max-sm:pt-16">
+            <div className="mx-auto max-w-3xl text-center md:max-w-none">
+              <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
+                Seu negócio não para e por isso o nosso <br />suporte também não
+              </h2>
+              <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#F6F9FC]/70 max-sm:text-[13px]">
+                Atendimento humanizado 24 horas por dia 7 dias por semana para sua empresa operar com mais segurança e tranquilidade
+              </p>
+
+              {/* Mensagens de suporte (WhatsApp) — decorativo, sem card */}
+              <div className="ml-auto mt-16 flex w-full max-w-[470px] translate-x-20 translate-y-12 flex-col gap-3 text-left max-sm:mt-12 max-sm:max-w-[290px] max-sm:translate-x-5 max-sm:translate-y-[30px]">
+                <div className="max-w-[86%] rounded-2xl rounded-tl-sm bg-white/[0.08] px-4 py-3 text-[14px] leading-snug text-[#F6F9FC]/90 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] max-sm:text-[13px]">
+                  opa, tudo bem? tô meio perdido aqui 😅 minha integração começou a dar erro na API do nada
+                </div>
+                <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-sm bg-[#2F6BFF] px-4 py-3 text-[14px] leading-snug text-white shadow-[0_10px_24px_-12px_rgba(47,107,255,0.7)] max-sm:text-[13px]">
+                  Oi! Tudo sim, bora resolver. Você gerou alguma secret key nova ou trocou de ambiente esses dias?
+                </div>
+                <div className="max-w-[86%] rounded-2xl rounded-tl-sm bg-white/[0.08] px-4 py-3 text-[14px] leading-snug text-[#F6F9FC]/90 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] max-sm:text-[13px]">
+                  gerei uma chave nova ontem
+                </div>
+                <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-sm bg-[#2F6BFF] px-4 py-3 text-[14px] leading-snug text-white shadow-[0_10px_24px_-12px_rgba(47,107,255,0.7)] max-sm:text-[13px]">
+                  É isso então! Essa nova é a <span className="font-mono">sk_test_…</span> (ambiente de teste). Em produção o header precisa usar a <span className="font-mono">sk_live_…</span> — troca lá que volta a autenticar ✅
+                </div>
+                <div className="max-w-[86%] rounded-2xl rounded-tl-sm bg-white/[0.08] px-4 py-3 text-[14px] leading-snug text-[#F6F9FC]/90 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] max-sm:text-[13px]">
+                  aaah era isso 🙌 voltou a funcionar, valeu demais!
+                </div>
+              </div>
+            </div>
+          </div>
           <Reveal><DevSection /></Reveal>
           <Security />
         </div>
@@ -498,20 +528,20 @@ function Hero() {
           {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto).
               -translate-y sobe título e subtítulo sem tocar no layout (os botões ficam no lugar);
               usa a prop `translate`, que compõe com o `transform` da animação em vez de sobrescrevê-lo. */}
-          <div className="animate-hero-in -translate-y-8 max-sm:translate-y-[46px] [animation-delay:120ms]">
+          <div className="animate-hero-in -translate-y-8 max-sm:-translate-y-[34px] [animation-delay:120ms]">
             <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-sm:text-center max-sm:text-[#0D1B39] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
-              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[8px] max-sm:text-[44px] max-sm:leading-[0.92] max-[360px]:text-[34px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
+              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[8px] max-sm:text-[28px] max-sm:leading-[0.92] max-[360px]:text-[28px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
                 Infraestrutura financeira
               </span>
               <br />
               {/* inline-block é pré-requisito do translate: transform não se aplica a inline puro.
                   Sobe só a 2ª linha p/ colar na 1ª, sem mexer na altura do h1. */}
-              <span className="inline-block -translate-y-1.5 font-medium max-sm:text-[28px]">para empresas <br className="hidden max-sm:inline" />que não <br className="max-sm:hidden" />querem limites.</span>
+              <span className="inline-block -translate-y-1.5 font-medium max-sm:text-[28px] max-sm:font-bold">para empresas que <br className="hidden max-sm:inline" />não <br className="max-sm:hidden" />querem limites</span>
             </h1>
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 max-sm:mx-auto max-sm:translate-y-[62px] max-sm:text-center max-sm:text-[13px] max-sm:text-[#0D1B39]/70 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
+          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 max-sm:mx-auto max-sm:-translate-y-[18px] max-sm:text-center max-sm:text-[13px] max-sm:text-[#0D1B39]/70 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
@@ -548,7 +578,7 @@ function Bento() {
             <span className="lg:whitespace-nowrap">Produtos que simplificam <br className="hidden max-sm:inline" />sua operação hoje<span className="hidden max-sm:inline"> e</span></span>
             <br className="max-sm:hidden" />
             <br className="hidden max-sm:inline" />
-            <span className="max-sm:hidden">e </span>escalam amanhã.
+            <span className="max-sm:hidden">e </span>escalam amanhã
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px] lg:-translate-y-[10px]">Um ecossistema construído e pensado para <br className="hidden max-sm:inline" />sua empresa.</p>
         </div>
@@ -688,7 +718,7 @@ function PaymentMethods() {
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[50px]">
         <SectionEyebrow
           titleClassName="max-sm:!text-[27px]"
-          title={<span className="text-[#0D1B39]">Venda onde e <span className="text-[#0D1B39]">como quiser.</span></span>}
+          title={<span className="text-[#0D1B39]">Venda onde e <span className="text-[#0D1B39]">como quiser</span></span>}
           sub="Na Nummo você tem acesso aos meios de pagamentos que o brasileiro usa de verdade."
         />
         <div className="grid gap-10 lg:grid-cols-2">
@@ -851,7 +881,7 @@ function Rates() {
           <div className="lg:-ml-24 lg:-translate-x-[20px] lg:-translate-y-12 xl:-ml-[170px]">
             <div className="invisible mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]" aria-hidden="true">/ Taxas</div>
             <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px] lg:whitespace-nowrap">
-              Seu negócio não precisa <br className="hidden lg:inline" />caber em uma <br className="hidden lg:inline" />taxa padrão.
+              Seu negócio não precisa <br className="hidden lg:inline" />caber em uma <br className="hidden lg:inline" />taxa padrão
             </h2>
             <p className="mt-6 text-pretty text-xl text-[#0D1B39] max-sm:text-[13px]">
               Temos <span className="font-semibold text-[#2F6BFF]">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa.
@@ -953,8 +983,9 @@ function HowItWorks() {
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[38px]">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow
-            title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <span className="text-[#0D1B39]">em um só lugar.</span></span>}
-            sub="Conecte anúncios, trackers e emissão de notas, e etc à Nummo e centralize sua operação em um só fluxo."
+            center
+            title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <br /><span className="text-[#0D1B39]">em um só lugar</span></span>}
+            sub="Conecte anúncios, trackers e emissão de notas, área de membros, à Nummo e centralize sua operação em um só fluxo."
           />
         </div>
 
@@ -1101,7 +1132,7 @@ function CodeTyping() {
 
 function DevSection() {
   return (
-    <section id="para-devs" className="overflow-x-clip py-32">
+    <section id="para-devs" className="h-[610px] overflow-hidden py-32">
       <div className="mx-auto max-w-7xl px-6">
         <div className="invisible grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:-translate-y-[10px]">
           <div>
@@ -1251,9 +1282,9 @@ function Testimonials() {
           Clientes que não voltam atrás
         </h2>
         <Stagger className="grid translate-y-5 gap-4 max-sm:flex max-sm:flex-wrap max-sm:justify-between max-sm:gap-x-0 max-sm:gap-y-4 md:grid-cols-3">
-          {t.map((q) => (
-            <div key={q.name} className="max-sm:w-[48.5%] @container">
-            <figure className="card-elevated flex h-full flex-col p-8 max-sm:w-full max-sm:p-[9.4cqw]" style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}>
+          {t.map((q, i) => (
+            <div key={q.name} className="@container max-sm:w-[48.5%]">
+            <figure className={`card-elevated flex h-full flex-col p-8 max-sm:p-[9.4cqw] ${i === 2 ? "max-sm:w-[206.2%]" : "max-sm:w-full"}`} style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}>
               <svg className="mb-6 size-7 text-[#2F6BFF] max-sm:mb-[7cqw] max-sm:size-[8.2cqw]" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
               </svg>
@@ -1359,7 +1390,7 @@ function FinalCta() {
     <section className="relative overflow-hidden py-32">
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
         <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight max-sm:text-[44px] md:text-7xl">
-          <span className="text-[#0D1B39]">Vender nunca foi tão simples.</span>
+          <span className="text-[#0D1B39]">Vender nunca foi tão simples</span>
         </h2>
 
         <p className="mt-6 text-lg text-[#0D1B39] max-sm:text-[13px]">
@@ -1470,7 +1501,7 @@ export function Footer() {
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
             ].map((col) => (
               <div key={col.t}>
-                <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-[#F6F9FC]/55">
+                <div className="mb-4 text-[10px] font-medium uppercase tracking-widest text-[#F6F9FC]/55">
                   {col.t}
                 </div>
                 <ul className="space-y-1">

@@ -147,6 +147,77 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
+// Orquestra o fluxo de suporte em loop: ao entrar na viewport, roda a cascata
+// (card1 sobe → barra1 enche → card2 sobe → barra2 enche → card3 sobe),
+// espera 2s, todos descem suave, espera 2s e reinicia — infinitamente.
+function FlowLoop({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
+    const cards = Array.from(el.querySelectorAll<HTMLElement>(".card-lift"));
+    const bars = Array.from(el.querySelectorAll<HTMLElement>(".conn-fill"));
+    const loaders = Array.from(el.querySelectorAll<HTMLElement>(".conn-loader"));
+
+    let cancelled = false;
+    const timers: number[] = [];
+    const wait = (ms: number) =>
+      new Promise<void>((res) => { timers.push(window.setTimeout(res, ms)); });
+
+    async function cycle() {
+      // reset: barras vazias sem transição (evita "retração" visível)
+      bars.forEach((b) => { b.classList.add("reset"); b.classList.remove("half", "full", "empty"); });
+      void el!.offsetHeight; // reflow
+      bars.forEach((b) => b.classList.remove("reset"));
+      cards.forEach((c) => c.classList.remove("up"));
+      loaders.forEach((l) => l.classList.remove("show"));
+
+      await wait(1000); if (cancelled) return; // 1s antes do 1º card
+      cards[0].classList.add("up");
+      await wait(850); if (cancelled) return;  // sobe card 1
+
+      for (let i = 0; i < bars.length; i++) {
+        bars[i].classList.add("half");
+        await wait(600); if (cancelled) return;   // enche até o meio
+        loaders[i].classList.add("show");
+        await wait(1500); if (cancelled) return;  // loader ~1,5s
+        loaders[i].classList.remove("show");
+        bars[i].classList.add("full");
+        await wait(600); if (cancelled) return;   // completa
+        cards[i + 1].classList.add("up");
+        await wait(850); if (cancelled) return;   // sobe o próximo card
+      }
+
+      await wait(1000); if (cancelled) return;   // 1s com tudo em cima
+      cards.forEach((c) => c.classList.remove("up")); // todos descem (suave)
+      bars.forEach((b) => b.classList.add("empty"));  // barras somem junto
+      await wait(850); if (cancelled) return;    // desce
+      await wait(1000);                          // 1s parado antes de reiniciar
+    }
+
+    let started = false;
+    const start = async () => {
+      if (started) return;
+      started = true;
+      while (!cancelled) await cycle();
+    };
+    const io = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting) { io.disconnect(); void start(); } },
+      { threshold: 0.5 },
+    );
+    io.observe(el);
+
+    return () => { cancelled = true; io.disconnect(); timers.forEach((t) => clearTimeout(t)); };
+  }, []);
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
+  );
+}
+
 // Entrada deslizando da borda direita até a posição final (usado no mockup dos Métodos).
 function SlideInRight({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -214,7 +285,7 @@ function Landing() {
         <Reveal><HowItWorks /></Reveal>
         <div className="band-blue relative bg-[#0D1B39]">
           {/* Título centralizado na faixa azul */}
-          <div className="pointer-events-none absolute inset-0 z-10 flex items-start justify-center px-6 pt-24 max-sm:pt-16">
+          <div className="pointer-events-none absolute inset-0 z-10 flex -translate-y-5 items-start justify-center px-6 pt-24 max-sm:pt-16">
             <div className="mx-auto max-w-3xl text-center md:max-w-none">
               <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
                 Seu negócio não para e por isso o nosso <br />suporte também não
@@ -223,22 +294,45 @@ function Landing() {
                 Atendimento humanizado 24 horas por dia 7 dias por semana para sua empresa operar com mais segurança e tranquilidade
               </p>
 
-              {/* Mensagens de suporte (WhatsApp) — decorativo, sem card */}
-              <div className="ml-auto mt-16 flex w-full max-w-[470px] translate-x-20 translate-y-12 flex-col gap-3 text-left max-sm:mt-12 max-sm:max-w-[290px] max-sm:translate-x-5 max-sm:translate-y-[30px]">
-                <div className="max-w-[86%] rounded-2xl rounded-tl-sm bg-white/[0.08] px-4 py-3 text-[14px] leading-snug text-[#F6F9FC]/90 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] max-sm:text-[13px]">
-                  opa, tudo bem? tô meio perdido aqui 😅 minha integração começou a dar erro na API do nada
+              {/* Fluxo de suporte animado em loop (desktop) */}
+              <FlowLoop className="relative mx-auto mb-8 mt-16 hidden max-w-4xl translate-y-[95px] scale-[1.16] items-center justify-center md:mt-20 md:flex">
+                <div className="card-lift relative h-[192px] w-[210px] shrink-0 rounded-2xl bg-[#eef4ff] px-5 pt-4 pb-32 text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+                  <div className="text-[15px] font-bold text-[#0D1B39]">Gabriel (CLIENTE)</div>
                 </div>
-                <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-sm bg-[#2F6BFF] px-4 py-3 text-[14px] leading-snug text-white shadow-[0_10px_24px_-12px_rgba(47,107,255,0.7)] max-sm:text-[13px]">
-                  Oi! Tudo sim, bora resolver. Você gerou alguma secret key nova ou trocou de ambiente esses dias?
+                <div className="relative mx-5 h-[3px] flex-1 rounded-full bg-white/12">
+                  <span className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]" />
+                  <span className="conn-loader absolute left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2">
+                    <span className="absolute inset-0 rounded-full border-2 border-white/15 bg-[#0D1B39]" />
+                    <span className="conn-spin-arc absolute inset-0 rounded-full border-2 border-transparent border-r-[#2F6BFF] border-t-[#2F6BFF]" />
+                  </span>
                 </div>
-                <div className="max-w-[86%] rounded-2xl rounded-tl-sm bg-white/[0.08] px-4 py-3 text-[14px] leading-snug text-[#F6F9FC]/90 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] max-sm:text-[13px]">
-                  gerei uma chave nova ontem
+                <div className="card-lift relative h-[192px] w-[210px] shrink-0 rounded-2xl bg-[#eef4ff] px-5 pt-4 pb-32 text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+                  <div className="text-[15px] font-bold text-[#0D1B39]">Especialista Nummo</div>
                 </div>
-                <div className="ml-auto max-w-[90%] rounded-2xl rounded-tr-sm bg-[#2F6BFF] px-4 py-3 text-[14px] leading-snug text-white shadow-[0_10px_24px_-12px_rgba(47,107,255,0.7)] max-sm:text-[13px]">
-                  É isso então! Essa nova é a <span className="font-mono">sk_test_…</span> (ambiente de teste). Em produção o header precisa usar a <span className="font-mono">sk_live_…</span> — troca lá que volta a autenticar ✅
+                <div className="relative mx-5 h-[3px] flex-1 rounded-full bg-white/12">
+                  <span className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]" />
+                  <span className="conn-loader absolute left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2">
+                    <span className="absolute inset-0 rounded-full border-2 border-white/15 bg-[#0D1B39]" />
+                    <span className="conn-spin-arc absolute inset-0 rounded-full border-2 border-transparent border-r-[#2F6BFF] border-t-[#2F6BFF]" />
+                  </span>
                 </div>
-                <div className="max-w-[86%] rounded-2xl rounded-tl-sm bg-white/[0.08] px-4 py-3 text-[14px] leading-snug text-[#F6F9FC]/90 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.6)] max-sm:text-[13px]">
-                  aaah era isso 🙌 voltou a funcionar, valeu demais!
+                <div className="card-lift relative h-[192px] w-[210px] shrink-0 rounded-2xl bg-[#eef4ff] px-5 pt-4 pb-32 text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+                  <div className="text-[15px] font-bold text-[#0D1B39]">Problema</div>
+                </div>
+              </FlowLoop>
+
+              {/* Fluxo de suporte — versão vertical (mobile) */}
+              <div className="mx-auto mt-12 flex max-w-[300px] flex-col items-stretch md:hidden">
+                <div className="rounded-2xl bg-[#eef4ff] px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)]">
+                  <div className="text-[14px] font-bold text-[#0D1B39]">Gabriel (CLIENTE)</div>
+                </div>
+                <span className="mx-auto h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF]" />
+                <div className="relative rounded-2xl bg-[#eef4ff] px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)]">
+                  <div className="text-[14px] font-bold text-[#0D1B39]">Especialista Nummo</div>
+                </div>
+                <span className="mx-auto h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF]" />
+                <div className="relative rounded-2xl bg-[#eef4ff] px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)]">
+                  <div className="text-[14px] font-bold text-[#0D1B39]">Problema</div>
                 </div>
               </div>
             </div>
@@ -1018,13 +1112,13 @@ function HowItWorks() {
 function DevSection() {
   // Seção antiga "API que dev ama" — removida do site; mantida apenas como
   // espaçador para preservar a altura da faixa azul (band-blue).
-  return <section id="para-devs" className="h-[610px]" aria-hidden />;
+  return <section id="para-devs" className="h-[620px] max-md:h-[430px]" aria-hidden />;
 }
 
 function Security() {
   // Seção antiga "Segurança e conformidade" — removida do site; mantida apenas
   // como espaçador para preservar a altura da faixa azul (band-blue).
-  return <section id="seguranca" className="h-[248px]" aria-hidden />;
+  return <section id="seguranca" className="h-[268px]" aria-hidden />;
 }
 
 function Testimonials() {

@@ -348,3 +348,34 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   .nm-press-light { transition: none; }
   .nm-press-light:active { box-shadow: 14px 14px 28px #d3dbea, -14px -14px 28px #ffffff; transform: none; }
 }
+
+/* ---------- Fluxo de suporte: cascata em loop (cards sobem, barras enchem, todos descem) ---------- */
+/* Tudo controlado por JS via classes; as transições dão a suavidade (subir = descer). */
+@keyframes conn-spin { to { transform: rotate(360deg); } }
+
+/* Barra conectora (fill azul sobre o trilho) — enche por estágios via .half/.full */
+.conn-fill {
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 1;
+  transition: transform .6s ease, opacity .85s ease;
+}
+.conn-fill.half { transform: scaleX(.5); }
+.conn-fill.full { transform: scaleX(1); }
+.conn-fill.empty { opacity: 0; }
+.conn-fill.reset { transition: none; }
+
+/* Loader no meio da barra — aparece durante a pausa (.show) */
+.conn-loader { opacity: 0; transition: opacity .3s ease; }
+.conn-loader.show { opacity: 1; }
+.conn-spin-arc { animation: conn-spin 1.1s linear infinite; }
+
+/* Cards: sobem ~15px (na tela, compensando o scale do container) suave; descer usa a mesma transição */
+.card-lift { transition: transform .85s cubic-bezier(.22,.61,.36,1); will-change: transform; }
+.card-lift.up { transform: translateY(-13px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-lift, .card-lift.up { transform: none; transition: none; }
+  .conn-fill { transform: scaleX(1); opacity: 1; transition: none; }
+  .conn-loader, .conn-spin-arc { animation: none; opacity: 0; }
+}

@@ -327,8 +327,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .nm-press-light,
 .nm-press-dark {
   transition:
-    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .nm-press-light { box-shadow: 14px 14px 28px #d3dbea, -14px -14px 28px #ffffff; }
 .nm-press-dark { box-shadow: 6px 6px 14px #080f22, -6px -6px 14px #12264a; }

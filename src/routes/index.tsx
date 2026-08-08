@@ -781,9 +781,9 @@ function Bento() {
           />
           <BentoCard
             className="md:col-span-1"
-            icon={<Link />}
-            title="Link de pagamento"
-            text="Venda por um link, sem precisar de site."
+            icon={<Users />}
+            title="Área de membros"
+            text="Hospede seu curso e entregue o conteúdo."
             compact
           />
         </Stagger>

@@ -8,6 +8,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
+import { TestimonialsColumn } from "../components/ui/testimonials-columns-1";
 
 function TikTok() {
   return (
@@ -291,14 +292,39 @@ function Landing() {
                 Seu negócio não para e por isso o nosso <br />suporte também não
               </h2>
               <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#F6F9FC]/70 max-sm:text-[13px]">
-                Atendimento humanizado 24 horas por dia 7 dias por semana para sua empresa operar com mais segurança e tranquilidade
+                Atendimento humanizado 24 horas 7 dias por semana <br /> em todos os canais de comunicações
               </p>
 
               {/* Fluxo de suporte animado em loop (desktop) */}
-              <FlowLoop className="relative mx-auto mb-8 mt-16 hidden max-w-4xl translate-y-[95px] scale-[1.16] items-center justify-center md:mt-20 md:flex">
-                <div className="card-lift relative h-[192px] w-[210px] shrink-0 rounded-2xl bg-[#eef4ff] px-5 pt-4 pb-32 text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+              <FlowLoop className="relative mx-auto mb-8 mt-16 hidden max-w-5xl translate-y-[130px] scale-[1.16] items-center justify-center md:mt-20 md:flex">
+                <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
                   <div className="text-[15px] font-bold text-[#0D1B39]">Gabriel (CLIENTE)</div>
                 </div>
+                {/* 1º conector: caminho pontilhado que ramifica para os 3 cards do meio.
+                    viewBox 0..234 = altura da pilha; centros dos cards em y=27/117/207. */}
+                <div className="relative mx-5 flex-1 self-stretch">
+                  <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 234" preserveAspectRatio="none" fill="none" aria-hidden>
+                    <path
+                      d="M0,117 H100 M42,117 C50,45 98,27 100,27 M42,117 C50,189 98,207 100,207"
+                      stroke="#2F6BFF"
+                      strokeWidth={3.5}
+                      strokeLinecap="round"
+                      strokeDasharray="0.1 13"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  </svg>
+                </div>
+                <div className="flex shrink-0 flex-col items-center gap-[36px]">
+                  <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+                    <div className="text-[15px] font-bold text-[#0D1B39]">E-mail</div>
+                  </div>
+                  <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+                    <div className="text-[15px] font-bold text-[#0D1B39]">WhatsApp</div>
+                  </div>
+                  <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+                    <div className="text-[15px] font-bold text-[#0D1B39]">Instagram</div>
+                  </div>
+                </div>
                 <div className="relative mx-5 h-[3px] flex-1 rounded-full bg-white/12">
                   <span className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]" />
                   <span className="conn-loader absolute left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2">
@@ -306,17 +332,7 @@ function Landing() {
                     <span className="conn-spin-arc absolute inset-0 rounded-full border-2 border-transparent border-r-[#2F6BFF] border-t-[#2F6BFF]" />
                   </span>
                 </div>
-                <div className="card-lift relative h-[192px] w-[210px] shrink-0 rounded-2xl bg-[#eef4ff] px-5 pt-4 pb-32 text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
-                  <div className="text-[15px] font-bold text-[#0D1B39]">Especialista Nummo</div>
-                </div>
-                <div className="relative mx-5 h-[3px] flex-1 rounded-full bg-white/12">
-                  <span className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]" />
-                  <span className="conn-loader absolute left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2">
-                    <span className="absolute inset-0 rounded-full border-2 border-white/15 bg-[#0D1B39]" />
-                    <span className="conn-spin-arc absolute inset-0 rounded-full border-2 border-transparent border-r-[#2F6BFF] border-t-[#2F6BFF]" />
-                  </span>
-                </div>
-                <div className="card-lift relative h-[192px] w-[210px] shrink-0 rounded-2xl bg-[#eef4ff] px-5 pt-4 pb-32 text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
+                <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
                   <div className="text-[15px] font-bold text-[#0D1B39]">Problema</div>
                 </div>
               </FlowLoop>
@@ -889,7 +905,7 @@ function SaleNotifications() {
   ];
   // Ordem de aparição (índices dos cards): topo → base → 2ª de baixo → 2ª de cima → meio.
   const ORDER = [0, 4, 3, 1, 2];
-  const STEP = 0.16; // s entre cada notificação
+  const STEP = 0.3; // s entre cada notificação
 
   const ref = useRef<HTMLDivElement>(null);
   // "armed" esconde os cards antes de entrarem em cena (setado no cliente, com a
@@ -918,7 +934,7 @@ function SaleNotifications() {
           // Card interno: só ele anima (opacidade + subida). A opacidade final de
           // profundidade fica no wrapper, então a animação 0→1 não a sobrescreve.
           const cardStyle: React.CSSProperties = { width: CARD_W, height: CARD_H };
-          if (play) cardStyle.animation = `notifIn 0.62s cubic-bezier(0.22,1,0.36,1) ${step * STEP}s both`;
+          if (play) cardStyle.animation = `notifIn 0.72s cubic-bezier(0.22,1,0.36,1) ${step * STEP}s both`;
           else if (armed) cardStyle.opacity = 0;
           return (
             <div
@@ -1006,20 +1022,18 @@ function IntegrationTile({ l }: { l: Integration }) {
   return (
     <div
       className="group/tile mr-6 flex h-[152px] w-[176px] shrink-0 flex-col items-center justify-center gap-3 rounded-[28px] p-3.5 max-sm:mr-3 max-sm:h-[104px] max-sm:w-[120px] max-sm:gap-1.5 max-sm:rounded-[18px] max-sm:p-2.5 sm:h-[168px] sm:w-[200px]"
-      style={{ background: "#F6F9FC", boxShadow: TILE_RAISED }}
     >
       {/* SOQUETE afundado — o "encaixe" onde cada integração pluga (rounded-xl = ícone dos Métodos).
           Quadrado e justo na logo: sem sobra horizontal, o card é que dá o respiro em volta. */}
       <div
-        className="flex h-[86px] w-[86px] items-center justify-center rounded-xl max-sm:h-[58px] max-sm:w-[58px] max-sm:rounded-lg sm:h-[96px] sm:w-[96px]"
-        style={{ background: "#F6F9FC", boxShadow: SOCKET_INSET }}
+        className="pointer-events-auto flex h-[86px] w-[86px] items-center justify-center rounded-xl max-sm:h-[58px] max-sm:w-[58px] max-sm:rounded-lg sm:h-[96px] sm:w-[96px]"
       >
         {l.tone === "node" ? (
           // TikTok: <TikTok/> inline em NAVY via currentColor (nunca branco — branco some no claro).
           <span
             role="img"
             aria-label={l.alt}
-            className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-[52px] [&>svg]:w-[52px] max-sm:[&>svg]:h-[35px] max-sm:[&>svg]:w-[35px]"
+            className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-[67px] [&>svg]:w-[67px] max-sm:[&>svg]:h-[45px] max-sm:[&>svg]:w-[45px]"
           >
             {l.node}
           </span>
@@ -1028,7 +1042,7 @@ function IntegrationTile({ l }: { l: Integration }) {
           <span
             role="img"
             aria-label={l.alt}
-            className="block h-[52px] w-[62px] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:h-[35px] max-sm:w-[42px]"
+            className="block h-[67px] w-[80px] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:h-[45px] max-sm:w-[55px]"
             style={{
               background: "#0D1B39",
               WebkitMaskImage: `url(${l.src})`,
@@ -1046,15 +1060,12 @@ function IntegrationTile({ l }: { l: Integration }) {
           <img
             src={l.src}
             alt={l.alt}
-            className="max-h-[52px] w-auto max-w-[62px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:max-h-[35px] max-sm:max-w-[42px]"
+            className="max-h-[67px] w-auto max-w-[80px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:max-h-[45px] max-sm:max-w-[55px]"
             draggable={false}
             loading="lazy"
           />
         )}
       </div>
-      <span className="translate-y-[2px] font-mono text-[10.5px] font-bold uppercase tracking-[0.14em] text-[#0D1B39]/70 max-sm:text-[8px]">
-        {l.alt}
-      </span>
     </div>
   );
 }
@@ -1068,6 +1079,7 @@ function HowItWorks() {
     { src: "/logos/utmify.png", alt: "UTMify", tone: "mono" },
     { src: "/logos/notazz.webp", alt: "Notazz", tone: "color" },
     { src: "/logos/astron.webp", alt: "Astron", tone: "color" },
+    { src: "/logos/gmail.svg", alt: "Gmail", tone: "color" },
   ];
   // Fileira de baixo rotacionada: evita o efeito "espelho" com a de cima.
   const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
@@ -1087,7 +1099,7 @@ function HowItWorks() {
             lendo como uma correia contínua. overflow-hidden + máscara horizontal; o padding externo
             das fileiras existe p/ não cortar a sombra "raised" no topo e na base. */}
         <div
-          className="group relative -mt-[136px] translate-y-9 overflow-hidden max-sm:-mt-[101px] max-sm:translate-y-[61px]"
+          className="group pointer-events-none relative -mt-[136px] translate-y-9 overflow-hidden max-sm:-mt-[101px] max-sm:translate-y-[61px]"
           style={{
             maskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
             WebkitMaskImage: "linear-gradient(to right, transparent 0, black 64px, black calc(100% - 64px), transparent 100%)",
@@ -1098,7 +1110,7 @@ function HowItWorks() {
               <IntegrationTile key={i} l={l} />
             ))}
           </div>
-          <div className="flex w-max animate-marquee pb-10 pt-3 group-hover:[animation-play-state:paused]">
+          <div className="flex w-max animate-marquee -mt-[32px] pb-10 pt-3 max-sm:-mt-[18px] group-hover:[animation-play-state:paused]">
             {[...bottomRow, ...bottomRow].map((l, i) => (
               <IntegrationTile key={i} l={l} />
             ))}
@@ -1121,59 +1133,34 @@ function Security() {
   return <section id="seguranca" className="h-[268px]" aria-hidden />;
 }
 
+const TESTIMONIALS = [
+  { text: "Trocamos de gateway e a taxa de aprovação do checkout subiu logo na primeira semana. Com o Pix caindo na hora e o D+0, nosso fluxo de caixa deixou de ser um problema.", image: "/depoimentos/p1.jpg", name: "Rafael Almeida", role: "CEO · E-commerce" },
+  { text: "Recebo pelo Pix na hora e reinvisto em tráfego no mesmo dia. O D+0 mudou completamente a velocidade com que a gente escala as campanhas.", image: "/depoimentos/p2.jpg", name: "Juliana Costa", role: "Head de Growth" },
+  { text: "A conciliação ficou simples e o antifraude derrubou nossos chargebacks. Hoje fecho o financeiro em minutos, não em dias.", image: "/depoimentos/p3.jpg", name: "Marcos Oliveira", role: "Diretor Financeiro" },
+  { text: "O split automático com meus coprodutores e afiliados acabou com as planilhas e os repasses manuais. Economizo horas toda semana.", image: "/depoimentos/p4.jpg", name: "Camila Ferreira", role: "Fundadora · Cursos" },
+  { text: "A API é limpa e bem documentada. Integramos o checkout em dois dias e os webhooks são confiáveis. Nunca perdemos um evento de pagamento.", image: "/depoimentos/p5.jpg", name: "Bruno Carvalho", role: "CTO · SaaS" },
+  { text: "O checkout transparente aumentou nossa conversão de forma perceptível. Menos abandono no carrinho e mais venda aprovada.", image: "/depoimentos/p6.jpg", name: "Patrícia Souza", role: "Gerente de E-commerce" },
+  { text: "Pix, cartão e boleto numa API só, com liquidação rápida. Conseguimos lançar novos meios de pagamento sem virar noite de dev.", image: "/depoimentos/p7.jpg", name: "Thiago Mendes", role: "Head de Produto" },
+  { text: "Gerencio o pagamento de dezenas de clientes num painel só. O saque cai rápido e o suporte responde de verdade quando a gente precisa.", image: "/depoimentos/p8.jpg", name: "Fernanda Lima", role: "CEO · Tráfego pago" },
+  { text: "Hospedo o curso na área de membros e recebo pelo mesmo ecossistema. Ter venda, entrega e afiliados integrados simplificou minha operação inteira.", image: "/depoimentos/p9.jpg", name: "Lucas Ribeiro", role: "Gestor de produtos" },
+];
+
+const firstColumn = TESTIMONIALS.slice(0, 3);
+const secondColumn = TESTIMONIALS.slice(3, 6);
+const thirdColumn = TESTIMONIALS.slice(6, 9);
+
 function Testimonials() {
-  const t = [
-    {
-      quote: "Migramos da concorrente e reduzimos de forma relevante o custo em taxas logo no primeiro mês. A API é cirúrgica.",
-      name: "Rafael Mendes", role: "Chief Technology Officer", photo: "/depoimentos/1.jpg",
-    },
-    {
-      quote: "D+0 mudou o jogo do nosso fluxo de caixa. Conseguimos escalar na velocidade que sempre sonhamos.",
-      name: "Bruno Carvalho", role: "Chief Executive Officer", photo: "/depoimentos/2.jpg",
-    },
-    {
-      quote: "Mais do que suporte, tenho um parceiro estratégico que entende minhas necessidades e oferece o acompanhamento que preciso para operar com segurança.",
-      name: "Lucas Hayashi", role: "Dev Lead", photo: "/depoimentos/3.jpg",
-    },
-  ];
   return (
     <section className="py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
+        <h2 className="mb-24 -translate-y-[30px] text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
           Clientes que não voltam atrás
         </h2>
-        <Stagger className="grid translate-y-5 gap-4 max-sm:flex max-sm:flex-wrap max-sm:justify-between max-sm:gap-x-0 max-sm:gap-y-4 md:grid-cols-3">
-          {t.map((q, i) => (
-            <div key={q.name} className="@container max-sm:w-[48.5%]">
-            <figure className={`card-elevated flex h-full flex-col p-8 max-sm:p-[9.4cqw] ${i === 2 ? "max-sm:w-[206.2%]" : "max-sm:w-full"}`} style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}>
-              <svg className="mb-6 size-7 text-[#2F6BFF] max-sm:mb-[7cqw] max-sm:size-[8.2cqw]" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
-              </svg>
-              <blockquote className="flex-1 text-pretty text-base leading-relaxed text-foreground/90 max-sm:text-[4.7cqw] max-sm:leading-relaxed">
-                "{q.quote}"
-              </blockquote>
-              <figcaption
-                className="mt-6 flex items-center gap-3 rounded-2xl p-4 max-sm:mt-[7cqw] max-sm:gap-[3.5cqw] max-sm:rounded-[4.7cqw] max-sm:p-[4.7cqw]"
-                style={{ background: "#0D1B39", boxShadow: "inset 5px 5px 10px #080f22, inset -5px -5px 10px #12264a" }}
-              >
-                <img
-                  src={q.photo}
-                  alt={q.name}
-                  width={40}
-                  height={40}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-10 shrink-0 rounded-full object-cover ring-1 ring-white/10 max-sm:size-[11.8cqw]"
-                />
-                <div>
-                  <div className="text-sm font-medium max-sm:text-[4.3cqw]">{q.name}</div>
-                  <div className="text-xs text-muted-foreground max-sm:text-[3.6cqw]">{q.role}</div>
-                </div>
-              </figcaption>
-            </figure>
-            </div>
-          ))}
-        </Stagger>
+        <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
+          <TestimonialsColumn testimonials={firstColumn} className="-translate-x-[33px]" duration={15} />
+          <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
+          <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block translate-x-[33px]" duration={17} />
+        </div>
       </div>
     </section>
   );

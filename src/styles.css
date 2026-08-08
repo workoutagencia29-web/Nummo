@@ -353,29 +353,31 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 /* Tudo controlado por JS via classes; as transições dão a suavidade (subir = descer). */
 @keyframes conn-spin { to { transform: rotate(360deg); } }
 
-/* Barra conectora (fill azul sobre o trilho) — enche por estágios via .half/.full */
-.conn-fill {
-  transform: scaleX(0);
-  transform-origin: left;
-  opacity: 1;
-  transition: transform .6s ease, opacity .85s ease;
+/* Barra conectora (fill azul) — preenchimento fluido e contínuo, sem parar.
+   Enche da esquerda, some ao completar, reinicia invisível e repete (sem pulo visível).
+   A animação infinita sobrepõe as classes .half/.full/.empty do JS. */
+@keyframes conn-flow {
+  0%   { transform: scaleX(0); opacity: 0; }
+  12%  { opacity: 1; }
+  55%  { transform: scaleX(1); opacity: 1; }
+  72%  { transform: scaleX(1); opacity: 0; }
+  100% { transform: scaleX(0); opacity: 0; }
 }
-.conn-fill.half { transform: scaleX(.5); }
-.conn-fill.full { transform: scaleX(1); }
-.conn-fill.empty { opacity: 0; }
-.conn-fill.reset { transition: none; }
+.conn-fill {
+  transform-origin: left;
+  animation: conn-flow 2.2s ease-in-out infinite;
+}
 
 /* Loader no meio da barra — aparece durante a pausa (.show) */
-.conn-loader { opacity: 0; transition: opacity .3s ease; }
-.conn-loader.show { opacity: 1; }
+.conn-loader { display: none; }
 .conn-spin-arc { animation: conn-spin 1.1s linear infinite; }
 
-/* Cards: sobem ~15px (na tela, compensando o scale do container) suave; descer usa a mesma transição */
-.card-lift { transition: transform .85s cubic-bezier(.22,.61,.36,1); will-change: transform; }
-.card-lift.up { transform: translateY(-13px); }
+/* Cards estáticos: animação de subir removida (mesmo que o JS marque .up, não se movem). */
+.card-lift { transform: none; transition: none; }
+.card-lift.up { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .card-lift, .card-lift.up { transform: none; transition: none; }
-  .conn-fill { transform: scaleX(1); opacity: 1; transition: none; }
+  .conn-fill { transform: scaleX(1); opacity: 1; transition: none; animation: none; }
   .conn-loader, .conn-spin-arc { animation: none; opacity: 0; }
 }

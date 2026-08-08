@@ -435,7 +435,7 @@ function navScroll(e: React.MouseEvent<HTMLAnchorElement>, hash: string, off = -
 const NAV_ITEMS = [
   { l: "Produtos", h: "plataforma", off: 70 },
   { l: "Taxas", h: "taxas", off: -140 },
-  { l: "Desenvolvedores", h: "para-devs", off: 0 },
+  { l: "Suporte", h: "para-devs", off: 0 },
   { l: "FAQ", h: "faq", off: 80 },
 ];
 

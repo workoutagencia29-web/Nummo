@@ -281,83 +281,9 @@ function Landing() {
       <main id="conteudo">
         <Hero />
         <Reveal><PaymentMethods /></Reveal>
-        <Reveal><Bento /></Reveal>
         <Reveal><Rates /></Reveal>
         <Reveal><HowItWorks /></Reveal>
-        <div className="band-blue relative bg-[#0D1B39]">
-          {/* Conteúdo da faixa (título, subtítulo e fluxo) desativado — mantido no código, só não renderiza. */}
-          {false && (
-          <div className="pointer-events-none absolute inset-0 z-10 flex -translate-y-5 items-start justify-center px-6 pt-24 max-sm:pt-16">
-            <div className="mx-auto max-w-3xl text-center md:max-w-none">
-              <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
-                Seu negócio não para e por isso o nosso <br />suporte também não
-              </h2>
-              <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#F6F9FC]/70 max-sm:text-[13px]">
-                Atendimento humanizado 24 horas 7 dias por semana <br /> em todos os canais de comunicações
-              </p>
-
-              {/* Fluxo de suporte animado em loop (desktop) */}
-              <FlowLoop className="relative mx-auto mb-8 mt-16 hidden max-w-5xl translate-y-[130px] scale-[1.16] items-center justify-center md:mt-20 md:flex">
-                <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
-                  <div className="text-[15px] font-bold text-[#0D1B39]">Gabriel (CLIENTE)</div>
-                </div>
-                {/* 1º conector: caminho pontilhado que ramifica para os 3 cards do meio.
-                    viewBox 0..234 = altura da pilha; centros dos cards em y=27/117/207. */}
-                <div className="relative mx-5 flex-1 self-stretch">
-                  <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 234" preserveAspectRatio="none" fill="none" aria-hidden>
-                    <path
-                      d="M0,117 H100 M42,117 C50,45 98,27 100,27 M42,117 C50,189 98,207 100,207"
-                      stroke="#2F6BFF"
-                      strokeWidth={3.5}
-                      strokeLinecap="round"
-                      strokeDasharray="0.1 13"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  </svg>
-                </div>
-                <div className="flex shrink-0 flex-col items-center gap-[36px]">
-                  <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
-                    <div className="text-[15px] font-bold text-[#0D1B39]">E-mail</div>
-                  </div>
-                  <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
-                    <div className="text-[15px] font-bold text-[#0D1B39]">WhatsApp</div>
-                  </div>
-                  <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
-                    <div className="text-[15px] font-bold text-[#0D1B39]">Instagram</div>
-                  </div>
-                </div>
-                <div className="relative mx-5 h-[3px] flex-1 rounded-full bg-white/12">
-                  <span className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]" />
-                  <span className="conn-loader absolute left-1/2 top-1/2 size-4 -translate-x-1/2 -translate-y-1/2">
-                    <span className="absolute inset-0 rounded-full border-2 border-white/15 bg-[#0D1B39]" />
-                    <span className="conn-spin-arc absolute inset-0 rounded-full border-2 border-transparent border-r-[#2F6BFF] border-t-[#2F6BFF]" />
-                  </span>
-                </div>
-                <div className="card-lift relative h-[54px] w-[210px] shrink-0 rounded-[15px] bg-[#eef4ff] px-5 flex items-center justify-center text-center shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)]">
-                  <div className="text-[15px] font-bold text-[#0D1B39]">Problema</div>
-                </div>
-              </FlowLoop>
-
-              {/* Fluxo de suporte — versão vertical (mobile) */}
-              <div className="mx-auto mt-12 flex max-w-[300px] flex-col items-stretch md:hidden">
-                <div className="rounded-2xl bg-[#eef4ff] px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)]">
-                  <div className="text-[14px] font-bold text-[#0D1B39]">Gabriel (CLIENTE)</div>
-                </div>
-                <span className="mx-auto h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF]" />
-                <div className="relative rounded-2xl bg-[#eef4ff] px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)]">
-                  <div className="text-[14px] font-bold text-[#0D1B39]">Especialista Nummo</div>
-                </div>
-                <span className="mx-auto h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF]" />
-                <div className="relative rounded-2xl bg-[#eef4ff] px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)]">
-                  <div className="text-[14px] font-bold text-[#0D1B39]">Problema</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          )}
-          {/* Diferenciais — comparativo "Outras soluções" x "Nummo" */}
-          <Reveal><Differentials /></Reveal>
-        </div>
+        <Reveal><Bento /></Reveal>
         <Reveal><Testimonials /></Reveal>
         <Reveal><Faq /></Reveal>
         <Reveal><FinalCta /></Reveal>

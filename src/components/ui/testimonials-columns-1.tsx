@@ -40,7 +40,7 @@ export const TestimonialsColumn = (props: {
                       height={40}
                       src={image}
                       alt={name}
-                      className="h-10 w-10 rounded-full ring-[2.5px] ring-[#2F6BFF]"
+                      className="h-10 w-10 rounded-full ring-[2.5px] ring-[#0D1B39]"
                     />
                     <div className="flex flex-col">
                       <div className="font-medium tracking-tight leading-5">{name}</div>

@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: radial-gradient(125% 125% at 50% 38%, #0a1a3c 0%, #050B1E 58%, #03060f 100%);
+  background: #0D1B39;
   opacity: 1;
   transition: opacity 0.6s ease;
 }
@@ -38,7 +38,7 @@
 }
 
 /* Fundo animado — só as auroras azuis flutuando (sem grade) */
-.app-loader-bg { position: absolute; inset: 0; overflow: hidden; }
+.app-loader-bg { display: none; }
 .app-loader-glow {
   position: absolute;
   border-radius: 50%;
@@ -67,7 +67,6 @@
 }
 .app-loader-logo {
   height: 40px; width: auto;
-  filter: drop-shadow(0 0 26px rgba(47, 107, 255, 0.4));
   animation: app-loader-pulse 2s ease-in-out infinite;
 }
 .app-loader-spinner {

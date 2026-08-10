@@ -5,9 +5,9 @@ import {
   Wallet, Zap, Code2,
   Instagram, Youtube, Linkedin, Menu, X, Sparkles,
   AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
-  RefreshCw,
+  RefreshCw, Lock, KeyRound, Activity,
 } from "lucide-react";
-import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
+import { useState, useEffect, useRef, Fragment, Children, isValidElement, cloneElement } from "react";
 import { TestimonialsColumn } from "../components/ui/testimonials-columns-1";
 
 function TikTok() {
@@ -280,12 +280,13 @@ function Landing() {
       <Nav />
       <main id="conteudo">
         <Hero />
-        <Reveal><Bento /></Reveal>
         <Reveal><PaymentMethods /></Reveal>
+        <Reveal><Bento /></Reveal>
         <Reveal><Rates /></Reveal>
         <Reveal><HowItWorks /></Reveal>
         <div className="band-blue relative bg-[#0D1B39]">
-          {/* Título centralizado na faixa azul */}
+          {/* Conteúdo da faixa (título, subtítulo e fluxo) desativado — mantido no código, só não renderiza. */}
+          {false && (
           <div className="pointer-events-none absolute inset-0 z-10 flex -translate-y-5 items-start justify-center px-6 pt-24 max-sm:pt-16">
             <div className="mx-auto max-w-3xl text-center md:max-w-none">
               <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
@@ -353,8 +354,9 @@ function Landing() {
               </div>
             </div>
           </div>
-          <Reveal><DevSection /></Reveal>
-          <Security />
+          )}
+          {/* Diferenciais — comparativo "Outras soluções" x "Nummo" */}
+          <Reveal><Differentials /></Reveal>
         </div>
         <Reveal><Testimonials /></Reveal>
         <Reveal><Faq /></Reveal>
@@ -679,34 +681,113 @@ function Hero() {
   );
 }
 
+const SCORE_METRICS = [
+  { label: "Clareza", value: 100 },
+  { label: "Confiança", value: 100 },
+  { label: "Urgência", value: 80 },
+  { label: "Fricção", value: 100 },
+  { label: "Mobile", value: 100 },
+  { label: "Preparo", value: 0 },
+];
+
+// Painel "Conversion Score" do Checkout Builder — anel de progresso + selo + barras.
+function ConversionScore() {
+  const score = 91;
+  const radius = 42;
+  const circ = 2 * Math.PI * radius;
+  const dash = (circ * score) / 100;
+  const [filled, setFilled] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setFilled(true); return; }
+    const io = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting) { setFilled(true); io.disconnect(); } },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="rounded-xl border border-white/10 p-4">
+      <div className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-[#F6F9FC]/50">
+        Conversion Score
+      </div>
+      <div className="mt-4 flex items-center justify-center gap-4">
+        <div className="relative size-28 shrink-0">
+          <svg viewBox="0 0 100 100" className="size-full -rotate-90">
+            <circle cx="50" cy="50" r={radius} fill="none" stroke="#F6F9FC" strokeOpacity="0.1" strokeWidth="9" />
+            <circle
+              cx="50"
+              cy="50"
+              r={radius}
+              fill="none"
+              stroke="#2F6BFF"
+              strokeWidth="9"
+              strokeLinecap="round"
+              strokeDasharray={circ}
+              strokeDashoffset={filled ? circ - dash : circ}
+              style={{ transition: "stroke-dashoffset 2.1s cubic-bezier(0.16, 1, 0.3, 1)" }}
+            />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <span className="text-3xl font-extrabold leading-none text-[#F6F9FC]">{score}</span>
+            <span className="mt-1 text-[9px] font-medium uppercase tracking-wide text-[#F6F9FC]/50">de 100</span>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-1.5">
+          <span className="flex size-11 items-center justify-center rounded-lg bg-[#2F6BFF] text-lg font-bold text-white">A</span>
+          <span className="text-sm font-bold text-[#2F6BFF]">Excelente</span>
+        </div>
+      </div>
+      <div className="mt-5 space-y-2.5">
+        {SCORE_METRICS.map((m, i) => (
+          <div key={m.label}>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-[#F6F9FC]/70">{m.label}</span>
+              <span className="text-xs font-bold text-[#F6F9FC]">{m.value}</span>
+            </div>
+            <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full rounded-full bg-[#2F6BFF]"
+                style={{ width: filled ? `${m.value}%` : "0%", transition: `width 1.4s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.08}s` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Bento() {
   return (
-    <section id="plataforma" className="relative py-32">
+    <section id="plataforma" className="relative bg-[#0D1B39] pb-[68px] pt-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-16 text-center max-sm:mb-[8px] max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
-          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
+        <div className="mb-[104px] text-center max-sm:mb-[8px] max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
+          <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
             <span className="lg:whitespace-nowrap">Produtos que simplificam <br className="hidden max-sm:inline" />sua operação hoje<span className="hidden max-sm:inline"> e</span></span>
             <br className="max-sm:hidden" />
             <br className="hidden max-sm:inline" />
             <span className="max-sm:hidden">e </span>escalam amanhã
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#0D1B39] max-sm:text-[13px] lg:-translate-y-[10px]">Um ecossistema construído e pensado para <br className="hidden max-sm:inline" />sua empresa.</p>
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#F6F9FC]/70 max-sm:text-[13px] lg:-translate-y-[10px]">Um ecossistema construído e pensado para <br className="hidden max-sm:inline" />sua empresa.</p>
         </div>
 
-        <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 md:grid-rows-2 lg:-translate-y-[40px]" step={200}>
+        <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
           {/* Big card */}
           <div
-            className="noise relative col-span-1 row-span-2 overflow-hidden rounded-[28px] p-6 text-[#F6F9FC] md:col-span-3 md:p-8"
-            style={{ background: "#0D1B39", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}
+            className="noise relative -mt-[30px] overflow-hidden rounded-[28px] p-6 pt-[54px] text-[#F6F9FC] md:col-span-6 md:p-8 md:pt-[62px]"
+            style={{ background: "#0C1730", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}
           >
+            <div className="absolute left-6 top-6 flex gap-2 md:left-8">
+              <span className="size-3 rounded-full bg-[#FF5F57]" />
+              <span className="size-3 rounded-full bg-[#FEBD2E]" />
+              <span className="size-3 rounded-full bg-[#28C840]" />
+            </div>
             <div className="flex h-full flex-col justify-between gap-10">
               <div>
-                <div
-                  className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
-                  style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
-                >
-                  <Sparkles className="size-5" />
-                </div>
                 <h3 className="font-display text-3xl font-medium tracking-tight">
                   Checkout Builder com IA
                 </h3>
@@ -714,22 +795,25 @@ function Bento() {
                   A IA da Nummo analisa seu checkout, dá uma nota e mostra o que trava suas vendas, sugerindo melhorias em cada etapa.
                 </p>
 
-                <div className="mt-5 grid translate-y-[7px] gap-2.5 lg:grid-cols-2">
+                <div className="mt-5 grid translate-y-[7px] gap-2.5 lg:grid-cols-3">
+                  {/* Score de conversão (IA) */}
+                  <ConversionScore />
                   {/* Recomendações da IA */}
-                  <div className="space-y-2">
+                  <div className="flex h-full flex-col gap-3">
                     {[
                       { title: "Pixel de rastreamento ativo", pts: 6, desc: "Cadastre um pixel (Meta/GTM) ativo na aba Pixel de Conversão.", tab: "Pixel de Conversão" },
                       { title: "Suporte (SAC) visível", pts: 3, desc: "Preencha e-mail e WhatsApp do SAC em Informações Gerais.", tab: "Informações Gerais" },
                       { title: "Página de vendas informada", pts: 2, desc: "Informe a URL da página de vendas em Informações Gerais.", tab: "Informações Gerais" },
+                      { title: "Depoimentos de clientes", pts: 4, desc: "Adicione provas sociais na aba Componentes do checkout.", tab: "Componentes" },
                     ].map((r) => (
-                      <div key={r.title} className="rounded-lg border border-white/10 p-2.5">
+                      <div key={r.title} className="flex flex-1 flex-col justify-center rounded-lg border border-white/10 p-2.5">
                         <div className="flex items-center gap-1.5">
                           <AlertTriangle className="size-3 shrink-0 text-[#2F6BFF]" />
                           <span className="text-[11px] font-semibold text-[#F6F9FC]">{r.title}</span>
                           <span className="text-[9px] text-[#F6F9FC]/70">+{r.pts}pts</span>
                         </div>
                         <p className="mt-1 text-[10px] leading-snug text-[#F6F9FC]/55">{r.desc}</p>
-                        <div className="mt-2 inline-flex rounded-md border border-[#2F6BFF]/30 bg-[#2F6BFF]/12 px-2 py-0.5 text-[9px] font-semibold text-[#6E9BFF]">
+                        <div className="mt-2 inline-flex self-start rounded-md border border-[#2F6BFF]/30 bg-[#2F6BFF]/12 px-2 py-0.5 text-[9px] font-semibold text-[#2F6BFF]">
                           Configure na aba "{r.tab}"
                         </div>
                       </div>
@@ -765,7 +849,7 @@ function Bento() {
 
           {/* Top right cards */}
           <BentoCard
-            className="md:col-span-3"
+            className="md:col-span-2"
             wide
             icon={<RefreshCw />}
             title="Recuperação de vendas"
@@ -780,11 +864,10 @@ function Bento() {
             text="Cadastre vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio. Tudo em uma só estrutura."
           />
           <BentoCard
-            className="md:col-span-1"
+            className="md:col-span-2"
             icon={<Users />}
             title="Área de membros"
             text="Hospede seu curso e entregue o conteúdo."
-            compact
           />
         </Stagger>
       </div>
@@ -799,8 +882,8 @@ function BentoCard({
 }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
-      style={{ background: "#0D1B39", boxShadow: "0 16px 32px -18px rgba(9,16,32,0.5)" }}
+      className={`relative min-h-[508px] overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
+      style={{ background: "#0C1730", boxShadow: "0 16px 32px -18px rgba(9,16,32,0.5)" }}
     >
       <div
         className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
@@ -811,7 +894,6 @@ function BentoCard({
       <h3 className={`font-display ${compact ? "text-lg" : "text-2xl"} font-medium tracking-tight`}>
         {title}
       </h3>
-      <p className={`mt-3 ${wide ? "" : "max-w-sm"} text-sm text-[#F6F9FC]/75`}>{text}</p>
     </div>
   );
 }
@@ -934,7 +1016,7 @@ function SaleNotifications() {
           // Card interno: só ele anima (opacidade + subida). A opacidade final de
           // profundidade fica no wrapper, então a animação 0→1 não a sobrescreve.
           const cardStyle: React.CSSProperties = { width: CARD_W, height: CARD_H };
-          if (play) cardStyle.animation = `notifIn 0.72s cubic-bezier(0.22,1,0.36,1) ${step * STEP}s both`;
+          if (play) cardStyle.animation = `notifIn 0.72s cubic-bezier(0.22,1,0.36,1) ${step * STEP}s both, notifFloat ${4 + i * 0.55}s ease-in-out ${step * STEP + 0.72}s infinite`;
           else if (armed) cardStyle.opacity = 0;
           return (
             <div
@@ -973,14 +1055,14 @@ function SaleNotifications() {
         })}
       </div>
       {/* Keyframe escopado (não mexe no styles.css global) */}
-      <style>{`@keyframes notifIn { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: none; } }`}</style>
+      <style>{`@keyframes notifIn { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: none; } } @keyframes notifFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }`}</style>
     </div>
   );
 }
 
 function Rates() {
   return (
-    <section id="taxas" className="relative overflow-x-clip py-32 max-sm:pt-[2px] max-sm:pb-10">
+    <section id="taxas" className="relative overflow-x-clip pb-32 pt-[198px] max-sm:pb-10 max-sm:pt-[2px]">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[48px]">
         <div className="grid grid-cols-1 items-center gap-14 max-sm:gap-[83px] lg:grid-cols-[1.6fr_1fr]">
           {/* Coluna antes ocupada pelo cartão: notificações de venda no estilo iOS.
@@ -1121,16 +1203,302 @@ function HowItWorks() {
   );
 }
 
-function DevSection() {
-  // Seção antiga "API que dev ama" — removida do site; mantida apenas como
-  // espaçador para preservar a altura da faixa azul (band-blue).
-  return <section id="para-devs" className="h-[620px] max-md:h-[430px]" aria-hidden />;
+/* ------------------------------------------------------------------ */
+/* Faixa azul — Diferenciais (comparativo Outras soluções x Nummo)     */
+/* ------------------------------------------------------------------ */
+
+const DIFF_NEG = [
+  "Taxas abusivas",
+  "Dinheiro bloqueado",
+  "Taxa de aprovação baixa",
+  "Ferramenta enxuta",
+  "Sistema ultrapassado",
+  "Suporte lento",
+];
+
+const DIFF_POS = [
+  "As melhores taxas do mercado",
+  "Liquidação D+0",
+  "Alta taxa de aprovação no checkout",
+  "Ferramenta super intuitiva com IA",
+  "Manual completo de funcionalidades e integrações",
+  "Suporte humanizado 24/7",
+];
+
+function DiffCard({ title, sub, items, positive = false, logo = false }: { title?: string; sub: string; items: string[]; positive?: boolean; logo?: boolean }) {
+  return (
+    <div className="rounded-[28px] bg-[#0C1730] p-8 md:p-10">
+      <div className="text-center">
+        <div className="flex h-8 items-center justify-center">
+          {logo ? (
+            <img src="/logo-nummo.svg" alt="Nummo" width={130} height={22} className="h-5 w-auto" />
+          ) : (
+            <h3 className="font-display text-2xl font-bold uppercase leading-none tracking-tight text-[#F6F9FC]">{title}</h3>
+          )}
+        </div>
+        <p className="mx-auto mt-3 whitespace-nowrap text-sm text-[#F6F9FC]/60 max-sm:whitespace-normal">{sub}</p>
+      </div>
+      <div className="my-8 h-px bg-white/10" />
+      <ul className="space-y-5">
+        {items.map((t) => (
+          <li key={t} className="flex items-start gap-3">
+            {positive ? (
+              <Check className="mt-0.5 size-5 shrink-0 text-[#2F6BFF]" strokeWidth={3} />
+            ) : (
+              <X className="mt-0.5 size-5 shrink-0 text-destructive" strokeWidth={3} />
+            )}
+            <span className={`text-[15px] leading-snug ${positive ? "text-[#F6F9FC]" : "text-[#F6F9FC]/80"}`}>{t}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-function Security() {
-  // Seção antiga "Segurança e conformidade" — removida do site; mantida apenas
-  // como espaçador para preservar a altura da faixa azul (band-blue).
-  return <section id="seguranca" className="h-[268px]" aria-hidden />;
+function Differentials() {
+  return (
+    <section id="para-devs" className="px-6 pb-[162px] pt-28 max-sm:pb-[130px] max-sm:pt-20">
+      <div id="seguranca" className="mx-auto max-w-6xl">
+        <h2 className="mx-auto mb-16 max-w-3xl -translate-y-[20px] text-center font-display text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:mb-10 max-sm:text-[27px] md:max-w-none md:whitespace-nowrap md:text-[46px]">
+          Um ecossistema pensado para seu negócio
+        </h2>
+        <div className="grid translate-y-[10px] items-stretch gap-6 md:grid-cols-2">
+          <DiffCard
+            title="Outras soluções"
+            sub="Soluções incompletas e tradicionais do mercado"
+            items={DIFF_NEG}
+          />
+          <DiffCard
+            logo
+            positive
+            sub="A solução completa para escalar o seu negócio"
+            items={DIFF_POS}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Faixa azul — Aprovação de pagamentos                                */
+/* ------------------------------------------------------------------ */
+
+const APPROVAL_STEPS = [
+  { n: "01", label: "Gabriel (CLIENTE)", meta: "dados do pagamento" },
+  { n: "02", label: "Tentativa de pagamento", meta: "autenticação" },
+  { n: "03", label: "Análise da transação", meta: "análise de risco" },
+  { n: "04", label: "Banco emissor", meta: "limite disponível · decisão do emissor" },
+  { n: "05", label: "Pagamento aprovado", meta: "confirmado em segundos", done: true },
+];
+
+// Bloco 1 — o fluxo de uma transação até a aprovação. É o principal elemento visual.
+// Os detalhes (dados, limite, risco, autenticação, decisão) entram como legendas
+// discretas presas a cada nó, não como cards soltos.
+function ApprovalFlow() {
+  return (
+    <section id="para-devs" className="px-6 pb-24 pt-24 max-sm:pt-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto mb-24 max-w-3xl text-center max-sm:mb-14 md:max-w-none">
+          <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
+            Uma venda só existe quando o<br className="max-sm:hidden" /> pagamento é aprovado.
+          </h2>
+        </div>
+
+        {/* Fluxo horizontal (desktop) — conectores reutilizam a barra .conn-fill (mesma animação do site) */}
+        <div className="mx-auto hidden max-w-6xl items-start justify-center md:flex">
+          {APPROVAL_STEPS.map((s, i) => (
+            <Fragment key={s.n}>
+              <div className="flex w-[172px] shrink-0 flex-col items-center text-center">
+                <div className={`flex min-h-[78px] w-full flex-col items-center justify-center gap-1.5 rounded-[15px] px-4 py-3 shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)] ${s.done ? "bg-white ring-2 ring-[#2F6BFF]/35" : "bg-[#eef4ff]"}`}>
+                  {s.done ? (
+                    <span className="flex size-6 items-center justify-center rounded-full bg-[#2F6BFF]">
+                      <Check className="size-3.5 text-white" strokeWidth={3} />
+                    </span>
+                  ) : (
+                    <span className="font-sans text-[11px] font-bold tracking-wider text-[#2F6BFF]">{s.n}</span>
+                  )}
+                  <span className="text-[13px] font-bold leading-tight text-[#0D1B39]">{s.label}</span>
+                </div>
+                <span className="mt-3 max-w-[160px] text-[11px] leading-snug text-[#F6F9FC]/55">{s.meta}</span>
+              </div>
+              {i < APPROVAL_STEPS.length - 1 && (
+                <div className="relative mx-2 mt-[38px] h-[3px] flex-1 rounded-full bg-white/12">
+                  <span
+                    className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]"
+                    style={{ animationDelay: `${i * 0.24}s` }}
+                  />
+                </div>
+              )}
+            </Fragment>
+          ))}
+        </div>
+
+        {/* Fluxo vertical (mobile) */}
+        <div className="mx-auto flex max-w-[320px] flex-col items-stretch md:hidden">
+          {APPROVAL_STEPS.map((s, i) => (
+            <Fragment key={s.n}>
+              <div className={`rounded-2xl px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)] ${s.done ? "bg-white ring-2 ring-[#2F6BFF]/35" : "bg-[#eef4ff]"}`}>
+                <div className="flex items-center justify-center gap-2">
+                  {s.done ? (
+                    <span className="flex size-5 items-center justify-center rounded-full bg-[#2F6BFF]">
+                      <Check className="size-3 text-white" strokeWidth={3} />
+                    </span>
+                  ) : (
+                    <span className="font-sans text-[11px] font-bold text-[#2F6BFF]">{s.n}</span>
+                  )}
+                  <span className="text-[14px] font-bold text-[#0D1B39]">{s.label}</span>
+                </div>
+                <div className="mt-0.5 text-[11px] text-[#0D1B39]/55">{s.meta}</div>
+              </div>
+              {i < APPROVAL_STEPS.length - 1 && (
+                <span className="mx-auto my-2 h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF]" />
+              )}
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const APPROVAL_TECH = [
+  { icon: <ShieldCheck />, title: "Antifraude", text: "Análise de risco durante as transações." },
+  { icon: <Lock />, title: "3DS 2.0", text: "Autenticação adicional quando necessária." },
+  { icon: <KeyRound />, title: "Tokenização", text: "Proteção dos dados sensíveis do pagamento." },
+  { icon: <Activity />, title: "Monitoramento", text: "Visibilidade sobre aprovações e recusas." },
+];
+
+// Chip de ícone reaproveita a receita neumórfica dos cards navy (BentoCard).
+function TechItem({ icon, title, text, align = "left" }: { icon: React.ReactNode; title: string; text: string; align?: "left" | "right" }) {
+  return (
+    <div className={`flex items-start gap-4 ${align === "right" ? "flex-row-reverse text-right" : "text-left"}`}>
+      <span
+        className="flex size-11 shrink-0 items-center justify-center rounded-xl text-[#F6F9FC] [&>svg]:size-5"
+        style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
+      >
+        {icon}
+      </span>
+      <div>
+        <h3 className="font-display text-lg font-semibold tracking-tight text-[#F6F9FC]">{title}</h3>
+        <p className="mt-1 text-sm text-[#F6F9FC]/65">{text}</p>
+      </div>
+    </div>
+  );
+}
+
+function ApprovalHub() {
+  return (
+    <div className="flex size-[132px] flex-col items-center justify-center gap-2 rounded-3xl bg-[#eef4ff] px-4 text-center shadow-[0_22px_50px_-20px_rgba(0,0,0,0.6)] max-sm:size-[120px]">
+      <img src="/logo-nummo-dark.svg" alt="Nummo" width={110} height={18} className="h-[18px] w-auto" />
+      <span className="text-[11px] font-semibold leading-tight text-[#0D1B39]/65">infraestrutura<br />de pagamentos</span>
+    </div>
+  );
+}
+
+// Bloco 2 — os 4 recursos ligados a um hub central (não uma grade de 4 cards).
+function ApprovalTech() {
+  return (
+    <section className="px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <h2 className="mx-auto mb-16 max-w-3xl text-balance text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:mb-10 max-sm:text-[27px] md:text-[56px]">
+          Tecnologia trabalhando por trás de cada tentativa.
+        </h2>
+
+        {/* Hub central + 4 elementos conectados (desktop) */}
+        <div className="relative mx-auto hidden max-w-4xl md:block">
+          <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" aria-hidden>
+            <path
+              d="M50,50 L30,27 M50,50 L70,27 M50,50 L30,73 M50,50 L70,73"
+              stroke="#2F6BFF"
+              strokeOpacity={0.5}
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeDasharray="0.1 11"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+          <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-center gap-x-10">
+            <div className="flex flex-col gap-16">
+              <TechItem {...APPROVAL_TECH[0]} align="right" />
+              <TechItem {...APPROVAL_TECH[2]} align="right" />
+            </div>
+            <ApprovalHub />
+            <div className="flex flex-col gap-16">
+              <TechItem {...APPROVAL_TECH[1]} align="left" />
+              <TechItem {...APPROVAL_TECH[3]} align="left" />
+            </div>
+          </div>
+        </div>
+
+        {/* Empilhado (mobile) */}
+        <div className="flex flex-col items-center gap-10 md:hidden">
+          <ApprovalHub />
+          <div className="w-full max-w-sm space-y-7">
+            {APPROVAL_TECH.map((t) => (
+              <TechItem key={t.title} icon={t.icon} title={t.title} text={t.text} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const APPROVAL_STATS = [
+  { value: "10.000", label: "Tentativas", accent: false },
+  { value: "9.240", label: "Aprovadas", accent: false },
+  { value: "92,4%", label: "Taxa de aprovação", accent: true },
+];
+
+// Bloco 3 — performance (números ilustrativos) + fechamento + CTA.
+function ApprovalStats() {
+  return (
+    <section id="seguranca" className="px-6 pb-40 pt-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto flex max-w-4xl items-center justify-center gap-4 max-sm:flex-col max-sm:gap-0">
+          {APPROVAL_STATS.map((st, i) => (
+            <Fragment key={st.label}>
+              <div className="text-center max-sm:py-3">
+                <div className={`font-display text-5xl font-extrabold leading-none tracking-tight md:text-6xl ${st.accent ? "text-[#6E9BFF]" : "text-[#F6F9FC]"}`}>
+                  {st.value}
+                </div>
+                <div className="mt-2 text-sm text-[#F6F9FC]/60">{st.label}</div>
+              </div>
+              {i < APPROVAL_STATS.length - 1 && (
+                <>
+                  <div className="relative mx-2 mt-[-18px] hidden h-[3px] w-24 shrink-0 rounded-full bg-white/12 sm:block">
+                    <span className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]" style={{ animationDelay: `${i * 0.3}s` }} />
+                  </div>
+                  <span className="my-1 h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF] sm:hidden" />
+                </>
+              )}
+            </Fragment>
+          ))}
+        </div>
+        <p className="mt-8 text-center text-xs text-[#F6F9FC]/45">Exemplo meramente ilustrativo.</p>
+
+        {/* Fechamento + CTA */}
+        <div className="mx-auto mt-24 max-w-3xl text-center max-sm:mt-16">
+          <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
+            Mais vendas começam com pagamentos aprovados.
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#F6F9FC]/70 max-sm:text-[13px]">
+            A Nummo conecta tecnologia, segurança e dados para construir uma infraestrutura preparada para cada tentativa de pagamento.
+          </p>
+          <div className="mt-10 flex justify-center">
+            <PrimaryButton
+              size="lg"
+              href="https://app.usenummo.com.br/dashboard/register"
+              className="!bg-[#2559d8] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#1f4fc4]"
+            >
+              Começar com a Nummo
+            </PrimaryButton>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 const TESTIMONIALS = [
@@ -1191,7 +1559,7 @@ function Faq() {
   const items = FAQ_ITEMS;
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="py-32 max-sm:pt-[44px]">
+    <section id="faq" className="pb-32 pt-[113px] max-sm:pt-[44px]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
       <div className="mx-auto max-w-[1000px] px-6">
         <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
@@ -1199,7 +1567,7 @@ function Faq() {
         </h2>
         <Stagger className="space-y-3">
           {items.map((it, i) => (
-            <div key={i} className="card-elevated overflow-hidden" style={{ background: "#0D1B39" }}>
+            <div key={i} className="card-elevated overflow-hidden" style={{ background: "#FFFFFF", color: "#0D1B39", borderColor: "rgba(13, 27, 57, 0.08)", boxShadow: "0 2px 10px rgba(13, 27, 57, 0.05)", "--foreground": "#0D1B39", "--muted-foreground": "#59617A", "--neon": "#2F6BFF" } as React.CSSProperties}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 id={`faq-btn-${i}`}

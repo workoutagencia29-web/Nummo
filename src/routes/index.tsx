@@ -2,7 +2,7 @@ import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, Check, ChevronDown, CreditCard,
   Link, Layers,
-  Wallet, Zap, Code2,
+  Zap, Code2, Barcode, DollarSign,
   Instagram, Youtube, Linkedin, Menu, X, Sparkles,
   AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
   RefreshCw, Lock, KeyRound, Activity,
@@ -365,7 +365,7 @@ const NAV_ITEMS = [
   { l: "Produtos", h: "plataforma", off: 70 },
   { l: "Taxas", h: "taxas", off: -176 },
   { l: "Integrações", h: "integracoes", off: -136 },
-  { l: "Ajuda", h: "faq", off: 80 },
+  { l: "Ajuda", h: "faq", off: -40 },
 ];
 
 export function Nav({ solid = false }: { solid?: boolean }) {
@@ -633,6 +633,68 @@ function CoffeeSteam({ imgRef, sectionRef }: { imgRef: React.RefObject<HTMLImage
   );
 }
 
+// Estampa o ícone da Nummo (anel) na face frontal da caneca, ancorado por JS
+// respeitando o object-contain da imagem (mesma matemática do CoffeeSteam).
+// Perspectiva (rotateY) transforma o círculo em elipse = superfície do cilindro;
+// mix-blend-mode multiply deixa as ranhuras/sombra da cerâmica atravessarem o
+// logo, dando o efeito de estampado. Só desktop (imagem só aparece no lg+).
+function MugLogo({ imgRef, sectionRef }: { imgRef: React.RefObject<HTMLImageElement | null>; sectionRef: React.RefObject<HTMLElement | null> }) {
+  const ref = useRef<HTMLDivElement>(null);
+  // ——— ajuste fino ———
+  const MUG_FX = 0.672;  // centro horizontal do logo (fração da imagem 1366x768)
+  const MUG_FY = 0.349;  // centro vertical (na barriga da caneca, abaixo da borda)
+  const SIZE = 0.030;    // diâmetro do logo como fração da largura da imagem
+  const ROT_Y = -26;     // curvatura do cilindro: quanto o logo "vira" na superfície
+  const PERSP = 130;     // px de perspectiva — MENOR = bordas recuam mais (mais cilíndrico)
+  const ROT_Z = -4;      // leve inclinação p/ acompanhar a caneca
+  const OPACITY = 0.7;
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const place = () => {
+      const img = imgRef.current, sec = sectionRef.current, el = ref.current;
+      if (!img || !sec || !el) return;
+      if (!window.matchMedia("(min-width: 1024px)").matches) { el.style.opacity = "0"; return; }
+      const box = img.getBoundingClientRect();
+      const secRect = sec.getBoundingClientRect();
+      const natW = img.naturalWidth || 1366, natH = img.naturalHeight || 768;
+      const scale = Math.min(box.width / natW, box.height / natH); // object-contain
+      const cW = natW * scale, cH = natH * scale;
+      const offX = box.width - cW;        // object-right
+      const offY = (box.height - cH) / 2; // vertical center
+      const x = box.left + offX + MUG_FX * cW;
+      const y = box.top + offY + MUG_FY * cH;
+      el.style.left = `${x - secRect.left}px`;
+      el.style.top = `${y - secRect.top}px`;
+      el.style.width = `${SIZE * cW}px`;
+      el.style.height = `${SIZE * cW}px`;
+      el.style.opacity = "1";
+    };
+    place();
+    const onR = () => place();
+    window.addEventListener("resize", onR, { passive: true });
+    const img = imgRef.current;
+    if (img && !img.complete) img.addEventListener("load", place, { once: true });
+    return () => { window.removeEventListener("resize", onR); };
+  }, [imgRef, sectionRef]);
+  return (
+    <div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute z-[6] hidden lg:block"
+      style={{
+        opacity: 0,
+        transform: `translate(-50%,-50%) perspective(${PERSP}px) rotateY(${ROT_Y}deg) rotate(${ROT_Z}deg)`,
+        transformOrigin: "50% 50%",
+        mixBlendMode: "multiply",
+      }}
+    >
+      <svg viewBox="0 0 1080 1080" width="100%" height="100%" style={{ display: "block", opacity: OPACITY, filter: "blur(0.4px)" }}>
+        <circle cx="540" cy="540" r="360" fill="none" stroke="#2F6BFF" strokeWidth="170" />
+      </svg>
+    </div>
+  );
+}
+
 function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -648,6 +710,7 @@ function Hero() {
         className="absolute right-[2%] top-[56%] hidden h-[90%] w-[82%] -translate-y-1/2 object-contain object-right lg:block"
       />
       <CoffeeSteam imgRef={imgRef} sectionRef={sectionRef} />
+      <MugLogo imgRef={imgRef} sectionRef={sectionRef} />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 max-sm:-translate-y-8 max-sm:pb-0 lg:py-10">
         <div className="lg:mt-8">
@@ -676,7 +739,7 @@ function Hero() {
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"
-              className="h-[56px] w-[240px] justify-center !bg-[#2559d8] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:!px-3 max-sm:!text-sm"
+              className="h-[56px] w-[240px] justify-center !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:!px-3 max-sm:!text-sm"
             >
               Criar Conta
             </PrimaryButton>
@@ -684,7 +747,7 @@ function Hero() {
               href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-[#0D1B39]/15 bg-[#0D1B39]/[0.03] px-8 text-base font-medium text-[#0D1B39] transition hover:bg-[#0D1B39]/[0.06] max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:whitespace-nowrap max-sm:border-[#0D1B39]/20 max-sm:bg-transparent max-sm:px-2 max-sm:text-[13px]"
+              className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full bg-white px-8 text-base font-medium text-[#0D1B39] shadow-[0_10px_30px_-8px_rgba(13,27,57,0.18)] transition hover:shadow-[0_14px_36px_-8px_rgba(13,27,57,0.26)] max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:whitespace-nowrap max-sm:px-2 max-sm:text-[13px]"
             >
               Falar com Especialista
             </a>
@@ -775,9 +838,165 @@ function ConversionScore() {
   );
 }
 
+// Tópicos da vitrine de produtos (tour em vídeo). videoId = ID do YouTube
+// (enviar depois); enquanto null, mostra placeholder "Vídeo em breve".
+const TOUR_ITEMS = [
+  {
+    key: "members",
+    label: "Nummo Members",
+    title: "Nummo Members",
+    desc: "Hospede seu curso e entregue o conteúdo aos seus alunos direto pela Nummo, com área de membros, hospedagem e player de vídeo inclusos, sem custo adicional.",
+    price: "R$ 0,00 / mês",
+    videoId: null as string | null,
+  },
+  {
+    key: "checkout",
+    label: "Nummo Studio",
+    title: "Nummo Studio com IA",
+    desc: "Monte seu checkout e deixe a IA da Nummo analisar cada etapa, dar uma nota e mostrar exatamente o que está travando suas vendas.",
+    price: "R$ 0,00 / mês",
+    videoId: null as string | null,
+  },
+  {
+    key: "marketplace",
+    label: "Nummo Market",
+    title: "Nummo Market",
+    desc: "Cadastre vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio. Tudo em uma só estrutura.",
+    price: "R$ 0,00 / mês",
+    videoId: null as string | null,
+  },
+  {
+    key: "subcontas",
+    label: "Nummo Units",
+    title: "Nummo Units",
+    desc: "Organize sua operação em sub-contas independentes, cada uma com seu saldo, acessos e relatórios, tudo sob a mesma estrutura Nummo.",
+    price: "R$ 0,00 / mês",
+    videoId: null as string | null,
+  },
+];
+
+// Vitrine de produtos no formato "tutorial": lista de tópicos à esquerda,
+// card com vídeo/descrição/preço à direita. Clicar no tópico troca o card.
+function ProductTours() {
+  const [active, setActive] = useState(0);
+  const item = TOUR_ITEMS[active];
+  // Indicador azul deslizante: um único retângulo posicionado por JS sobre o
+  // tópico ativo, com transição suave (padrão do site). Isolado ao ProductTours.
+  const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const indicatorRef = useRef<HTMLDivElement>(null);
+  const firstRun = useRef(true);
+  useEffect(() => {
+    const place = () => {
+      const btn = btnRefs.current[active];
+      const ind = indicatorRef.current;
+      if (!btn || !ind) return;
+      if (firstRun.current) ind.style.transition = "none"; // sem animar no 1º posicionamento
+      ind.style.transform = `translateY(${btn.offsetTop}px)`;
+      ind.style.height = `${btn.offsetHeight}px`;
+      ind.style.width = `${btn.offsetWidth}px`;
+      if (firstRun.current) {
+        void ind.offsetWidth; // reflow p/ aplicar a posição sem transição
+        ind.style.transition =
+          "transform 1s cubic-bezier(0.4,0,0.2,1), height 1s cubic-bezier(0.4,0,0.2,1), width 1s cubic-bezier(0.4,0,0.2,1)";
+        firstRun.current = false;
+      }
+    };
+    place();
+    window.addEventListener("resize", place, { passive: true });
+    return () => window.removeEventListener("resize", place);
+  }, [active]);
+  return (
+    <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
+      {/* Coluna esquerda — tópicos clicáveis */}
+      <div className="relative flex translate-y-[2px] flex-col gap-1.5">
+        {/* Retângulo azul deslizante (posicionado/animado via JS) */}
+        <div
+          ref={indicatorRef}
+          aria-hidden
+          className="pointer-events-none absolute left-0 top-0 rounded-xl bg-[#2F6BFF]/12"
+          style={{ height: 0, width: 0, transform: "translateY(0)" }}
+        />
+        {TOUR_ITEMS.map((t, i) => (
+          <button
+            key={t.key}
+            ref={(el) => { btnRefs.current[i] = el; }}
+            type="button"
+            onClick={() => setActive(i)}
+            className={`relative z-10 mr-[30px] rounded-xl px-4 py-3 text-left text-base font-medium transition-colors ${
+              i === active ? "text-[#F6F9FC]" : "text-[#F6F9FC]/55 hover:text-[#F6F9FC]/85"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Coluna direita — card do produto */}
+      <div className="rounded-[24px] bg-[#0C1730] p-5 shadow-[18px_26px_50px_-12px_rgba(0,0,0,0.6)] md:p-6">
+        {/* key={active} remonta o conteúdo a cada troca → replay do fade suave */}
+        <div key={active} className="tour-in">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="translate-y-[5px] font-display text-2xl font-semibold tracking-tight text-[#F6F9FC] md:text-3xl">{item.title}</h3>
+          {/* Botão "Usar Nummo" — removido a pedido. Reativar: trocar `false` por `true`. */}
+          {false && (
+          <a
+            href="https://app.usenummo.com.br/dashboard/register"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 rounded-full bg-[#2559d8] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#1f4fc4]"
+          >
+            Usar Nummo
+          </a>
+          )}
+        </div>
+
+        {/* Área do vídeo — embed do YouTube quando houver videoId; senão, placeholder */}
+        <div className="mt-6 aspect-video w-full overflow-hidden rounded-2xl bg-[#091020]">
+          {item.videoId ? (
+            <iframe
+              className="h-full w-full"
+              src={`https://www.youtube.com/embed/${item.videoId}`}
+              title={item.title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-[#F6F9FC]/40">
+              <span className="grid size-16 place-items-center rounded-full bg-white/5 ring-1 ring-inset ring-white/10">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              </span>
+              <span className="text-sm font-medium">Vídeo em breve</span>
+            </div>
+          )}
+        </div>
+
+        {/* Descrição */}
+        <p className="mt-[35px] text-pretty text-sm leading-relaxed text-[#F6F9FC]/70 md:text-base">{item.desc}</p>
+
+        {/* Preço */}
+        <div className="mt-[30px] flex items-center gap-3">
+          <span
+            className="inline-flex size-11 items-center justify-center rounded-xl text-[#F6F9FC] [&>svg]:size-5"
+            style={{
+              background: "#0C1730",
+              boxShadow: "inset 2px 2px 4px #070d1c, inset -2px -2px 4px #111f3d",
+            }}
+          >
+            <DollarSign />
+          </span>
+          <span className="translate-x-[5px] text-lg font-medium text-[#F6F9FC]">{item.price}</span>
+        </div>
+        </div>
+        <style>{`@keyframes tourIn{from{opacity:0}to{opacity:1}}.tour-in{animation:tourIn 1s cubic-bezier(0.4,0,0.2,1)}`}</style>
+      </div>
+    </div>
+  );
+}
+
 function Bento() {
   return (
-    <section id="plataforma" className="relative bg-[#0D1B39] pb-[68px] pt-[138px]">
+    <section id="plataforma" className="relative bg-[#0D1B39] pb-[118px] pt-[138px]">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-[104px] text-center max-sm:mb-[8px] max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
           <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
@@ -790,9 +1009,13 @@ function Bento() {
         </div>
 
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
+          {/* Checkout Builder com IA + Área de membros + Marketplace —
+              TEMPORARIAMENTE OCULTOS a pedido (serão reutilizados depois).
+              Para reativar: trocar `false` por `true` no wrapper abaixo. */}
+          {false && (<>
           {/* Big card */}
           <div
-            className="noise relative -mt-[30px] overflow-hidden rounded-[28px] p-6 pt-[54px] text-[#F6F9FC] md:col-span-6 md:p-8 md:pt-[62px]"
+            className="noise relative -mt-[30px] overflow-hidden rounded-[28px] p-6 pt-[54px] text-[#F6F9FC] md:col-span-6 md:justify-self-start md:p-8 md:pt-[62px] lg:max-w-[840px]"
             style={{ background: "#0C1730", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}
           >
             <div className="absolute left-6 top-6 flex gap-2 md:left-8">
@@ -809,7 +1032,7 @@ function Bento() {
                   A IA da Nummo analisa seu checkout, dá uma nota e mostra o que trava suas vendas, sugerindo melhorias em cada etapa.
                 </p>
 
-                <div className="mt-5 grid translate-y-[7px] gap-2.5 lg:grid-cols-3">
+                <div className="mt-5 grid translate-y-[7px] gap-2.5 lg:grid-cols-2">
                   {/* Score de conversão (IA) */}
                   <ConversionScore />
                   {/* Recomendações da IA */}
@@ -833,29 +1056,6 @@ function Bento() {
                       </div>
                     ))}
                   </div>
-
-                  {/* Grade de componentes */}
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { icon: <Type />, label: "Texto" },
-                      { icon: <Image />, label: "Imagem" },
-                      { icon: <Check />, label: "Vantagens" },
-                      { icon: <ShieldCheck />, label: "Selo" },
-                      { icon: <Layers />, label: "Header" },
-                      { icon: <List />, label: "Lista" },
-                      { icon: <Zap />, label: "Cronômetro" },
-                      { icon: <Star />, label: "Depoimento" },
-                      { icon: <Video />, label: "Vídeo" },
-                      { icon: <Users />, label: "Facebook" },
-                      { icon: <Globe />, label: "Mapa" },
-                      { icon: <Zap />, label: "Botão" },
-                    ].map((c) => (
-                      <div key={c.label} className="flex flex-col items-center justify-center gap-1 rounded-lg border border-white/10 py-2.5">
-                        <span className="text-[#F6F9FC]/70 [&>svg]:size-4">{c.icon}</span>
-                        <span className="text-[9px] text-[#F6F9FC]/70">{c.label}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>
@@ -873,9 +1073,12 @@ function Bento() {
             title="Marketplace"
             text="Cadastre vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio. Tudo em uma só estrutura."
           />
+          </>)}
 
-          {/* Foto do notebook — sem card/fundo: a imagem fica solta sobre o navy da seção.
-              A máscara radial funde a imagem direto no fundo navy. */}
+          {/* Foto do notebook (metodos-dashboard-2.png) + degradê radial.
+              TEMPORARIAMENTE OCULTA a pedido (será reutilizada depois).
+              Para reativar: trocar `false` por `true` abaixo. O PNG segue em /public. */}
+          {false && (
           <div
             className="relative flex min-h-[438px] items-start justify-center md:col-span-2"
           >
@@ -894,7 +1097,11 @@ function Bento() {
               }}
             />
           </div>
+          )}
         </Stagger>
+
+        {/* Vitrine de produtos em vídeo (tour) */}
+        <ProductTours />
       </div>
     </section>
   );
@@ -927,7 +1134,7 @@ function PaymentMethods() {
   const methods = [
     { name: "Pix", desc: "Aprovação instantânea.", icon: <Pix /> },
     { name: "Cartões", desc: "Visa, Mastercard, Elo, Amex.", icon: <CreditCard /> },
-    { name: "Boleto", desc: "Emissão automática.", icon: <Wallet /> },
+    { name: "Boleto", desc: "Emissão automática.", icon: <Barcode /> },
     { name: "Link de Pagamento", desc: "Venda por link, sem ter um site.", icon: <Link /> },
   ];
   return (
@@ -1271,7 +1478,7 @@ function Rates() {
             <p className="mt-6 text-pretty text-xl text-[#0D1B39] max-sm:text-[13px]">
               Temos <span className="font-semibold text-[#2F6BFF]">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa.
               E, conforme seu negócio evolui, cresce em volume ou muda de estrutura,
-              suas condições podem ser revisadas para acompanhar essa <span className="font-semibold text-[#2F6BFF]">nova fase</span>.
+              suas condições podem ser revisadas para acompanhar essa nova fase.
             </p>
             <p className="mt-6 text-pretty text-base text-[#0D1B39] max-sm:text-[11px]">
               Comece com o plano ideal hoje e{" "}
@@ -1734,7 +1941,6 @@ const FAQ_ITEMS = [
   { q: "Como funciona a área de membros da Nummo?", a: "Hospede seu curso gratuitamente na área de membros da Nummo. O armazenamento e a exibição dos seus vídeos também estão inclusos, sem nenhum custo adicional." },
   { q: "Como funciona o programa de afiliados da Nummo?", a: "Na Nummo, você pode divulgar seu produto no marketplace para atrair novos afiliados ou convidar parceiros diretamente por meio de um link personalizado." },
   { q: "É possível adicionar coprodutores aos meus produtos?", a: "Sim. Você pode incluir quantos coprodutores precisar e configurar a divisão das comissões diretamente pela plataforma da Nummo." },
-  { q: "Como funciona o D+0?", a: "Liquidação na hora em vendas realizadas no PIX sem custo adicional. O dinheiro cai na sua conta minutos após a aprovação da venda." },
   { q: "Quanto tempo leva para sacar?", a: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
 ];
 

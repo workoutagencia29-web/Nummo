@@ -363,7 +363,7 @@ function navScroll(e: React.MouseEvent<HTMLAnchorElement>, hash: string, off = -
 const NAV_ITEMS = [
   { l: "Produtos", h: "plataforma", off: 70 },
   { l: "Taxas", h: "taxas", off: -140 },
-  { l: "Suporte", h: "para-devs", off: 0 },
+  { l: "Integrações", h: "integracoes", off: 0 },
   { l: "Ajuda", h: "faq", off: 80 },
 ];
 
@@ -568,17 +568,85 @@ export function Nav({ solid = false }: { solid?: boolean }) {
   );
 }
 
-function Hero() {
+// Fumacinha da xícara: SVG com turbulência (wisps que sobem e dissipam),
+// ancorada por JS na borda da xícara respeitando o object-contain da imagem.
+function CoffeeSteam({ imgRef, sectionRef }: { imgRef: React.RefObject<HTMLImageElement | null>; sectionRef: React.RefObject<HTMLElement | null> }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const CUP_FX = 0.686; // centro da borda da xícara (fração da imagem 1366x768)
+    const CUP_FY = 0.318; // topo da borda
+    const place = () => {
+      const img = imgRef.current, sec = sectionRef.current, el = ref.current;
+      if (!img || !sec || !el) return;
+      if (!window.matchMedia("(min-width: 1024px)").matches) { el.style.opacity = "0"; return; }
+      const box = img.getBoundingClientRect();
+      const secRect = sec.getBoundingClientRect();
+      const natW = img.naturalWidth || 1366, natH = img.naturalHeight || 768;
+      const scale = Math.min(box.width / natW, box.height / natH); // object-contain
+      const cW = natW * scale, cH = natH * scale;
+      const offX = box.width - cW;        // object-right
+      const offY = (box.height - cH) / 2; // vertical center
+      const cupX = box.left + offX + CUP_FX * cW;
+      const cupY = box.top + offY + CUP_FY * cH;
+      el.style.left = `${cupX - secRect.left}px`;
+      el.style.top = `${cupY - secRect.top}px`;
+      el.style.setProperty("--cs-scale", String(Math.max(0.65, Math.min(1.35, (cW / natW) * 1.2))));
+      el.style.opacity = "1";
+    };
+    place();
+    const onR = () => place();
+    window.addEventListener("resize", onR, { passive: true });
+    const img = imgRef.current;
+    if (img && !img.complete) img.addEventListener("load", place, { once: true });
+    return () => { window.removeEventListener("resize", onR); };
+  }, [imgRef, sectionRef]);
   return (
-    <section className="relative flex min-h-svh items-end overflow-hidden bg-[#F6F9FC] text-[#0D1B39] max-sm:items-center lg:items-center">
+    <div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute z-[5] hidden lg:block"
+      style={{ opacity: 0, transform: "translate(-50%,-100%) scale(var(--cs-scale,1))", transformOrigin: "50% 100%" }}
+    >
+      <svg width="96" height="168" viewBox="0 0 96 168" fill="none" style={{ overflow: "visible" }}>
+        <defs>
+          <filter id="cs-turb" x="-80%" y="-80%" width="260%" height="260%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.021 0.045" numOctaves="2" seed="7" result="n">
+              <animate attributeName="baseFrequency" dur="13s" values="0.021 0.045;0.03 0.062;0.021 0.045" repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id="cs-blur" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="3.6" />
+          </filter>
+        </defs>
+        <g filter="url(#cs-turb)">
+          <g filter="url(#cs-blur)" fill="#ffffff">
+            <ellipse className="cs-wisp cs-w1" cx="48" cy="132" rx="9" ry="27" />
+            <ellipse className="cs-wisp cs-w2" cx="48" cy="132" rx="8" ry="24" />
+            <ellipse className="cs-wisp cs-w3" cx="48" cy="132" rx="7" ry="22" />
+          </g>
+        </g>
+      </svg>
+    </div>
+  );
+}
+
+function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  return (
+    <section ref={sectionRef} className="relative flex min-h-svh items-end overflow-hidden bg-[#F6F9FC] text-[#0D1B39] max-sm:items-center lg:items-center">
       {/* Foto e overlays escuros removidos — Hero usa o branco da Nummo (#F6F9FC) com texto escuro. */}
       {/* TESTE: imagem de fundo do Hero (desktop) */}
       <img
+        ref={imgRef}
         src="/hero-graphic.png"
         alt=""
         aria-hidden
         className="absolute right-[2%] top-[56%] hidden h-[90%] w-[82%] -translate-y-1/2 object-contain object-right lg:block"
       />
+      <CoffeeSteam imgRef={imgRef} sectionRef={sectionRef} />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 max-sm:-translate-y-8 max-sm:pb-0 lg:py-10">
         <div className="lg:mt-8">
@@ -1113,7 +1181,7 @@ function HowItWorks() {
   const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
 
   return (
-    <section className="pb-[17px] pt-32 max-sm:pt-[2px] max-sm:pb-[85px]">
+    <section id="integracoes" className="pb-[17px] pt-32 max-sm:pt-[2px] max-sm:pb-[85px]">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[38px]">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow

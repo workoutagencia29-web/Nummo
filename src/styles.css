@@ -273,6 +273,22 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   .animate-hero-in { animation: none; }
 }
 
+/* Fumacinha da xícara: cada wisp sobe, dilata e dissipa (com stagger) */
+@keyframes cs-rise {
+  0%   { opacity: 0;    transform: translateY(4px)   scaleX(0.55) scaleY(0.6); }
+  22%  { opacity: 0.75; }
+  55%  { opacity: 0.5; }
+  82%  { opacity: 0.18; }
+  100% { opacity: 0;    transform: translateY(-96px) scaleX(1.6)  scaleY(1.65); }
+}
+.cs-wisp { transform-box: fill-box; transform-origin: 50% 100%; will-change: transform, opacity; animation: cs-rise 6.2s ease-in-out infinite; }
+.cs-w1 { animation-duration: 6.2s; animation-delay: 0s; }
+.cs-w2 { animation-duration: 7.6s; animation-delay: 1.7s; }
+.cs-w3 { animation-duration: 8.4s; animation-delay: 3.3s; }
+@media (prefers-reduced-motion: reduce) {
+  .cs-wisp { animation: none; opacity: 0; }
+}
+
 /* ---------- reveal ao rolar (entrada das seções) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {

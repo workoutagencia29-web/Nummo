@@ -364,7 +364,7 @@ const NAV_ITEMS = [
   { l: "Produtos", h: "plataforma", off: 70 },
   { l: "Taxas", h: "taxas", off: -140 },
   { l: "Suporte", h: "para-devs", off: 0 },
-  { l: "FAQ", h: "faq", off: 80 },
+  { l: "Ajuda", h: "faq", off: 80 },
 ];
 
 export function Nav({ solid = false }: { solid?: boolean }) {
@@ -391,10 +391,37 @@ export function Nav({ solid = false }: { solid?: boolean }) {
     return () => clearTimeout(t);
   }, [open]);
 
-  // Navbar no TOPO da página (position: absolute) — fica sobre o Hero escuro
-  // e sai da tela ao rolar (não acompanha o scroll). Só aparece sobre o Hero,
-  // então usamos sempre o estilo overlay (transparente + branco).
-  const overlay = true;
+  // Header fixo (liquid glass): sobre o Hero escuro fica transparente + branco;
+  // ao rolar para o conteúdo claro vira vidro fosco (backdrop-blur) + texto escuro.
+  // `solid` (outras páginas) mantém o estilo branco sobre a barra navy.
+  // `scrolled` aqui = "a pílula está sobre uma seção de fundo CLARO" (modo claro:
+  // vidro fosco + texto escuro). Sobre seções escuras (Hero e a faixa navy dos
+  // Produtos) fica false → modo escuro (vidro clear + texto branco).
+  const [scrolled, setScrolled] = useState(true);
+  useEffect(() => {
+    if (solid) return;
+    const NAV_Y = 50; // ponto vertical ~centro da pílula
+    let ticking = false;
+    const update = () => {
+      const darkEls = [document.getElementById("plataforma")];
+      const overDark = darkEls.some((el) => {
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        return r.top <= NAV_Y && r.bottom >= NAV_Y;
+      });
+      setScrolled(!overDark);
+      ticking = false;
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [solid]);
+  const overlay = solid || !scrolled;
 
   const scrollTop = (e: React.MouseEvent) => {
     // Fora da home: deixa o link "/" navegar normalmente pra página inicial.
@@ -408,22 +435,28 @@ export function Nav({ solid = false }: { solid?: boolean }) {
   return (
     <>
       {solid && <ScrollRail />}
-      <header className={`absolute inset-x-0 top-0 z-50 ${solid ? "bg-[#0D1B39]" : ""}`}>
-      {/* Vidro do menu mobile — camada separada p/ fazer fade in/out suave */}
-      {menuMounted && (
-        <div
-          aria-hidden
-          className={`absolute inset-0 bg-gradient-to-b from-white/12 to-white/[0.04] backdrop-blur-2xl backdrop-saturate-[2] transition-opacity duration-500 ease-in-out lg:hidden ${menuShown ? "opacity-100" : "opacity-0"}`}
-        />
-      )}
-      <div className="relative flex h-20 items-center px-6 lg:px-8">
-        <a href="/" onClick={scrollTop} className={`flex shrink-0 items-center transition-opacity duration-500 ease-in-out ${menuMounted ? "max-lg:pointer-events-none max-lg:opacity-0" : ""}`} aria-label="Nummo — início">
+      <header className={`${solid ? "absolute bg-[#0D1B39]" : "fixed px-4 pt-4 sm:pt-5"} inset-x-0 top-0 z-50`}>
+      <div className={solid ? "" : "mx-auto max-w-7xl"}>
+      {/* Pílula flutuante (liquid glass) na home; barra navy cheia nas páginas solid. */}
+      <div
+        className={`relative transition-[background-color,box-shadow] duration-300 ${
+          solid
+            ? ""
+            : `rounded-full backdrop-blur-2xl backdrop-saturate-[1.8] ${
+                scrolled
+                  ? "bg-white/40 shadow-[0_16px_44px_-16px_rgba(13,27,57,0.3)]"
+                  : "bg-white/45 shadow-[0_12px_36px_-14px_rgba(13,27,57,0.28)] sm:bg-white/10 sm:shadow-[0_14px_40px_-10px_rgba(0,0,0,0.5)]"
+              }`
+        }`}
+      >
+      <div className={`relative flex items-center ${solid ? "h-20 px-6 lg:px-8" : "h-16 px-5 lg:px-6"}`}>
+        <a href="/" onClick={scrollTop} className="flex shrink-0 translate-x-[2px] items-center" aria-label="Nummo — início">
           <img
             src={overlay ? "/logo-nummo.svg" : "/logo-nummo-dark.svg"}
             alt="Nummo"
             width={145}
             height={24}
-            className={`h-6 w-auto select-none md:h-7 ${!solid ? "max-sm:hidden" : ""}`}
+            className={`h-5 w-auto select-none md:h-6 ${!solid ? "max-sm:hidden" : ""}`}
             draggable={false}
           />
           {!solid && (
@@ -432,7 +465,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
               alt="Nummo"
               width={145}
               height={24}
-              className="hidden h-6 w-auto select-none max-sm:block md:h-7"
+              className="hidden h-5 w-auto select-none max-sm:block md:h-6"
               draggable={false}
             />
           )}
@@ -453,7 +486,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
           ))}
         </nav>
 
-        <div className="ml-auto hidden shrink-0 items-center gap-3 lg:flex">
+        <div className="ml-auto hidden shrink-0 translate-x-[8px] items-center gap-3 lg:flex">
           <a
             href="https://app.usenummo.com.br/dashboard/login"
             target="_blank"
@@ -479,7 +512,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className={`relative z-20 ml-auto rounded-md p-3 lg:hidden ${overlay ? "text-white" : "text-foreground"} ${menuMounted ? "max-lg:!text-[#0D1B39]" : ""} ${!solid ? "max-sm:!text-[#0D1B39]" : ""}`}
+          className={`relative z-20 ml-auto rounded-md p-2.5 lg:hidden ${overlay ? "text-white" : "text-foreground"} ${!solid ? "max-sm:!text-foreground" : ""}`}
           aria-label={menuMounted ? "Fechar menu" : "Abrir menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -487,10 +520,14 @@ export function Nav({ solid = false }: { solid?: boolean }) {
           {menuMounted ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
+      </div>
 
       {menuMounted && (
-        <div id="mobile-nav" className={`relative -mt-[72px] transition-opacity duration-500 ease-in-out lg:hidden ${menuShown ? "opacity-100" : "pointer-events-none opacity-0"}`}>
-          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
+        <div
+          id="mobile-nav"
+          className={`mt-2 overflow-hidden rounded-3xl border border-[#0D1B39]/[0.06] bg-white/90 shadow-[0_16px_42px_-16px_rgba(13,27,57,0.3)] backdrop-blur-xl transition-opacity duration-300 ease-in-out lg:hidden ${menuShown ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        >
+          <div className="flex flex-col gap-1 p-4">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.l}
@@ -499,7 +536,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
                   navScroll(e, item.h, item.off);
                   setOpen(false);
                 }}
-                className="rounded-md px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+                className="rounded-xl px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
               >
                 {item.l}
               </a>
@@ -509,7 +546,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
                 href="https://app.usenummo.com.br/dashboard/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 rounded-full border border-white/25 bg-white/15 py-2.5 text-center text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 max-sm:border-[#0D1B39]/20 max-sm:bg-transparent max-sm:text-[#0D1B39]"
+                className="flex-1 rounded-full border border-[#0D1B39]/15 py-2.5 text-center text-sm font-semibold text-foreground transition hover:bg-muted"
               >
                 Entrar
               </a>
@@ -525,6 +562,7 @@ export function Nav({ solid = false }: { solid?: boolean }) {
           </div>
         </div>
       )}
+      </div>
       </header>
     </>
   );
@@ -532,59 +570,40 @@ export function Nav({ solid = false }: { solid?: boolean }) {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-svh items-end overflow-hidden text-white max-sm:items-center max-sm:bg-[#F6F9FC] max-sm:text-[#0D1B39] lg:items-center">
-      {/* Fundo cinematográfico (copiado do nummo-premium-flow) */}
-      <div className="absolute inset-0">
-        {/* Fundo desktop */}
-        <img
-          src="/hero-bg.webp"
-          alt=""
-          aria-hidden
-          fetchPriority="high"
-          width={1920}
-          height={1280}
-          className="absolute inset-0 hidden h-full w-full scale-105 object-cover object-center lg:block"
-        />
-        {/* Fundo mobile/tablet — enquadrado na executiva (corta o teto escuro, estilo Stark) */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-no-repeat max-sm:hidden lg:hidden"
-          style={{ backgroundImage: "url(/hero-bg.webp)", backgroundSize: "auto 115%", backgroundPosition: "76% 26%" }}
-        />
-        {/* Overlay desktop (original) */}
-        <div className="absolute inset-0 hidden bg-gradient-to-b from-[#050B1E]/70 via-[#050B1E]/35 to-[#050B1E]/95 lg:block" />
-        {/* Overlay mobile — rosto visível em cima, escuro embaixo p/ o texto (estilo Stark/Revolut) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050B1E] via-[#050B1E]/40 to-[#050B1E]/5 max-sm:hidden lg:hidden" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050B1E]/50 via-transparent to-transparent max-sm:hidden lg:hidden" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,11,30,0.45)_78%)] max-sm:hidden" />
-        <div className="absolute inset-0 grid-bg opacity-[0.05] max-sm:hidden" />
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#050B1E]/90 to-transparent max-sm:hidden" />
-      </div>
+    <section className="relative flex min-h-svh items-end overflow-hidden bg-[#F6F9FC] text-[#0D1B39] max-sm:items-center lg:items-center">
+      {/* Foto e overlays escuros removidos — Hero usa o branco da Nummo (#F6F9FC) com texto escuro. */}
+      {/* TESTE: imagem de fundo do Hero (desktop) */}
+      <img
+        src="/hero-graphic.png"
+        alt=""
+        aria-hidden
+        className="absolute right-[2%] top-[56%] hidden h-[90%] w-[82%] -translate-y-1/2 object-contain object-right lg:block"
+      />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 max-sm:-translate-y-8 max-sm:pb-0 lg:py-10">
         <div className="lg:mt-8">
           {/* Wrapper anima o fade+subida sem mexer nos transforms do título (desktop intacto).
               -translate-y sobe título e subtítulo sem tocar no layout (os botões ficam no lugar);
               usa a prop `translate`, que compõe com o `transform` da animação em vez de sobrescrevê-lo. */}
-          <div className="animate-hero-in -translate-y-8 max-sm:-translate-y-[34px] [animation-delay:120ms]">
-            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#F6F9FC] max-sm:text-center max-sm:text-[#0D1B39] max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
-              <span className="inline-block text-[40px] leading-[0.98] max-sm:-translate-y-[8px] max-sm:text-[28px] max-sm:leading-[0.92] max-[360px]:text-[28px] md:text-[55px] lg:-translate-y-2 lg:text-[56px] xl:text-[62px]">
-                Infraestrutura financeira
+          <div className="animate-hero-in -translate-y-[52px] max-sm:-translate-y-[54px] [animation-delay:120ms]">
+            <h1 className="text-left text-[32px] font-bold leading-[1.03] tracking-[-0.01em] text-[#0D1B39] max-sm:text-center max-[360px]:text-[28px] lg:whitespace-nowrap md:text-[42px] lg:text-left lg:text-[50px] xl:text-[54px]">
+              <span className="inline-block text-[44px] font-bold leading-[0.98] max-sm:-translate-y-[8px] max-sm:text-[34px] max-sm:leading-[0.92] md:text-[60px] lg:-translate-y-2 lg:text-[68px] xl:text-[74px]">
+                Seja o protagonista
               </span>
               <br />
               {/* inline-block é pré-requisito do translate: transform não se aplica a inline puro.
                   Sobe só a 2ª linha p/ colar na 1ª, sem mexer na altura do h1. */}
-              <span className="inline-block -translate-y-1.5 font-medium max-sm:text-[28px] max-sm:font-bold">para empresas que <br className="hidden max-sm:inline" />não <br className="max-sm:hidden" />querem limites</span>
+              <span className="inline-block -translate-y-1.5 font-bold text-[44px] max-sm:text-[34px] md:text-[60px] lg:text-[68px] xl:text-[74px]">vem pra Nummo!</span>
             </h1>
           </div>
 
           {/* Subtítulo — só no mobile/tablet */}
-          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-white/75 max-sm:mx-auto max-sm:-translate-y-[18px] max-sm:text-center max-sm:text-[13px] max-sm:text-[#0D1B39]/70 [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg lg:text-white/85">
+          <p className="animate-hero-in -translate-y-4 mt-5 max-w-md text-left text-[15px] leading-relaxed text-[#0D1B39]/70 max-sm:mx-auto max-sm:-translate-y-[18px] max-sm:text-center max-sm:text-[13px] [animation-delay:440ms] lg:max-w-lg lg:text-left lg:text-lg">
             Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
           </p>
 
           {/* Botões — só no mobile/tablet; no desktop o hero segue sem botões */}
-          <div className="animate-hero-in mt-8 flex translate-y-4 flex-col items-start gap-3 max-sm:w-full max-sm:translate-y-[210px] max-sm:flex-row max-sm:items-stretch max-sm:gap-2 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-start">
+          <div className="animate-hero-in mt-8 flex translate-y-[96px] flex-col items-start gap-3 max-sm:w-full max-sm:translate-y-[210px] max-sm:flex-row max-sm:items-stretch max-sm:gap-2 [animation-delay:760ms] lg:mt-10 lg:flex-row lg:items-center lg:justify-start">
             <PrimaryButton
               size="lg"
               href="https://app.usenummo.com.br/dashboard/register"
@@ -596,7 +615,7 @@ function Hero() {
               href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/15 px-8 text-base font-medium text-white transition hover:bg-white/20 max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:whitespace-nowrap max-sm:border-[#0D1B39]/20 max-sm:bg-transparent max-sm:px-2 max-sm:text-[13px] max-sm:text-[#0D1B39]"
+              className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-[#0D1B39]/15 bg-[#0D1B39]/[0.03] px-8 text-base font-medium text-[#0D1B39] transition hover:bg-[#0D1B39]/[0.06] max-sm:w-auto max-sm:flex-1 max-sm:min-w-0 max-sm:whitespace-nowrap max-sm:border-[#0D1B39]/20 max-sm:bg-transparent max-sm:px-2 max-sm:text-[13px]"
             >
               Falar com Especialista
             </a>
@@ -829,7 +848,7 @@ function PaymentMethods() {
     { name: "Pix", desc: "Aprovação instantânea.", icon: <Pix /> },
     { name: "Cartões", desc: "Visa, Mastercard, Elo, Amex.", icon: <CreditCard /> },
     { name: "Boleto", desc: "Emissão automática.", icon: <Wallet /> },
-    { name: "API Pix", desc: "Cobranças Pix direto pela sua API.", icon: <Code2 /> },
+    { name: "Link de Pagamento", desc: "Venda por link, sem ter um site.", icon: <Link /> },
   ];
   return (
     <section className="py-32 max-sm:pt-6 max-sm:pb-10">
@@ -837,7 +856,7 @@ function PaymentMethods() {
         <SectionEyebrow
           titleClassName="max-sm:!text-[27px]"
           title={<span className="text-[#0D1B39]">Venda onde e <span className="text-[#0D1B39]">como quiser</span></span>}
-          sub="Na Nummo você tem acesso aos meios de pagamentos que o brasileiro usa de verdade."
+          sub="Aqui você tem acesso aos meios de pagamentos que o brasileiro usa de verdade."
         />
         <div className="grid gap-10 lg:grid-cols-2">
           {/* 4 cards à esquerda */}
@@ -988,7 +1007,7 @@ function SaleNotifications() {
 
 function Rates() {
   return (
-    <section id="taxas" className="relative overflow-x-clip pb-32 pt-[198px] max-sm:pb-10 max-sm:pt-[2px]">
+    <section id="taxas" className="relative overflow-x-clip pb-32 pt-[128px] max-sm:pb-10 max-sm:pt-[2px]">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[48px]">
         <div className="grid grid-cols-1 items-center gap-14 max-sm:gap-[83px] lg:grid-cols-[1.6fr_1fr]">
           {/* Coluna antes ocupada pelo cartão: notificações de venda no estilo iOS.
@@ -1018,7 +1037,7 @@ function Rates() {
   );
 }
 
-type Integration = { alt: string; src?: string; node?: React.ReactNode; tone: "color" | "mono" | "node" };
+type Integration = { alt: string; src?: string; node?: React.ReactNode; tone: "color" | "mono" | "node"; wide?: boolean };
 
 // Neumorfismo modo claro — família dos cards de Métodos, com mais profundidade/contraste
 // (sombra escura mais funda #c7d1e4) + filete de luz no topo p/ definir a borda.
@@ -1041,7 +1060,7 @@ function IntegrationTile({ l }: { l: Integration }) {
           <span
             role="img"
             aria-label={l.alt}
-            className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-[67px] [&>svg]:w-[67px] max-sm:[&>svg]:h-[45px] max-sm:[&>svg]:w-[45px]"
+            className="text-[#0D1B39] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 [&>svg]:h-[58px] [&>svg]:w-[58px] max-sm:[&>svg]:h-[39px] max-sm:[&>svg]:w-[39px]"
           >
             {l.node}
           </span>
@@ -1050,7 +1069,7 @@ function IntegrationTile({ l }: { l: Integration }) {
           <span
             role="img"
             aria-label={l.alt}
-            className="block h-[67px] w-[80px] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:h-[45px] max-sm:w-[55px]"
+            className="block h-[52px] w-[63px] opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:h-[35px] max-sm:w-[43px]"
             style={{
               background: "#0D1B39",
               WebkitMaskImage: `url(${l.src})`,
@@ -1068,7 +1087,7 @@ function IntegrationTile({ l }: { l: Integration }) {
           <img
             src={l.src}
             alt={l.alt}
-            className="max-h-[67px] w-auto max-w-[80px] object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 max-sm:max-h-[45px] max-sm:max-w-[55px]"
+            className={`w-auto object-contain opacity-90 transition-opacity duration-300 group-hover/tile:opacity-100 ${l.wide ? "max-h-[58px] max-w-[108px] max-sm:max-h-[39px] max-sm:max-w-[74px]" : "max-h-[58px] max-w-[70px] max-sm:max-h-[39px] max-sm:max-w-[48px]"}`}
             draggable={false}
             loading="lazy"
           />
@@ -1088,12 +1107,13 @@ function HowItWorks() {
     { src: "/logos/notazz.webp", alt: "Notazz", tone: "color" },
     { src: "/logos/astron.webp", alt: "Astron", tone: "color" },
     { src: "/logos/gmail.svg", alt: "Gmail", tone: "color" },
+    { src: "/logos/sms.png", alt: "SMS", tone: "color", wide: true },
   ];
   // Fileira de baixo rotacionada: evita o efeito "espelho" com a de cima.
   const bottomRow = [...integrations.slice(3), ...integrations.slice(0, 3)];
 
   return (
-    <section className="pb-[57px] pt-32 max-sm:pt-[2px] max-sm:pb-[85px]">
+    <section className="pb-[17px] pt-32 max-sm:pt-[2px] max-sm:pb-[85px]">
       <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[38px]">
         <div className="lg:-translate-y-[82px]">
           <SectionEyebrow

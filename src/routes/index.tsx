@@ -290,6 +290,7 @@ function Landing() {
       </main>
       <Footer />
       <ScrollRail />
+      <ScrollDrawLine />
     </div>
   );
 }
@@ -362,8 +363,8 @@ function navScroll(e: React.MouseEvent<HTMLAnchorElement>, hash: string, off = -
 
 const NAV_ITEMS = [
   { l: "Produtos", h: "plataforma", off: 70 },
-  { l: "Taxas", h: "taxas", off: -140 },
-  { l: "Integrações", h: "integracoes", off: 0 },
+  { l: "Taxas", h: "taxas", off: -176 },
+  { l: "Integrações", h: "integracoes", off: -136 },
   { l: "Ajuda", h: "faq", off: 80 },
 ];
 
@@ -776,7 +777,7 @@ function ConversionScore() {
 
 function Bento() {
   return (
-    <section id="plataforma" className="relative bg-[#0D1B39] pb-[68px] pt-32">
+    <section id="plataforma" className="relative bg-[#0D1B39] pb-[68px] pt-[138px]">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-[104px] text-center max-sm:mb-[8px] max-sm:-translate-y-[30px] lg:-translate-y-[38px]">
           <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
@@ -860,28 +861,39 @@ function Bento() {
             </div>
           </div>
 
-          {/* Top right cards */}
-          <BentoCard
-            className="md:col-span-2"
-            wide
-            icon={<RefreshCw />}
-            title="Recuperação de vendas"
-            text="A IA da Nummo recupera sozinha o que você perderia: cartões recusados são reprocessados com retry inteligente, e checkouts abandonados, Pix e boletos não pagos voltam com mensagens automáticas. Tudo em segundo plano, virando faturamento recuperado."
-          />
-
-          {/* Bottom right two */}
-          <BentoCard
-            className="md:col-span-2"
-            icon={<Layers />}
-            title="Marketplace"
-            text="Cadastre vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio. Tudo em uma só estrutura."
-          />
           <BentoCard
             className="md:col-span-2"
             icon={<Users />}
             title="Área de membros"
             text="Hospede seu curso e entregue o conteúdo."
           />
+          <BentoCard
+            className="md:col-span-2"
+            icon={<Layers />}
+            title="Marketplace"
+            text="Cadastre vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio. Tudo em uma só estrutura."
+          />
+
+          {/* Foto do notebook — sem card/fundo: a imagem fica solta sobre o navy da seção.
+              A máscara radial funde a imagem direto no fundo navy. */}
+          <div
+            className="relative flex min-h-[438px] items-start justify-center md:col-span-2"
+          >
+            <img
+              src="/metodos-dashboard-2.png"
+              alt="Dashboard da Nummo no notebook"
+              width={2160}
+              height={2160}
+              loading="lazy"
+              decoding="async"
+              className="w-full select-none object-contain"
+              draggable={false}
+              style={{
+                WebkitMaskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
+                maskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
+              }}
+            />
+          </div>
         </Stagger>
       </div>
     </section>
@@ -895,7 +907,7 @@ function BentoCard({
 }) {
   return (
     <div
-      className={`relative min-h-[508px] overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
+      className={`relative min-h-[438px] overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
       style={{ background: "#0C1730", boxShadow: "0 16px 32px -18px rgba(9,16,32,0.5)" }}
     >
       <div
@@ -951,24 +963,53 @@ function PaymentMethods() {
             ))}
           </div>
 
-          {/* mockup do dashboard à direita */}
+          {/* Foto à direita (porquinho) — no lugar onde ficava o mockup do notebook. */}
           <div className="flex items-center justify-center lg:justify-end">
             <SlideInRight className="w-full max-w-md lg:max-w-lg">
             <div className="relative w-full max-sm:-translate-y-8 max-sm:scale-90 lg:-translate-y-[54px] lg:scale-110">
-              <img
-                src="/metodos-dashboard-2.png"
-                alt="Dashboard da Nummo — saldo disponível e desempenho de vendas"
-                width={2160}
-                height={2160}
-                loading="lazy"
-                decoding="async"
-                className="relative w-full select-none object-contain"
-                draggable={false}
-                style={{
-                  WebkitMaskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
-                  maskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
-                }}
-              />
+              {/* wrapper que move/escala porquinho + sombra juntos */}
+              <div className="relative w-full translate-y-[37px] scale-[1.07]">
+                {/* Sombra de contato realista sob o porquinho:
+                    camada 1 = halo largo e suave (oclusão ambiente);
+                    camada 2 = núcleo mais escuro logo sob as patas (contato). */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute left-1/2 top-[76%] h-[16%] w-[88%] -translate-x-1/2 rounded-[50%]"
+                  style={{ background: "radial-gradient(50% 50% at 50% 45%, rgba(13,27,57,0.18), rgba(13,27,57,0.06) 55%, transparent 78%)", filter: "blur(11px)" }}
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute left-1/2 top-[80%] h-[9%] w-[62%] -translate-x-1/2 rounded-[50%]"
+                  style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(13,27,57,0.42), rgba(13,27,57,0.16) 50%, transparent 74%)", filter: "blur(5px)" }}
+                />
+                <img
+                  data-nl-anchor="pig"
+                  src="/porquinho.png"
+                  alt="Cofrinho com óculos de sol"
+                  width={1080}
+                  height={1080}
+                  loading="lazy"
+                  decoding="async"
+                  className="relative w-full select-none object-contain"
+                  draggable={false}
+                />
+                {/* Escurece suavemente a base/patas do porquinho (que estavam claras demais),
+                    mascarado pela silhueta do PNG e em multiply, para casar com a sombra do chão. */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    WebkitMaskImage: "url(/porquinho.png)",
+                    maskImage: "url(/porquinho.png)",
+                    WebkitMaskSize: "100% 100%",
+                    maskSize: "100% 100%",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    background: "linear-gradient(to top, rgba(23,34,66,0.42) 0%, rgba(23,34,66,0.26) 11%, rgba(23,34,66,0.1) 21%, transparent 31%)",
+                    mixBlendMode: "multiply",
+                  }}
+                />
+              </div>
             </div>
             </SlideInRight>
           </div>
@@ -1023,7 +1064,7 @@ function SaleNotifications() {
 
   return (
     <div ref={ref} className="flex justify-center max-sm:order-last max-sm:-translate-x-[10px] sm:hidden lg:flex lg:-translate-x-[160px] lg:-translate-y-6 lg:justify-center">
-      <div className="relative h-[416px] w-full max-w-[440px] max-sm:h-[366px] max-sm:origin-top max-sm:scale-[0.68]">
+      <div data-nl-anchor="notif" className="relative h-[416px] w-full max-w-[440px] max-sm:h-[366px] max-sm:origin-top max-sm:scale-[0.68]">
         {items.map((n, i) => {
           const step = ORDER.indexOf(i);
           // Card interno: só ele anima (opacidade + subida). A opacidade final de
@@ -1073,17 +1114,156 @@ function SaleNotifications() {
   );
 }
 
+// Linha que se "desenha" com o scroll ligando o porquinho às notificações de
+// venda. Overlay FIXO (pointer-events none) que redesenha o caminho a cada
+// frame em coordenadas de viewport; o traço fica amarrado ao progresso do
+// scroll via stroke-dashoffset — some ao subir, completa ao descer, com um
+// leve lerp p/ ficar sedoso. Só desktop (lg+), pois no mobile as notificações
+// ficam ocultas. Totalmente isolado: não altera layout, fluxo nem altura.
+function ScrollDrawLine() {
+  const pathRef = useRef<SVGPathElement>(null);
+  const arrowRef = useRef<SVGPathElement>(null);
+
+  // ——— parâmetros de ajuste fino (fáceis de calibrar no olho) ———
+  const PIG_FX = 0.483, PIG_FY = 0.828;   // saída: base/meio do porquinho (abaixo da sombra)
+  const NOTIF_FX = 0.511, NOTIF_FY = 0.0; // chegada: descendo na esquerda do card de cima
+  const TRIM_START = 6;                   // px cortados da ponta do PORQUINHO (sem deslocar)
+  const TRIM_END = 15;                    // px cortados da ponta das NOTIFICAÇÕES (sem deslocar)
+  // Caminho em ONDA (2 Béziers). Frações do vetor início→fim: x cresce p/ a
+  // esquerda, y p/ baixo. 1ª curva = tombo reto + 1ª barriga; junção suave no
+  // meio (crista); 2ª curva (S, tangente refletida) = mergulho abaixo dos cards
+  // e gancho de subida — igual ao desenho da foto.
+  const A1X = 0.0,  A1Y = 0.40;           // saída do porquinho: tombo quase reto
+  const A2X = 0.15, A2Y = 0.50;           // sobe pro patamar alto
+  const MX  = 0.47, MY  = 0.50;           // meio: PATAMAR ALTO, junção nivelada (sem subida)
+  const B2X = 1.0,  B2Y = 0.46;           // desce direto p/ o card, sem cristinha antes de cair, ponta ~vertical
+  const START_VH = 0.9, END_VH = 0.15;    // só começa a desenhar com o porquinho já em cena
+  const BOOST_DRAW = 0.22;                // fração da linha desenhada no arranque acelerado
+  const BOOST_SCROLL = 0.08;              // ...consumindo só essa fração do scroll (arranque rápido)
+  const LERP = 0.14;                      // suavidade do traço (0..1)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const path = pathRef.current;
+    const arrow = arrowRef.current;
+    const pig = document.querySelector('[data-nl-anchor="pig"]') as HTMLElement | null;
+    const notif = document.querySelector('[data-nl-anchor="notif"]') as HTMLElement | null;
+    if (!path || !arrow || !pig || !notif) return;
+
+    let raf = 0;
+    let running = false;
+    let shown = 0; // progresso exibido (lerpado)
+
+    const frame = () => {
+      if (!running) return;
+      const vh = window.innerHeight;
+      const a = pig.getBoundingClientRect();
+      const b = notif.getBoundingClientRect();
+      const sx = a.left + a.width * PIG_FX;
+      const sy = a.top + a.height * PIG_FY;
+      const ex = b.left + b.width * NOTIF_FX;
+      const ey = b.top + b.height * NOTIF_FY;
+      const dx = ex - sx, dy = ey - sy;
+      const fx = (f: number) => (sx + dx * f).toFixed(1);
+      const fy = (f: number) => (sy + dy * f).toFixed(1);
+      const d =
+        `M ${sx.toFixed(1)} ${sy.toFixed(1)} ` +
+        `C ${fx(A1X)} ${fy(A1Y)}, ${fx(A2X)} ${fy(A2Y)}, ${fx(MX)} ${fy(MY)} ` +
+        `S ${fx(B2X)} ${fy(B2Y)}, ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+      path.setAttribute("d", d);
+      const len = path.getTotalLength();
+
+      const midY = (sy + ey) / 2;
+      const startAt = vh * START_VH, endAt = vh * END_VH;
+      let s = (startAt - midY) / (startAt - endAt); // progresso de scroll (linear)
+      s = s < 0 ? 0 : s > 1 ? 1 : s;
+      // Arranque acelerado: desenha BOOST_DRAW da linha nos primeiros BOOST_SCROLL
+      // do scroll (rápido); depois segue em velocidade normal (linear) até o fim.
+      const p = s < BOOST_SCROLL
+        ? (s / BOOST_SCROLL) * BOOST_DRAW
+        : BOOST_DRAW + ((s - BOOST_SCROLL) / (1 - BOOST_SCROLL)) * (1 - BOOST_DRAW);
+      shown += (p - shown) * LERP;
+      if (Math.abs(p - shown) < 0.0005) shown = p;
+
+      // Corta um pedacinho das DUAS pontas (porquinho e notificações) sem mexer
+      // no traçado: o traço visível vai de TRIM_START até len-TRIM_END, e ainda
+      // "desenha" do porquinho → notificações conforme o scroll.
+      const trackMax = Math.max(0, len - TRIM_START - TRIM_END);
+      const drawn = Math.min(trackMax, len * shown - TRIM_START);
+      if (drawn <= 0) {
+        path.style.strokeDasharray = `${len}`;
+        path.style.strokeDashoffset = `${len}`;
+        arrow.style.opacity = "0";
+      } else {
+        path.style.strokeDasharray = `${drawn} ${len}`;
+        path.style.strokeDashoffset = `${-TRIM_START}`;
+        // Seta na PONTA desenhada (lado das notificações): segue o traço no
+        // scroll e gira p/ a tangente da linha (no fim, aponta pra baixo).
+        const tipLen = TRIM_START + drawn;
+        const tip = path.getPointAtLength(tipLen);
+        const back = path.getPointAtLength(Math.max(0, tipLen - 6));
+        const ang = (Math.atan2(tip.y - back.y, tip.x - back.x) * 180) / Math.PI;
+        arrow.setAttribute("transform", `translate(${tip.x.toFixed(1)} ${tip.y.toFixed(1)}) rotate(${ang.toFixed(1)})`);
+        arrow.style.opacity = "1";
+      }
+
+      raf = requestAnimationFrame(frame);
+    };
+    const start = () => { if (!running) { running = true; raf = requestAnimationFrame(frame); } };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    // Só roda o loop quando a região está por perto (economiza bateria).
+    const io = new IntersectionObserver(
+      (e) => { if (e[0].isIntersecting) start(); else stop(); },
+      { rootMargin: "700px 0px 700px 0px" },
+    );
+    io.observe(notif);
+    return () => { io.disconnect(); stop(); };
+  }, []);
+
+  return (
+    <svg
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-[1] hidden h-full w-full lg:block"
+      width="100%"
+      height="100%"
+      fill="none"
+    >
+      <path
+        ref={pathRef}
+        stroke="#0D1B39"
+        strokeWidth={3.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeOpacity={1}
+      />
+      {/* Seta minimalista na ponta (posicionada/rotacionada via JS a cada frame) */}
+      <path
+        ref={arrowRef}
+        d="M -8 -5.5 L 0 0 L -8 5.5"
+        stroke="#0D1B39"
+        strokeWidth={3.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ opacity: 0 }}
+      />
+    </svg>
+  );
+}
+
 function Rates() {
   return (
-    <section id="taxas" className="relative overflow-x-clip pb-32 pt-[128px] max-sm:pb-10 max-sm:pt-[2px]">
-      <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[48px]">
+    <section id="taxas" className="relative overflow-x-clip pb-[118px] pt-[98px] max-sm:pb-10 max-sm:pt-[2px]">
+      <div className="mx-auto max-w-7xl px-6 lg:-translate-y-[28px]">
         <div className="grid grid-cols-1 items-center gap-14 max-sm:gap-[83px] lg:grid-cols-[1.6fr_1fr]">
           {/* Coluna antes ocupada pelo cartão: notificações de venda no estilo iOS.
               Ocultas no mobile (a coluna já ficava vazia lá) p/ não alterar o layout. */}
           <SaleNotifications />
 
           {/* Texto */}
-          <div className="lg:-ml-24 lg:-translate-x-[20px] lg:-translate-y-12 xl:-ml-[170px]">
+          <div className="lg:-ml-24 lg:-translate-x-[8px] lg:-translate-y-12 xl:-ml-[170px]">
             <div className="invisible mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]" aria-hidden="true">/ Taxas</div>
             <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px] lg:whitespace-nowrap">
               Seu negócio não precisa <br className="hidden lg:inline" />caber em uma <br className="hidden lg:inline" />taxa padrão
@@ -1550,7 +1730,7 @@ function Testimonials() {
 
 const FAQ_ITEMS = [
   { q: "Preciso ter CNPJ para abrir conta?", a: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta normalmente em até 24h, sujeita à análise cadastral e de segurança (KYC)." },
-  { q: "Quanto custa começar?", a: "Criar conta é gratuito — sem mensalidade e sem fidelidade. As taxas incidem apenas sobre vendas aprovadas e são descontadas automaticamente no momento da transação." },
+  { q: "Quanto custa começar?", a: "Criar conta é gratuito, sem mensalidade e sem fidelidade. As taxas incidem apenas sobre vendas aprovadas e são descontadas automaticamente no momento da transação." },
   { q: "Como funciona a área de membros da Nummo?", a: "Hospede seu curso gratuitamente na área de membros da Nummo. O armazenamento e a exibição dos seus vídeos também estão inclusos, sem nenhum custo adicional." },
   { q: "Como funciona o programa de afiliados da Nummo?", a: "Na Nummo, você pode divulgar seu produto no marketplace para atrair novos afiliados ou convidar parceiros diretamente por meio de um link personalizado." },
   { q: "É possível adicionar coprodutores aos meus produtos?", a: "Sim. Você pode incluir quantos coprodutores precisar e configurar a divisão das comissões diretamente pela plataforma da Nummo." },
@@ -1573,7 +1753,7 @@ function Faq() {
   const items = FAQ_ITEMS;
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="pb-32 pt-[113px] max-sm:pt-[44px]">
+    <section id="faq" className="pb-32 pt-[83px] max-sm:pt-[44px]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
       <div className="mx-auto max-w-[1000px] px-6">
         <h2 className="mb-16 text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
@@ -1581,7 +1761,7 @@ function Faq() {
         </h2>
         <Stagger className="space-y-3">
           {items.map((it, i) => (
-            <div key={i} className="card-elevated overflow-hidden" style={{ background: "#FFFFFF", color: "#0D1B39", borderColor: "rgba(13, 27, 57, 0.08)", boxShadow: "0 2px 10px rgba(13, 27, 57, 0.05)", "--foreground": "#0D1B39", "--muted-foreground": "#59617A", "--neon": "#2F6BFF" } as React.CSSProperties}>
+            <div key={i} className="card-elevated overflow-hidden" style={{ background: "#FFFFFF", color: "#0D1B39", borderColor: "rgba(13, 27, 57, 0.04)", boxShadow: "0 2px 10px rgba(13, 27, 57, 0.05)", "--foreground": "#0D1B39", "--muted-foreground": "#59617A", "--neon": "#2F6BFF" } as React.CSSProperties}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 id={`faq-btn-${i}`}
@@ -1668,10 +1848,9 @@ const FOOTER_LINKS: Record<string, string> = {
 
 export function Footer() {
   return (
-    <footer className="relative bg-background px-3 text-[#F6F9FC] max-sm:px-0 sm:px-[1.5%]">
-      {/* Fundo em "meio-card": navy da marca, cantos superiores arredondados e
-          recuo lateral (o espaço vazio nas laterais é o fundo da própria página). */}
-      <div className="relative overflow-hidden rounded-t-[32px] border-x border-t border-white/[0.07] bg-[#0D1B39] px-6 pb-10 pt-16 max-sm:rounded-t-none max-sm:border-x-0 sm:rounded-t-[44px] sm:px-10">
+    <footer className="relative bg-background text-[#F6F9FC]">
+      {/* Retângulo pleno: navy da marca ocupando toda a largura, sem recuo nem cantos arredondados. */}
+      <div className="relative overflow-hidden bg-[#0D1B39] px-6 pb-10 pt-16 sm:px-10">
         {/* Glow sutil no topo */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-44 radial-glow opacity-50" />
 

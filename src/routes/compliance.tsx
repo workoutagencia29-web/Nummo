@@ -35,7 +35,6 @@ function CompliancePage() {
         {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
-            <div className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-[#0D1B39]">/ Compliance</div>
             <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
               Confiança que se comprova.
             </h1>

@@ -1,11 +1,10 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, Check, ChevronDown, CreditCard,
-  Link, Layers,
-  Zap, Code2, Barcode, DollarSign,
-  Instagram, Youtube, Linkedin, Menu, X, Sparkles,
-  AlertTriangle, Globe, Image, List, ShieldCheck, Star, Type, Users, Video,
-  RefreshCw, Lock, KeyRound, Activity,
+  Link, Layers, Barcode, DollarSign,
+  Instagram, Youtube, Linkedin, Menu, X,
+  AlertTriangle, ShieldCheck, Users,
+  Lock, KeyRound, Activity,
 } from "lucide-react";
 import { useState, useEffect, useRef, Fragment, Children, isValidElement, cloneElement } from "react";
 import { TestimonialsColumn } from "../components/ui/testimonials-columns-1";
@@ -291,7 +290,49 @@ function Landing() {
       <Footer />
       <ScrollRail />
       <ScrollDrawLine />
+      <CursorRing />
     </div>
+  );
+}
+
+/* Cursor customizado: anel vazado (logo da Nummo) grudado no mouse, sem delay.
+   Só no desktop com mouse (pointer fino). Esconde o cursor nativo enquanto montado. */
+function CursorRing() {
+  const ringRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // Apenas dispositivos com mouse de precisão (desktop). Toque/mobile: não faz nada.
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const ring = ringRef.current;
+    if (!ring) return;
+
+    // Esconde o cursor nativo em TODO elemento (inclusive botões/links que usam cursor: pointer).
+    const styleEl = document.createElement("style");
+    styleEl.textContent = "*, *::before, *::after { cursor: none !important; }";
+    document.head.appendChild(styleEl);
+    const onMove = (e: MouseEvent) => {
+      ring.style.opacity = "1";
+      ring.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+    };
+    const onLeave = () => { ring.style.opacity = "0"; };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    document.addEventListener("mouseleave", onLeave);
+    return () => {
+      styleEl.remove();
+      window.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={ringRef}
+      aria-hidden
+      className="pointer-events-none fixed left-0 top-0 z-[9999] size-[18px] rounded-full border-[4px] border-[#2F6BFF] opacity-0 will-change-transform"
+      style={{ transform: "translate3d(-100px, -100px, 0)" }}
+    />
   );
 }
 
@@ -643,7 +684,7 @@ function MugLogo({ imgRef, sectionRef }: { imgRef: React.RefObject<HTMLImageElem
   // ——— ajuste fino ———
   const MUG_FX = 0.672;  // centro horizontal do logo (fração da imagem 1366x768)
   const MUG_FY = 0.349;  // centro vertical (na barriga da caneca, abaixo da borda)
-  const SIZE = 0.030;    // diâmetro do logo como fração da largura da imagem
+  const SIZE = 0.024;    // diâmetro do logo como fração da largura da imagem
   const ROT_Y = -26;     // curvatura do cilindro: quanto o logo "vira" na superfície
   const PERSP = 130;     // px de perspectiva — MENOR = bordas recuam mais (mais cilíndrico)
   const ROT_Z = -4;      // leve inclinação p/ acompanhar a caneca

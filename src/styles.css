@@ -190,9 +190,8 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
 
-/* esconder o scrollbar nativo — usamos a barra custom (ScrollRail) */
-html, body { scrollbar-width: none; -ms-overflow-style: none; overflow-x: clip; max-width: 100%; }
-html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display: none; }
+/* usa a barra de rolagem padrão do navegador (só bloqueia overflow horizontal) */
+html, body { overflow-x: clip; max-width: 100%; }
 
 /* ---------- utilities ---------- */
 @utility text-balance { text-wrap: balance; }

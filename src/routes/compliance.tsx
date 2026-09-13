@@ -90,11 +90,11 @@ export const Route = createFileRoute("/compliance")({
       { name: "description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
       { property: "og:title", content: "Compliance — Nummo" },
       { property: "og:description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
-      { property: "og:url", content: "https://usenummo.com.br/compliance" },
+      { property: "og:url", content: "https://www.usenummo.com.br/compliance" },
       { name: "twitter:title", content: "Compliance — Nummo" },
       { name: "twitter:description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
     ],
-    links: [{ rel: "canonical", href: "https://usenummo.com.br/compliance" }],
+    links: [{ rel: "canonical", href: "https://www.usenummo.com.br/compliance" }],
   }),
   component: CompliancePage,
 });

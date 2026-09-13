@@ -42,11 +42,11 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Receba na hora, com taxas transparentes e infraestrutura de pagamentos pensada para escalar." },
       { property: "og:title", content: "Nummo | A infraestrutura de pagamentos para a nova economia brasileira." },
       { property: "og:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
-      { property: "og:url", content: "https://usenummo.com.br/" },
+      { property: "og:url", content: "https://www.usenummo.com.br/" },
       { name: "twitter:title", content: "Nummo | A infraestrutura de pagamentos para a nova economia brasileira." },
       { name: "twitter:description", content: "Infraestrutura financeira brasileira: liquidez D+0, API moderna e segurança PCI-DSS." },
     ],
-    links: [{ rel: "canonical", href: "https://usenummo.com.br/" }],
+    links: [{ rel: "canonical", href: "https://www.usenummo.com.br/" }],
   }),
   component: Landing,
 });

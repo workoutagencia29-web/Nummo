@@ -333,9 +333,9 @@ export const Route = createFileRoute("/privacidade")({
       { name: "description", content: "Política de Privacidade da Nummo: como coletamos, usamos, armazenamos e protegemos seus dados pessoais, em conformidade com a LGPD." },
       { property: "og:title", content: "Privacidade — Nummo" },
       { property: "og:description", content: "Política de Privacidade da Nummo: como coletamos, usamos, armazenamos e protegemos seus dados pessoais, em conformidade com a LGPD." },
-      { property: "og:url", content: "https://usenummo.com.br/privacidade" },
+      { property: "og:url", content: "https://www.usenummo.com.br/privacidade" },
     ],
-    links: [{ rel: "canonical", href: "https://usenummo.com.br/privacidade" }],
+    links: [{ rel: "canonical", href: "https://www.usenummo.com.br/privacidade" }],
   }),
   component: PrivacidadePage,
 });

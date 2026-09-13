@@ -1,4 +1,4 @@
-# robots.txt — Nummo (https://usenummo.com.br)
+# robots.txt — Nummo (https://www.usenummo.com.br)
 # Todo o site é aberto para indexação e para leitura por IAs/LLMs.
 
 User-agent: *
@@ -41,5 +41,5 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
-# Resumo do site legível por IA (padrão llmstxt.org): https://usenummo.com.br/llms.txt
-Sitemap: https://usenummo.com.br/sitemap.xml
+# Resumo do site legível por IA (padrão llmstxt.org): https://www.usenummo.com.br/llms.txt
+Sitemap: https://www.usenummo.com.br/sitemap.xml

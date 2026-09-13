@@ -101,11 +101,11 @@ export const Route = createFileRoute("/changelog")({
       { name: "description", content: "Novidades, melhorias e correções da plataforma Nummo." },
       { property: "og:title", content: "Changelog — Nummo" },
       { property: "og:description", content: "Novidades, melhorias e correções da plataforma Nummo." },
-      { property: "og:url", content: "https://usenummo.com.br/changelog" },
+      { property: "og:url", content: "https://www.usenummo.com.br/changelog" },
       { name: "twitter:title", content: "Changelog — Nummo" },
       { name: "twitter:description", content: "Novidades, melhorias e correções da plataforma Nummo." },
     ],
-    links: [{ rel: "canonical", href: "https://usenummo.com.br/changelog" }],
+    links: [{ rel: "canonical", href: "https://www.usenummo.com.br/changelog" }],
   }),
   component: ChangelogPage,
 });

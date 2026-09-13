@@ -136,11 +136,11 @@ export const Route = createFileRoute("/sobre")({
       { name: "description", content: "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna." },
       { property: "og:title", content: "Sobre — Nummo" },
       { property: "og:description", content: "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna." },
-      { property: "og:url", content: "https://usenummo.com.br/sobre" },
+      { property: "og:url", content: "https://www.usenummo.com.br/sobre" },
       { name: "twitter:title", content: "Sobre — Nummo" },
       { name: "twitter:description", content: "A Nummo é a infraestrutura de pagamentos da nova economia brasileira: Pix, cartões e boleto com liquidez D+0, taxas justas e API moderna." },
     ],
-    links: [{ rel: "canonical", href: "https://usenummo.com.br/sobre" }],
+    links: [{ rel: "canonical", href: "https://www.usenummo.com.br/sobre" }],
   }),
   component: SobrePage,
 });

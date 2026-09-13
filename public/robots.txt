@@ -1,4 +1,45 @@
+# robots.txt — Nummo (https://usenummo.com.br)
+# Todo o site é aberto para indexação e para leitura por IAs/LLMs.
+
 User-agent: *
 Allow: /
 
+# Crawlers de IA / LLM explicitamente autorizados (busca e assistentes)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# Resumo do site legível por IA (padrão llmstxt.org): https://usenummo.com.br/llms.txt
 Sitemap: https://usenummo.com.br/sitemap.xml

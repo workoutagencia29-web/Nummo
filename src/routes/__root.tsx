@@ -3,6 +3,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { ConsentAnalytics } from "../components/consent-analytics";
+import { Component as AppLoader } from "../components/ui/ai-loader";
 
 import appCss from "../styles.css?url";
 
@@ -12,16 +13,67 @@ const ORG_JSONLD = JSON.stringify({
   "@graph": [
     {
       "@type": "Organization",
+      "@id": "https://usenummo.com.br/#organization",
       name: "Nummo",
+      legalName: "Nummo",
       url: "https://usenummo.com.br/",
-      logo: "https://usenummo.com.br/favicon.png",
+      logo: { "@type": "ImageObject", url: "https://usenummo.com.br/favicon.png", width: 512, height: 512 },
+      image: "https://usenummo.com.br/og-image.png",
+      description:
+        "Infraestrutura de pagamentos para a nova economia brasileira: Pix, cartão e boleto em uma só API, com liquidez D+0, taxas transparentes e ferramentas de conversão.",
+      slogan: "A infraestrutura de pagamentos para a nova economia brasileira.",
+      areaServed: { "@type": "Country", name: "Brasil" },
+      knowsAbout: [
+        "Gateway de pagamento",
+        "Pix",
+        "Checkout online",
+        "Cobrança recorrente",
+        "Split de pagamentos",
+        "Antifraude",
+        "API de pagamentos",
+      ],
       sameAs: ["https://www.instagram.com/use.nummo"],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        url: "https://usenummo.com.br/email",
+        availableLanguage: ["Portuguese"],
+      },
     },
     {
       "@type": "WebSite",
+      "@id": "https://usenummo.com.br/#website",
       name: "Nummo",
       url: "https://usenummo.com.br/",
+      publisher: { "@id": "https://usenummo.com.br/#organization" },
       inLanguage: "pt-BR",
+    },
+    {
+      "@type": "Service",
+      "@id": "https://usenummo.com.br/#service",
+      name: "Gateway de pagamentos Nummo",
+      serviceType: "Gateway de pagamentos online",
+      provider: { "@id": "https://usenummo.com.br/#organization" },
+      areaServed: { "@type": "Country", name: "Brasil" },
+      description:
+        "Aceite Pix, cartão, boleto, Apple Pay e Google Pay com liquidação D+0, checkout otimizado e ferramentas de conversão (link de pagamento, recorrência, order bump, upsell e recuperação de carrinho com IA).",
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Meios de pagamento e ferramentas",
+        itemListElement: [
+          "Pix",
+          "Cartão de crédito",
+          "Boleto",
+          "Apple Pay",
+          "Google Pay",
+          "Link de pagamento",
+          "Cobrança recorrente",
+          "Checkout Builder",
+          "Upsell",
+          "Order Bump",
+          "Recuperação de carrinho com IA",
+        ].map((n) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: n } })),
+      },
     },
   ],
 });
@@ -75,6 +127,10 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Nummo — Infraestrutura financeira para o seu negócio" },
       { name: "description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
+      { name: "keywords", content: "gateway de pagamento, gateway de pagamentos, Pix, checkout, cobrança recorrente, link de pagamento, boleto, cartão de crédito, Apple Pay, Google Pay, split de pagamento, marketplace, recuperação de carrinho, antifraude, API de pagamentos, liquidez D+0, infoprodutos, e-commerce, Nummo" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "googlebot", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "author", content: "Nummo" },
       { property: "og:title", content: "Nummo — Infraestrutura financeira para o seu negócio" },
       { property: "og:description", content: "Nummo: liquidez D+0, taxas transparentes e infraestrutura de pagamentos para escalar." },
       { property: "og:type", content: "website" },
@@ -93,7 +149,6 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#060a0e" },
     ],
     links: [
-      { rel: "preload", as: "image", href: "/hero-bg.webp", type: "image/webp", fetchPriority: "high" },
       { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/inter-700.woff2", crossOrigin: "anonymous" },
       { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/inter-400.woff2", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: appCss },
@@ -164,13 +219,41 @@ function RootComponent() {
     if (lenis) lenis.scrollTo(0, { immediate: true });
     else window.scrollTo(0, 0);
   }, [pathname]);
-  // Preloader: aparece no 1º paint (SSR) e some com fade após a hidratação.
+  // Preloader: aparece no 1º paint (SSR) e some assim que a página está REALMENTE
+  // pronta — hidratada (este efeito já rodou), fontes carregadas (document.fonts.ready,
+  // evita o "swap" da Inter aparecer depois) e um frame pintado. Em vez de timer fixo:
+  // some cedo em conexões rápidas, espera só o necessário nas lentas.
+  // MIN evita um flash/piscada; MAX é o teto de segurança; a rede 100% CSS (2.2s no
+  // styles.css) ainda cobre o caso de a hidratação falhar.
   const [loaderHide, setLoaderHide] = useState(false);
   const [loaderGone, setLoaderGone] = useState(false);
   useEffect(() => {
-    const t1 = setTimeout(() => setLoaderHide(true), 650);
-    const t2 = setTimeout(() => setLoaderGone(true), 1300);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    const MIN_VISIBLE = 300; // ms mínimos na tela (evita piscar em loads instantâneos)
+    const MAX_VISIBLE = 1000; // ms máximos (não fica refém de fonte/rede lenta)
+    const FADE = 600; // casa com a transição de opacidade do #app-loader (0.6s)
+    const start = performance.now();
+    let hideT = 0, goneT = 0, capT = 0, done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      const wait = Math.max(0, MIN_VISIBLE - (performance.now() - start));
+      hideT = window.setTimeout(() => {
+        setLoaderHide(true);
+        goneT = window.setTimeout(() => setLoaderGone(true), FADE);
+      }, wait);
+    };
+    // Pronto = fontes carregadas + 2 rAFs (garante um frame pintado com a fonte certa).
+    const whenPainted = () =>
+      requestAnimationFrame(() => requestAnimationFrame(finish));
+    const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
+    if (fonts?.ready) fonts.ready.then(whenPainted, whenPainted);
+    else whenPainted();
+    capT = window.setTimeout(finish, MAX_VISIBLE); // teto de segurança
+    return () => {
+      clearTimeout(hideT);
+      clearTimeout(goneT);
+      clearTimeout(capT);
+    };
   }, []);
   return (
     <>
@@ -179,17 +262,7 @@ function RootComponent() {
         <Outlet />
       </div>
       {!loaderGone && (
-        <div id="app-loader" className={loaderHide ? "app-loader-hidden" : ""} aria-hidden="true">
-          <div className="app-loader-bg">
-            <span className="app-loader-glow app-loader-glow-1" />
-            <span className="app-loader-glow app-loader-glow-2" />
-            <span className="app-loader-glow app-loader-glow-3" />
-          </div>
-          <div className="app-loader-content">
-            <img src="/logo-nummo.svg" alt="" width={230} height={38} className="app-loader-logo" />
-            <span className="app-loader-spinner" />
-          </div>
-        </div>
+        <AppLoader id="app-loader" className={loaderHide ? "app-loader-hidden" : ""} text="Carregando" />
       )}
       <ConsentAnalytics />
     </>

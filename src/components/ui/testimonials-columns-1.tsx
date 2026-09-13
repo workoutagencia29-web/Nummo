@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { motion } from "motion/react";
 
 export interface Testimonial {
   text: string;
@@ -16,17 +15,12 @@ export const TestimonialsColumn = (props: {
 }) => {
   return (
     <div className={props.className}>
-      <motion.div
-        animate={{
-          translateY: "-50%",
-        }}
-        transition={{
-          duration: props.duration || 10,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop",
-        }}
-        className="flex flex-col gap-14 pb-14 bg-background"
+      {/* Rolagem vertical infinita via CSS (animate-marquee-y): translateY(0 → -50%)
+          em loop linear. Conteúdo duplicado 2× abaixo → emenda invisível.
+          Duração por coluna via animationDuration inline. */}
+      <div
+        className="animate-marquee-y flex flex-col gap-14 pb-14 bg-background"
+        style={{ animationDuration: `${props.duration || 10}s` }}
       >
         {[
           ...new Array(2).fill(0).map((_, index) => (
@@ -40,6 +34,8 @@ export const TestimonialsColumn = (props: {
                       height={40}
                       src={image}
                       alt={name}
+                      loading="lazy"
+                      decoding="async"
                       className="h-10 w-10 rounded-full ring-[2.5px] ring-[#0D1B39]"
                     />
                     <div className="flex flex-col">
@@ -52,7 +48,7 @@ export const TestimonialsColumn = (props: {
             </React.Fragment>
           )),
         ]}
-      </motion.div>
+      </div>
     </div>
   );
 };

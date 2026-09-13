@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Banner } from "./ui/banner";
+import { Button } from "./ui/button";
 
 // Code-split: os libs de analytics só entram no bundle (e na rede) após o "Aceitar".
 const Analytics = lazy(() => import("@vercel/analytics/react").then((m) => ({ default: m.Analytics })));
@@ -50,36 +52,32 @@ export function ConsentAnalytics() {
       )}
 
       {choice === null && (
-        <div
+        <Banner
+          rounded="default"
           role="dialog"
           aria-label="Consentimento de cookies"
-          className="fixed inset-x-3 bottom-3 z-[9998] mx-auto max-w-md rounded-2xl p-5 sm:inset-x-auto sm:bottom-6 sm:left-6"
-          style={{ background: "#0D1B39", boxShadow: "10px 10px 30px rgba(5,11,30,0.55), -8px -8px 24px #14284d" }}
+          className="fixed bottom-4 left-1/2 z-[9998] w-[calc(100%-1.5rem)] max-w-2xl -translate-x-1/2 shadow-xl shadow-black/10"
         >
-          <p className="text-sm leading-relaxed text-[#F6F9FC]/80">
-            Usamos cookies essenciais e, com o seu consentimento, cookies de análise para melhorar o site. Veja a{" "}
-            <Link to="/cookies" className="font-medium text-[#6E9BFF] underline-offset-2 hover:underline">
-              Política de Cookies
-            </Link>
-            .
-          </p>
-          <div className="mt-4 flex gap-2.5">
-            <button
-              type="button"
-              onClick={() => decide("granted")}
-              className="flex-1 rounded-full bg-[#2559d8] py-2.5 text-sm font-semibold text-white transition hover:bg-[#1f4fc4]"
-            >
-              Aceitar
-            </button>
-            <button
-              type="button"
-              onClick={() => decide("denied")}
-              className="flex-1 rounded-full border border-white/20 bg-white/5 py-2.5 text-sm font-medium text-[#F6F9FC] transition hover:bg-white/10"
-            >
-              Recusar
-            </button>
+          <div className="w-full">
+            <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
+              <p className="text-sm leading-relaxed text-foreground/80">
+                Usamos cookies essenciais e, com o seu consentimento, cookies de análise para melhorar o site. Veja a{" "}
+                <Link to="/cookies" className="font-medium text-primary underline-offset-2 hover:underline">
+                  Política de Cookies
+                </Link>
+                .
+              </p>
+              <div className="flex shrink-0 gap-2 max-md:flex-wrap">
+                <Button size="sm" onClick={() => decide("granted")}>
+                  Aceitar
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => decide("denied")}>
+                  Recusar
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
+        </Banner>
       )}
     </>
   );

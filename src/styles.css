@@ -12,80 +12,47 @@
 @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/jbmono-500.woff2") format("woff2"); }
 
 /* ---------- Preloader (tela de carregamento) ---------- */
+/* O layout/fundo/animação do loader ficam no componente ai-loader.tsx (raiz com
+   id="app-loader"). Aqui só o mecanismo de dismiss + a rede de segurança 100% CSS:
+   fade de saída (.app-loader-hidden, controlado pelo __root.tsx quando a página
+   está pronta) e auto-some aos 2.2s caso a hidratação do React falhe/demore. */
 #app-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #0D1B39;
   opacity: 1;
   transition: opacity 0.6s ease;
+  animation: app-loader-autohide 0.5s ease 2.2s forwards;
 }
 #app-loader.app-loader-hidden {
   opacity: 0;
   pointer-events: none;
 }
-/* Rede de segurança 100% CSS: se a hidratação do React falhar ou demorar,
-   o loader some sozinho (não depende dos timers do React) e libera a página. */
-#app-loader {
-  animation: app-loader-autohide 0.5s ease 2.2s forwards;
-}
 @keyframes app-loader-autohide {
   to { opacity: 0; visibility: hidden; pointer-events: none; }
 }
 
-/* Fundo animado — só as auroras azuis flutuando (sem grade) */
-.app-loader-bg { display: none; }
-.app-loader-glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(72px);
-  will-change: transform, opacity;
+/* Visual do loader (ai-loader): anel giratório com brilho azul (box-shadow inset
+   animado) + letras "Carregando" pulsando. styled-jsx do original removido (não
+   suportado); keyframes migrados pra cá. Só transform/opacity nas letras; sob
+   prefers-reduced-motion o reset global (*) neutraliza tudo. */
+.animate-loaderCircle { animation: loaderCircle 5s linear infinite; }
+.animate-loaderLetter { animation: loaderLetter 3s infinite; }
+@keyframes loaderCircle {
+  0% {
+    transform: rotate(90deg);
+    box-shadow: 0 6px 12px 0 #38bdf8 inset, 0 12px 18px 0 #005dff inset, 0 36px 36px 0 #1e40af inset, 0 0 3px 1.2px rgba(56, 189, 248, 0.3), 0 0 6px 1.8px rgba(0, 93, 255, 0.2);
+  }
+  50% {
+    transform: rotate(270deg);
+    box-shadow: 0 6px 12px 0 #60a5fa inset, 0 12px 6px 0 #0284c7 inset, 0 24px 36px 0 #005dff inset, 0 0 3px 1.2px rgba(56, 189, 248, 0.3), 0 0 6px 1.8px rgba(0, 93, 255, 0.2);
+  }
+  100% {
+    transform: rotate(450deg);
+    box-shadow: 0 6px 12px 0 #4dc8fd inset, 0 12px 18px 0 #005dff inset, 0 36px 36px 0 #1e40af inset, 0 0 3px 1.2px rgba(56, 189, 248, 0.3), 0 0 6px 1.8px rgba(0, 93, 255, 0.2);
+  }
 }
-.app-loader-glow-1 {
-  width: 460px; height: 460px; top: 6%; left: 16%;
-  background: radial-gradient(circle, rgba(47, 107, 255, 0.55), transparent 68%);
-  animation: loader-drift-1 8s ease-in-out infinite;
-}
-.app-loader-glow-2 {
-  width: 400px; height: 400px; bottom: 4%; right: 14%;
-  background: radial-gradient(circle, rgba(110, 155, 255, 0.45), transparent 68%);
-  animation: loader-drift-2 10s ease-in-out infinite;
-}
-.app-loader-glow-3 {
-  width: 320px; height: 320px; top: 44%; left: 56%;
-  background: radial-gradient(circle, rgba(47, 107, 255, 0.35), transparent 70%);
-  animation: loader-drift-3 12s ease-in-out infinite;
-}
-/* Conteúdo — logo + spinner */
-.app-loader-content {
-  position: relative;
-  display: flex; flex-direction: column; align-items: center; gap: 34px;
-}
-.app-loader-logo {
-  height: 40px; width: auto;
-  animation: app-loader-pulse 2s ease-in-out infinite;
-}
-.app-loader-spinner {
-  width: 56px; height: 56px; border-radius: 50%;
-  background: conic-gradient(from 90deg, transparent 6%, rgba(47, 107, 255, 0.14) 42%, #2F6BFF 92%, transparent 100%);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px));
-  filter: drop-shadow(0 0 12px rgba(47, 107, 255, 0.55));
-  animation: app-loader-spin 0.95s linear infinite;
-}
-
-@keyframes app-loader-spin { to { transform: rotate(360deg); } }
-@keyframes app-loader-pulse { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.045); } }
-@keyframes loader-drift-1 { 0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; } 50% { transform: translate(70px, -50px) scale(1.25); opacity: 0.78; } }
-@keyframes loader-drift-2 { 0%, 100% { transform: translate(0, 0) scale(1.1); opacity: 0.45; } 50% { transform: translate(-60px, 45px) scale(0.9); opacity: 0.7; } }
-@keyframes loader-drift-3 { 0%, 100% { transform: translate(0, 0) scale(0.9); opacity: 0.3; } 50% { transform: translate(-45px, -32px) scale(1.15); opacity: 0.55; } }
-@media (prefers-reduced-motion: reduce) {
-  .app-loader-spinner { animation-duration: 1.5s; }
-  .app-loader-logo, .app-loader-glow { animation: none; }
+@keyframes loaderLetter {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  20% { opacity: 1; transform: scale(1.15); }
+  40% { opacity: 0.7; transform: translateY(0); }
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -265,11 +232,95 @@ html, body { overflow-x: clip; max-width: 100%; }
 @keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 @utility animate-marquee-right { animation: marquee-right 40s linear infinite; }
 
+/* Depoimentos: rolagem vertical infinita das colunas (substitui o framer-motion,
+   removendo ~88KB gzip do bundle). O conteúdo é duplicado 2× no JSX → translateY(-50%)
+   fecha o loop sem emenda. Duração por coluna vem inline (animationDuration).
+   Só transform → compositado na GPU, sem jank. */
+@keyframes marquee-y { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+@utility animate-marquee-y { animation: marquee-y 12s linear infinite; will-change: transform; }
+
+/* FAQ: revelação de entrada (sobe + fade) — substitui os initial/animate do framer.
+   Reaplica ao trocar de categoria via remontagem (key={activeCategory}). `both` mantém
+   o estado final (visível) e roda mesmo sem JS. Sob prefers-reduced-motion o reset global
+   (*) neutraliza, deixando o conteúdo já visível. */
+@keyframes faq-reveal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@utility animate-faq-reveal { animation: faq-reveal 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
 /* Entrada do hero (fade + subida suave, estilo Linear/Stripe) */
 @keyframes hero-in { 0% { opacity: 0; transform: translateY(28px); } 100% { opacity: 1; transform: translateY(0); } }
 @utility animate-hero-in { animation: hero-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @media (prefers-reduced-motion: reduce) {
   .animate-hero-in { animation: none; }
+}
+
+/* Hero "orbit": anéis pontilhados girando lentamente + selo com brilho + glow do mockup.
+   Tudo em transform/opacity (compositado na GPU, sem repaint) para não brigar com o scroll. */
+@keyframes hero-orbit { to { transform: rotate(360deg); } }
+@utility animate-hero-orbit { animation: hero-orbit 90s linear infinite; }
+
+@keyframes hero-spark { to { transform: rotate(360deg); } }
+@utility animate-hero-spark { animation: hero-spark 4s linear infinite; }
+
+@keyframes hero-glow { 0% { opacity: 0; } 55% { opacity: 0.9; } 100% { opacity: 0.62; } }
+@utility animate-hero-glow { animation: hero-glow 2.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Seta da "onda" no rodapé do hero: quica de leve só no eixo Y (a centralização
+   horizontal fica por conta do flex do wrapper, evitando conflito de transform). */
+@keyframes chev-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@utility animate-chev-bounce { animation: chev-bounce 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-orbit, .animate-hero-spark, .animate-chev-bounce { animation: none !important; }
+  .animate-hero-glow { animation: none !important; opacity: 0.62; }
+}
+
+/* Seção Taxas: orbes de luz + partículas flutuando nas laterais.
+   Só transform/opacity (blur estático, compositado na GPU) → sem jank. */
+@keyframes taxa-drift-1 { 0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.40; } 50% { transform: translate(16px, -48px) scale(1.18); opacity: 0.72; } }
+@keyframes taxa-drift-2 { 0%, 100% { transform: translate(0, 0) scale(1.12); opacity: 0.36; } 50% { transform: translate(-18px, 42px) scale(0.9); opacity: 0.66; } }
+@keyframes taxa-drift-3 { 0%, 100% { transform: translate(0, 0) scale(0.95); opacity: 0.45; } 50% { transform: translate(12px, 36px) scale(1.12); opacity: 0.70; } }
+@keyframes taxa-twinkle { 0%, 100% { opacity: 0.15; transform: translateY(6px) scale(0.9); } 50% { opacity: 0.9; transform: translateY(-16px) scale(1.35); } }
+@utility taxa-orb-1 { animation: taxa-drift-1 15s ease-in-out infinite; }
+@utility taxa-orb-2 { animation: taxa-drift-2 19s ease-in-out infinite; }
+@utility taxa-orb-3 { animation: taxa-drift-3 13s ease-in-out infinite; }
+@utility taxa-tw { animation: taxa-twinkle 5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .taxa-orb-1, .taxa-orb-2, .taxa-orb-3, .taxa-tw { animation: none !important; }
+}
+
+/* Navbar no tema escuro (home): tokens escuros no escopo do header para os menus
+   (dropdowns Produtos/Empresa) herdarem fundo navy + texto claro automaticamente
+   — mesmo padrão do escopo .faq. Os botões .nav-* têm regras próprias abaixo. */
+.nav-over-dark {
+  --background: #0a1322;
+  --card: #0a1322;
+  --popover: #0a1322;
+  --popover-foreground: #F6F9FC;
+  --foreground: #F6F9FC;
+  --muted-foreground: rgba(246, 249, 252, 0.60);
+  --border: rgba(246, 249, 252, 0.12);
+  --accent: rgba(246, 249, 252, 0.10);
+  --accent-foreground: #F6F9FC;
+}
+
+/* Textos/ícones/botão-contorno da barra em claro (barra transparente no topo,
+   escura ao rolar). Escopo restrito às classes .nav-* p/ estilizar só a barra. */
+.nav-over-dark .nav-trigger { color: #F6F9FC; }
+.nav-over-dark .nav-trigger:hover,
+.nav-over-dark .nav-trigger[data-state="open"] {
+  background-color: rgba(246, 249, 252, 0.10);
+  color: #F6F9FC;
+}
+.nav-over-dark .nav-entrar,
+.nav-over-dark .nav-toggle {
+  color: #F6F9FC;
+  border-color: rgba(246, 249, 252, 0.28);
+  background-color: transparent;
+}
+.nav-over-dark .nav-entrar:hover,
+.nav-over-dark .nav-toggle:hover {
+  background-color: rgba(246, 249, 252, 0.12);
+  color: #F6F9FC;
 }
 
 /* Fumacinha da xícara: cada wisp sobe, dilata e dissipa (com stagger) */
@@ -395,3 +446,84 @@ html, body { overflow-x: clip; max-width: 100%; }
   .conn-fill { transform: scaleX(1); opacity: 1; transition: none; animation: none; }
   .conn-loader, .conn-spin-arc { animation: none; opacity: 0; }
 }
+
+/* ---------- Fundo gradiente azul → preto (luz nascendo da base) ---------- */
+/* Classe reutilizável: usada no FAQ e no footer. O gradiente vai no container
+   inteiro (nunca nos cards). Camadas na ordem: vinheta, brilho, halo azul, preto base. */
+.grad-night {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 90% at 50% 80%, transparent 50%, rgba(0,0,0,.5)),
+    radial-gradient(34% 20% at 50% 106%, rgba(180,215,255,.5), rgba(180,215,255,0) 72%),
+    radial-gradient(62% 46% at 50% 116%, #3b8bff 0%, #1652c6 22%, #0a2559 42%, rgba(5,12,28,0) 74%),
+    #03060c;
+}
+
+/* Variante ampliada (footer): brilho azul só na base (sem entrada no topo). */
+.grad-night-lg {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 50% 78%, transparent 46%, rgba(0,0,0,.5)),
+    radial-gradient(48% 30% at 50% 110%, rgba(180,215,255,.55), rgba(180,215,255,0) 72%),
+    radial-gradient(92% 74% at 50% 118%, #3b8bff 0%, #1652c6 24%, #0a2559 46%, rgba(5,12,28,0) 78%),
+    #03060c;
+}
+
+/* Variante do FAQ: base maior + entrada no topo REDUZIDA (menor/mais suave que a
+   base, por cima da vinheta pra não ser escurecida). */
+.grad-night-faq {
+  position: relative;
+  overflow: hidden;
+  background:
+    /* TOPO — entrada reduzida (mais fraca e menor que a base) */
+    radial-gradient(48% 28% at 50% -13%, rgba(180,215,255,.40), rgba(180,215,255,0) 72%),
+    radial-gradient(92% 66% at 50% -23%, #3b8bff 0%, #1652c6 24%, #0a2559 46%, rgba(5,12,28,0) 80%),
+    /* vinheta */
+    radial-gradient(120% 120% at 50% 76%, transparent 44%, rgba(0,0,0,.5)),
+    /* BASE */
+    radial-gradient(54% 34% at 50% 111%, rgba(180,215,255,.58), rgba(180,215,255,0) 72%),
+    radial-gradient(106% 84% at 50% 119%, #3b8bff 0%, #1652c6 24%, #0a2559 46%, rgba(5,12,28,0) 80%),
+    #03060c;
+}
+
+/* Variante da seção dev/API (#plataforma): brilho azul igual em cima e embaixo —
+   o topo é um espelho exato das 2 camadas da base (mesma intensidade/tamanho),
+   posto POR CIMA da vinheta pra não ser escurecido por ela (a vinheta é centrada
+   embaixo e escurecia só o topo). Ordem: camadas listadas antes pintam por cima. */
+.grad-night-dev {
+  position: relative;
+  overflow: hidden;
+  background:
+    /* TOPO — espelho da base (de cima para baixo) */
+    radial-gradient(52% 32% at 50% -10%, rgba(180,215,255,.56), rgba(180,215,255,0) 72%),
+    radial-gradient(100% 80% at 50% -18%, #3b8bff 0%, #1652c6 24%, #0a2559 46%, rgba(5,12,28,0) 80%),
+    /* vinheta */
+    radial-gradient(120% 120% at 50% 78%, transparent 46%, rgba(0,0,0,.5)),
+    /* BASE */
+    radial-gradient(52% 32% at 50% 110%, rgba(180,215,255,.56), rgba(180,215,255,0) 72%),
+    radial-gradient(100% 80% at 50% 118%, #3b8bff 0%, #1652c6 24%, #0a2559 46%, rgba(5,12,28,0) 80%),
+    #03060c;
+}
+
+/* FAQ: tokens de cor no escopo da seção — títulos/perguntas (text-foreground) em
+   #e8ecf2, bordas e divisores (border-border) em rgba(255,255,255,.08). */
+.faq {
+  --foreground: #e8ecf2;
+  --border: rgba(255, 255, 255, 0.08);
+  --background: #0a1322; /* fundo sólido e sutil dos cards (não recebe o gradiente) */
+  --primary: #1652c6;    /* acento das categorias/abas — mesmo azul da borda dos cards */
+}
+
+/* Respostas e descrição do FAQ (parágrafos) em cinza claro #8a94a6. */
+.faq p {
+  color: #8a94a6;
+}
+
+/* Borda azul ao passar o mouse nos cards do FAQ — usa o --primary (#1652c6),
+   o mesmo azul agora aplicado ao acento das categorias/abas. */
+.faq .rounded-xl:hover {
+  border-color: #1652c6;
+}
+

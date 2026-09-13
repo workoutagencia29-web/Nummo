@@ -1,0 +1,44 @@
+# Nummo
+
+> Nummo é a infraestrutura de pagamentos para a nova economia brasileira: um gateway que aceita Pix, cartão, boleto, Apple Pay e Google Pay em uma só API, com liquidação D+0 (dinheiro na hora), taxas transparentes e ferramentas de conversão (checkout builder, link de pagamento, recorrência, order bump, upsell e recuperação de carrinho com IA).
+
+Nummo é uma empresa brasileira de tecnologia financeira (fintech / gateway de pagamentos) voltada a criadores de conteúdo, infoprodutores, e-commerces e negócios digitais que vendem online. O site é em português do Brasil (pt-BR) e o produto é operado no Brasil.
+
+Principais diferenciais:
+- **Liquidez D+0**: recebimento no mesmo dia da venda.
+- **Taxas transparentes**: sem letra miúda, sem mensalidade e sem fidelidade.
+- **API moderna**: REST, JSON e webhooks, com exemplos em cURL, Node.js, Python, PHP, Ruby, Go, Java, C#, C++ e Rust.
+- **Segurança**: PCI-DSS Level 1, autenticação 3DS 2.0, tokenização e antifraude com análise de risco por IA.
+
+Meios de pagamento aceitos: Pix, Cartão de crédito, Boleto, Apple Pay, Google Pay.
+
+Ferramentas para vender mais: Link de pagamento, Cobrança recorrente (assinaturas), Checkout Builder (com nota de conversão por IA), Upsell, Order Bump, Recuperação de carrinho com IA, Marketplace (split e repasse automático, KYC por seller), Área de membros e Co-produção.
+
+Integrações: Meta Ads, Google Ads, TikTok Ads, Kwai Ads, UTMify, Notazz, Astron, Gmail e SMS.
+
+## Páginas principais
+
+- [Início](https://usenummo.com.br/): visão geral do gateway, meios de pagamento, ferramentas de conversão, taxas, integrações, prévia da API e perguntas frequentes.
+- [Sobre](https://usenummo.com.br/sobre): missão, valores e visão da Nummo como infraestrutura de pagamentos.
+- [Status](https://usenummo.com.br/status): status em tempo real dos serviços (API, Pix, cartões, boleto, dashboard e saques).
+- [Changelog](https://usenummo.com.br/changelog): novidades e atualizações do produto (Pix Automático, liquidação D+0, split na API, 3DS 2.0, webhooks, dashboard).
+
+## Legal e conformidade
+
+- [Compliance](https://usenummo.com.br/compliance): certificações de segurança (PCI-DSS), LGPD, auditoria e prevenção à lavagem de dinheiro (AML/KYC).
+- [Política de Privacidade](https://usenummo.com.br/privacidade): como a Nummo coleta, usa, armazena e protege dados pessoais, conforme a LGPD.
+- [Termos e Condições](https://usenummo.com.br/termos): regras de uso da plataforma, pagamentos, saques, chargebacks e responsabilidades.
+- [Política de Cookies](https://usenummo.com.br/cookies): cookies necessários, de análise e de marketing e como gerenciá-los.
+
+## Contato e cadastro
+
+- [Criar conta](https://app.usenummo.com.br/dashboard/register): cadastro na plataforma Nummo.
+- [Suporte](https://usenummo.com.br/email): canal de dúvidas sobre conta, pagamentos e integrações.
+- [Instagram @use.nummo](https://www.instagram.com/use.nummo): perfil oficial da Nummo.
+- WhatsApp: +55 11 91200-2801.
+
+## Em breve (páginas ainda não publicadas)
+
+- Documentação da API (https://usenummo.com.br/documentacao)
+- Integrações (https://usenummo.com.br/integracoes)
+- Parceiros (https://usenummo.com.br/parceiros)

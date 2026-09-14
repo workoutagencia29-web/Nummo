@@ -273,7 +273,7 @@ function PrivacidadePage() {
               <Li>proteção da Plataforma e de seus usuários.</Li>
             </Bul>
             <P>Quando uma decisão relevante for tomada exclusivamente com base em tratamento automatizado e afetar os interesses do titular, ele poderá solicitar revisão pelos canais oficiais da Nummo.</P>
-            <P>A Nummo poderá fornecer informações sobre os critérios e procedimentos utilizados, observados os limites relacionados à proteção de segredos comercial e industrial, segurança da Plataforma, prevenção a fraudes e direitos de terceiros.</P>
+            <P>A Nummo poderá fornecer informações sobre os critérios e procedimentos utilizados, observados os limites relacionados à proteção de segredos comerciais e industriais, segurança da Plataforma, prevenção a fraudes e direitos de terceiros.</P>
             <P>A solicitação de revisão não garante alteração da decisão, pois cada caso será analisado conforme os dados disponíveis, obrigações legais, contratos aplicáveis e riscos envolvidos.</P>
 
             <H2>13. Direitos dos titulares</H2>

@@ -178,7 +178,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 					className="nav-toggle md:hidden"
 					aria-expanded={open}
 					aria-controls="mobile-menu"
-					aria-label="Abrir menu"
+					aria-label={open ? "Fechar menu" : "Abrir menu"}
 				>
 					<MenuToggleIcon open={open} className="size-5" duration={300} />
 				</Button>

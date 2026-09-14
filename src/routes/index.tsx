@@ -1,13 +1,12 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
-  ArrowRight, Check, ChevronDown, CreditCard,
-  Link, Layers, Barcode, Copy, ExternalLink, Search,
-  Instagram, Youtube, Linkedin, Menu, X,
-  AlertTriangle, ShieldCheck, Users,
-  Lock, KeyRound, Activity,
+  ArrowRight, Check, ChevronDown,
+  Layers, Copy, ExternalLink, Search,
+  Instagram, Youtube, Linkedin,
+  AlertTriangle, Users, Lock,
 } from "lucide-react";
 import { SiCurl, SiNodedotjs, SiPython, SiPhp, SiRuby, SiGo, SiOpenjdk, SiDotnet, SiCplusplus, SiRust } from "react-icons/si";
-import { useState, useEffect, useRef, Fragment, Children, isValidElement, cloneElement } from "react";
+import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 import { TestimonialsColumn } from "../components/ui/testimonials-columns-1";
 import { FaqCategorized } from "../components/ui/faq-4";
 import { Header } from "../components/ui/header-3";
@@ -18,14 +17,6 @@ function TikTok() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-    </svg>
-  );
-}
-
-function Pix() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M5.283 18.36a3.505 3.505 0 0 0 2.493-1.032l3.6-3.6a.684.684 0 0 1 .946 0l3.613 3.613a3.504 3.504 0 0 0 2.493 1.032h.71l-4.56 4.56a3.647 3.647 0 0 1-5.156 0L4.85 18.36ZM18.428 5.627a3.505 3.505 0 0 0-2.493 1.032l-3.613 3.614a.67.67 0 0 1-.946 0l-3.6-3.6A3.505 3.505 0 0 0 5.283 5.64h-.434l4.573-4.572a3.646 3.646 0 0 1 5.156 0l4.559 4.559ZM1.068 9.422 3.79 6.699h1.492a2.483 2.483 0 0 1 1.744.722l3.6 3.6a1.73 1.73 0 0 0 2.443 0l3.614-3.613a2.482 2.482 0 0 1 1.744-.723h1.767l2.737 2.737a3.646 3.646 0 0 1 0 5.156l-2.736 2.736h-1.768a2.482 2.482 0 0 1-1.744-.722l-3.613-3.613a1.77 1.77 0 0 0-2.444 0l-3.6 3.6a2.483 2.483 0 0 1-1.744.722H3.791l-2.723-2.723a3.646 3.646 0 0 1 0-5.156" />
     </svg>
   );
 }
@@ -112,7 +103,7 @@ export function GhostButton({ children, className = "", size = "md", href, targe
 
 function SectionEyebrow({ kicker, title, sub, titleClassName = "", center = false }: { kicker?: string; title: React.ReactNode; sub?: string; titleClassName?: string; center?: boolean }) {
   return (
-    <div className={`mb-16 ${center ? "mx-auto max-w-[1220px] text-center" : "max-w-3xl"}`}>
+    <div className={`mb-16 max-sm:mb-10 ${center ? "mx-auto max-w-[1220px] text-center" : "max-w-3xl"}`}>
       {kicker && (
         <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-[#0D1B39]">
           / {kicker}
@@ -153,95 +144,6 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       {children}
     </div>
   );
-}
-
-// Orquestra o fluxo de suporte em loop: ao entrar na viewport, roda a cascata
-// (card1 sobe → barra1 enche → card2 sobe → barra2 enche → card3 sobe),
-// espera 2s, todos descem suave, espera 2s e reinicia — infinitamente.
-function FlowLoop({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-
-    const cards = Array.from(el.querySelectorAll<HTMLElement>(".card-lift"));
-    const bars = Array.from(el.querySelectorAll<HTMLElement>(".conn-fill"));
-    const loaders = Array.from(el.querySelectorAll<HTMLElement>(".conn-loader"));
-
-    let cancelled = false;
-    const timers: number[] = [];
-    const wait = (ms: number) =>
-      new Promise<void>((res) => { timers.push(window.setTimeout(res, ms)); });
-
-    async function cycle() {
-      // reset: barras vazias sem transição (evita "retração" visível)
-      bars.forEach((b) => { b.classList.add("reset"); b.classList.remove("half", "full", "empty"); });
-      void el!.offsetHeight; // reflow
-      bars.forEach((b) => b.classList.remove("reset"));
-      cards.forEach((c) => c.classList.remove("up"));
-      loaders.forEach((l) => l.classList.remove("show"));
-
-      await wait(1000); if (cancelled) return; // 1s antes do 1º card
-      cards[0].classList.add("up");
-      await wait(850); if (cancelled) return;  // sobe card 1
-
-      for (let i = 0; i < bars.length; i++) {
-        bars[i].classList.add("half");
-        await wait(600); if (cancelled) return;   // enche até o meio
-        loaders[i].classList.add("show");
-        await wait(1500); if (cancelled) return;  // loader ~1,5s
-        loaders[i].classList.remove("show");
-        bars[i].classList.add("full");
-        await wait(600); if (cancelled) return;   // completa
-        cards[i + 1].classList.add("up");
-        await wait(850); if (cancelled) return;   // sobe o próximo card
-      }
-
-      await wait(1000); if (cancelled) return;   // 1s com tudo em cima
-      cards.forEach((c) => c.classList.remove("up")); // todos descem (suave)
-      bars.forEach((b) => b.classList.add("empty"));  // barras somem junto
-      await wait(850); if (cancelled) return;    // desce
-      await wait(1000);                          // 1s parado antes de reiniciar
-    }
-
-    let started = false;
-    const start = async () => {
-      if (started) return;
-      started = true;
-      while (!cancelled) await cycle();
-    };
-    const io = new IntersectionObserver(
-      (entries) => { if (entries[0].isIntersecting) { io.disconnect(); void start(); } },
-      { threshold: 0.5 },
-    );
-    io.observe(el);
-
-    return () => { cancelled = true; io.disconnect(); timers.forEach((t) => clearTimeout(t)); };
-  }, []);
-  return (
-    <div ref={ref} className={className}>
-      {children}
-    </div>
-  );
-}
-
-// Entrada deslizando da borda direita até a posição final (usado no mockup dos Métodos).
-function SlideInRight({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) { el.classList.add("in"); io.disconnect(); }
-      },
-      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return <div ref={ref} className={`slide-in-right ${className}`}>{children}</div>;
 }
 
 // Stagger: cada filho vira .reveal-child e recebe .in em sequência ao entrar na viewport.
@@ -304,156 +206,11 @@ function Landing() {
 /* Sections                                                            */
 /* ------------------------------------------------------------------ */
 
-function navScroll(e: React.MouseEvent<HTMLAnchorElement>, hash: string, off = -90) {
-  if (!hash) return;
-  const el = document.getElementById(hash);
-  if (!el) return; // não está na home: deixa o href "/#hash" navegar pra home
-  e.preventDefault();
-  const lenis = (window as unknown as {
-    __lenis?: { scrollTo: (t: Element | string, o?: { offset?: number }) => void };
-  }).__lenis;
-  if (lenis) lenis.scrollTo(el, { offset: off });
-  else el.scrollIntoView({ behavior: "smooth" });
-}
-
-const NAV_ITEMS = [
-  { l: "Produtos", h: "plataforma", off: 70 },
-  { l: "Taxas", h: "taxas", off: -176 },
-  { l: "Integrações", h: "integracoes", off: -136 },
-  { l: "Ajuda", h: "faq", off: -40 },
-];
-
 // Navbar do site — agora renderiza o novo Header (shadcn navigation-menu).
 // Mantém o nome/So export `Nav` e o prop opcional `solid` (ignorado) para que
 // todas as páginas que importam `Nav` continuem funcionando sem alteração.
 export function Nav({ dark = false }: { solid?: boolean; dark?: boolean } = {}) {
   return <Header dark={dark} />;
-}
-
-// Fumacinha da xícara: SVG com turbulência (wisps que sobem e dissipam),
-// ancorada por JS na borda da xícara respeitando o object-contain da imagem.
-function CoffeeSteam({ imgRef, sectionRef }: { imgRef: React.RefObject<HTMLImageElement | null>; sectionRef: React.RefObject<HTMLElement | null> }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const CUP_FX = 0.686; // centro da borda da xícara (fração da imagem 1366x768)
-    const CUP_FY = 0.318; // topo da borda
-    const place = () => {
-      const img = imgRef.current, sec = sectionRef.current, el = ref.current;
-      if (!img || !sec || !el) return;
-      if (!window.matchMedia("(min-width: 1024px)").matches) { el.style.opacity = "0"; return; }
-      const box = img.getBoundingClientRect();
-      const secRect = sec.getBoundingClientRect();
-      const natW = img.naturalWidth || 1366, natH = img.naturalHeight || 768;
-      const scale = Math.min(box.width / natW, box.height / natH); // object-contain
-      const cW = natW * scale, cH = natH * scale;
-      const offX = box.width - cW;        // object-right
-      const offY = (box.height - cH) / 2; // vertical center
-      const cupX = box.left + offX + CUP_FX * cW;
-      const cupY = box.top + offY + CUP_FY * cH;
-      el.style.left = `${cupX - secRect.left}px`;
-      el.style.top = `${cupY - secRect.top}px`;
-      el.style.setProperty("--cs-scale", String(Math.max(0.65, Math.min(1.35, (cW / natW) * 1.2))));
-      el.style.opacity = "1";
-    };
-    place();
-    const onR = () => place();
-    window.addEventListener("resize", onR, { passive: true });
-    const img = imgRef.current;
-    if (img && !img.complete) img.addEventListener("load", place, { once: true });
-    return () => { window.removeEventListener("resize", onR); };
-  }, [imgRef, sectionRef]);
-  return (
-    <div
-      ref={ref}
-      aria-hidden
-      className="pointer-events-none absolute z-[5] hidden lg:block"
-      style={{ opacity: 0, transform: "translate(-50%,-100%) scale(var(--cs-scale,1))", transformOrigin: "50% 100%" }}
-    >
-      <svg width="96" height="168" viewBox="0 0 96 168" fill="none" style={{ overflow: "visible" }}>
-        <defs>
-          <filter id="cs-turb" x="-80%" y="-80%" width="260%" height="260%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.021 0.045" numOctaves="2" seed="7" result="n">
-              <animate attributeName="baseFrequency" dur="13s" values="0.021 0.045;0.03 0.062;0.021 0.045" repeatCount="indefinite" />
-            </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-          <filter id="cs-blur" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="3.6" />
-          </filter>
-        </defs>
-        <g filter="url(#cs-turb)">
-          <g filter="url(#cs-blur)" fill="#ffffff">
-            <ellipse className="cs-wisp cs-w1" cx="48" cy="132" rx="9" ry="27" />
-            <ellipse className="cs-wisp cs-w2" cx="48" cy="132" rx="8" ry="24" />
-            <ellipse className="cs-wisp cs-w3" cx="48" cy="132" rx="7" ry="22" />
-          </g>
-        </g>
-      </svg>
-    </div>
-  );
-}
-
-// Estampa o ícone da Nummo (anel) na face frontal da caneca, ancorado por JS
-// respeitando o object-contain da imagem (mesma matemática do CoffeeSteam).
-// Perspectiva (rotateY) transforma o círculo em elipse = superfície do cilindro;
-// mix-blend-mode multiply deixa as ranhuras/sombra da cerâmica atravessarem o
-// logo, dando o efeito de estampado. Só desktop (imagem só aparece no lg+).
-function MugLogo({ imgRef, sectionRef }: { imgRef: React.RefObject<HTMLImageElement | null>; sectionRef: React.RefObject<HTMLElement | null> }) {
-  const ref = useRef<HTMLDivElement>(null);
-  // ——— ajuste fino ———
-  const MUG_FX = 0.672;  // centro horizontal do logo (fração da imagem 1366x768)
-  const MUG_FY = 0.349;  // centro vertical (na barriga da caneca, abaixo da borda)
-  const SIZE = 0.024;    // diâmetro do logo como fração da largura da imagem
-  const ROT_Y = -26;     // curvatura do cilindro: quanto o logo "vira" na superfície
-  const PERSP = 130;     // px de perspectiva — MENOR = bordas recuam mais (mais cilíndrico)
-  const ROT_Z = -4;      // leve inclinação p/ acompanhar a caneca
-  const OPACITY = 0.7;
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const place = () => {
-      const img = imgRef.current, sec = sectionRef.current, el = ref.current;
-      if (!img || !sec || !el) return;
-      if (!window.matchMedia("(min-width: 1024px)").matches) { el.style.opacity = "0"; return; }
-      const box = img.getBoundingClientRect();
-      const secRect = sec.getBoundingClientRect();
-      const natW = img.naturalWidth || 1366, natH = img.naturalHeight || 768;
-      const scale = Math.min(box.width / natW, box.height / natH); // object-contain
-      const cW = natW * scale, cH = natH * scale;
-      const offX = box.width - cW;        // object-right
-      const offY = (box.height - cH) / 2; // vertical center
-      const x = box.left + offX + MUG_FX * cW;
-      const y = box.top + offY + MUG_FY * cH;
-      el.style.left = `${x - secRect.left}px`;
-      el.style.top = `${y - secRect.top}px`;
-      el.style.width = `${SIZE * cW}px`;
-      el.style.height = `${SIZE * cW}px`;
-      el.style.opacity = "1";
-    };
-    place();
-    const onR = () => place();
-    window.addEventListener("resize", onR, { passive: true });
-    const img = imgRef.current;
-    if (img && !img.complete) img.addEventListener("load", place, { once: true });
-    return () => { window.removeEventListener("resize", onR); };
-  }, [imgRef, sectionRef]);
-  return (
-    <div
-      ref={ref}
-      aria-hidden
-      className="pointer-events-none absolute z-[6] hidden lg:block"
-      style={{
-        opacity: 0,
-        transform: `translate(-50%,-50%) perspective(${PERSP}px) rotateY(${ROT_Y}deg) rotate(${ROT_Z}deg)`,
-        transformOrigin: "50% 50%",
-        mixBlendMode: "multiply",
-      }}
-    >
-      <svg viewBox="0 0 1080 1080" width="100%" height="100%" style={{ display: "block", opacity: OPACITY, filter: "blur(0.4px)" }}>
-        <circle cx="540" cy="540" r="360" fill="none" stroke="#2F6BFF" strokeWidth="170" />
-      </svg>
-    </div>
-  );
 }
 
 // Anéis pontilhados concêntricos girando lentamente (dashes "viajam" ao redor).
@@ -516,7 +273,7 @@ function Hero() {
         <h1 className="animate-hero-in mt-7 text-balance text-[40px] font-bold leading-[1.02] tracking-tight text-[#F6F9FC] [animation-delay:240ms] max-sm:text-[34px] md:text-[64px] lg:text-[72px]">
           Seja o protagonista,
           <br />
-          <span className="text-[#5b8bff]">vem pra Nummo!</span>
+          <span className="text-[#5b8bff]">venha pra Nummo!</span>
         </h1>
 
         <p className="animate-hero-in mt-6 max-w-xl text-pretty text-base leading-relaxed text-[#F6F9FC]/70 [animation-delay:420ms] max-sm:text-[15px] lg:text-lg">
@@ -537,7 +294,7 @@ function Hero() {
             rel="noopener noreferrer"
             className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-[#F6F9FC]/25 bg-[#F6F9FC]/[0.06] px-8 text-base font-medium text-[#F6F9FC] backdrop-blur transition-colors hover:border-[#F6F9FC]/40 hover:bg-[#F6F9FC]/[0.12] max-sm:w-full"
           >
-            Falar com Especialista
+            Falar com especialista
           </a>
         </div>
       </div>
@@ -1024,9 +781,9 @@ function ApiDocs() {
         <span className="inline-block rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#7cc5ff]">
           Para desenvolvedores
         </span>
-        <h3 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-[#F6F9FC] md:text-4xl">
+        <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-[#F6F9FC] md:text-4xl">
           Uma API feita para escalar
-        </h3>
+        </h2>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-[#F6F9FC]/60 max-sm:text-sm">
           Preview da API da Nummo: REST, JSON e webhooks — com exemplos prontos em cURL, Node.js e Python.
         </p>
@@ -1103,7 +860,7 @@ function ApiDocs() {
                       key={l.key}
                       type="button"
                       onClick={() => setLang(l.key)}
-                      className={`inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${
+                      className={`inline-flex min-h-9 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-[13px] font-medium transition-colors ${
                         on
                           ? "bg-[#2F6BFF] text-white"
                           : "bg-white/[0.04] text-[#F6F9FC]/55 hover:text-[#F6F9FC]/85"
@@ -1146,7 +903,7 @@ function ApiDocs() {
 
 function Bento() {
   return (
-    <section id="plataforma" className="grad-night-dev pb-24 pt-20 max-sm:pt-14">
+    <section id="plataforma" className="grad-night-dev pb-24 pt-20 max-sm:pb-16 max-sm:pt-14">
       <div className="mx-auto max-w-7xl px-6">
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
           {/* Checkout Builder com IA + Área de membros + Marketplace —
@@ -1492,7 +1249,7 @@ function HowItWorks() {
         <SectionEyebrow
           center
           title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <br className="max-sm:hidden" /><span className="text-[#0D1B39]">em um só lugar</span></span>}
-          sub="Conecte anúncios, trackers e emissão de notas, área de membros, à Nummo e centralize sua operação em um só fluxo."
+          sub="Conecte anúncios, trackers, emissão de notas e área de membros à Nummo e centralize sua operação em um só fluxo."
         />
         <div className="-mt-8 flex justify-center">
           <PrimaryButton
@@ -1527,304 +1284,6 @@ function HowItWorks() {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Faixa azul — Diferenciais (comparativo Outras soluções x Nummo)     */
-/* ------------------------------------------------------------------ */
-
-const DIFF_NEG = [
-  "Taxas abusivas",
-  "Dinheiro bloqueado",
-  "Taxa de aprovação baixa",
-  "Ferramenta enxuta",
-  "Sistema ultrapassado",
-  "Suporte lento",
-];
-
-const DIFF_POS = [
-  "As melhores taxas do mercado",
-  "Liquidação D+0",
-  "Alta taxa de aprovação no checkout",
-  "Ferramenta super intuitiva com IA",
-  "Manual completo de funcionalidades e integrações",
-  "Suporte humanizado 24/7",
-];
-
-function DiffCard({ title, sub, items, positive = false, logo = false }: { title?: string; sub: string; items: string[]; positive?: boolean; logo?: boolean }) {
-  return (
-    <div className="rounded-[28px] bg-[#0C1730] p-8 md:p-10">
-      <div className="text-center">
-        <div className="flex h-8 items-center justify-center">
-          {logo ? (
-            <img src="/logo-nummo.svg" alt="Nummo" width={130} height={22} className="h-5 w-auto" />
-          ) : (
-            <h3 className="font-display text-2xl font-bold uppercase leading-none tracking-tight text-[#F6F9FC]">{title}</h3>
-          )}
-        </div>
-        <p className="mx-auto mt-3 whitespace-nowrap text-sm text-[#F6F9FC]/60 max-sm:whitespace-normal">{sub}</p>
-      </div>
-      <div className="my-8 h-px bg-white/10" />
-      <ul className="space-y-5">
-        {items.map((t) => (
-          <li key={t} className="flex items-start gap-3">
-            {positive ? (
-              <Check className="mt-0.5 size-5 shrink-0 text-[#2F6BFF]" strokeWidth={3} />
-            ) : (
-              <X className="mt-0.5 size-5 shrink-0 text-destructive" strokeWidth={3} />
-            )}
-            <span className={`text-[15px] leading-snug ${positive ? "text-[#F6F9FC]" : "text-[#F6F9FC]/80"}`}>{t}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function Differentials() {
-  return (
-    <section id="para-devs" className="px-6 pb-[162px] pt-28 max-sm:pb-[130px] max-sm:pt-20">
-      <div id="seguranca" className="mx-auto max-w-6xl">
-        <h2 className="mx-auto mb-16 max-w-3xl -translate-y-[20px] text-center font-display text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:mb-10 max-sm:text-[27px] md:max-w-none md:whitespace-nowrap md:text-[46px]">
-          Um ecossistema pensado para seu negócio
-        </h2>
-        <div className="grid translate-y-[10px] items-stretch gap-6 md:grid-cols-2">
-          <DiffCard
-            title="Outras soluções"
-            sub="Soluções incompletas e tradicionais do mercado"
-            items={DIFF_NEG}
-          />
-          <DiffCard
-            logo
-            positive
-            sub="A solução completa para escalar o seu negócio"
-            items={DIFF_POS}
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Faixa azul — Aprovação de pagamentos                                */
-/* ------------------------------------------------------------------ */
-
-const APPROVAL_STEPS = [
-  { n: "01", label: "Gabriel (CLIENTE)", meta: "dados do pagamento" },
-  { n: "02", label: "Tentativa de pagamento", meta: "autenticação" },
-  { n: "03", label: "Análise da transação", meta: "análise de risco" },
-  { n: "04", label: "Banco emissor", meta: "limite disponível · decisão do emissor" },
-  { n: "05", label: "Pagamento aprovado", meta: "confirmado em segundos", done: true },
-];
-
-// Bloco 1 — o fluxo de uma transação até a aprovação. É o principal elemento visual.
-// Os detalhes (dados, limite, risco, autenticação, decisão) entram como legendas
-// discretas presas a cada nó, não como cards soltos.
-function ApprovalFlow() {
-  return (
-    <section id="para-devs" className="px-6 pb-24 pt-24 max-sm:pt-20">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto mb-24 max-w-3xl text-center max-sm:mb-14 md:max-w-none">
-          <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
-            Uma venda só existe quando o<br className="max-sm:hidden" /> pagamento é aprovado.
-          </h2>
-        </div>
-
-        {/* Fluxo horizontal (desktop) — conectores reutilizam a barra .conn-fill (mesma animação do site) */}
-        <div className="mx-auto hidden max-w-6xl items-start justify-center md:flex">
-          {APPROVAL_STEPS.map((s, i) => (
-            <Fragment key={s.n}>
-              <div className="flex w-[172px] shrink-0 flex-col items-center text-center">
-                <div className={`flex min-h-[78px] w-full flex-col items-center justify-center gap-1.5 rounded-[15px] px-4 py-3 shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)] ${s.done ? "bg-white ring-2 ring-[#2F6BFF]/35" : "bg-[#eef4ff]"}`}>
-                  {s.done ? (
-                    <span className="flex size-6 items-center justify-center rounded-full bg-[#2F6BFF]">
-                      <Check className="size-3.5 text-white" strokeWidth={3} />
-                    </span>
-                  ) : (
-                    <span className="font-sans text-[11px] font-bold tracking-wider text-[#2F6BFF]">{s.n}</span>
-                  )}
-                  <span className="text-[13px] font-bold leading-tight text-[#0D1B39]">{s.label}</span>
-                </div>
-                <span className="mt-3 max-w-[160px] text-[11px] leading-snug text-[#F6F9FC]/55">{s.meta}</span>
-              </div>
-              {i < APPROVAL_STEPS.length - 1 && (
-                <div className="relative mx-2 mt-[38px] h-[3px] flex-1 rounded-full bg-white/12">
-                  <span
-                    className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]"
-                    style={{ animationDelay: `${i * 0.24}s` }}
-                  />
-                </div>
-              )}
-            </Fragment>
-          ))}
-        </div>
-
-        {/* Fluxo vertical (mobile) */}
-        <div className="mx-auto flex max-w-[320px] flex-col items-stretch md:hidden">
-          {APPROVAL_STEPS.map((s, i) => (
-            <Fragment key={s.n}>
-              <div className={`rounded-2xl px-4 py-3 text-center shadow-[0_16px_36px_-20px_rgba(0,0,0,0.55)] ${s.done ? "bg-white ring-2 ring-[#2F6BFF]/35" : "bg-[#eef4ff]"}`}>
-                <div className="flex items-center justify-center gap-2">
-                  {s.done ? (
-                    <span className="flex size-5 items-center justify-center rounded-full bg-[#2F6BFF]">
-                      <Check className="size-3 text-white" strokeWidth={3} />
-                    </span>
-                  ) : (
-                    <span className="font-sans text-[11px] font-bold text-[#2F6BFF]">{s.n}</span>
-                  )}
-                  <span className="text-[14px] font-bold text-[#0D1B39]">{s.label}</span>
-                </div>
-                <div className="mt-0.5 text-[11px] text-[#0D1B39]/55">{s.meta}</div>
-              </div>
-              {i < APPROVAL_STEPS.length - 1 && (
-                <span className="mx-auto my-2 h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF]" />
-              )}
-            </Fragment>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const APPROVAL_TECH = [
-  { icon: <ShieldCheck />, title: "Antifraude", text: "Análise de risco durante as transações." },
-  { icon: <Lock />, title: "3DS 2.0", text: "Autenticação adicional quando necessária." },
-  { icon: <KeyRound />, title: "Tokenização", text: "Proteção dos dados sensíveis do pagamento." },
-  { icon: <Activity />, title: "Monitoramento", text: "Visibilidade sobre aprovações e recusas." },
-];
-
-// Chip de ícone reaproveita a receita neumórfica dos cards navy (BentoCard).
-function TechItem({ icon, title, text, align = "left" }: { icon: React.ReactNode; title: string; text: string; align?: "left" | "right" }) {
-  return (
-    <div className={`flex items-start gap-4 ${align === "right" ? "flex-row-reverse text-right" : "text-left"}`}>
-      <span
-        className="flex size-11 shrink-0 items-center justify-center rounded-xl text-[#F6F9FC] [&>svg]:size-5"
-        style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
-      >
-        {icon}
-      </span>
-      <div>
-        <h3 className="font-display text-lg font-semibold tracking-tight text-[#F6F9FC]">{title}</h3>
-        <p className="mt-1 text-sm text-[#F6F9FC]/65">{text}</p>
-      </div>
-    </div>
-  );
-}
-
-function ApprovalHub() {
-  return (
-    <div className="flex size-[132px] flex-col items-center justify-center gap-2 rounded-3xl bg-[#eef4ff] px-4 text-center shadow-[0_22px_50px_-20px_rgba(0,0,0,0.6)] max-sm:size-[120px]">
-      <img src="/logo-nummo-dark.svg" alt="Nummo" width={110} height={18} className="h-[18px] w-auto" />
-      <span className="text-[11px] font-semibold leading-tight text-[#0D1B39]/65">infraestrutura<br />de pagamentos</span>
-    </div>
-  );
-}
-
-// Bloco 2 — os 4 recursos ligados a um hub central (não uma grade de 4 cards).
-function ApprovalTech() {
-  return (
-    <section className="px-6 py-24">
-      <div className="mx-auto max-w-7xl">
-        <h2 className="mx-auto mb-16 max-w-3xl text-balance text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:mb-10 max-sm:text-[27px] md:text-[56px]">
-          Tecnologia trabalhando por trás de cada tentativa.
-        </h2>
-
-        {/* Hub central + 4 elementos conectados (desktop) */}
-        <div className="relative mx-auto hidden max-w-4xl md:block">
-          <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" aria-hidden>
-            <path
-              d="M50,50 L30,27 M50,50 L70,27 M50,50 L30,73 M50,50 L70,73"
-              stroke="#2F6BFF"
-              strokeOpacity={0.5}
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeDasharray="0.1 11"
-              vectorEffect="non-scaling-stroke"
-            />
-          </svg>
-          <div className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-center gap-x-10">
-            <div className="flex flex-col gap-16">
-              <TechItem {...APPROVAL_TECH[0]} align="right" />
-              <TechItem {...APPROVAL_TECH[2]} align="right" />
-            </div>
-            <ApprovalHub />
-            <div className="flex flex-col gap-16">
-              <TechItem {...APPROVAL_TECH[1]} align="left" />
-              <TechItem {...APPROVAL_TECH[3]} align="left" />
-            </div>
-          </div>
-        </div>
-
-        {/* Empilhado (mobile) */}
-        <div className="flex flex-col items-center gap-10 md:hidden">
-          <ApprovalHub />
-          <div className="w-full max-w-sm space-y-7">
-            {APPROVAL_TECH.map((t) => (
-              <TechItem key={t.title} icon={t.icon} title={t.title} text={t.text} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const APPROVAL_STATS = [
-  { value: "10.000", label: "Tentativas", accent: false },
-  { value: "9.240", label: "Aprovadas", accent: false },
-  { value: "92,4%", label: "Taxa de aprovação", accent: true },
-];
-
-// Bloco 3 — performance (números ilustrativos) + fechamento + CTA.
-function ApprovalStats() {
-  return (
-    <section id="seguranca" className="px-6 pb-40 pt-24">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto flex max-w-4xl items-center justify-center gap-4 max-sm:flex-col max-sm:gap-0">
-          {APPROVAL_STATS.map((st, i) => (
-            <Fragment key={st.label}>
-              <div className="text-center max-sm:py-3">
-                <div className={`font-display text-5xl font-extrabold leading-none tracking-tight md:text-6xl ${st.accent ? "text-[#6E9BFF]" : "text-[#F6F9FC]"}`}>
-                  {st.value}
-                </div>
-                <div className="mt-2 text-sm text-[#F6F9FC]/60">{st.label}</div>
-              </div>
-              {i < APPROVAL_STATS.length - 1 && (
-                <>
-                  <div className="relative mx-2 mt-[-18px] hidden h-[3px] w-24 shrink-0 rounded-full bg-white/12 sm:block">
-                    <span className="conn-fill absolute inset-0 origin-left rounded-full bg-[#2F6BFF]" style={{ animationDelay: `${i * 0.3}s` }} />
-                  </div>
-                  <span className="my-1 h-6 w-[3px] rounded-full bg-gradient-to-b from-[#2F6BFF] to-[#84A9FF] sm:hidden" />
-                </>
-              )}
-            </Fragment>
-          ))}
-        </div>
-        <p className="mt-8 text-center text-xs text-[#F6F9FC]/45">Exemplo meramente ilustrativo.</p>
-
-        {/* Fechamento + CTA */}
-        <div className="mx-auto mt-24 max-w-3xl text-center max-sm:mt-16">
-          <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] max-sm:text-[27px] md:text-[56px]">
-            Mais vendas começam com pagamentos aprovados.
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[#F6F9FC]/70 max-sm:text-[13px]">
-            A Nummo conecta tecnologia, segurança e dados para construir uma infraestrutura preparada para cada tentativa de pagamento.
-          </p>
-          <div className="mt-10 flex justify-center">
-            <PrimaryButton
-              size="lg"
-              href="https://app.usenummo.com.br/dashboard/register"
-              className="!bg-[#2559d8] shadow-[0_14px_34px_-10px_rgba(47,107,255,0.8)] hover:!bg-[#1f4fc4]"
-            >
-              Começar com a Nummo
-            </PrimaryButton>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 const TESTIMONIALS = [
   { text: "Trocamos de gateway e a taxa de aprovação do checkout subiu logo na primeira semana. Com o Pix caindo na hora e o D+0, nosso fluxo de caixa deixou de ser um problema.", image: "/depoimentos/p1.jpg", name: "Rafael Almeida", role: "CEO · E-commerce" },
   { text: "Recebo pelo Pix na hora e reinvisto em tráfego no mesmo dia. O D+0 mudou completamente a velocidade com que a gente escala as campanhas.", image: "/depoimentos/p2.jpg", name: "Juliana Costa", role: "Head de Growth" },
@@ -1843,9 +1302,9 @@ const thirdColumn = TESTIMONIALS.slice(6, 9);
 
 function Testimonials() {
   return (
-    <section className="py-32">
+    <section className="py-32 max-sm:py-16">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-24 -translate-y-[30px] text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
+        <h2 className="mb-24 -translate-y-[30px] text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:mb-12 max-sm:text-[27px] md:text-[56px]">
           Clientes que não voltam atrás
         </h2>
         <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
@@ -1866,7 +1325,7 @@ const FAQ_CATEGORIES = [
       { question: "Quanto custa começar?", answer: "Criar conta é gratuito, sem mensalidade e sem fidelidade. As taxas incidem apenas sobre vendas aprovadas e são descontadas automaticamente no momento da transação." },
       { question: "Quais meios de pagamento a Nummo aceita?", answer: "A Nummo aceita Pix (com recebimento na hora), cartão de crédito das principais bandeiras (Visa, Mastercard, Elo e Amex) e boleto com emissão automática — tudo em uma única integração." },
       { question: "Quando recebo o dinheiro das minhas vendas?", answer: "A Nummo trabalha com liquidação D+0: as vendas no Pix caem na hora e você recebe no mesmo dia, o que acelera o seu fluxo de caixa para reinvestir mais rápido." },
-      { question: "Quanto tempo leva para sacar?", answer: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
+      { question: "Quanto tempo leva para sacar?", answer: "Os saques na Nummo são processados diariamente das 6h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 6h." },
     ],
   },
   {
@@ -1919,7 +1378,7 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-32">
+    <section className="relative overflow-hidden py-32 max-sm:py-20">
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
         <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight max-sm:text-[44px] md:text-7xl">
           <span className="text-[#0D1B39]">Vender nunca foi tão simples</span>
@@ -1929,10 +1388,10 @@ function FinalCta() {
           Sem mensalidade. Sem fidelidade. Sem surpresa.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4 max-sm:flex-nowrap max-sm:gap-2">
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
           <PrimaryButton
             href="https://app.usenummo.com.br/dashboard/register"
-            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]"
+            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full"
           >
             Criar Conta
           </PrimaryButton>
@@ -1941,7 +1400,7 @@ function FinalCta() {
             href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]"
+            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-full"
           >
             Falar com especialista
           </GhostButton>
@@ -1995,7 +1454,7 @@ export function Footer() {
           {/* Colunas de links */}
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {[
-              { t: "Produtos", l: ["Checkout Builder", "Marketplace", "Co-Produção", "Rec. de Vendas"] },
+              { t: "Produtos", l: ["Checkout Builder", "Marketplace", "Coprodução", "Recuperação de vendas"] },
               { t: "Empresa", l: ["Sobre", "Parceiros", "E-mail", "WhatsApp"] },
               { t: "Recursos", l: ["Documentação", "Status", "Changelog", "Integrações"] },
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
@@ -2042,7 +1501,7 @@ export function Footer() {
 
         {/* Barra inferior: redes sociais + copyright */}
         <div className="flex flex-col items-center justify-between gap-4 text-sm md:flex-row">
-          <div className="flex items-center gap-5 text-[#F6F9FC]/60">
+          <div className="flex items-center gap-1 text-[#F6F9FC]/60">
             {socialLinks.map((s) =>
               s.href ? (
                 <a
@@ -2051,7 +1510,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="transition-colors hover:text-[#3ca2fa] [&>svg]:size-5"
+                  className="inline-flex size-10 items-center justify-center transition-colors hover:text-[#3ca2fa] [&>svg]:size-5"
                 >
                   {s.icon}
                 </a>
@@ -2061,7 +1520,7 @@ export function Footer() {
                   role="img"
                   aria-label={`${s.label} (em breve)`}
                   title="Em breve"
-                  className="cursor-default text-[#F6F9FC]/40 [&>svg]:size-5"
+                  className="inline-flex size-10 cursor-default items-center justify-center text-[#F6F9FC]/40 [&>svg]:size-5"
                 >
                   {s.icon}
                 </span>
@@ -2069,7 +1528,7 @@ export function Footer() {
             )}
           </div>
           <p className="text-center text-[#F6F9FC]/50 md:text-right">
-            © 2026 Nummo Todos os direitos reservados.
+            © 2026 Nummo. Todos os direitos reservados.
           </p>
         </div>
       </div>

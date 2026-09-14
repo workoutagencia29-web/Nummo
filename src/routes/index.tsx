@@ -271,13 +271,13 @@ function Hero() {
         </div>
 
         <h1 className="animate-hero-in mt-7 text-balance text-[40px] font-bold leading-[1.02] tracking-tight text-[#F6F9FC] [animation-delay:240ms] max-sm:text-[34px] md:text-[64px] lg:text-[72px]">
-          Seja o protagonista,
+          Receba na hora e
           <br />
-          <span className="text-[#5b8bff]">venha pra Nummo!</span>
+          <span className="text-[#5b8bff]">cresça sem limites.</span>
         </h1>
 
         <p className="animate-hero-in mt-6 max-w-xl text-pretty text-base leading-relaxed text-[#F6F9FC]/70 [animation-delay:420ms] max-sm:text-[15px] lg:text-lg">
-          Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
+          Taxas transparentes e infraestrutura pronta para escalar — do primeiro Pix ao milionésimo.
         </p>
 
         <div className="animate-hero-in mt-8 flex flex-col items-center gap-3 [animation-delay:600ms] max-sm:w-full sm:flex-row sm:justify-center">
@@ -286,7 +286,7 @@ function Hero() {
             href="https://app.usenummo.com.br/dashboard/register"
             className="h-[56px] w-[240px] justify-center !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full"
           >
-            Criar Conta
+            Criar conta grátis
           </PrimaryButton>
           <a
             href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
@@ -1300,7 +1300,7 @@ function Testimonials() {
     <section className="py-32 max-sm:py-16">
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="mb-24 -translate-y-[30px] text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:mb-12 max-sm:text-[27px] md:text-[56px]">
-          Clientes que não voltam atrás
+          Quem troca pra Nummo não olha pra trás
         </h2>
         <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
           <TestimonialsColumn testimonials={firstColumn} className="md:-translate-x-[33px]" duration={15} />
@@ -1376,11 +1376,11 @@ function FinalCta() {
     <section className="relative overflow-hidden py-32 max-sm:py-20">
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
         <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight max-sm:text-[44px] md:text-7xl">
-          <span className="text-[#0D1B39]">Vender nunca foi tão simples</span>
+          <span className="text-[#0D1B39]">Pronto para vender com a Nummo?</span>
         </h2>
 
         <p className="mt-6 text-lg text-[#0D1B39] max-sm:text-[13px]">
-          Sem mensalidade. Sem fidelidade. Sem surpresa.
+          Sem mensalidade. Sem fidelidade. Sem taxa escondida.
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
@@ -1388,7 +1388,7 @@ function FinalCta() {
             href="https://app.usenummo.com.br/dashboard/register"
             className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full"
           >
-            Criar Conta
+            Criar conta grátis
           </PrimaryButton>
 
           <GhostButton

@@ -167,7 +167,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 					</Button>
 					<Button asChild>
 						<a href={REGISTER_URL} target="_blank" rel="noopener noreferrer">
-							Criar Conta
+							Criar conta grátis
 						</a>
 					</Button>
 				</div>
@@ -213,7 +213,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 					</Button>
 					<Button className="w-full" asChild>
 						<a href={REGISTER_URL} target="_blank" rel="noopener noreferrer">
-							Criar Conta
+							Criar conta grátis
 						</a>
 					</Button>
 				</div>

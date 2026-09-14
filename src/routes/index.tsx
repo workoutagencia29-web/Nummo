@@ -1,7 +1,7 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, Check, ChevronDown,
-  Layers, Copy, ExternalLink, Search,
+  Layers, Copy, ExternalLink,
   Instagram, Youtube, Linkedin,
   AlertTriangle, Users, Lock,
 } from "lucide-react";
@@ -809,11 +809,6 @@ function ApiDocs() {
         <div className="grid lg:grid-cols-[240px_1fr]">
           {/* Navegação de endpoints */}
           <aside className="min-w-0 border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
-            {/* Busca (visual) */}
-            <div className="mb-4 flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-[#F6F9FC]/35">
-              <Search className="size-3.5" />
-              Buscar na documentação
-            </div>
             {groups.map((g) => (
               <div key={g} className="mb-5 last:mb-0">
                 <div className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#F6F9FC]/40">
@@ -875,7 +870,7 @@ function ApiDocs() {
 
               <CodeBlock label="Requisição" code={ep.request[lang]} />
               <div className="mt-4">
-                <CodeBlock label="Resposta" code={ep.response} status="200 OK" />
+                <CodeBlock label="Resposta" code={ep.response} status={ep.method === "POST" ? "201 Created" : "200 OK"} />
               </div>
             </div>
           </div>
@@ -1467,7 +1462,7 @@ export function Footer() {
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];
                     const ext = FOOTER_LINKS[i];
-                    const cls = "inline-block py-2.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#3ca2fa]";
+                    const cls = "inline-block py-2.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#5b8bff]";
                     return (
                       <li key={i}>
                         {to ? (
@@ -1510,7 +1505,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="inline-flex size-10 items-center justify-center transition-colors hover:text-[#3ca2fa] [&>svg]:size-5"
+                  className="inline-flex size-10 items-center justify-center transition-colors hover:text-[#5b8bff] [&>svg]:size-5"
                 >
                   {s.icon}
                 </a>

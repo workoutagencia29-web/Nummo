@@ -1373,32 +1373,43 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-32 max-sm:py-20">
-      <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
-        <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight max-sm:text-[44px] md:text-7xl">
-          <span className="text-[#0D1B39]">Pronto para vender com a Nummo?</span>
-        </h2>
+    <section className="relative overflow-hidden py-24 max-sm:py-16">
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#2559d8] to-[#5b8bff] px-8 py-20 text-center shadow-[0_30px_80px_-30px_rgba(37,89,216,0.5)] max-sm:rounded-3xl max-sm:px-6 max-sm:py-14">
+          {/* Brilhos decorativos do painel */}
+          <div aria-hidden className="pointer-events-none absolute -left-20 -top-24 size-64 rounded-full bg-white/10 blur-3xl" />
+          <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-16 size-72 rounded-full bg-[#0D1B39]/25 blur-3xl" />
 
-        <p className="mt-6 text-lg text-[#0D1B39] max-sm:text-[13px]">
-          Sem mensalidade. Sem fidelidade. Sem taxa escondida.
-        </p>
+          <div className="relative">
+            <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white max-sm:text-[30px] md:text-6xl">
+              Pronto para vender com a Nummo?
+            </h2>
 
-        <div className="mt-10 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
-          <PrimaryButton
-            href="https://app.usenummo.com.br/dashboard/register"
-            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full"
-          >
-            Criar conta grátis
-          </PrimaryButton>
+            <p className="mx-auto mt-5 max-w-md text-lg text-white/80 max-sm:text-sm">
+              Sem mensalidade. Sem fidelidade. Sem taxa escondida.
+            </p>
 
-          <GhostButton
-            href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-full"
-          >
-            Falar com especialista
-          </GhostButton>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
+              <a
+                href="https://app.usenummo.com.br/dashboard/register"
+                className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full bg-white text-base font-semibold text-[#0D1B39] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5 max-sm:w-full"
+              >
+                Criar conta grátis
+                <ArrowRight className="size-[18px]" />
+              </a>
+
+              <a
+                href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 text-base font-medium text-white backdrop-blur transition-colors hover:bg-white/20 max-sm:w-full"
+              >
+                Falar com especialista
+              </a>
+            </div>
+
+            <p className="mt-6 text-[13px] text-white/70">Conta gratuita • aprovação em minutos • suporte no WhatsApp</p>
+          </div>
         </div>
       </div>
     </section>

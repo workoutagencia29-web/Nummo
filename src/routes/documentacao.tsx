@@ -6,7 +6,7 @@ export const Route = createFileRoute("/documentacao")({
   component: () => (
     <PlaceholderPage
       eyebrow="Documentação"
-      title="Documentações Nummo"
+      title="Documentação Nummo"
       subtitle="Tudo o que você precisa para integrar a Nummo: referência de API, SDKs oficiais, webhooks e guias passo a passo para começar a receber pagamentos em minutos."
     />
   ),

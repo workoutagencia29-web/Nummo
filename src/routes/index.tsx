@@ -1,8 +1,8 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
-  ArrowRight, Check, ChevronDown, CreditCard,
-  Link, Layers, Barcode, Copy, ExternalLink, Search,
-  Instagram, Youtube, Linkedin, Menu, X,
+  ArrowRight, Check, ChevronDown,
+  Link, Layers, Copy, ExternalLink, Search,
+  Instagram, Youtube, Linkedin, X,
   AlertTriangle, ShieldCheck, Users,
   Lock, KeyRound, Activity,
 } from "lucide-react";
@@ -112,7 +112,7 @@ export function GhostButton({ children, className = "", size = "md", href, targe
 
 function SectionEyebrow({ kicker, title, sub, titleClassName = "", center = false }: { kicker?: string; title: React.ReactNode; sub?: string; titleClassName?: string; center?: boolean }) {
   return (
-    <div className={`mb-16 ${center ? "mx-auto max-w-[1220px] text-center" : "max-w-3xl"}`}>
+    <div className={`mb-16 max-sm:mb-10 ${center ? "mx-auto max-w-[1220px] text-center" : "max-w-3xl"}`}>
       {kicker && (
         <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-[#0D1B39]">
           / {kicker}
@@ -537,7 +537,7 @@ function Hero() {
             rel="noopener noreferrer"
             className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-[#F6F9FC]/25 bg-[#F6F9FC]/[0.06] px-8 text-base font-medium text-[#F6F9FC] backdrop-blur transition-colors hover:border-[#F6F9FC]/40 hover:bg-[#F6F9FC]/[0.12] max-sm:w-full"
           >
-            Falar com Especialista
+            Falar com especialista
           </a>
         </div>
       </div>
@@ -1024,9 +1024,9 @@ function ApiDocs() {
         <span className="inline-block rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#7cc5ff]">
           Para desenvolvedores
         </span>
-        <h3 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-[#F6F9FC] md:text-4xl">
+        <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-[#F6F9FC] md:text-4xl">
           Uma API feita para escalar
-        </h3>
+        </h2>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-[#F6F9FC]/60 max-sm:text-sm">
           Preview da API da Nummo: REST, JSON e webhooks — com exemplos prontos em cURL, Node.js e Python.
         </p>
@@ -1103,7 +1103,7 @@ function ApiDocs() {
                       key={l.key}
                       type="button"
                       onClick={() => setLang(l.key)}
-                      className={`inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-1.5 text-xs font-medium transition-colors ${
+                      className={`inline-flex min-h-9 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-[13px] font-medium transition-colors ${
                         on
                           ? "bg-[#2F6BFF] text-white"
                           : "bg-white/[0.04] text-[#F6F9FC]/55 hover:text-[#F6F9FC]/85"
@@ -1146,7 +1146,7 @@ function ApiDocs() {
 
 function Bento() {
   return (
-    <section id="plataforma" className="grad-night-dev pb-24 pt-20 max-sm:pt-14">
+    <section id="plataforma" className="grad-night-dev pb-24 pt-20 max-sm:pb-16 max-sm:pt-14">
       <div className="mx-auto max-w-7xl px-6">
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
           {/* Checkout Builder com IA + Área de membros + Marketplace —
@@ -1492,7 +1492,7 @@ function HowItWorks() {
         <SectionEyebrow
           center
           title={<span className="text-[#0D1B39]">Tudo o que sua operação precisa, conectado <br className="max-sm:hidden" /><span className="text-[#0D1B39]">em um só lugar</span></span>}
-          sub="Conecte anúncios, trackers e emissão de notas, área de membros, à Nummo e centralize sua operação em um só fluxo."
+          sub="Conecte anúncios, trackers, emissão de notas e área de membros à Nummo e centralize sua operação em um só fluxo."
         />
         <div className="-mt-8 flex justify-center">
           <PrimaryButton
@@ -1843,9 +1843,9 @@ const thirdColumn = TESTIMONIALS.slice(6, 9);
 
 function Testimonials() {
   return (
-    <section className="py-32">
+    <section className="py-32 max-sm:py-16">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-24 -translate-y-[30px] text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:text-[27px] md:text-[56px]">
+        <h2 className="mb-24 -translate-y-[30px] text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:mb-12 max-sm:text-[27px] md:text-[56px]">
           Clientes que não voltam atrás
         </h2>
         <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
@@ -1866,7 +1866,7 @@ const FAQ_CATEGORIES = [
       { question: "Quanto custa começar?", answer: "Criar conta é gratuito, sem mensalidade e sem fidelidade. As taxas incidem apenas sobre vendas aprovadas e são descontadas automaticamente no momento da transação." },
       { question: "Quais meios de pagamento a Nummo aceita?", answer: "A Nummo aceita Pix (com recebimento na hora), cartão de crédito das principais bandeiras (Visa, Mastercard, Elo e Amex) e boleto com emissão automática — tudo em uma única integração." },
       { question: "Quando recebo o dinheiro das minhas vendas?", answer: "A Nummo trabalha com liquidação D+0: as vendas no Pix caem na hora e você recebe no mesmo dia, o que acelera o seu fluxo de caixa para reinvestir mais rápido." },
-      { question: "Quanto tempo leva para sacar?", answer: "Os saques na Nummo são processados diariamente das 06h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 06h." },
+      { question: "Quanto tempo leva para sacar?", answer: "Os saques na Nummo são processados diariamente das 6h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 6h." },
     ],
   },
   {
@@ -1919,7 +1919,7 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-32">
+    <section className="relative overflow-hidden py-32 max-sm:py-20">
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
         <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight max-sm:text-[44px] md:text-7xl">
           <span className="text-[#0D1B39]">Vender nunca foi tão simples</span>
@@ -1929,10 +1929,10 @@ function FinalCta() {
           Sem mensalidade. Sem fidelidade. Sem surpresa.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4 max-sm:flex-nowrap max-sm:gap-2">
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
           <PrimaryButton
             href="https://app.usenummo.com.br/dashboard/register"
-            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]"
+            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full"
           >
             Criar Conta
           </PrimaryButton>
@@ -1941,7 +1941,7 @@ function FinalCta() {
             href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
             target="_blank"
             rel="noopener noreferrer"
-            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]"
+            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-full"
           >
             Falar com especialista
           </GhostButton>
@@ -1995,7 +1995,7 @@ export function Footer() {
           {/* Colunas de links */}
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             {[
-              { t: "Produtos", l: ["Checkout Builder", "Marketplace", "Co-Produção", "Rec. de Vendas"] },
+              { t: "Produtos", l: ["Checkout Builder", "Marketplace", "Coprodução", "Recuperação de vendas"] },
               { t: "Empresa", l: ["Sobre", "Parceiros", "E-mail", "WhatsApp"] },
               { t: "Recursos", l: ["Documentação", "Status", "Changelog", "Integrações"] },
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
@@ -2042,7 +2042,7 @@ export function Footer() {
 
         {/* Barra inferior: redes sociais + copyright */}
         <div className="flex flex-col items-center justify-between gap-4 text-sm md:flex-row">
-          <div className="flex items-center gap-5 text-[#F6F9FC]/60">
+          <div className="flex items-center gap-1 text-[#F6F9FC]/60">
             {socialLinks.map((s) =>
               s.href ? (
                 <a
@@ -2051,7 +2051,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="transition-colors hover:text-[#3ca2fa] [&>svg]:size-5"
+                  className="inline-flex size-10 items-center justify-center transition-colors hover:text-[#3ca2fa] [&>svg]:size-5"
                 >
                   {s.icon}
                 </a>
@@ -2061,7 +2061,7 @@ export function Footer() {
                   role="img"
                   aria-label={`${s.label} (em breve)`}
                   title="Em breve"
-                  className="cursor-default text-[#F6F9FC]/40 [&>svg]:size-5"
+                  className="inline-flex size-10 cursor-default items-center justify-center text-[#F6F9FC]/40 [&>svg]:size-5"
                 >
                   {s.icon}
                 </span>
@@ -2069,7 +2069,7 @@ export function Footer() {
             )}
           </div>
           <p className="text-center text-[#F6F9FC]/50 md:text-right">
-            © 2026 Nummo Todos os direitos reservados.
+            © 2026 Nummo. Todos os direitos reservados.
           </p>
         </div>
       </div>

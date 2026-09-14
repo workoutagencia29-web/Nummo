@@ -83,7 +83,7 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
                 variant="ghost"
                 className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
                 onClick={onClose}
-                aria-label="Close banner"
+                aria-label="Fechar"
               >
                 <X
                   size={16}

@@ -151,6 +151,8 @@ export function FaqCategorized({
             {categories.map((category, index) => (
               <button
                 aria-selected={activeCategory === index}
+                aria-controls="faq-panel"
+                id={`faq-tab-${index}`}
                 className={`relative px-4 py-3 font-medium text-sm transition-colors ${
                   activeCategory === index
                     ? "text-primary"
@@ -180,7 +182,14 @@ export function FaqCategorized({
           </div>
         </div>
 
-        <div className="animate-faq-reveal" key={activeCategory}>
+        <div
+          className="animate-faq-reveal"
+          key={activeCategory}
+          id="faq-panel"
+          role="tabpanel"
+          aria-labelledby={`faq-tab-${activeCategory}`}
+          tabIndex={0}
+        >
           <div className="space-y-4">
             {categories[activeCategory].faqs.map((faq, index) => {
               const isOpen = openIndex === index;

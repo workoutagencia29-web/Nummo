@@ -25,7 +25,7 @@ const STORY_KICKER = "Porque pagamentos não deveriam limitar negócios. Deveria
 
 const VALUES = [
   { icon: <Eye />, title: "Transparência radical", desc: "Taxas claras, sem letra miúda e sem surpresa. Você sempre sabe exatamente quanto paga." },
-  { icon: <Zap />, title: "Velocidade obsessiva", desc: "Liquidez D+0 e uma stack construída para processar na velocidade do seu negócio." },
+  { icon: <Zap />, title: "Velocidade obsessiva", desc: "Liquidação D+0 e uma stack construída para processar na velocidade do seu negócio." },
   { icon: <ShieldCheck />, title: "Segurança inegociável", desc: "PCI-DSS Level 1, 3DS 2.0 e antifraude com IA protegendo cada transação." },
   { icon: <Users />, title: "Parceria de verdade", desc: "Mais que um gateway: um time que entende seu negócio e cresce junto com você." },
 ];
@@ -117,9 +117,9 @@ function SobrePage() {
               Vamos crescer juntos.
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">Crie sua conta em minutos ou fale com um especialista.</p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 max-sm:flex-nowrap max-sm:gap-2">
-              <PrimaryButton href="https://app.usenummo.com.br/register" className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]">Criar conta grátis</PrimaryButton>
-              <GhostButton href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-auto max-sm:flex-1 max-sm:px-2 max-sm:text-[13px]">Falar com especialista</GhostButton>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
+              <PrimaryButton href="https://app.usenummo.com.br/dashboard/register" className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full">Criar conta grátis</PrimaryButton>
+              <GhostButton href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-full">Falar com especialista</GhostButton>
             </div>
           </div>
         </section>

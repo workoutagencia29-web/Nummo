@@ -83,18 +83,41 @@ export function PaymentsBento() {
           {/* Mini-preview de um checkout (decorativo) */}
           <div
             aria-hidden
-            className="hidden w-44 shrink-0 self-end rounded-t-2xl border border-[#0D1B39]/10 bg-[#F6F9FC] p-3.5 md:block"
+            className="hidden w-48 shrink-0 self-end overflow-hidden rounded-t-2xl border border-[#0D1B39]/10 bg-white shadow-[0_-10px_30px_-14px_rgba(13,27,57,0.15)] md:block"
           >
-            <div className="h-2 w-16 rounded bg-[#0D1B39]/15" />
-            <div className="mt-3 space-y-2">
-              <div className="h-7 rounded-md border border-[#0D1B39]/10 bg-white" />
-              <div className="h-7 rounded-md border border-[#0D1B39]/10 bg-white" />
+            {/* topo do checkout */}
+            <div className="flex items-center justify-between border-b border-[#0D1B39]/[0.06] bg-[#F6F9FC] px-3.5 py-2.5">
+              <span className="text-[11px] font-semibold text-[#0D1B39]">Checkout</span>
+              <span className="flex items-center gap-1 text-[9px] font-medium text-[#00A3A3]">
+                <span className="size-1.5 rounded-full bg-[#00A3A3]" />
+                Seguro
+              </span>
             </div>
-            <div className="mt-3 flex items-center justify-between">
-              <span className="h-2 w-10 rounded bg-[#0D1B39]/15" />
-              <span className="h-2 w-8 rounded bg-[#0D1B39]/25" />
+            <div className="p-3.5">
+              {/* seletor de método */}
+              <div className="flex gap-1.5">
+                <span className="rounded-md bg-[#2559d8] px-2 py-1 text-[9px] font-semibold text-white">Pix</span>
+                <span className="rounded-md border border-[#0D1B39]/10 px-2 py-1 text-[9px] font-medium text-[#0D1B39]/45">Cartão</span>
+              </div>
+              {/* campos */}
+              <div className="mt-3 space-y-2">
+                <div className="rounded-md border border-[#0D1B39]/10 px-2 py-1.5">
+                  <div className="h-1.5 w-12 rounded-full bg-[#0D1B39]/15" />
+                </div>
+                <div className="rounded-md border border-[#0D1B39]/10 px-2 py-1.5">
+                  <div className="h-1.5 w-20 rounded-full bg-[#0D1B39]/15" />
+                </div>
+              </div>
+              {/* total */}
+              <div className="mt-3 flex items-center justify-between">
+                <span className="text-[10px] text-[#0D1B39]/50">Total</span>
+                <span className="text-[12px] font-bold text-[#0D1B39]">R$ 197,00</span>
+              </div>
+              {/* botão */}
+              <div className="mt-2.5 rounded-lg bg-gradient-to-r from-[#2559d8] to-[#5b8bff] py-2 text-center text-[10px] font-semibold text-white shadow-[0_6px_14px_-5px_rgba(37,89,216,0.6)]">
+                Pagar agora
+              </div>
             </div>
-            <div className="mt-3 h-8 rounded-lg bg-gradient-to-r from-[#2559d8] to-[#5b8bff]" />
           </div>
         </div>
       </div>

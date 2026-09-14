@@ -44,15 +44,17 @@ export default defineConfig({
       "/fonts/**": {
         headers: { "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800" },
       },
-      // Imagens do /public (não hasheadas) — cache forte c/ revalidação p/ visitas repetidas.
+      // Imagens do /public (não hasheadas, URL estável). Cache curto (1h) + must-revalidate:
+      // performance nas visitas repetidas, mas troca de asset aparece rápido (sem servir
+      // stale por dias). Para efeito imediato após deploy, purgar o cache do Cloudflare.
       "/logos/**": {
-        headers: { "Cache-Control": "public, max-age=604800, stale-while-revalidate=2592000" },
+        headers: { "Cache-Control": "public, max-age=3600, must-revalidate" },
       },
       "/depoimentos/**": {
-        headers: { "Cache-Control": "public, max-age=604800, stale-while-revalidate=2592000" },
+        headers: { "Cache-Control": "public, max-age=3600, must-revalidate" },
       },
       "/*.webp": {
-        headers: { "Cache-Control": "public, max-age=604800, stale-while-revalidate=2592000" },
+        headers: { "Cache-Control": "public, max-age=3600, must-revalidate" },
       },
     },
   },

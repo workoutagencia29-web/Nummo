@@ -77,8 +77,18 @@ export function PaymentsBento() {
             <IconTile icon={Blocks} className="size-12" />
             <h3 className="mt-5 font-display text-2xl font-bold tracking-tight text-[#0D1B39]">Checkout Builder</h3>
             <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#0D1B39]/60">
-              Monte seu checkout do seu jeito, sem código. Arraste, solte e publique.
+              Crie o checkout do seu jeito, sem código. Arraste, solte, publique.
             </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["Sem código", "Templates prontos", "Domínio próprio"].map((c) => (
+                <span
+                  key={c}
+                  className="rounded-full border border-[#0D1B39]/10 bg-[#F6F9FC] px-2.5 py-1 text-[11px] font-medium text-[#0D1B39]/70"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
           {/* Mini-preview de um checkout (decorativo) */}
           <div

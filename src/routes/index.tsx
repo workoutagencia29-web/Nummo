@@ -1375,12 +1375,13 @@ function FinalCta() {
   return (
     <section className="relative overflow-hidden py-24 max-sm:py-16">
       <div className="mx-auto max-w-5xl px-6">
-        <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#2559d8] to-[#5b8bff] px-8 py-20 text-center shadow-[0_30px_80px_-30px_rgba(37,89,216,0.5)] max-sm:rounded-3xl max-sm:px-6 max-sm:py-14">
-          {/* Brilhos decorativos do painel */}
-          <div aria-hidden className="pointer-events-none absolute -left-20 -top-24 size-64 rounded-full bg-white/10 blur-3xl" />
-          <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-16 size-72 rounded-full bg-[#0D1B39]/25 blur-3xl" />
+        <div className="relative overflow-hidden rounded-[32px] bg-[#03060c] px-8 py-20 text-center shadow-[0_30px_80px_-30px_rgba(3,6,12,0.55)] max-sm:rounded-3xl max-sm:px-6 max-sm:py-14">
+          {/* Fundo de gradiente animado (mesmo da seção Taxas) */}
+          <Velaris className="absolute inset-0" height="100%" speed={2.2} />
+          {/* Scrim leve para garantir o contraste do texto branco sobre o gradiente */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[#03060c]/30" />
 
-          <div className="relative">
+          <div className="relative z-10">
             <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white max-sm:text-[30px] md:text-6xl">
               Pronto para vender com a Nummo?
             </h2>

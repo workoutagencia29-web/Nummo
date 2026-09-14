@@ -1341,7 +1341,7 @@ function SaleNotifications() {
           return (
             <div
               key={i}
-              className="absolute left-1/2 top-0"
+              className="notif-card absolute left-1/2 top-0"
               style={{
                 top: n.top,
                 zIndex: n.z,

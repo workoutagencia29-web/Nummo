@@ -288,6 +288,13 @@ html, body { overflow-x: clip; max-width: 100%; }
   .taxa-orb-1, .taxa-orb-2, .taxa-orb-3, .taxa-tw { animation: none !important; }
 }
 
+/* Mobile: notificações de venda (seção Taxas) viram uma pilha centralizada e
+   alinhada — remove o espalhamento horizontal e a rotação (que cortavam os cards
+   nas bordas no desktop scatter). !important sobrescreve o transform inline. */
+@media (max-width: 639px) {
+  .notif-card { transform: translateX(-50%) !important; }
+}
+
 /* Navbar no tema escuro (home): tokens escuros no escopo do header para os menus
    (dropdowns Produtos/Empresa) herdarem fundo navy + texto claro automaticamente
    — mesmo padrão do escopo .faq. Os botões .nav-* têm regras próprias abaixo. */

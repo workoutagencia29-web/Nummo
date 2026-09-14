@@ -2,8 +2,9 @@ import { CreditCard, Barcode, Link2, Repeat, Blocks, TrendingUp, PlusCircle, Spa
 
 /* ------------------------------------------------------------------ */
 /* Seção "Venda onde e como quiser": faixa com os meios de pagamento
-   aceitos + grid de ferramentas. Estilo neomórfico claro (igual ao resto
-   do site). Sem imagens externas — marcas em SVG inline (seguro no CSP).   */
+   aceitos + grid de ferramentas. Cards brancos com borda fina, sombra de
+   elevação e tiles de ícone em gradiente da marca (hover levanta + brilho).
+   Sem imagens externas — marcas em SVG inline (seguro no CSP).             */
 /* ------------------------------------------------------------------ */
 
 function PixMark({ className = "" }: { className?: string }) {
@@ -67,8 +68,7 @@ export function PaymentsBento() {
         {METHODS.map((m) => (
           <div
             key={m.name}
-            className="inline-flex items-center gap-2.5 rounded-full bg-[#F6F9FC] px-5 py-3 max-sm:px-4 max-sm:py-2.5"
-            style={{ boxShadow: "7px 7px 16px #d3dbea, -7px -7px 16px #ffffff" }}
+            className="inline-flex items-center gap-2.5 rounded-full border border-[#0D1B39]/[0.08] bg-white px-5 py-3 shadow-[0_1px_2px_rgba(13,27,57,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#2559d8]/30 hover:shadow-[0_8px_20px_-8px_rgba(37,89,216,0.28)] max-sm:px-4 max-sm:py-2.5"
           >
             <span className="flex items-center [&>svg]:size-5 max-sm:[&>svg]:size-[18px]">{m.icon}</span>
             <span className="text-sm font-medium text-[#0D1B39] max-sm:text-[13px]">{m.name}</span>
@@ -80,28 +80,43 @@ export function PaymentsBento() {
       <div className="mt-14 max-sm:mt-10">
         <GroupLabel>Ferramentas pra vender mais</GroupLabel>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f) => (
-            <div
-              key={f.title}
-              className="nm-press-light group relative rounded-[24px] bg-[#F6F9FC] p-7 max-sm:rounded-[20px] max-sm:p-5"
-            >
-              {f.tag && (
-                <span className="absolute right-5 top-5 rounded-full bg-gradient-to-r from-[#2559d8] to-[#5b8bff] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                  {f.tag}
-                </span>
-              )}
+          {FEATURES.map((f) => {
+            const highlight = Boolean(f.tag);
+            return (
               <div
-                className="inline-flex size-12 items-center justify-center rounded-xl text-[#2559d8] max-sm:size-10"
-                style={{ boxShadow: "inset 3px 3px 6px #d3dbea, inset -3px -3px 6px #ffffff" }}
+                key={f.title}
+                className={`group relative overflow-hidden rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 max-sm:rounded-xl max-sm:p-5 ${
+                  highlight
+                    ? "border-[#2559d8]/20 bg-gradient-to-br from-[#eef4ff] to-white shadow-[0_10px_30px_-16px_rgba(37,89,216,0.35)] hover:shadow-[0_22px_46px_-18px_rgba(37,89,216,0.42)]"
+                    : "border-[#0D1B39]/[0.07] bg-white shadow-[0_1px_3px_rgba(13,27,57,0.05)] hover:border-[#2559d8]/25 hover:shadow-[0_20px_44px_-18px_rgba(37,89,216,0.3)]"
+                }`}
               >
-                <f.icon className="size-5 max-sm:size-[18px]" />
+                {/* Brilho de marca no canto — sutil, intensifica no hover */}
+                <div
+                  aria-hidden
+                  className={`pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-[#2559d8] blur-3xl transition-opacity duration-300 ${
+                    highlight ? "opacity-[0.10] group-hover:opacity-[0.16]" : "opacity-0 group-hover:opacity-[0.08]"
+                  }`}
+                />
+
+                {f.tag && (
+                  <span className="absolute right-5 top-5 z-10 rounded-full bg-gradient-to-r from-[#2559d8] to-[#5b8bff] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow-[0_4px_10px_-3px_rgba(37,89,216,0.6)]">
+                    {f.tag}
+                  </span>
+                )}
+
+                <div className="relative">
+                  <div className="inline-flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#2559d8] to-[#5b8bff] text-white shadow-[0_8px_18px_-6px_rgba(37,89,216,0.55)] transition-transform duration-300 group-hover:scale-105 max-sm:size-11">
+                    <f.icon className="size-5 max-sm:size-[18px]" />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-[#0D1B39] max-sm:mt-4 max-sm:text-base">
+                    {f.title}
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-[#0D1B39]/60 max-sm:text-[13px]">{f.desc}</p>
+                </div>
               </div>
-              <h3 className="mt-6 font-display text-lg font-semibold tracking-tight text-[#0D1B39] max-sm:mt-4 max-sm:text-base">
-                {f.title}
-              </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#0D1B39]/60 max-sm:text-[13px]">{f.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

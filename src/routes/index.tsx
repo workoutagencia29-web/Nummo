@@ -1051,7 +1051,7 @@ function ApiDocs() {
         {/* Corpo: navegação + conteúdo */}
         <div className="grid lg:grid-cols-[240px_1fr]">
           {/* Navegação de endpoints */}
-          <aside className="border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
+          <aside className="min-w-0 border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
             {/* Busca (visual) */}
             <div className="mb-4 flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-[#F6F9FC]/35">
               <Search className="size-3.5" />
@@ -1091,7 +1091,7 @@ function ApiDocs() {
           </aside>
 
           {/* Conteúdo do endpoint — remonta a cada troca (fade suave via .tour-in) */}
-          <div key={active} className="tour-in">
+          <div key={active} className="tour-in min-w-0">
             {/* Exemplos de código */}
             <div className="bg-[#091020] p-4 md:p-6">
               {/* Tabs de linguagem (com ícones) — grade alinhada: 5 por linha */}
@@ -1849,7 +1849,7 @@ function Testimonials() {
           Clientes que não voltam atrás
         </h2>
         <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
-          <TestimonialsColumn testimonials={firstColumn} className="-translate-x-[33px]" duration={15} />
+          <TestimonialsColumn testimonials={firstColumn} className="md:-translate-x-[33px]" duration={15} />
           <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
           <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block translate-x-[33px]" duration={17} />
         </div>

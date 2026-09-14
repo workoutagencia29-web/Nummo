@@ -1330,7 +1330,7 @@ function SaleNotifications() {
 
   return (
     <div ref={ref} className="flex justify-center max-sm:order-last sm:hidden lg:flex">
-      <div data-nl-anchor="notif" className="relative h-[416px] w-full max-w-[440px] max-sm:h-[366px] max-sm:origin-top max-sm:scale-[0.68]">
+      <div data-nl-anchor="notif" className="relative h-[416px] w-full max-w-[440px] max-sm:h-[280px] max-sm:origin-top max-sm:scale-[0.68]">
         {items.map((n, i) => {
           const step = ORDER.indexOf(i);
           // Card interno: só ele anima (opacidade + subida). A opacidade final de
@@ -1382,7 +1382,7 @@ function SaleNotifications() {
 
 function Rates() {
   return (
-    <section id="taxas" className="relative overflow-hidden bg-[#03060c] pb-[118px] pt-[98px] text-[#F6F9FC] max-sm:pb-10 max-sm:pt-[2px]">
+    <section id="taxas" className="relative overflow-hidden bg-[#03060c] pb-[118px] pt-[98px] text-[#F6F9FC] max-sm:pb-14 max-sm:pt-16">
       <Velaris className="absolute inset-0" height="100%" speed={2.2} />
 
       {/* Animação das laterais: orbes de luz + partículas flutuando (atrás do conteúdo) */}

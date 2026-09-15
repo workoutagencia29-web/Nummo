@@ -12,6 +12,24 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Split de vendors estaveis em chunks proprios: melhora o cache entre deploys
+  // (React/TanStack raramente mudam) e permite parse/compile em paralelo. Nao muda
+  // nada visual: apenas reparte o mesmo JS em arquivos separados.
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id: string) {
+            if (!id.includes("node_modules")) return;
+            if (/[\\/]node_modules[\\/](react-dom|react|scheduler)[\\/]/.test(id)) return "vendor-react";
+            if (id.includes("@tanstack")) return "vendor-tanstack";
+            if (id.includes("@radix-ui")) return "vendor-radix";
+            if (id.includes("lucide-react")) return "vendor-lucide";
+          },
+        },
+      },
+    },
+  },
   // Deploy na Vercel: fixa o preset do Nitro como "vercel" (fora do sandbox da Lovable).
   // Gera .vercel/output (Build Output API), que a Vercel detecta sozinha, resolvendo o erro
   // "No Output Directory named build".

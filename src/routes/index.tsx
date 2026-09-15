@@ -1027,10 +1027,10 @@ function SaleNotifications() {
                 className="flex items-center gap-3 rounded-[22px] border border-white/70 bg-white/75 px-4 shadow-[0_20px_48px_-14px_rgba(13,27,57,0.32)] backdrop-blur-xl"
                 style={cardStyle}
               >
-                {/* Ícone do app (squircle azul + anel branco, coerente com o favicon) */}
-                <div className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[12px] bg-gradient-to-br from-[#2F6BFF] to-[#1E4FD6] shadow-[0_4px_10px_rgba(47,107,255,0.45)]">
-                  <svg width="21" height="21" viewBox="0 0 40 40" aria-hidden="true">
-                    <circle cx="20" cy="20" r="12.5" fill="none" stroke="#fff" strokeWidth="7" />
+                {/* Ícone do app: o favicon da Nummo (anel azul) num squircle branco */}
+                <div className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[12px] bg-white shadow-[0_4px_12px_rgba(13,27,57,0.15)] ring-1 ring-[#0D1B39]/[0.06]">
+                  <svg width="24" height="24" viewBox="0 0 40 40" aria-hidden="true">
+                    <circle cx="20" cy="20" r="14.8" fill="none" stroke="#2F6BFF" strokeWidth="8.5" />
                   </svg>
                 </div>
                 <div className="min-w-0 flex-1">

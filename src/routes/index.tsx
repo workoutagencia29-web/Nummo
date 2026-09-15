@@ -1343,15 +1343,15 @@ function HowItWorks() {
 }
 
 const TESTIMONIALS = [
-  { text: "Trocamos de gateway e a taxa de aprovação do checkout subiu logo na primeira semana. Com o Pix caindo na hora e o D+0, nosso fluxo de caixa deixou de ser um problema.", image: "/depoimentos/p1.jpg", name: "Rafael Almeida", role: "CEO · E-commerce" },
-  { text: "Recebo pelo Pix na hora e reinvisto em tráfego no mesmo dia. O D+0 mudou completamente a velocidade com que a gente escala as campanhas.", image: "/depoimentos/p2.jpg", name: "Juliana Costa", role: "Head de Growth" },
-  { text: "A conciliação ficou simples e o antifraude derrubou nossos chargebacks. Hoje fecho o financeiro em minutos, não em dias.", image: "/depoimentos/p3.jpg", name: "Marcos Oliveira", role: "Diretor Financeiro" },
-  { text: "O split automático com meus coprodutores e afiliados acabou com as planilhas e os repasses manuais. Economizo horas toda semana.", image: "/depoimentos/p4.jpg", name: "Camila Ferreira", role: "Fundadora · Cursos" },
-  { text: "A API é limpa e bem documentada. Integramos o checkout em dois dias e os webhooks são confiáveis. Nunca perdemos um evento de pagamento.", image: "/depoimentos/p5.jpg", name: "Bruno Carvalho", role: "CTO · SaaS" },
-  { text: "O checkout transparente aumentou nossa conversão de forma perceptível. Menos abandono no carrinho e mais venda aprovada.", image: "/depoimentos/p6.jpg", name: "Patrícia Souza", role: "Gerente de E-commerce" },
-  { text: "Pix, cartão e boleto numa API só, com liquidação rápida. Conseguimos lançar novos meios de pagamento sem virar noite de dev.", image: "/depoimentos/p7.jpg", name: "Thiago Mendes", role: "Head de Produto" },
-  { text: "Gerencio o pagamento de dezenas de clientes num painel só. O saque cai rápido e o suporte responde de verdade quando a gente precisa.", image: "/depoimentos/p8.jpg", name: "Fernanda Lima", role: "CEO · Tráfego pago" },
-  { text: "Hospedo o curso na área de membros e recebo pelo mesmo ecossistema. Ter venda, entrega e afiliados integrados simplificou minha operação inteira.", image: "/depoimentos/p9.jpg", name: "Lucas Ribeiro", role: "Gestor de produtos" },
+  { text: "Troquei de gateway com medo da dor de cabeça e foi o contrário: a aprovação subiu já na primeira semana. Com o Pix caindo na hora, meu caixa parou de ser gargalo e eu reinvisto no mesmo dia.", image: "/depoimentos/p1.jpg", name: "Rafael Almeida", role: "CEO · E-commerce" },
+  { text: "Vendo hoje e reinvisto hoje. O D+0 mudou o jogo pra escalar tráfego: não fico mais parado esperando o dinheiro cair pra subir a próxima campanha.", image: "/depoimentos/p2.jpg", name: "Juliana Costa", role: "Head de Growth" },
+  { text: "A conciliação que levava dias hoje leva minutos, e o antifraude derrubou meus chargebacks. Foi a primeira vez que meu fechamento financeiro ficou realmente previsível.", image: "/depoimentos/p3.jpg", name: "Marcos Oliveira", role: "Diretor Financeiro" },
+  { text: "Adeus planilha de repasse. O split entre mim, coprodutores e afiliados é automático, então cada um recebe certinho sem eu tocar em nada. Ganhei horas toda semana.", image: "/depoimentos/p4.jpg", name: "Camila Ferreira", role: "Fundadora · Cursos" },
+  { text: "Documentação clara e webhooks que não falham. Meu time integrou o checkout em dois dias e a gente nunca mais perdeu um evento de pagamento.", image: "/depoimentos/p5.jpg", name: "Bruno Carvalho", role: "CTO · SaaS" },
+  { text: "O checkout transparente segurou quem antes abandonava o carrinho. Menos fricção na hora de pagar virou mais venda aprovada no fim do mês, sem eu mudar nada no tráfego.", image: "/depoimentos/p6.jpg", name: "Patrícia Souza", role: "Gerente de E-commerce" },
+  { text: "Pix, cartão e boleto numa integração só. Lançar um novo meio de pagamento deixou de ser projeto de semanas e virou questão de horas pro meu time.", image: "/depoimentos/p7.jpg", name: "Thiago Mendes", role: "Head de Produto" },
+  { text: "Gerencio dezenas de clientes num painel só, o saque cai rápido e, quando bate uma dúvida, tem gente de verdade respondendo. Suporte assim faz toda a diferença.", image: "/depoimentos/p8.jpg", name: "Fernanda Lima", role: "CEO · Tráfego pago" },
+  { text: "Vendo, entrego o curso na área de membros e pago os afiliados no mesmo lugar. Juntar venda, entrega e repasse num ecossistema só enxugou minha operação inteira.", image: "/depoimentos/p9.jpg", name: "Lucas Ribeiro", role: "Gestor de produtos" },
 ];
 
 const firstColumn = TESTIMONIALS.slice(0, 3);

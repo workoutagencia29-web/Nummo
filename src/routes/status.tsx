@@ -125,13 +125,13 @@ function StatusPage() {
 export const Route = createFileRoute("/status")({
   head: () => ({
     meta: [
-      { title: "Status — Nummo" },
-      { name: "description", content: "Status em tempo real dos serviços da Nummo — API, Pix, cartões, boleto, dashboard e saques." },
-      { property: "og:title", content: "Status — Nummo" },
-      { property: "og:description", content: "Status em tempo real dos serviços da Nummo — API, Pix, cartões, boleto, dashboard e saques." },
+      { title: "Status | Nummo" },
+      { name: "description", content: "Status em tempo real dos serviços da Nummo: API, Pix, cartões, boleto, dashboard e saques." },
+      { property: "og:title", content: "Status | Nummo" },
+      { property: "og:description", content: "Status em tempo real dos serviços da Nummo: API, Pix, cartões, boleto, dashboard e saques." },
       { property: "og:url", content: "https://www.usenummo.com.br/status" },
-      { name: "twitter:title", content: "Status — Nummo" },
-      { name: "twitter:description", content: "Status em tempo real dos serviços da Nummo — API, Pix, cartões, boleto, dashboard e saques." },
+      { name: "twitter:title", content: "Status | Nummo" },
+      { name: "twitter:description", content: "Status em tempo real dos serviços da Nummo: API, Pix, cartões, boleto, dashboard e saques." },
     ],
     links: [{ rel: "canonical", href: "https://www.usenummo.com.br/status" }],
   }),

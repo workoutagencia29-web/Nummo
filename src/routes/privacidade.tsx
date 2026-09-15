@@ -38,11 +38,11 @@ function PrivacidadePage() {
         {/* Corpo — mesma posição, formato e formatação do texto da /sobre */}
         <div className="mx-auto max-w-4xl px-6 pb-20 md:pb-28">
           <div className="mt-14 text-pretty text-lg leading-relaxed text-muted-foreground lg:-ml-12 lg:-mr-16 lg:mt-[98px] xl:-ml-24 xl:-mr-28 [&>*:first-child]:mt-0">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Versão 1.0 — Atualizada em 21 de junho de 2026</p>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Versão 1.0, atualizada em 21 de junho de 2026</p>
 
             <P lead>A Nummo respeita a privacidade e a proteção dos dados pessoais de todas as pessoas que acessam sua Plataforma, utilizam seus produtos ou se relacionam com seus serviços.</P>
             <P>Esta Política de Privacidade explica como a Nummo coleta, utiliza, armazena, compartilha, protege e elimina Dados Pessoais, em conformidade com a legislação aplicável.</P>
-            <P>A Nummo é uma marca operada por <B>HEITOR ROCHA PAGANOTTO LTDA. – ME</B>, inscrita no CNPJ sob o nº <B>63.320.977/0001-06</B>, com sede na Rua Pais Leme, nº 215, Conjunto 1713, Pinheiros, São Paulo/SP, CEP 05424-150.</P>
+            <P>A Nummo é uma marca operada por <B>HEITOR ROCHA PAGANOTTO LTDA. - ME</B>, inscrita no CNPJ sob o nº <B>63.320.977/0001-06</B>, com sede na Rua Pais Leme, nº 215, Conjunto 1713, Pinheiros, São Paulo/SP, CEP 05424-150.</P>
             <P>Esta Política deve ser lida em conjunto aos demais documentos disponibilizados pela Nummo.</P>
 
             <H2>1. A quem esta Política se aplica</H2>
@@ -329,9 +329,9 @@ function PrivacidadePage() {
 export const Route = createFileRoute("/privacidade")({
   head: () => ({
     meta: [
-      { title: "Privacidade — Nummo" },
+      { title: "Privacidade | Nummo" },
       { name: "description", content: "Política de Privacidade da Nummo: como coletamos, usamos, armazenamos e protegemos seus dados pessoais, em conformidade com a LGPD." },
-      { property: "og:title", content: "Privacidade — Nummo" },
+      { property: "og:title", content: "Privacidade | Nummo" },
       { property: "og:description", content: "Política de Privacidade da Nummo: como coletamos, usamos, armazenamos e protegemos seus dados pessoais, em conformidade com a LGPD." },
       { property: "og:url", content: "https://www.usenummo.com.br/privacidade" },
     ],

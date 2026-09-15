@@ -20,7 +20,7 @@ function EmailPage() {
         <div className="mx-auto max-w-4xl px-6 pb-20 md:pb-28">
           <div className="mt-14 text-pretty text-lg leading-relaxed text-muted-foreground lg:-ml-12 lg:-mr-16 lg:mt-[98px] xl:-ml-24 xl:-mr-28 [&>*:first-child]:mt-0">
             <p className="text-xl text-foreground/90">
-              Ficou com alguma dúvida ou precisa de ajuda? É só mandar um e-mail — nosso time de suporte lê tudo e responde rápido.
+              Ficou com alguma dúvida ou precisa de ajuda? É só mandar um e-mail. Nosso time de suporte lê tudo e responde rápido.
             </p>
 
             <div className="mt-8">
@@ -53,10 +53,10 @@ function EmailPage() {
 export const Route = createFileRoute("/email")({
   head: () => ({
     meta: [
-      { title: "Suporte — Nummo" },
+      { title: "Suporte | Nummo" },
       { name: "description", content: "Suporte da Nummo: tire suas dúvidas sobre conta, pagamentos, integrações e mais. Nosso time está pronto para ajudar." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Suporte — Nummo" },
+      { property: "og:title", content: "Suporte | Nummo" },
       { property: "og:description", content: "Suporte da Nummo: tire suas dúvidas sobre conta, pagamentos, integrações e mais. Nosso time está pronto para ajudar." },
       { property: "og:url", content: "https://www.usenummo.com.br/email" },
     ],

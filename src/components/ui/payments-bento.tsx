@@ -157,7 +157,7 @@ export function PaymentsBento() {
       {/* Meios de pagamento — 2 colunas, chips dentro */}
       <div className="flex flex-col justify-center rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-6 shadow-[0_1px_3px_rgba(13,27,57,0.05)] max-sm:p-5 md:col-span-2">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#0D1B39]/45">Meios de pagamento</p>
-        <p className="mt-1.5 text-sm text-[#0D1B39]/55">Do Pix ao Apple Pay — num só checkout.</p>
+        <p className="mt-1.5 text-sm text-[#0D1B39]/55">Do Pix ao Apple Pay, num só checkout.</p>
         <div className="mt-4 flex flex-wrap gap-2.5">
           {METHODS.map((m) => (
             <span

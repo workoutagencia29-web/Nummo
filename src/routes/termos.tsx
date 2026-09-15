@@ -38,15 +38,15 @@ function TermosPage() {
         {/* Corpo — mesma posição, formato e formatação da /privacidade e /cookies */}
         <div className="mx-auto max-w-4xl px-6 pb-20 md:pb-28">
           <div className="mt-14 text-pretty text-lg leading-relaxed text-muted-foreground lg:-ml-12 lg:-mr-16 lg:mt-[98px] xl:-ml-24 xl:-mr-28 [&>*:first-child]:mt-0">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Versão 1.0 — Atualizada em 21 de junho de 2026</p>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Versão 1.0, atualizada em 21 de junho de 2026</p>
 
             <P lead>Estes Termos regulam o acesso e o uso da Plataforma Nummo por Sellers, usuários autorizados, compradores finais, marketplaces, parceiros e demais pessoas que utilizem seus recursos.</P>
-            <P>A Nummo é uma marca operada por <B>HEITOR ROCHA PAGANOTTO LTDA. – ME</B>, inscrita no CNPJ sob o nº <B>63.320.977/0001-06</B>, com sede na Rua Pais Leme, nº 215, Conjunto 1713, Pinheiros, São Paulo/SP, CEP 05424-150.</P>
+            <P>A Nummo é uma marca operada por <B>HEITOR ROCHA PAGANOTTO LTDA. - ME</B>, inscrita no CNPJ sob o nº <B>63.320.977/0001-06</B>, com sede na Rua Pais Leme, nº 215, Conjunto 1713, Pinheiros, São Paulo/SP, CEP 05424-150.</P>
             <P>Ao criar uma conta, utilizar a Plataforma, integrar a API, gerar um checkout, criar link de pagamento, realizar uma transação, solicitar um saque ou aceitar estes Termos por meio eletrônico, o usuário declara que leu, compreendeu e concordou com as regras abaixo.</P>
 
             <H2>1. Definições</H2>
             <P>Para estes Termos:</P>
-            <P><B>Nummo:</B> marca operada por HEITOR ROCHA PAGANOTTO LTDA. – ME e responsável pela Plataforma.</P>
+            <P><B>Nummo:</B> marca operada por HEITOR ROCHA PAGANOTTO LTDA. - ME e responsável pela Plataforma.</P>
             <P><B>Plataforma:</B> conjunto de ambientes, dashboards, APIs, checkouts, links de pagamento, integrações, recursos tecnológicos e demais funcionalidades disponibilizadas pela Nummo.</P>
             <P><B>Seller ou Lojista:</B> pessoa jurídica com CNPJ ativo que utiliza a Plataforma para disponibilizar meios de pagamento aos seus compradores.</P>
             <P><B>Comprador:</B> pessoa física ou jurídica que realiza ou tenta realizar uma compra por meio de checkout, link de pagamento, marketplace ou outro recurso integrado à Nummo.</P>
@@ -203,7 +203,7 @@ function TermosPage() {
             <P>A Nummo não garante disponibilidade ininterrupta da API, do dashboard, dos checkouts, dos meios de pagamento ou de serviços dependentes de terceiros. Manutenções, atualizações, falhas de conectividade, indisponibilidades de Parceiros de Pagamento, interrupções de segurança ou eventos fora do controle direto da Nummo poderão afetar a operação.</P>
             <P>Informações sobre disponibilidade e incidentes operacionais poderão ser divulgadas na <Link to="/status" className="text-neon underline-offset-2 hover:underline">página de status</Link> da Nummo.</P>
 
-            <H2>13. Tratamento de Dados Pessoais — DPA Simplificado</H2>
+            <H2>13. Tratamento de Dados Pessoais (DPA Simplificado)</H2>
             <P>Esta seção integra estes Termos e funciona como acordo simplificado de tratamento de dados entre a Nummo e o Seller sempre que a Nummo tratar Dados Pessoais em nome do Seller.</P>
             <P>O Seller atua como Controlador dos Dados Pessoais de Compradores que tratar para fins comerciais próprios, incluindo venda, entrega, suporte, relacionamento, publicidade, emissão de nota fiscal e cumprimento de suas obrigações legais.</P>
             <P>A Nummo poderá atuar como Operadora quando tratar Dados Pessoais em nome do Seller para viabilizar checkout, confirmação de pagamento, integração tecnológica, comunicação operacional e funcionalidades contratadas.</P>
@@ -283,9 +283,9 @@ function TermosPage() {
 export const Route = createFileRoute("/termos")({
   head: () => ({
     meta: [
-      { title: "Termos — Nummo" },
+      { title: "Termos | Nummo" },
       { name: "description", content: "Termos e Condições da Nummo: regras de uso da plataforma, dos produtos e dos serviços, pagamentos, saques, chargebacks e responsabilidades." },
-      { property: "og:title", content: "Termos — Nummo" },
+      { property: "og:title", content: "Termos | Nummo" },
       { property: "og:description", content: "Termos e Condições da Nummo: regras de uso da plataforma, dos produtos e dos serviços, pagamentos, saques, chargebacks e responsabilidades." },
       { property: "og:url", content: "https://www.usenummo.com.br/termos" },
     ],

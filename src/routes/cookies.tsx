@@ -68,10 +68,10 @@ function CookiesPage() {
 export const Route = createFileRoute("/cookies")({
   head: () => ({
     meta: [
-      { title: "Cookies — Nummo" },
+      { title: "Cookies | Nummo" },
       { name: "description", content: "Política de Cookies da Nummo: quais cookies usamos (necessários, analytics e marketing) e como você pode gerenciá-los." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Cookies — Nummo" },
+      { property: "og:title", content: "Cookies | Nummo" },
       { property: "og:description", content: "Política de Cookies da Nummo: quais cookies usamos (necessários, analytics e marketing) e como você pode gerenciá-los." },
       { property: "og:url", content: "https://www.usenummo.com.br/cookies" },
     ],

@@ -844,9 +844,51 @@ function ApiDocs() {
 
           {/* Conteúdo do endpoint - remonta a cada troca (fade suave via .tour-in) */}
           <div key={active} className="tour-in min-w-0">
+            {/* Cabeçalho: método + rota + título + descrição + parâmetros */}
+            <div className="border-b border-white/10 p-4 md:p-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className="grid h-5 min-w-[46px] place-items-center rounded px-1.5 font-mono text-[10px] font-bold"
+                  style={{ color: methodColor(ep.method), background: methodColor(ep.method) + "22" }}
+                >
+                  {ep.method}
+                </span>
+                <code className="font-mono text-sm text-[#F6F9FC]/80">{ep.path}</code>
+              </div>
+              <h3 className="mt-3 font-display text-lg font-semibold tracking-tight text-[#F6F9FC]">{ep.title}</h3>
+              <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-[#F6F9FC]/60">{ep.desc}</p>
+
+              {ep.params.length > 0 && (
+                <div className="mt-5">
+                  <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-[#F6F9FC]/40">Parâmetros</div>
+                  <div className="overflow-hidden rounded-lg border border-white/10">
+                    {ep.params.map((p, i) => (
+                      <div
+                        key={p.name}
+                        className={`flex flex-col gap-1 p-3 sm:flex-row sm:items-baseline sm:gap-3 ${i > 0 ? "border-t border-white/[0.06]" : ""}`}
+                      >
+                        <div className="flex items-center gap-2 sm:w-40 sm:shrink-0">
+                          <code className="font-mono text-[13px] text-[#7cc5ff]">{p.name}</code>
+                          {p.required && (
+                            <span className="rounded bg-[#ff5f57]/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[#ff8a84]">
+                              obrig.
+                            </span>
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="font-mono text-[11px] text-[#F6F9FC]/40">{p.type}</span>
+                          <p className="mt-0.5 text-[13px] leading-relaxed text-[#F6F9FC]/60">{p.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Exemplos de código */}
             <div className="bg-[#091020] p-4 md:p-6">
-              {/* Tabs de linguagem (com ícones) - grade alinhada: 5 por linha */}
+              {/* Tabs de linguagem (com ícones): grade alinhada, 5 por linha */}
               <div className="mb-4 grid grid-cols-3 gap-1.5 sm:grid-cols-5">
                 {langs.map((l) => {
                   const on = lang === l.key;
@@ -868,8 +910,8 @@ function ApiDocs() {
                 })}
               </div>
 
-              <CodeBlock label="Requisição" code={ep.request[lang]} />
-              <div className="mt-4">
+              <div className="grid gap-4 lg:grid-cols-2">
+                <CodeBlock label="Requisição" code={ep.request[lang]} />
                 <CodeBlock label="Resposta" code={ep.response} status={ep.method === "POST" ? "201 Created" : "200 OK"} />
               </div>
             </div>

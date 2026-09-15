@@ -138,9 +138,9 @@ export function PaymentsBento() {
       {/* Recorrência */}
       <ToolTile icon={Repeat} title="Recorrência" desc="Assinaturas e cobranças automáticas." />
 
-      {/* Recuperação de carrinho (IA) - destaque, 2 colunas */}
-      <div className="group relative overflow-hidden rounded-2xl border border-[#2559d8]/20 bg-gradient-to-br from-[#eef4ff] to-white p-5 shadow-[0_10px_30px_-16px_rgba(37,89,216,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_46px_-18px_rgba(37,89,216,0.42)] md:col-span-2">
-        <div aria-hidden className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-[#2559d8] opacity-[0.1] blur-3xl transition-opacity duration-300 group-hover:opacity-[0.16]" />
+      {/* Recuperação de carrinho (IA) - 2 colunas, mesmo estilo das outras */}
+      <div className="group relative overflow-hidden rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-5 shadow-[0_1px_3px_rgba(13,27,57,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-[#2559d8]/25 hover:shadow-[0_18px_40px_-18px_rgba(37,89,216,0.3)] md:col-span-2">
+        <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 size-28 rounded-full bg-[#2559d8] opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-[0.08]" />
         <span className="absolute right-4 top-4 z-10 rounded-full bg-gradient-to-r from-[#2559d8] to-[#5b8bff] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow-[0_4px_10px_-3px_rgba(37,89,216,0.6)]">
           IA
         </span>

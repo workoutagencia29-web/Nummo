@@ -13,7 +13,7 @@ const TOPICS = [
   {
     icon: <FileCheck />,
     title: "Auditoria & transparência",
-    desc: "Nossos processos e controles passam por auditorias e verificações independentes que comprovam, na prática, a segurança, a integridade e a conformidade de toda a operação da Nummo — sem depender da nossa palavra.",
+    desc: "Nossos processos e controles passam por auditorias e verificações independentes que comprovam, na prática, a segurança, a integridade e a conformidade de toda a operação da Nummo, sem depender da nossa palavra.",
   },
   {
     icon: <Lock />,
@@ -86,12 +86,12 @@ function CompliancePage() {
 export const Route = createFileRoute("/compliance")({
   head: () => ({
     meta: [
-      { title: "Compliance — Nummo" },
+      { title: "Compliance | Nummo" },
       { name: "description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
-      { property: "og:title", content: "Compliance — Nummo" },
+      { property: "og:title", content: "Compliance | Nummo" },
       { property: "og:description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
       { property: "og:url", content: "https://www.usenummo.com.br/compliance" },
-      { name: "twitter:title", content: "Compliance — Nummo" },
+      { name: "twitter:title", content: "Compliance | Nummo" },
       { name: "twitter:description", content: "Compliance da Nummo: certificações de segurança (PCI-DSS), proteção de dados (LGPD) e prevenção à lavagem de dinheiro (AML/KYC)." },
     ],
     links: [{ rel: "canonical", href: "https://www.usenummo.com.br/compliance" }],

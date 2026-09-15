@@ -93,7 +93,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 			})}
 		>
 			<nav className="relative mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-6">
-					<RouterLink to="/" className="nav-trigger rounded-md transition-opacity hover:opacity-80" aria-label="Nummo — início">
+					<RouterLink to="/" className="nav-trigger rounded-md transition-opacity hover:opacity-80" aria-label="Nummo, início">
 						<img src="/logo-nummo.svg" alt="Nummo" className="h-6 w-auto" />
 					</RouterLink>
 					<NavigationMenu className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex">

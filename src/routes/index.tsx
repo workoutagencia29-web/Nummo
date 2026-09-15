@@ -277,7 +277,7 @@ function Hero() {
         </h1>
 
         <p className="animate-hero-in mt-6 max-w-xl text-pretty text-base leading-relaxed text-[#F6F9FC]/70 [animation-delay:420ms] max-sm:text-[15px] lg:text-lg">
-          Taxas transparentes e infraestrutura pronta para escalar — do primeiro Pix ao milionésimo.
+          Taxas transparentes e infraestrutura pronta para escalar, do primeiro Pix ao milionésimo.
         </p>
 
         <div className="animate-hero-in mt-8 flex flex-col items-center gap-3 [animation-delay:600ms] max-sm:w-full sm:flex-row sm:justify-center">
@@ -785,7 +785,7 @@ function ApiDocs() {
           Uma API feita para escalar
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-[#F6F9FC]/60 max-sm:text-sm">
-          Preview da API da Nummo: REST, JSON e webhooks — com exemplos prontos em cURL, Node.js e Python.
+          Preview da API da Nummo: REST, JSON e webhooks, com exemplos prontos em cURL, Node.js e Python.
         </p>
       </div>
 
@@ -1318,7 +1318,7 @@ const FAQ_CATEGORIES = [
     faqs: [
       { question: "Preciso ter CNPJ para abrir conta?", answer: "Sim. A Nummo atende empresas (MEI, ME, EPP e médias/grandes). Cadastro 100% online e aprovação da conta normalmente em até 24h, sujeita à análise cadastral e de segurança (KYC)." },
       { question: "Quanto custa começar?", answer: "Criar conta é gratuito, sem mensalidade e sem fidelidade. As taxas incidem apenas sobre vendas aprovadas e são descontadas automaticamente no momento da transação." },
-      { question: "Quais meios de pagamento a Nummo aceita?", answer: "A Nummo aceita Pix (com recebimento na hora), cartão de crédito das principais bandeiras (Visa, Mastercard, Elo e Amex) e boleto com emissão automática — tudo em uma única integração." },
+      { question: "Quais meios de pagamento a Nummo aceita?", answer: "A Nummo aceita Pix (com recebimento na hora), cartão de crédito das principais bandeiras (Visa, Mastercard, Elo e Amex) e boleto com emissão automática, tudo em uma única integração." },
       { question: "Quando recebo o dinheiro das minhas vendas?", answer: "A Nummo trabalha com liquidação D+0: as vendas no Pix caem na hora e você recebe no mesmo dia, o que acelera o seu fluxo de caixa para reinvestir mais rápido." },
       { question: "Quanto tempo leva para sacar?", answer: "Os saques na Nummo são processados diariamente das 6h às 15h. Após a solicitação, o valor é creditado em sua conta em até 1 a 2 horas. Solicitações realizadas fora desse horário serão processadas no próximo período de atendimento, a partir das 6h." },
     ],
@@ -1330,13 +1330,13 @@ const FAQ_CATEGORIES = [
       { question: "Como funciona a área de membros da Nummo?", answer: "Hospede seu curso gratuitamente na área de membros da Nummo. O armazenamento e a exibição dos seus vídeos também estão inclusos, sem nenhum custo adicional." },
       { question: "Como funciona o programa de afiliados da Nummo?", answer: "Na Nummo, você pode divulgar seu produto no marketplace para atrair novos afiliados ou convidar parceiros diretamente por meio de um link personalizado." },
       { question: "É possível adicionar coprodutores aos meus produtos?", answer: "Sim. Você pode incluir quantos coprodutores precisar e configurar a divisão das comissões diretamente pela plataforma da Nummo." },
-      { question: "Posso cadastrar vários vendedores no marketplace?", answer: "Sim. Você cadastra vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio — tudo em uma só estrutura." },
+      { question: "Posso cadastrar vários vendedores no marketplace?", answer: "Sim. Você cadastra vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio, tudo em uma só estrutura." },
     ],
   },
   {
     name: "Segurança e tecnologia",
     faqs: [
-      { question: "Como a Nummo protege os meus pagamentos?", answer: "A Nummo segue o padrão PCI-DSS e conta com antifraude, que analisa o risco durante as transações, além de autenticação 3DS 2.0 quando necessária — ajudando a reduzir chargebacks." },
+      { question: "Como a Nummo protege os meus pagamentos?", answer: "A Nummo segue o padrão PCI-DSS e conta com antifraude, que analisa o risco durante as transações, além de autenticação 3DS 2.0 quando necessária, ajudando a reduzir chargebacks." },
       { question: "A Nummo tem API e webhooks para integração?", answer: "Sim. A API da Nummo é moderna e bem documentada, com webhooks confiáveis para você integrar o checkout e acompanhar cada evento de pagamento em tempo real." },
       { question: "A Nummo tem boa taxa de aprovação?", answer: "Sim. A Nummo é focada em alta taxa de aprovação no checkout, combinando um checkout transparente com antifraude para aprovar mais vendas legítimas e reduzir recusas indevidas." },
     ],
@@ -1450,7 +1450,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 pb-12 md:grid-cols-2 md:gap-8 lg:grid-cols-[1.5fr_3fr] lg:gap-16">
           {/* Marca */}
           <div className="flex flex-col space-y-5">
-            <RouterLink to="/" className="inline-flex items-center" aria-label="Nummo — início">
+            <RouterLink to="/" className="inline-flex items-center" aria-label="Nummo, início">
               <img src="/logo-nummo.svg" alt="Nummo" width={145} height={24} className="h-[24px] w-auto" />
             </RouterLink>
             <p className="max-w-xs text-sm leading-relaxed text-[#F6F9FC]/55">

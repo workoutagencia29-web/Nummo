@@ -13,7 +13,7 @@ const ENTRIES = [
     date: "18 jun 2026",
     tag: "Novo",
     title: "Pix Automático",
-    desc: "Cobranças recorrentes via Pix com débito automático autorizado pelo cliente — sem depender de cartão.",
+    desc: "Cobranças recorrentes via Pix com débito automático autorizado pelo cliente, sem depender de cartão.",
   },
   {
     date: "10 jun 2026",
@@ -97,12 +97,12 @@ function ChangelogPage() {
 export const Route = createFileRoute("/changelog")({
   head: () => ({
     meta: [
-      { title: "Changelog — Nummo" },
+      { title: "Changelog | Nummo" },
       { name: "description", content: "Novidades, melhorias e correções da plataforma Nummo." },
-      { property: "og:title", content: "Changelog — Nummo" },
+      { property: "og:title", content: "Changelog | Nummo" },
       { property: "og:description", content: "Novidades, melhorias e correções da plataforma Nummo." },
       { property: "og:url", content: "https://www.usenummo.com.br/changelog" },
-      { name: "twitter:title", content: "Changelog — Nummo" },
+      { name: "twitter:title", content: "Changelog | Nummo" },
       { name: "twitter:description", content: "Novidades, melhorias e correções da plataforma Nummo." },
     ],
     links: [{ rel: "canonical", href: "https://www.usenummo.com.br/changelog" }],

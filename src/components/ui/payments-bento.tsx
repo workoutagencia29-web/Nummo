@@ -155,13 +155,14 @@ export function PaymentsBento() {
       <ToolTile icon={TrendingUp} title="Upsell" desc="Aumente o ticket no pós-compra." />
 
       {/* Meios de pagamento — 2 colunas, chips dentro */}
-      <div className="rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-5 shadow-[0_1px_3px_rgba(13,27,57,0.05)] md:col-span-2">
-        <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-[#0D1B39]/45">Meios de pagamento</p>
-        <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col justify-center rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-6 shadow-[0_1px_3px_rgba(13,27,57,0.05)] max-sm:p-5 md:col-span-2">
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#0D1B39]/45">Meios de pagamento</p>
+        <p className="mt-1.5 text-sm text-[#0D1B39]/55">Do Pix ao Apple Pay, num só checkout.</p>
+        <div className="mt-4 flex flex-wrap gap-2.5">
           {METHODS.map((m) => (
             <span
               key={m.name}
-              className="inline-flex items-center gap-2 rounded-full border border-[#0D1B39]/[0.08] bg-white px-4 py-2 shadow-[0_1px_2px_rgba(13,27,57,0.06)] transition-colors hover:border-[#2559d8]/30"
+              className="inline-flex items-center gap-2 rounded-full border border-[#0D1B39]/[0.08] bg-white px-4 py-2.5 shadow-[0_1px_2px_rgba(13,27,57,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#2559d8]/30 hover:shadow-[0_8px_18px_-8px_rgba(37,89,216,0.3)]"
             >
               <span className="flex items-center">{m.icon}</span>
               <span className="text-[13px] font-medium text-[#0D1B39]">{m.name}</span>

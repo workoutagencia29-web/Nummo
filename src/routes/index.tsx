@@ -5,7 +5,6 @@ import {
   Instagram, Youtube, Linkedin,
   AlertTriangle, Users, Lock,
 } from "lucide-react";
-import { SiCurl, SiNodedotjs, SiPython, SiPhp, SiRuby, SiGo, SiOpenjdk, SiDotnet, SiCplusplus, SiRust } from "react-icons/si";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 import { TestimonialsColumn } from "../components/ui/testimonials-columns-1";
 import { FaqCategorized } from "../components/ui/faq-4";
@@ -481,13 +480,22 @@ let balance = nummo.balance().retrieve().await?;`,
       { name: "description", type: "string", required: false, desc: "Descrição exibida na fatura." },
     ],
     request: {
-      curl: `curl https://api.usenummo.com.br/v1/charges \\
+      curl: `curl -X POST https://api.usenummo.com.br/v1/charges \\
   -H "Authorization: Bearer sk_live_..." \\
   -H "Content-Type: application/json" \\
   -d '{
     "amount": 19700,
+    "currency": "BRL",
     "payment_method": "pix",
-    "customer": { "email": "cliente@email.com" }
+    "customer": {
+      "name": "Ana Souza",
+      "email": "ana@email.com",
+      "tax_id": "123.456.789-09"
+    },
+    "items": [
+      { "description": "Plano Pro", "quantity": 1, "amount": 19700 }
+    ],
+    "webhook_url": "https://sualoja.com.br/webhooks/nummo"
   }'`,
       node: `const charge = await nummo.charges.create({
   amount: 19700,
@@ -538,14 +546,21 @@ let balance = nummo.balance().retrieve().await?;`,
 }).await?;`,
     },
     response: `{
-  "id": "chg_3a9f2c",
+  "id": "chg_3a9f2c8db1",
   "status": "pending",
   "amount": 19700,
+  "currency": "BRL",
   "payment_method": "pix",
+  "customer": {
+    "name": "Ana Souza",
+    "email": "ana@email.com"
+  },
   "pix": {
-    "qr_code": "00020126...5204",
-    "expires_at": "2026-09-13T18:30:00Z"
-  }
+    "qr_code": "00020126360014BR.GOV.BCB.PIX...5204",
+    "qr_code_url": "https://api.usenummo.com.br/v1/qr/chg_3a9f2c8db1.png",
+    "expires_at": "2026-09-15T18:45:00Z"
+  },
+  "created_at": "2026-09-15T18:30:00Z"
 }`,
   },
   {
@@ -750,24 +765,9 @@ function CodeBlock({ label, code, status }: { label: string; code: string; statu
 // endpoints à esquerda; à direita, descrição + parâmetros e os exemplos de
 // request/response por linguagem. CTA para a página completa da documentação.
 function ApiDocs() {
-  const [lang, setLang] = useState<LangKey>("curl");
-  const langs: {
-    key: LangKey;
-    label: string;
-    Icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
-    color: string;
-  }[] = [
-    { key: "curl", label: "cURL", Icon: SiCurl, color: "#F6F9FC" },
-    { key: "node", label: "Node.js", Icon: SiNodedotjs, color: "#5FA04E" },
-    { key: "python", label: "Python", Icon: SiPython, color: "#4B8BBE" },
-    { key: "php", label: "PHP", Icon: SiPhp, color: "#8892BF" },
-    { key: "ruby", label: "Ruby", Icon: SiRuby, color: "#CC342D" },
-    { key: "go", label: "Go", Icon: SiGo, color: "#00ADD8" },
-    { key: "java", label: "Java", Icon: SiOpenjdk, color: "#E76F00" },
-    { key: "csharp", label: "C#", Icon: SiDotnet, color: "#8A6BE2" },
-    { key: "cpp", label: "C++", Icon: SiCplusplus, color: "#659AD2" },
-    { key: "rust", label: "Rust", Icon: SiRust, color: "#DEA584" },
-  ];
+  // Linguagens temporariamente ocultas (serão reativadas depois). O exemplo
+  // mostra a requisição em cURL + a resposta. A infra por linguagem continua
+  // em API_ENDPOINTS.request para quando as abas voltarem.
   const demo = API_ENDPOINTS.find((e) => e.id === "create-charge") ?? API_ENDPOINTS[0];
 
   return (
@@ -801,30 +801,10 @@ function ApiDocs() {
           </span>
         </div>
 
-        {/* Conteúdo: seletor de linguagem + código colorido */}
-        <div className="p-4 md:p-6">
-          <div className="mb-4 grid grid-cols-3 gap-1.5 sm:grid-cols-5">
-            {langs.map((l) => {
-              const on = lang === l.key;
-              return (
-                <button
-                  key={l.key}
-                  type="button"
-                  onClick={() => setLang(l.key)}
-                  className={`inline-flex min-h-9 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-[13px] font-medium transition-colors ${
-                    on
-                      ? "bg-[#2F6BFF] text-white"
-                      : "bg-white/[0.04] text-[#F6F9FC]/55 hover:text-[#F6F9FC]/85"
-                  }`}
-                >
-                  <l.Icon className="size-3.5 shrink-0" style={{ color: on ? "#ffffff" : l.color }} />
-                  {l.label}
-                </button>
-              );
-            })}
-          </div>
-
-          <CodeBlock label="Criar uma cobrança" code={demo.request[lang]} />
+        {/* Conteúdo: código colorido (requisição + resposta) */}
+        <div className="space-y-4 p-4 md:p-6">
+          <CodeBlock label="Criar uma cobrança" code={demo.request.curl} />
+          <CodeBlock label="Resposta" code={demo.response} status="201 Created" />
         </div>
       </div>
 

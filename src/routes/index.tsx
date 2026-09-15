@@ -1058,7 +1058,7 @@ function Rates() {
     <section id="taxas" className="relative overflow-hidden bg-[#03060c] pb-[118px] pt-[98px] text-[#F6F9FC] max-sm:pb-14 max-sm:pt-16">
       <Velaris className="absolute inset-0" height="100%" speed={2.2} />
 
-      {/* Animação das laterais: orbes de luz + partículas flutuando (atrás do conteúdo) */}
+      {/* Orbes de luz suaves nas laterais (atrás do conteúdo) */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden sm:block">
         {/* esquerda */}
         <div className="taxa-orb-1 absolute left-[-60px] top-[16%] size-56 rounded-full bg-[#3b8bff]/25 blur-[75px]" />
@@ -1068,12 +1068,6 @@ function Rates() {
         <div className="taxa-orb-2 absolute right-[-60px] top-[10%] size-52 rounded-full bg-[#3b8bff]/22 blur-[75px]" />
         <div className="taxa-orb-3 absolute right-[2%] top-[46%] size-36 rounded-full bg-[#5b8bff]/22 blur-[55px]" />
         <div className="taxa-orb-1 absolute bottom-[8%] right-[-40px] size-48 rounded-full bg-[#2559d8]/22 blur-[65px]" />
-        {/* partículas */}
-        <div className="taxa-tw absolute left-[8%] top-[28%] size-1.5 rounded-full bg-white/80" style={{ animationDelay: "0s" }} />
-        <div className="taxa-tw absolute left-[14%] top-[68%] size-1 rounded-full bg-[#8fb6ff]" style={{ animationDelay: "1.2s" }} />
-        <div className="taxa-tw absolute right-[10%] top-[24%] size-1.5 rounded-full bg-white/80" style={{ animationDelay: "0.6s" }} />
-        <div className="taxa-tw absolute right-[7%] top-[60%] size-1 rounded-full bg-[#8fb6ff]" style={{ animationDelay: "2s" }} />
-        <div className="taxa-tw absolute bottom-[18%] right-[16%] size-1.5 rounded-full bg-white/70" style={{ animationDelay: "1.6s" }} />
       </div>
 
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 max-sm:gap-12 lg:grid-cols-2 lg:gap-20">

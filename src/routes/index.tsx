@@ -1,9 +1,9 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, Check, ChevronDown,
-  Layers, Copy, ExternalLink,
+  Layers, Copy,
   Instagram, Youtube, Linkedin,
-  AlertTriangle, Users, Lock,
+  AlertTriangle, Users, FileText,
 } from "lucide-react";
 import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
 import { TestimonialsColumn } from "../components/ui/testimonials-columns-1";
@@ -480,22 +480,17 @@ let balance = nummo.balance().retrieve().await?;`,
       { name: "description", type: "string", required: false, desc: "Descrição exibida na fatura." },
     ],
     request: {
-      curl: `curl -X POST https://api.usenummo.com.br/v1/charges \\
-  -H "Authorization: Bearer sk_live_..." \\
+      curl: `# Crie uma cobrança Pix em segundos
+curl -X POST https://api.usenummo.com.br/v1/charges \\
+  -H "Authorization: Bearer SEU_TOKEN" \\
   -H "Content-Type: application/json" \\
   -d '{
-    "amount": 19700,
-    "currency": "BRL",
+    "amount": 4990,
     "payment_method": "pix",
     "customer": {
-      "name": "Ana Souza",
-      "email": "ana@email.com",
-      "tax_id": "123.456.789-09"
-    },
-    "items": [
-      { "description": "Plano Pro", "quantity": 1, "amount": 19700 }
-    ],
-    "webhook_url": "https://sualoja.com.br/webhooks/nummo"
+      "name": "Maria Silva",
+      "document": "12345678900"
+    }
   }'`,
       node: `const charge = await nummo.charges.create({
   amount: 19700,
@@ -691,27 +686,32 @@ let balance = nummo.balance().retrieve().await?;`,
   },
 ];
 
-// Realce de sintaxe simples para os exemplos de JSON da documentação.
-// Entrada 100% estática (definida acima), então o HTML gerado é seguro.
-function highlightJson(code: string): string {
-  const esc = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  return esc.replace(
-    /("(?:\\.|[^"\\])*")(\s*:)?|\b(\d+)\b|\b(true|false|null)\b/g,
-    (m, str, colon, num, kw) => {
-      if (str !== undefined) {
-        return colon
-          ? `<span style="color:#7cc5ff">${str}</span>${colon}`
-          : `<span style="color:#9be08f">${str}</span>`;
-      }
-      if (num !== undefined) return `<span style="color:#e0b978">${num}</span>`;
-      if (kw !== undefined) return `<span style="color:#e0b978">${kw}</span>`;
-      return m;
-    },
-  );
+// Realce de sintaxe (por linha) dos exemplos de código. Entrada 100% estática,
+// então o HTML gerado é seguro. Cores: comentário cinza, método HTTP magenta,
+// URL ciano, string verde, chave azul, número laranja.
+function highlightCode(line: string): string {
+  const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  if (/^\s*#/.test(line)) return `<span style="color:#6b7a90">${esc(line)}</span>`;
+  const re = /("(?:\\.|[^"\\])*"\s*:)|("(?:\\.|[^"\\])*")|(https?:\/\/[^\s"'\\]+)|\b(POST|GET|PUT|PATCH|DELETE)\b|\b(\d+)\b/g;
+  let out = "";
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(line)) !== null) {
+    out += esc(line.slice(last, m.index));
+    if (m[1]) out += `<span style="color:#7cc5ff">${esc(m[1])}</span>`;
+    else if (m[2]) out += `<span style="color:#9be08f">${esc(m[2])}</span>`;
+    else if (m[3]) out += `<span style="color:#56c8d8">${esc(m[3])}</span>`;
+    else if (m[4]) out += `<span style="color:#e879c9">${esc(m[4])}</span>`;
+    else if (m[5]) out += `<span style="color:#e0b978">${esc(m[5])}</span>`;
+    last = re.lastIndex;
+  }
+  out += esc(line.slice(last));
+  return out;
 }
 
-// Bloco de código: números de linha, realce de sintaxe e botão de copiar.
-function CodeBlock({ label, code, status }: { label: string; code: string; status?: string }) {
+// Janela de código (estilo editor): barra com semáforo + aba do arquivo +
+// copiar; código com números de linha e realce de sintaxe.
+function ApiCodeWindow({ filename, code }: { filename: string; code: string }) {
   const [copied, setCopied] = useState(false);
   const copy = () => {
     try {
@@ -724,104 +724,76 @@ function CodeBlock({ label, code, status }: { label: string; code: string; statu
   };
   const lines = code.split("\n");
   return (
-    <div className="overflow-hidden rounded-xl bg-[#060b16] ring-1 ring-inset ring-white/[0.06]">
-      <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-2">
-        <span className="font-mono text-[11px] uppercase tracking-wide text-[#F6F9FC]/40">{label}</span>
-        <div className="ml-auto flex items-center gap-3">
-          {status ? (
-            <span className="flex items-center gap-1.5 font-mono text-[11px] text-[#F6F9FC]/40">
-              <span className="size-1.5 rounded-full bg-[#28c840]" />
-              {status}
-            </span>
-          ) : null}
+    <div className="relative">
+      {/* Brilho azul por trás da janela */}
+      <div aria-hidden className="pointer-events-none absolute -inset-4 rounded-[32px] bg-[#2559d8]/20 blur-3xl" />
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#070b14] shadow-[0_30px_70px_-24px_rgba(0,0,0,0.7)]">
+        {/* Barra do editor */}
+        <div className="flex items-center gap-2 border-b border-white/[0.08] px-4 py-3">
+          <span className="size-3 rounded-full bg-[#ff5f57]" />
+          <span className="size-3 rounded-full bg-[#febc2e]" />
+          <span className="size-3 rounded-full bg-[#28c840]" />
+          <div className="mx-auto flex items-center gap-1.5 rounded-md bg-white/[0.05] px-3 py-1 font-mono text-xs text-[#F6F9FC]/60">
+            <FileText className="size-3" />
+            {filename}
+          </div>
           <button
             type="button"
             onClick={copy}
-            className="inline-flex items-center gap-1 text-[11px] text-[#F6F9FC]/45 transition-colors hover:text-[#F6F9FC]/85"
+            aria-label="Copiar código"
+            className="text-[#F6F9FC]/45 transition-colors hover:text-[#F6F9FC]/85"
           >
-            {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
-            {copied ? "Copiado" : "Copiar"}
+            {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
           </button>
         </div>
-      </div>
-      <div className="overflow-x-auto px-4 py-4">
-        <div className="min-w-max font-mono text-[12px] leading-relaxed md:text-[13px]">
-          {lines.map((ln, i) => (
-            <div key={i} className="flex">
-              <span className="w-8 shrink-0 select-none pr-3 text-right text-[#F6F9FC]/25">{i + 1}</span>
-              <code
-                className="whitespace-pre text-[#F6F9FC]/85"
-                dangerouslySetInnerHTML={{ __html: highlightJson(ln) || "&nbsp;" }}
-              />
-            </div>
-          ))}
+        {/* Código */}
+        <div className="overflow-x-auto px-4 py-5">
+          <div className="min-w-max font-mono text-[13px] leading-relaxed">
+            {lines.map((ln, i) => (
+              <div key={i} className="flex">
+                <span className="w-8 shrink-0 select-none pr-4 text-right text-[#F6F9FC]/25">{i + 1}</span>
+                <code
+                  className="whitespace-pre text-[#F6F9FC]/85"
+                  dangerouslySetInnerHTML={{ __html: highlightCode(ln) || "&nbsp;" }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-// Seção de documentação da API do gateway: "app" de docs com navegação de
-// endpoints à esquerda; à direita, descrição + parâmetros e os exemplos de
-// request/response por linguagem. CTA para a página completa da documentação.
+// Seção "Documentação da API": duas colunas (texto + CTA à esquerda, janela de
+// código à direita). Demonstração enxuta; a doc completa fica no CTA. A infra
+// por linguagem continua em API_ENDPOINTS.request para quando quiser reativar.
 function ApiDocs() {
-  // Linguagens temporariamente ocultas (serão reativadas depois). O exemplo
-  // mostra a requisição em cURL + a resposta. A infra por linguagem continua
-  // em API_ENDPOINTS.request para quando as abas voltarem.
   const demo = API_ENDPOINTS.find((e) => e.id === "create-charge") ?? API_ENDPOINTS[0];
 
   return (
-    <div>
-      {/* Cabeçalho da seção */}
-      <div className="mb-8 text-center">
-        <span className="inline-block rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#7cc5ff]">
-          Para desenvolvedores
-        </span>
-        <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-[#F6F9FC] md:text-4xl">
-          Uma API feita para escalar
+    <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      {/* Esquerda: texto + CTA */}
+      <div className="max-sm:text-center">
+        <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] md:text-5xl">
+          Uma API tão simples que integra num café
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-pretty text-[#F6F9FC]/60 max-sm:text-sm">
-          REST, JSON e webhooks. Integre Pix, cartão e boleto com poucas linhas de código, na linguagem que o seu time já usa.
+        <p className="mt-5 max-w-md text-lg leading-relaxed text-[#F6F9FC]/60 max-sm:mx-auto max-sm:text-base">
+          Endpoints claros, exemplos prontos e webhooks documentados. Tudo o que você precisa pra integrar a Nummo ao seu sistema em minutos.
         </p>
-      </div>
-
-      {/* "App" de documentação */}
-      <div className="overflow-hidden rounded-[24px] border border-white/10 bg-[#0C1730] shadow-[18px_26px_50px_-12px_rgba(0,0,0,0.6)]">
-        {/* Chrome (barra estilo navegador) */}
-        <div className="flex items-center gap-2 border-b border-white/10 bg-[#0a1424] px-4 py-3">
-          <span className="size-3 rounded-full bg-[#ff5f57]" />
-          <span className="size-3 rounded-full bg-[#febc2e]" />
-          <span className="size-3 rounded-full bg-[#28c840]" />
-          <div className="ml-3 hidden items-center gap-2 rounded-md bg-white/[0.04] px-3 py-1 font-mono text-xs text-[#F6F9FC]/45 sm:flex">
-            <Lock className="size-3" />
-            docs.usenummo.com.br
-          </div>
-          <span className="ml-auto rounded-md bg-[#2F6BFF]/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-[#7cc5ff]">
-            API v1
-          </span>
-        </div>
-
-        {/* Conteúdo: código colorido (requisição + resposta) */}
-        <div className="space-y-4 p-4 md:p-6">
-          <CodeBlock label="Criar uma cobrança" code={demo.request.curl} />
-          <CodeBlock label="Resposta" code={demo.response} status="201 Created" />
-        </div>
-      </div>
-
-      {/* CTA - página completa da documentação */}
-      <div className="mt-8 flex flex-col items-center gap-3">
         <a
           href={NUMMO_DOCS_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 rounded-full bg-[#2F6BFF] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_-8px_rgba(47,107,255,0.6)] transition hover:bg-[#2559d8]"
+          className="group mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#2559d8] to-[#5b8bff] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_0_44px_-6px_rgba(37,89,216,0.75)] transition-transform hover:-translate-y-0.5"
         >
-          Acessar documentação da API
-          <ExternalLink className="size-4 transition-transform group-hover:translate-x-0.5" />
+          Ver documentação da API
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
         </a>
-        <span className="text-xs text-[#F6F9FC]/40">Referência completa, SDKs e ambiente de testes.</span>
       </div>
 
+      {/* Direita: janela de código */}
+      <ApiCodeWindow filename="api-pix-nummo" code={demo.request.curl} />
     </div>
   );
 }

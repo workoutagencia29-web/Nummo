@@ -1,4 +1,4 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
+// @lovable.dev/vite-tanstack-config already includes the following, so do NOT add them manually
 // or the app will break with duplicate plugins:
 //   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, nitro (build-only using cloudflare as a default target),
 //     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
@@ -13,14 +13,15 @@ export default defineConfig({
     server: { entry: "server" },
   },
   // Deploy na Vercel: fixa o preset do Nitro como "vercel" (fora do sandbox da Lovable).
-  // Gera .vercel/output (Build Output API), que a Vercel detecta sozinha — resolve o erro
+  // Gera .vercel/output (Build Output API), que a Vercel detecta sozinha, resolvendo o erro
   // "No Output Directory named build".
   nitro: {
     preset: "vercel",
     // Headers de segurança compilados para dentro do .vercel/output/config.json
     // (caminho que a Vercel realmente aplica neste stack Build Output API).
-    // CSP começa em Report-Only (monitora sem bloquear) — flip para enforcing
-    // após confirmar zero violações no site em produção.
+    // CSP em modo enforcing (chave "Content-Security-Policy"). Para depurar novas
+    // violações sem quebrar o site, troque temporariamente a chave por
+    // "Content-Security-Policy-Report-Only".
     routeRules: {
       "/**": {
         headers: {
@@ -34,6 +35,7 @@ export default defineConfig({
           "Cross-Origin-Opener-Policy": "same-origin",
           "Cross-Origin-Resource-Policy": "same-site",
           "X-XSS-Protection": "0",
+          "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
         },
       },
       "/fonts/**": {

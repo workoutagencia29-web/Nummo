@@ -545,16 +545,10 @@ curl -X POST https://api.usenummo.com.br/v1/charges \\
   "status": "pending",
   "amount": 4990,
   "payment_method": "pix",
-  "customer": {
-    "name": "Maria Silva",
-    "document": "12345678900"
-  },
   "pix": {
     "qr_code": "00020126360014BR.GOV.BCB.PIX...5204",
-    "qr_code_url": "https://api.usenummo.com.br/v1/qr/chg_3a9f2c8db1.png",
     "expires_at": "2026-09-15T18:45:00Z"
-  },
-  "created_at": "2026-09-15T18:30:00Z"
+  }
 }`,
   },
   {
@@ -777,10 +771,10 @@ function ApiDocs() {
   ];
 
   return (
-    <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+    <div className="grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16">
       {/* Esquerda: texto + CTA + destaques */}
       <div className="max-sm:text-center">
-        <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] md:text-5xl lg:text-[52px]">
+        <h2 className="font-display text-balance text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] md:text-5xl">
           Uma API tão simples que integra num café
         </h2>
         <p className="mt-5 max-w-md text-lg leading-relaxed text-[#F6F9FC]/60 max-sm:mx-auto max-sm:text-base">

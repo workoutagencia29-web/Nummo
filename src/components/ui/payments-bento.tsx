@@ -1,9 +1,11 @@
 import { CreditCard, Barcode, Link2, Repeat, Blocks, TrendingUp, PlusCircle, Sparkles, type LucideIcon } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
-/* Seção "Venda onde e como quiser": faixa com os meios de pagamento
-   aceitos + grid de ferramentas. Estilo neomórfico claro (igual ao resto
-   do site). Sem imagens externas — marcas em SVG inline (seguro no CSP).   */
+/* Seção "Venda onde e como quiser": grade BENTO assimétrica.
+   Card grande de destaque (Checkout Builder, com mini-preview), card de IA
+   em evidência, tile com os meios de pagamento e tiles menores das demais
+   ferramentas. Cards brancos com borda fina + elevação; hover levanta +
+   brilho de marca. Sem imagens externas — marcas em SVG inline (CSP-safe). */
 /* ------------------------------------------------------------------ */
 
 function PixMark({ className = "" }: { className?: string }) {
@@ -34,76 +36,142 @@ function GoogleG({ className = "" }: { className?: string }) {
 }
 
 const METHODS: { name: string; icon: React.ReactNode }[] = [
-  { name: "Pix", icon: <PixMark className="size-5 text-[#00A3A3]" /> },
-  { name: "Cartão", icon: <CreditCard className="size-5 text-[#0D1B39]" /> },
-  { name: "Boleto", icon: <Barcode className="size-5 text-[#0D1B39]" /> },
-  { name: "Apple Pay", icon: <AppleMark className="size-5 text-[#0D1B39]" /> },
-  { name: "Google Pay", icon: <GoogleG className="size-5" /> },
+  { name: "Pix", icon: <PixMark className="size-[18px] text-[#00A3A3]" /> },
+  { name: "Cartão", icon: <CreditCard className="size-[18px] text-[#0D1B39]" /> },
+  { name: "Boleto", icon: <Barcode className="size-[18px] text-[#0D1B39]" /> },
+  { name: "Apple Pay", icon: <AppleMark className="size-[18px] text-[#0D1B39]" /> },
+  { name: "Google Pay", icon: <GoogleG className="size-[18px]" /> },
 ];
 
-type Feature = { icon: LucideIcon; title: string; desc: string; tag?: string };
-
-const FEATURES: Feature[] = [
-  { icon: Link2, title: "Link de pagamento", desc: "Cobre por um link, sem precisar de site." },
-  { icon: Repeat, title: "Recorrência", desc: "Assinaturas e cobranças automáticas todo mês." },
-  { icon: Blocks, title: "Checkout Builder", desc: "Monte seu checkout do seu jeito, sem código." },
-  { icon: TrendingUp, title: "Upsell", desc: "Ofereça mais no pós-compra e aumente o ticket." },
-  { icon: PlusCircle, title: "Order Bump", desc: "Ofertas extras na hora do pagamento." },
-  { icon: Sparkles, title: "Recuperação de carrinho", desc: "A IA traz de volta as vendas abandonadas.", tag: "IA" },
-];
-
-function GroupLabel({ children }: { children: React.ReactNode }) {
+/* Tile de ícone com gradiente da marca (ícone branco). */
+function IconTile({ icon: Icon, className = "size-11" }: { icon: LucideIcon; className?: string }) {
   return (
-    <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-[#0D1B39]/45">{children}</p>
+    <div className={`inline-flex ${className} items-center justify-center rounded-xl bg-gradient-to-br from-[#2559d8] to-[#5b8bff] text-white shadow-[0_8px_18px_-6px_rgba(37,89,216,0.5)] transition-transform duration-300 group-hover:scale-105`}>
+      <Icon className="size-5" />
+    </div>
+  );
+}
+
+/* Card pequeno (1×1) da grade bento. */
+function ToolTile({ icon, title, desc }: { icon: LucideIcon; title: string; desc: string }) {
+  return (
+    <div className="group relative overflow-hidden rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-5 shadow-[0_1px_3px_rgba(13,27,57,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-[#2559d8]/25 hover:shadow-[0_18px_40px_-18px_rgba(37,89,216,0.3)]">
+      <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 size-28 rounded-full bg-[#2559d8] opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-[0.08]" />
+      <div className="relative">
+        <IconTile icon={icon} className="size-10" />
+        <h3 className="mt-3 font-display text-base font-semibold tracking-tight text-[#0D1B39]">{title}</h3>
+        <p className="mt-1 text-[13px] leading-relaxed text-[#0D1B39]/60">{desc}</p>
+      </div>
+    </div>
   );
 }
 
 export function PaymentsBento() {
   return (
-    <div>
-      {/* Meios de pagamento */}
-      <GroupLabel>Meios de pagamento</GroupLabel>
-      <div className="flex flex-wrap gap-3">
-        {METHODS.map((m) => (
-          <div
-            key={m.name}
-            className="inline-flex items-center gap-2.5 rounded-full bg-[#F6F9FC] px-5 py-3 max-sm:px-4 max-sm:py-2.5"
-            style={{ boxShadow: "7px 7px 16px #d3dbea, -7px -7px 16px #ffffff" }}
-          >
-            <span className="flex items-center [&>svg]:size-5 max-sm:[&>svg]:size-[18px]">{m.icon}</span>
-            <span className="text-sm font-medium text-[#0D1B39] max-sm:text-[13px]">{m.name}</span>
+    <div className="grid grid-cols-1 gap-4 md:auto-rows-[170px] md:grid-cols-3">
+      {/* Destaque: Checkout Builder (2×2) com mini-preview */}
+      <div className="group relative overflow-hidden rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-6 shadow-[0_1px_3px_rgba(13,27,57,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-[#2559d8]/20 hover:shadow-[0_24px_50px_-20px_rgba(37,89,216,0.3)] md:col-span-2 md:row-span-2">
+        <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-[#2559d8] opacity-[0.05] blur-3xl transition-opacity duration-300 group-hover:opacity-[0.1]" />
+        <div className="relative flex h-full flex-col gap-6 md:flex-row md:items-stretch">
+          <div className="flex flex-1 flex-col">
+            <IconTile icon={Blocks} className="size-12" />
+            <h3 className="mt-5 font-display text-2xl font-bold tracking-tight text-[#0D1B39]">Checkout Builder</h3>
+            <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#0D1B39]/60">
+              Crie o checkout do seu jeito, sem código. Arraste, solte, publique.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["Sem código", "Templates prontos", "Domínio próprio"].map((c) => (
+                <span
+                  key={c}
+                  className="rounded-full border border-[#0D1B39]/10 bg-[#F6F9FC] px-2.5 py-1 text-[11px] font-medium text-[#0D1B39]/70"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
-        ))}
+          {/* Mini-preview de um checkout (decorativo) */}
+          <div
+            aria-hidden
+            className="hidden w-48 shrink-0 self-end overflow-hidden rounded-t-2xl border border-[#0D1B39]/10 bg-white shadow-[0_-10px_30px_-14px_rgba(13,27,57,0.15)] md:block"
+          >
+            {/* topo do checkout */}
+            <div className="flex items-center justify-between border-b border-[#0D1B39]/[0.06] bg-[#F6F9FC] px-3.5 py-2.5">
+              <span className="text-[11px] font-semibold text-[#0D1B39]">Checkout</span>
+              <span className="flex items-center gap-1 text-[9px] font-medium text-[#00A3A3]">
+                <span className="size-1.5 rounded-full bg-[#00A3A3]" />
+                Seguro
+              </span>
+            </div>
+            <div className="p-3.5">
+              {/* seletor de método */}
+              <div className="flex gap-1.5">
+                <span className="rounded-md bg-[#2559d8] px-2 py-1 text-[9px] font-semibold text-white">Pix</span>
+                <span className="rounded-md border border-[#0D1B39]/10 px-2 py-1 text-[9px] font-medium text-[#0D1B39]/45">Cartão</span>
+              </div>
+              {/* campos */}
+              <div className="mt-3 space-y-2">
+                <div className="rounded-md border border-[#0D1B39]/10 px-2 py-1.5">
+                  <div className="h-1.5 w-12 rounded-full bg-[#0D1B39]/15" />
+                </div>
+                <div className="rounded-md border border-[#0D1B39]/10 px-2 py-1.5">
+                  <div className="h-1.5 w-20 rounded-full bg-[#0D1B39]/15" />
+                </div>
+              </div>
+              {/* total */}
+              <div className="mt-3 flex items-center justify-between">
+                <span className="text-[10px] text-[#0D1B39]/50">Total</span>
+                <span className="text-[12px] font-bold text-[#0D1B39]">R$ 197,00</span>
+              </div>
+              {/* botão */}
+              <div className="mt-2.5 rounded-lg bg-gradient-to-r from-[#2559d8] to-[#5b8bff] py-2 text-center text-[10px] font-semibold text-white shadow-[0_6px_14px_-5px_rgba(37,89,216,0.6)]">
+                Pagar agora
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Ferramentas */}
-      <div className="mt-14 max-sm:mt-10">
-        <GroupLabel>Ferramentas pra vender mais</GroupLabel>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f) => (
-            <div
-              key={f.title}
-              className="nm-press-light group relative rounded-[24px] bg-[#F6F9FC] p-7 max-sm:rounded-[20px] max-sm:p-5"
+      {/* Link de pagamento */}
+      <ToolTile icon={Link2} title="Link de pagamento" desc="Cobre por um link, sem precisar de site." />
+
+      {/* Recorrência */}
+      <ToolTile icon={Repeat} title="Recorrência" desc="Assinaturas e cobranças automáticas." />
+
+      {/* Recuperação de carrinho (IA) — destaque, 2 colunas */}
+      <div className="group relative overflow-hidden rounded-2xl border border-[#2559d8]/20 bg-gradient-to-br from-[#eef4ff] to-white p-5 shadow-[0_10px_30px_-16px_rgba(37,89,216,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_46px_-18px_rgba(37,89,216,0.42)] md:col-span-2">
+        <div aria-hidden className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-[#2559d8] opacity-[0.1] blur-3xl transition-opacity duration-300 group-hover:opacity-[0.16]" />
+        <span className="absolute right-4 top-4 z-10 rounded-full bg-gradient-to-r from-[#2559d8] to-[#5b8bff] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow-[0_4px_10px_-3px_rgba(37,89,216,0.6)]">
+          IA
+        </span>
+        <div className="relative">
+          <IconTile icon={Sparkles} />
+          <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-[#0D1B39]">Recuperação de carrinho</h3>
+          <p className="mt-1 text-sm leading-relaxed text-[#0D1B39]/60">A IA traz de volta as vendas abandonadas automaticamente.</p>
+        </div>
+      </div>
+
+      {/* Upsell */}
+      <ToolTile icon={TrendingUp} title="Upsell" desc="Aumente o ticket no pós-compra." />
+
+      {/* Meios de pagamento — 2 colunas, chips dentro */}
+      <div className="rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-5 shadow-[0_1px_3px_rgba(13,27,57,0.05)] md:col-span-2">
+        <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-[#0D1B39]/45">Meios de pagamento</p>
+        <div className="flex flex-wrap gap-2">
+          {METHODS.map((m) => (
+            <span
+              key={m.name}
+              className="inline-flex items-center gap-2 rounded-full border border-[#0D1B39]/[0.08] bg-white px-4 py-2 shadow-[0_1px_2px_rgba(13,27,57,0.06)] transition-colors hover:border-[#2559d8]/30"
             >
-              {f.tag && (
-                <span className="absolute right-5 top-5 rounded-full bg-gradient-to-r from-[#2559d8] to-[#5b8bff] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                  {f.tag}
-                </span>
-              )}
-              <div
-                className="inline-flex size-12 items-center justify-center rounded-xl text-[#2559d8] max-sm:size-10"
-                style={{ boxShadow: "inset 3px 3px 6px #d3dbea, inset -3px -3px 6px #ffffff" }}
-              >
-                <f.icon className="size-5 max-sm:size-[18px]" />
-              </div>
-              <h3 className="mt-6 font-display text-lg font-semibold tracking-tight text-[#0D1B39] max-sm:mt-4 max-sm:text-base">
-                {f.title}
-              </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#0D1B39]/60 max-sm:text-[13px]">{f.desc}</p>
-            </div>
+              <span className="flex items-center">{m.icon}</span>
+              <span className="text-[13px] font-medium text-[#0D1B39]">{m.name}</span>
+            </span>
           ))}
         </div>
       </div>
+
+      {/* Order Bump */}
+      <ToolTile icon={PlusCircle} title="Order Bump" desc="Ofertas extras na hora do pagamento." />
     </div>
   );
 }

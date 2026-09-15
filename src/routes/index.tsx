@@ -1,7 +1,7 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, Check, ChevronDown,
-  Layers, Copy, ExternalLink, Search,
+  Layers, Copy, ExternalLink,
   Instagram, Youtube, Linkedin,
   AlertTriangle, Users, Lock,
 } from "lucide-react";
@@ -271,13 +271,13 @@ function Hero() {
         </div>
 
         <h1 className="animate-hero-in mt-7 text-balance text-[40px] font-bold leading-[1.02] tracking-tight text-[#F6F9FC] [animation-delay:240ms] max-sm:text-[34px] md:text-[64px] lg:text-[72px]">
-          Seja o protagonista,
+          Receba na hora e
           <br />
-          <span className="text-[#5b8bff]">venha pra Nummo!</span>
+          <span className="text-[#5b8bff]">cresça sem limites.</span>
         </h1>
 
         <p className="animate-hero-in mt-6 max-w-xl text-pretty text-base leading-relaxed text-[#F6F9FC]/70 [animation-delay:420ms] max-sm:text-[15px] lg:text-lg">
-          Receba na hora, com taxas transparentes e uma infraestrutura de pagamentos pensada para escalar.
+          Taxas transparentes e infraestrutura pronta para escalar — do primeiro Pix ao milionésimo.
         </p>
 
         <div className="animate-hero-in mt-8 flex flex-col items-center gap-3 [animation-delay:600ms] max-sm:w-full sm:flex-row sm:justify-center">
@@ -286,7 +286,7 @@ function Hero() {
             href="https://app.usenummo.com.br/dashboard/register"
             className="h-[56px] w-[240px] justify-center !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full"
           >
-            Criar Conta
+            Criar conta grátis
           </PrimaryButton>
           <a
             href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
@@ -809,11 +809,6 @@ function ApiDocs() {
         <div className="grid lg:grid-cols-[240px_1fr]">
           {/* Navegação de endpoints */}
           <aside className="min-w-0 border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
-            {/* Busca (visual) */}
-            <div className="mb-4 flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-[#F6F9FC]/35">
-              <Search className="size-3.5" />
-              Buscar na documentação
-            </div>
             {groups.map((g) => (
               <div key={g} className="mb-5 last:mb-0">
                 <div className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#F6F9FC]/40">
@@ -875,7 +870,7 @@ function ApiDocs() {
 
               <CodeBlock label="Requisição" code={ep.request[lang]} />
               <div className="mt-4">
-                <CodeBlock label="Resposta" code={ep.response} status="200 OK" />
+                <CodeBlock label="Resposta" code={ep.response} status={ep.method === "POST" ? "201 Created" : "200 OK"} />
               </div>
             </div>
           </div>
@@ -1305,7 +1300,7 @@ function Testimonials() {
     <section className="py-32 max-sm:py-16">
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="mb-24 -translate-y-[30px] text-center font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] max-sm:mb-12 max-sm:text-[27px] md:text-[56px]">
-          Clientes que não voltam atrás
+          Quem troca pra Nummo não olha pra trás
         </h2>
         <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
           <TestimonialsColumn testimonials={firstColumn} className="md:-translate-x-[33px]" duration={15} />
@@ -1378,32 +1373,44 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-32 max-sm:py-20">
-      <div className="relative mx-auto max-w-4xl px-6 text-center lg:-translate-y-[45px]">
-        <h2 className="text-balance font-display text-5xl font-extrabold leading-[1.02] tracking-tight max-sm:text-[44px] md:text-7xl">
-          <span className="text-[#0D1B39]">Vender nunca foi tão simples</span>
-        </h2>
+    <section className="relative overflow-hidden py-24 max-sm:py-16">
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="relative overflow-hidden rounded-[32px] bg-[#03060c] px-8 py-20 text-center shadow-[0_30px_80px_-30px_rgba(3,6,12,0.55)] max-sm:rounded-3xl max-sm:px-6 max-sm:py-14">
+          {/* Fundo de gradiente animado (mesmo da seção Taxas) */}
+          <Velaris className="absolute inset-0" height="100%" speed={2.2} />
+          {/* Scrim leve para garantir o contraste do texto branco sobre o gradiente */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[#03060c]/30" />
 
-        <p className="mt-6 text-lg text-[#0D1B39] max-sm:text-[13px]">
-          Sem mensalidade. Sem fidelidade. Sem surpresa.
-        </p>
+          <div className="relative z-10">
+            <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white max-sm:text-[30px] md:text-6xl">
+              Pronto para vender com a Nummo?
+            </h2>
 
-        <div className="mt-10 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
-          <PrimaryButton
-            href="https://app.usenummo.com.br/dashboard/register"
-            className="w-[230px] !bg-[#2559d8] hover:!bg-[#1f4fc4] max-sm:w-full"
-          >
-            Criar Conta
-          </PrimaryButton>
+            <p className="mx-auto mt-5 max-w-md text-lg text-white/80 max-sm:text-sm">
+              Sem mensalidade. Sem fidelidade. Sem taxa escondida.
+            </p>
 
-          <GhostButton
-            href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-[230px] whitespace-nowrap !border-transparent !bg-[#F6F9FC] !text-[#0D1B39] backdrop-blur-none !shadow-[6px_6px_14px_#d3dbea,-6px_-6px_14px_#ffffff] hover:!bg-[#F6F9FC] max-sm:w-full"
-          >
-            Falar com especialista
-          </GhostButton>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 max-sm:w-full sm:flex-row sm:gap-4">
+              <a
+                href="https://app.usenummo.com.br/dashboard/register"
+                className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full bg-white text-base font-semibold text-[#0D1B39] shadow-[0_12px_30px_-10px_rgba(0,0,0,0.35)] transition-transform hover:-translate-y-0.5 max-sm:w-full"
+              >
+                Criar conta grátis
+                <ArrowRight className="size-[18px]" />
+              </a>
+
+              <a
+                href="https://wa.me/5511912002801?text=Olá!%20Fiquei%20interessado(a)%20em%20criar%20uma%20conta%20na%20Nummo%20e%20gostaria%20de%20ajuda."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-[56px] w-[240px] items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 text-base font-medium text-white backdrop-blur transition-colors hover:bg-white/20 max-sm:w-full"
+              >
+                Falar com especialista
+              </a>
+            </div>
+
+            <p className="mt-6 text-[13px] text-white/70">Conta gratuita • aprovação em minutos • suporte no WhatsApp</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1467,7 +1474,7 @@ export function Footer() {
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];
                     const ext = FOOTER_LINKS[i];
-                    const cls = "inline-block py-2.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#3ca2fa]";
+                    const cls = "inline-block py-2.5 text-sm text-[#F6F9FC]/70 transition-colors hover:text-[#5b8bff]";
                     return (
                       <li key={i}>
                         {to ? (
@@ -1510,7 +1517,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="inline-flex size-10 items-center justify-center transition-colors hover:text-[#3ca2fa] [&>svg]:size-5"
+                  className="inline-flex size-10 items-center justify-center transition-colors hover:text-[#5b8bff] [&>svg]:size-5"
                 >
                   {s.icon}
                 </a>

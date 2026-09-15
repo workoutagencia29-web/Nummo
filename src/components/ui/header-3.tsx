@@ -93,7 +93,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 			})}
 		>
 			<nav className="relative mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-6">
-					<RouterLink to="/" className="nav-trigger hover:bg-accent rounded-md p-2" aria-label="Nummo — início">
+					<RouterLink to="/" className="nav-trigger rounded-md transition-opacity hover:opacity-80" aria-label="Nummo — início">
 						<img src="/logo-nummo.svg" alt="Nummo" className="h-6 w-auto" />
 					</RouterLink>
 					<NavigationMenu className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex">
@@ -167,7 +167,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 					</Button>
 					<Button asChild>
 						<a href={REGISTER_URL} target="_blank" rel="noopener noreferrer">
-							Criar Conta
+							Criar conta grátis
 						</a>
 					</Button>
 				</div>
@@ -213,7 +213,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 					</Button>
 					<Button className="w-full" asChild>
 						<a href={REGISTER_URL} target="_blank" rel="noopener noreferrer">
-							Criar Conta
+							Criar conta grátis
 						</a>
 					</Button>
 				</div>
@@ -264,8 +264,8 @@ function ListItem({
 	return (
 		<NavigationMenuLink className={cn('w-full flex flex-row gap-x-2 data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground rounded-sm p-2', className)} {...props} asChild>
 			<SmartLink href={href}>
-				<div className="bg-background/40 flex aspect-square size-12 items-center justify-center rounded-md border shadow-sm">
-					<Icon className="text-foreground size-5" />
+				<div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-[#2559d8]/[0.08]">
+					<Icon className="size-[18px] text-[#2559d8]" />
 				</div>
 				<div className="flex flex-col items-start justify-center">
 					<span className="font-medium">{title}</span>

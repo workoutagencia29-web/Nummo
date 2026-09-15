@@ -95,7 +95,7 @@ export function FaqCategorized({
   className,
 }: FaqCategorizedProps) {
   const [activeCategory, setActiveCategory] = useState(0);
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   // Indicador de aba que desliza (substitui o layoutId do framer): medimos a
   // posição/largura do botão ativo relativas ao tablist e movemos uma barra
@@ -123,7 +123,7 @@ export function FaqCategorized({
 
   const handleCategoryChange = (index: number) => {
     setActiveCategory(index);
-    setOpenIndex(null);
+    setOpenIndex(0);
   };
 
   const toggleAccordion = (index: number) => {
@@ -172,7 +172,7 @@ export function FaqCategorized({
             {/* Barra que desliza sob a aba ativa */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute left-0 top-0 h-0.5 bg-primary transition-[transform,width] duration-300 ease-out"
+              className="pointer-events-none absolute left-0 top-0 h-[3px] bg-primary transition-[transform,width] duration-300 ease-out"
               style={{
                 transform: `translate(${indicator.left}px, ${indicator.top}px)`,
                 width: indicator.width,

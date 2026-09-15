@@ -520,7 +520,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   --foreground: #e8ecf2;
   --border: rgba(255, 255, 255, 0.08);
   --background: #0a1322; /* fundo sólido e sutil dos cards (não recebe o gradiente) */
-  --primary: #1652c6;    /* acento das categorias/abas — mesmo azul da borda dos cards */
+  --primary: #5b8bff;    /* acento das categorias/abas — azul claro, legível no fundo escuro */
 }
 
 /* Respostas e descrição do FAQ (parágrafos) em cinza claro #8a94a6. */
@@ -528,9 +528,8 @@ html, body { overflow-x: clip; max-width: 100%; }
   color: #8a94a6;
 }
 
-/* Borda azul ao passar o mouse nos cards do FAQ — usa o --primary (#1652c6),
-   o mesmo azul agora aplicado ao acento das categorias/abas. */
+/* Borda azul ao passar o mouse nos cards do FAQ — mesmo acento das abas (#5b8bff). */
 .faq .rounded-xl:hover {
-  border-color: #1652c6;
+  border-color: #5b8bff;
 }
 

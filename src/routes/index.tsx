@@ -1339,6 +1339,8 @@ const FAQ_CATEGORIES = [
       { question: "Como a Nummo protege os meus pagamentos?", answer: "A Nummo segue o padrão PCI-DSS e conta com antifraude, que analisa o risco durante as transações, além de autenticação 3DS 2.0 quando necessária, ajudando a reduzir chargebacks." },
       { question: "A Nummo tem API e webhooks para integração?", answer: "Sim. A API da Nummo é moderna e bem documentada, com webhooks confiáveis para você integrar o checkout e acompanhar cada evento de pagamento em tempo real." },
       { question: "A Nummo tem boa taxa de aprovação?", answer: "Sim. A Nummo é focada em alta taxa de aprovação no checkout, combinando um checkout transparente com antifraude para aprovar mais vendas legítimas e reduzir recusas indevidas." },
+      { question: "Os dados dos meus clientes ficam seguros?", answer: "Sim. A Nummo é aderente à LGPD e ao padrão PCI-DSS: os dados sensíveis de cartão são tokenizados e trafegam criptografados, então você nunca precisa armazená-los. Seus clientes compram com a confiança de um checkout certificado." },
+      { question: "A plataforma é estável? E se sair do ar?", answer: "A estabilidade é prioridade. Você acompanha a disponibilidade de todos os serviços em tempo real na nossa página de Status, com transparência total, e a infraestrutura é monitorada para manter suas vendas no ar quando você mais precisa." },
     ],
   },
 ];

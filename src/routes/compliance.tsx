@@ -51,7 +51,7 @@ function CompliancePage() {
               {BADGES.map((b) => (
                 <span
                   key={b}
-                  className="inline-flex items-center gap-2 rounded-full border border-neon/25 bg-neon-soft px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-neon"
+                  className="inline-flex items-center gap-2 rounded-full border border-neon/25 bg-neon-soft px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-[#1E4FC4]"
                 >
                   <ShieldCheck className="size-3.5" /> {b}
                 </span>

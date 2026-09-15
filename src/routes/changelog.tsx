@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav, Footer } from "./index";
 
 const TAGS: Record<string, { dot: string; bg: string }> = {
-  Novo: { dot: "#2F6BFF", bg: "rgba(47,107,255,0.14)" },
-  Melhoria: { dot: "#22C55E", bg: "rgba(34,197,94,0.14)" },
-  "Correção": { dot: "#F59E0B", bg: "rgba(245,158,11,0.15)" },
-  "Segurança": { dot: "#A78BFA", bg: "rgba(167,139,250,0.16)" },
+  Novo: { dot: "#1E4FC4", bg: "rgba(47,107,255,0.14)" },
+  Melhoria: { dot: "#166534", bg: "rgba(34,197,94,0.14)" },
+  "Correção": { dot: "#8A5A00", bg: "rgba(245,158,11,0.15)" },
+  "Segurança": { dot: "#6025C9", bg: "rgba(167,139,250,0.16)" },
 };
 
 const ENTRIES = [

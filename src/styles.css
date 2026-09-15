@@ -102,9 +102,9 @@
   --popover: #FFFFFF;
   --popover-foreground: #0D1B39;
 
-  --primary: #2F6BFF;                 /* azul */
+  --primary: #2860EC;                 /* azul */
   --primary-foreground: #F6F9FC;      /* texto claro sobre o azul */
-  --neon: #2F6BFF;
+  --neon: #2860EC;
   --neon-soft: rgba(47, 107, 255, 0.12);
   --accent-violet: oklch(0.7 0.22 295);
 
@@ -188,7 +188,7 @@ html, body { overflow-x: clip; max-width: 100%; }
 }
 
 @utility card-elevated {
-  background: #2F6BFF;
+  background: #2860EC;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-2xl);
   color: #F6F9FC;
@@ -217,7 +217,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   color: #0D1B39;
   --foreground: #0D1B39;
   --muted-foreground: #59617A;
-  --neon: #2F6BFF;
+  --neon: #2860EC;
 }
 
 /* ---------- animations ---------- */

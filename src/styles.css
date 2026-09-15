@@ -97,7 +97,7 @@
 :root {
   --radius: 0.875rem;
 
-  /* Tema claro — branco #F6F9FC + navy/azul */
+  /* Tema claro - branco #F6F9FC + navy/azul */
   --background: #F6F9FC;
   --foreground: #0D1B39;
   --surface: #FFFFFF;
@@ -139,7 +139,7 @@
   :focus-visible { outline: 2px solid var(--neon); outline-offset: 2px; border-radius: 3px; }
 }
 
-/* respeitar "reduzir movimento" do sistema — corta animações/transições */
+/* respeitar "reduzir movimento" do sistema - corta animações/transições */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -187,7 +187,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   }
 }
 /* No mobile a textura (0.04) é imperceptível, mas o mix-blend-mode custa paint
-   durante o scroll — desliga em telas pequenas para aliviar o celular. */
+   durante o scroll - desliga em telas pequenas para aliviar o celular. */
 @media (max-width: 767px) {
   .noise::after { display: none; }
 }
@@ -200,7 +200,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   box-shadow: 0 1px 3px rgba(13, 27, 57, 0.05), 0 16px 36px -18px rgba(47, 107, 255, 0.5);
 }
 
-/* Dentro dos cards azuis, os tokens de cor viram claros —
+/* Dentro dos cards azuis, os tokens de cor viram claros -
    assim todo texto/ícone/borda interno fica branco automaticamente. */
 .card-elevated {
   --foreground: #F6F9FC;
@@ -239,7 +239,7 @@ html, body { overflow-x: clip; max-width: 100%; }
 @keyframes marquee-y { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 @utility animate-marquee-y { animation: marquee-y 12s linear infinite; will-change: transform; }
 
-/* FAQ: revelação de entrada (sobe + fade) — substitui os initial/animate do framer.
+/* FAQ: revelação de entrada (sobe + fade) - substitui os initial/animate do framer.
    Reaplica ao trocar de categoria via remontagem (key={activeCategory}). `both` mantém
    o estado final (visível) e roda mesmo sem JS. Sob prefers-reduced-motion o reset global
    (*) neutraliza, deixando o conteúdo já visível. */
@@ -289,7 +289,7 @@ html, body { overflow-x: clip; max-width: 100%; }
 }
 
 /* Mobile: notificações de venda (seção Taxas) viram uma pilha centralizada e
-   alinhada — remove o espalhamento horizontal e a rotação (que cortavam os cards
+   alinhada - remove o espalhamento horizontal e a rotação (que cortavam os cards
    nas bordas no desktop scatter). !important sobrescreve o transform inline. */
 @media (max-width: 639px) {
   .notif-card { transform: translateX(-50%) !important; }
@@ -297,7 +297,7 @@ html, body { overflow-x: clip; max-width: 100%; }
 
 /* Navbar no tema escuro (home): tokens escuros no escopo do header para os menus
    (dropdowns Produtos/Empresa) herdarem fundo navy + texto claro automaticamente
-   — mesmo padrão do escopo .faq. Os botões .nav-* têm regras próprias abaixo. */
+   - mesmo padrão do escopo .faq. Os botões .nav-* têm regras próprias abaixo. */
 .nav-over-dark {
   --background: #0a1322;
   --card: #0a1322;
@@ -408,7 +408,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   .nm-press-light:hover { box-shadow: 18px 18px 40px #cdd7e8, -16px -16px 34px #ffffff; transform: translateY(-3px); }
   .nm-press-dark:hover { box-shadow: 9px 9px 22px #080f22, -9px -9px 22px #12264a; transform: translateY(-3px); }
 }
-/* Cards de meios de pagamento: SEM animação de clique (:active removido) — mantém só sombra base + hover. */
+/* Cards de meios de pagamento: SEM animação de clique (:active removido) - mantém só sombra base + hover. */
 .nm-press-dark:active { box-shadow: inset 4px 4px 9px #080f22, inset -4px -4px 9px #12264a; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   .nm-press-light, .nm-press-dark { transition: none; }
@@ -425,7 +425,7 @@ html, body { overflow-x: clip; max-width: 100%; }
 /* Tudo controlado por JS via classes; as transições dão a suavidade (subir = descer). */
 @keyframes conn-spin { to { transform: rotate(360deg); } }
 
-/* Barra conectora (fill azul) — preenchimento fluido e contínuo, sem parar.
+/* Barra conectora (fill azul) - preenchimento fluido e contínuo, sem parar.
    Enche da esquerda, some ao completar, reinicia invisível e repete (sem pulo visível).
    A animação infinita sobrepõe as classes .half/.full/.empty do JS. */
 @keyframes conn-flow {
@@ -440,7 +440,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   animation: conn-flow 2.2s ease-in-out infinite;
 }
 
-/* Loader no meio da barra — aparece durante a pausa (.show) */
+/* Loader no meio da barra - aparece durante a pausa (.show) */
 .conn-loader { display: none; }
 .conn-spin-arc { animation: conn-spin 1.1s linear infinite; }
 
@@ -484,7 +484,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   position: relative;
   overflow: hidden;
   background:
-    /* TOPO — entrada reduzida (mais fraca e menor que a base) */
+    /* TOPO - entrada reduzida (mais fraca e menor que a base) */
     radial-gradient(48% 28% at 50% -13%, rgba(180,215,255,.40), rgba(180,215,255,0) 72%),
     radial-gradient(92% 66% at 50% -23%, #3b8bff 0%, #1652c6 24%, #0a2559 46%, rgba(5,12,28,0) 80%),
     /* vinheta */
@@ -495,7 +495,7 @@ html, body { overflow-x: clip; max-width: 100%; }
     #03060c;
 }
 
-/* Variante da seção dev/API (#plataforma): brilho azul igual em cima e embaixo —
+/* Variante da seção dev/API (#plataforma): brilho azul igual em cima e embaixo -
    o topo é um espelho exato das 2 camadas da base (mesma intensidade/tamanho),
    posto POR CIMA da vinheta pra não ser escurecido por ela (a vinheta é centrada
    embaixo e escurecia só o topo). Ordem: camadas listadas antes pintam por cima. */
@@ -503,7 +503,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   position: relative;
   overflow: hidden;
   background:
-    /* TOPO — espelho da base (de cima para baixo) */
+    /* TOPO - espelho da base (de cima para baixo) */
     radial-gradient(52% 32% at 50% -10%, rgba(180,215,255,.56), rgba(180,215,255,0) 72%),
     radial-gradient(100% 80% at 50% -18%, #3b8bff 0%, #1652c6 24%, #0a2559 46%, rgba(5,12,28,0) 80%),
     /* vinheta */
@@ -514,13 +514,13 @@ html, body { overflow-x: clip; max-width: 100%; }
     #03060c;
 }
 
-/* FAQ: tokens de cor no escopo da seção — títulos/perguntas (text-foreground) em
+/* FAQ: tokens de cor no escopo da seção - títulos/perguntas (text-foreground) em
    #e8ecf2, bordas e divisores (border-border) em rgba(255,255,255,.08). */
 .faq {
   --foreground: #e8ecf2;
   --border: rgba(255, 255, 255, 0.08);
   --background: #0a1322; /* fundo sólido e sutil dos cards (não recebe o gradiente) */
-  --primary: #5b8bff;    /* acento das categorias/abas — azul claro, legível no fundo escuro */
+  --primary: #5b8bff;    /* acento das categorias/abas - azul claro, legível no fundo escuro */
 }
 
 /* Respostas e descrição do FAQ (parágrafos) em cinza claro #8a94a6. */
@@ -528,7 +528,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   color: #8a94a6;
 }
 
-/* Borda azul ao passar o mouse nos cards do FAQ — mesmo acento das abas (#5b8bff). */
+/* Borda azul ao passar o mouse nos cards do FAQ - mesmo acento das abas (#5b8bff). */
 .faq .rounded-xl:hover {
   border-color: #5b8bff;
 }

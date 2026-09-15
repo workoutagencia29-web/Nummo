@@ -52,7 +52,7 @@ function ChangelogPage() {
     <>
       <Nav solid />
       <main id="conteudo">
-        {/* Head — igual ao da /status (tamanho + posição) */}
+        {/* Head - igual ao da /status (tamanho + posição) */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
             <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Novidades Nummo</h1>
@@ -60,7 +60,7 @@ function ChangelogPage() {
           </div>
         </div>
 
-        {/* Timeline — mesma posição (X e Y) do conteúdo da /status */}
+        {/* Timeline - mesma posição (X e Y) do conteúdo da /status */}
         <div className="mx-auto max-w-4xl px-6 pb-20 md:pb-28">
         <ol className="relative mt-12 border-l border-white/10 pl-6 lg:-ml-12 lg:-mr-16 lg:mt-[98px] xl:-ml-24 xl:-mr-28">
           {ENTRIES.map((e) => {

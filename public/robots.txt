@@ -1,4 +1,4 @@
-# robots.txt — Nummo (https://www.usenummo.com.br)
+# robots.txt - Nummo (https://www.usenummo.com.br)
 # Todo o site é aberto para indexação e para leitura por IAs/LLMs.
 
 User-agent: *

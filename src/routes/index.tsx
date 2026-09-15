@@ -206,7 +206,7 @@ function Landing() {
 /* Sections                                                            */
 /* ------------------------------------------------------------------ */
 
-// Navbar do site — agora renderiza o novo Header (shadcn navigation-menu).
+// Navbar do site - agora renderiza o novo Header (shadcn navigation-menu).
 // Mantém o nome/So export `Nav` e o prop opcional `solid` (ignorado) para que
 // todas as páginas que importam `Nav` continuem funcionando sem alteração.
 export function Nav({ dark = false }: { solid?: boolean; dark?: boolean } = {}) {
@@ -299,7 +299,7 @@ function Hero() {
         </div>
       </div>
 
-      {/* Onda branca com seta para baixo — indicador de "role para baixo" que faz a
+      {/* Onda branca com seta para baixo - indicador de "role para baixo" que faz a
           transição do hero escuro para a próxima seção (clara). */}
       <div className="pointer-events-none absolute inset-x-0 -bottom-px z-20 hidden justify-center md:flex">
         <button
@@ -336,7 +336,7 @@ const SCORE_METRICS = [
   { label: "Preparo", value: 0 },
 ];
 
-// Painel "Conversion Score" do Checkout Builder — anel de progresso + selo + barras.
+// Painel "Conversion Score" do Checkout Builder - anel de progresso + selo + barras.
 function ConversionScore() {
   const score = 91;
   const radius = 42;
@@ -842,11 +842,11 @@ function ApiDocs() {
             ))}
           </aside>
 
-          {/* Conteúdo do endpoint — remonta a cada troca (fade suave via .tour-in) */}
+          {/* Conteúdo do endpoint - remonta a cada troca (fade suave via .tour-in) */}
           <div key={active} className="tour-in min-w-0">
             {/* Exemplos de código */}
             <div className="bg-[#091020] p-4 md:p-6">
-              {/* Tabs de linguagem (com ícones) — grade alinhada: 5 por linha */}
+              {/* Tabs de linguagem (com ícones) - grade alinhada: 5 por linha */}
               <div className="mb-4 grid grid-cols-3 gap-1.5 sm:grid-cols-5">
                 {langs.map((l) => {
                   const on = lang === l.key;
@@ -877,7 +877,7 @@ function ApiDocs() {
         </div>
       </div>
 
-      {/* CTA — página completa da documentação */}
+      {/* CTA - página completa da documentação */}
       <div className="mt-8 flex flex-col items-center gap-3">
         <a
           href={NUMMO_DOCS_URL}
@@ -901,7 +901,7 @@ function Bento() {
     <section id="plataforma" className="grad-night-dev pb-24 pt-20 max-sm:pb-16 max-sm:pt-14">
       <div className="mx-auto max-w-7xl px-6">
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
-          {/* Checkout Builder com IA + Área de membros + Marketplace —
+          {/* Checkout Builder com IA + Área de membros + Marketplace -
               TEMPORARIAMENTE OCULTOS a pedido (serão reutilizados depois).
               Para reativar: trocar `false` por `true` no wrapper abaixo. */}
           {false && (<>
@@ -1041,7 +1041,7 @@ function PaymentMethods() {
 // do app, título em negrito + horário à direita, corpo abaixo). Componente
 // autocontido: preenche a coluna esquerda da seção Taxas sem tocar em mais nada.
 // Arranjo em cascata "embaralhada": cada card recebe um deslocamento horizontal
-// (off), rotação (rot), escala, opacidade e blur próprios — os do fundo ficam
+// (off), rotação (rot), escala, opacidade e blur próprios - os do fundo ficam
 // menores/translúcidos/desfocados (profundidade), com um card central em foco.
 // Posicionamento absoluto num container de altura fixa (< coluna do texto),
 // então NÃO altera o fluxo nem a altura da página.
@@ -1208,7 +1208,7 @@ function IntegrationChip({ l }: { l: Integration }) {
           }}
         />
       ) : (
-        // Coloridos intactos — reconhecibilidade de marca.
+        // Coloridos intactos - reconhecibilidade de marca.
         <img
           src={l.src}
           alt={l.alt}
@@ -1343,7 +1343,7 @@ const FAQ_CATEGORIES = [
   },
 ];
 
-// JSON-LD FAQPage — habilita rich results na busca (conteúdo já existe no acordeão).
+// JSON-LD FAQPage - habilita rich results na busca (conteúdo já existe no acordeão).
 const FAQ_JSONLD = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -1356,9 +1356,9 @@ const FAQ_JSONLD = JSON.stringify({
 
 function Faq() {
   return (
-    // Bloco escuro — quebra o ritmo claro da página. O fundo (gradiente azul → preto,
+    // Bloco escuro - quebra o ritmo claro da página. O fundo (gradiente azul → preto,
     // luz nascendo da base) e os tokens de cor da seção vêm da classe global `.faq`
-    // (styles.css), aplicada aqui no container inteiro — nunca nos cards.
+    // (styles.css), aplicada aqui no container inteiro - nunca nos cards.
     <div id="faq" className="faq grad-night-faq scroll-mt-24">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
       <FaqCategorized
@@ -1435,7 +1435,7 @@ const FOOTER_LINKS: Record<string, string> = {
 };
 
 export function Footer() {
-  // Redes sociais — Instagram é link; os demais ainda não têm canal,
+  // Redes sociais - Instagram é link; os demais ainda não têm canal,
   // então ficam como botões visuais SEM função (não são <a>).
   const socialLinks = [
     { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/use.nummo" },

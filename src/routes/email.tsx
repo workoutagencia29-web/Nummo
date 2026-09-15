@@ -6,7 +6,7 @@ function EmailPage() {
     <>
       <Nav solid />
       <main id="conteudo">
-        {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
+        {/* Head - mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
             <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">Suporte por e-mail</h1>
@@ -16,7 +16,7 @@ function EmailPage() {
           </div>
         </div>
 
-        {/* Corpo — mesma posição, formato e formatação das outras páginas */}
+        {/* Corpo - mesma posição, formato e formatação das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pb-20 md:pb-28">
           <div className="mt-14 text-pretty text-lg leading-relaxed text-muted-foreground lg:-ml-12 lg:-mr-16 lg:mt-[98px] xl:-ml-24 xl:-mr-28 [&>*:first-child]:mt-0">
             <p className="text-xl text-foreground/90">

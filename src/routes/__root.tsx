@@ -229,7 +229,7 @@ function RootComponent() {
   const [loaderGone, setLoaderGone] = useState(false);
   useEffect(() => {
     const MIN_VISIBLE = 300; // ms mínimos na tela (evita piscar em loads instantâneos)
-    const MAX_VISIBLE = 1000; // ms máximos (não fica refém de fonte/rede lenta)
+    const MAX_VISIBLE = 600; // ms máximos (não fica refém de fonte/rede lenta; libera o LCP mais cedo)
     const FADE = 600; // casa com a transição de opacidade do #app-loader (0.6s)
     const start = performance.now();
     let hideT = 0, goneT = 0, capT = 0, done = false;

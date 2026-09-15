@@ -1,11 +1,11 @@
 import { createFileRoute, Link as RouterLink } from "@tanstack/react-router";
 import {
   ArrowRight, Check, ChevronDown,
-  Layers, Copy,
+  Copy,
   Instagram, Youtube, Linkedin,
-  AlertTriangle, Users, FileText,
+  FileText,
 } from "lucide-react";
-import { useState, useEffect, useRef, Children, isValidElement, cloneElement } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TestimonialsColumn } from "../components/ui/testimonials-columns-1";
 import { FaqCategorized } from "../components/ui/faq-4";
 import { Header } from "../components/ui/header-3";
@@ -145,40 +145,6 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
-// Stagger: cada filho vira .reveal-child e recebe .in em sequência ao entrar na viewport.
-function Stagger({ children, className = "", step = 90 }: { children: React.ReactNode; className?: string; step?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const timers: ReturnType<typeof window.setTimeout>[] = [];
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          Array.from(el.children).forEach((k, i) => {
-            timers.push(window.setTimeout(() => k.classList.add("in"), i * step));
-          });
-          io.disconnect();
-        }
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -6% 0px" },
-    );
-    io.observe(el);
-    return () => { io.disconnect(); timers.forEach(clearTimeout); };
-  }, [step]);
-  return (
-    <div ref={ref} className={className}>
-      {Children.map(children, (child) =>
-        isValidElement(child)
-          ? cloneElement(child as React.ReactElement<{ className?: string }>, {
-              className: `${(child.props as { className?: string }).className ?? ""} reveal-child`.trim(),
-            })
-          : child,
-      )}
-    </div>
-  );
-}
-
 function Landing() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground">
@@ -186,7 +152,7 @@ function Landing() {
         Pular para o conteúdo
       </a>
       <Nav dark />
-      <main id="conteudo">
+      <main id="conteudo" tabIndex={-1} className="outline-none">
         <Hero />
         <Reveal><PaymentMethods /></Reveal>
         <Reveal><Rates /></Reveal>
@@ -326,173 +292,9 @@ function Hero() {
   );
 }
 
-const SCORE_METRICS = [
-  { label: "Clareza", value: 100 },
-  { label: "Confiança", value: 100 },
-  { label: "Urgência", value: 80 },
-  { label: "Fricção", value: 100 },
-  { label: "Mobile", value: 100 },
-  { label: "Preparo", value: 0 },
-];
-
-// Painel "Conversion Score" do Checkout Builder - anel de progresso + selo + barras.
-function ConversionScore() {
-  const score = 91;
-  const radius = 42;
-  const circ = 2 * Math.PI * radius;
-  const dash = (circ * score) / 100;
-  const [filled, setFilled] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setFilled(true); return; }
-    const io = new IntersectionObserver(
-      (entries) => { if (entries[0].isIntersecting) { setFilled(true); io.disconnect(); } },
-      { threshold: 0.4 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <div ref={ref} className="rounded-xl border border-white/10 p-4">
-      <div className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-[#F6F9FC]/50">
-        Conversion Score
-      </div>
-      <div className="mt-4 flex items-center justify-center gap-4">
-        <div className="relative size-28 shrink-0">
-          <svg viewBox="0 0 100 100" className="size-full -rotate-90">
-            <circle cx="50" cy="50" r={radius} fill="none" stroke="#F6F9FC" strokeOpacity="0.1" strokeWidth="9" />
-            <circle
-              cx="50"
-              cy="50"
-              r={radius}
-              fill="none"
-              stroke="#2F6BFF"
-              strokeWidth="9"
-              strokeLinecap="round"
-              strokeDasharray={circ}
-              strokeDashoffset={filled ? circ - dash : circ}
-              style={{ transition: "stroke-dashoffset 2.1s cubic-bezier(0.16, 1, 0.3, 1)" }}
-            />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-3xl font-extrabold leading-none text-[#F6F9FC]">{score}</span>
-            <span className="mt-1 text-[9px] font-medium uppercase tracking-wide text-[#F6F9FC]/50">de 100</span>
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-1.5">
-          <span className="flex size-11 items-center justify-center rounded-lg bg-[#2F6BFF] text-lg font-bold text-white">A</span>
-          <span className="text-sm font-bold text-[#2F6BFF]">Excelente</span>
-        </div>
-      </div>
-      <div className="mt-5 space-y-2.5">
-        {SCORE_METRICS.map((m, i) => (
-          <div key={m.label}>
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-[#F6F9FC]/70">{m.label}</span>
-              <span className="text-xs font-bold text-[#F6F9FC]">{m.value}</span>
-            </div>
-            <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/10">
-              <div
-                className="h-full rounded-full bg-[#2F6BFF]"
-                style={{ width: filled ? `${m.value}%` : "0%", transition: `width 1.4s cubic-bezier(0.16, 1, 0.3, 1) ${0.15 + i * 0.08}s` }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Documentação da API do gateway (padrão dos gateways: navegação de endpoints
-// à esquerda, prosa + exemplos de request/response por linguagem à direita).
-type ApiParam = { name: string; type: string; required: boolean; desc: string };
-type LangKey = "curl" | "node" | "python" | "php" | "ruby" | "go" | "java" | "csharp" | "cpp" | "rust";
-type ApiEndpoint = {
-  id: string;
-  group: string;
-  nav: string;
-  method: "GET" | "POST" | "DELETE";
-  path: string;
-  title: string;
-  desc: string;
-  params: ApiParam[];
-  request: Record<LangKey, string>;
-  response: string;
-};
-
-const API_ENDPOINTS: ApiEndpoint[] = [
-  {
-    id: "auth",
-    group: "Introdução",
-    nav: "Autenticação",
-    method: "GET",
-    path: "/v1/balance",
-    title: "Autenticação",
-    desc: "Toda requisição usa sua chave secreta no header Authorization, sempre via HTTPS. Nunca exponha a chave no front-end.",
-    params: [],
-    request: {
-      curl: `curl https://api.usenummo.com.br/v1/balance \\
-  -H "Authorization: Bearer sk_live_..."`,
-      node: `import { Nummo } from "nummo";
-
-const nummo = new Nummo("sk_live_...");
-const balance = await nummo.balance.retrieve();`,
-      python: `import nummo
-nummo.api_key = "sk_live_..."
-
-balance = nummo.Balance.retrieve()`,
-      php: `$nummo = new Nummo("sk_live_...");
-$balance = $nummo->balance->retrieve();`,
-      ruby: `Nummo.api_key = "sk_live_..."
-balance = Nummo::Balance.retrieve`,
-      go: `client := nummo.New("sk_live_...")
-balance, _ := client.Balance.Retrieve(context.Background())`,
-      java: `Nummo nummo = new Nummo("sk_live_...");
-Balance balance = nummo.balance().retrieve();`,
-      csharp: `var nummo = new NummoClient("sk_live_...");
-var balance = await nummo.Balance.RetrieveAsync();`,
-      cpp: `nummo::Client client("sk_live_...");
-auto balance = client.balance().retrieve();`,
-      rust: `let nummo = Nummo::new("sk_live_...");
-let balance = nummo.balance().retrieve().await?;`,
-    },
-    response: `{
-  "available": 1500000,
-  "pending": 230000,
-  "currency": "BRL"
-}`,
-  },
-  {
-    id: "create-charge",
-    group: "Cobranças",
-    nav: "Criar cobrança",
-    method: "POST",
-    path: "/v1/charges",
-    title: "Criar cobrança",
-    desc: "Cria uma cobrança via Pix, cartão de crédito ou boleto. Os valores são sempre em centavos (R$ 197,00 = 19700).",
-    params: [
-      { name: "amount", type: "integer", required: true, desc: "Valor da cobrança, em centavos." },
-      { name: "payment_method", type: "string", required: true, desc: "pix, credit_card ou boleto." },
-      { name: "customer", type: "object", required: true, desc: "Dados do cliente (nome, e-mail, documento)." },
-      { name: "description", type: "string", required: false, desc: "Descrição exibida na fatura." },
-    ],
-    request: {
-      curl: `# Crie uma cobrança Pix em segundos
-curl -X POST https://api.usenummo.com.br/v1/charges \\
-  -H "Authorization: Bearer SEU_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "amount": 4990,
-    "payment_method": "pix",
-    "customer": {
-      "name": "Maria Silva",
-      "document": "12345678900"
-    }
-  }'`,
-      node: `// Crie uma cobrança Pix em segundos
+// Demonstração da API na home: exemplo de "criar cobrança" (JavaScript) + resposta.
+// É o único trecho exibido; a documentação completa fica no CTA (NUMMO_DOCS_URL).
+const DEMO_REQUEST = `// Crie uma cobrança Pix em segundos
 import { Nummo } from "nummo";
 
 const nummo = new Nummo("SEU_TOKEN");
@@ -504,51 +306,9 @@ const cobranca = await nummo.charges.create({
     name: "Maria Silva",
     document: "12345678900",
   },
-});`,
-      python: `charge = nummo.Charge.create(
-    amount=19700,
-    payment_method="pix",
-    customer={"email": "cliente@email.com"},
-)`,
-      php: `$charge = $nummo->charges->create([
-    "amount" => 19700,
-    "payment_method" => "pix",
-    "customer" => ["email" => "cliente@email.com"],
-]);`,
-      ruby: `charge = Nummo::Charge.create(
-  amount: 19700,
-  payment_method: "pix",
-  customer: { email: "cliente@email.com" }
-)`,
-      go: `charge, _ := client.Charges.Create(ctx, &nummo.ChargeParams{
-    Amount:        19700,
-    PaymentMethod: "pix",
-    Customer:      &nummo.Customer{Email: "cliente@email.com"},
-})`,
-      java: `Charge charge = nummo.charges().create(
-    ChargeParams.builder()
-        .amount(19700)
-        .paymentMethod("pix")
-        .customer(Customer.of("cliente@email.com"))
-        .build());`,
-      csharp: `var charge = await nummo.Charges.CreateAsync(new ChargeParams {
-    Amount = 19700,
-    PaymentMethod = "pix",
-    Customer = new Customer { Email = "cliente@email.com" },
-});`,
-      cpp: `auto charge = client.charges().create({
-    {"amount", 19700},
-    {"payment_method", "pix"},
-    {"customer", {{"email", "cliente@email.com"}}},
-});`,
-      rust: `let charge = nummo.charges().create(ChargeParams {
-    amount: 19700,
-    payment_method: "pix".into(),
-    customer: Customer { email: "cliente@email.com".into() },
-    ..Default::default()
-}).await?;`,
-    },
-    response: `{
+});`;
+
+const DEMO_RESPONSE = `{
   "id": "chg_3a9f2c8db1",
   "status": "pending",
   "amount": 4990,
@@ -557,135 +317,7 @@ const cobranca = await nummo.charges.create({
     "qr_code": "00020126360014BR.GOV.BCB.PIX...5204",
     "expires_at": "2026-09-15T18:45:00Z"
   }
-}`,
-  },
-  {
-    id: "get-charge",
-    group: "Cobranças",
-    nav: "Consultar cobrança",
-    method: "GET",
-    path: "/v1/charges/{id}",
-    title: "Consultar cobrança",
-    desc: "Recupera os detalhes e o status atual de uma cobrança pelo seu id.",
-    params: [
-      { name: "id", type: "string", required: true, desc: "Id da cobrança (informado na URL)." },
-    ],
-    request: {
-      curl: `curl https://api.usenummo.com.br/v1/charges/chg_3a9f2c \\
-  -H "Authorization: Bearer sk_live_..."`,
-      node: `const charge = await nummo.charges.retrieve("chg_3a9f2c");`,
-      python: `charge = nummo.Charge.retrieve("chg_3a9f2c")`,
-      php: `$charge = $nummo->charges->retrieve("chg_3a9f2c");`,
-      ruby: `charge = Nummo::Charge.retrieve("chg_3a9f2c")`,
-      go: `charge, _ := client.Charges.Retrieve(ctx, "chg_3a9f2c")`,
-      java: `Charge charge = nummo.charges().retrieve("chg_3a9f2c");`,
-      csharp: `var charge = await nummo.Charges.RetrieveAsync("chg_3a9f2c");`,
-      cpp: `auto charge = client.charges().retrieve("chg_3a9f2c");`,
-      rust: `let charge = nummo.charges().retrieve("chg_3a9f2c").await?;`,
-    },
-    response: `{
-  "id": "chg_3a9f2c",
-  "status": "paid",
-  "amount": 19700,
-  "paid_at": "2026-09-13T18:12:04Z"
-}`,
-  },
-  {
-    id: "refund",
-    group: "Cobranças",
-    nav: "Reembolsar",
-    method: "POST",
-    path: "/v1/charges/{id}/refunds",
-    title: "Reembolsar cobrança",
-    desc: "Reembolsa total ou parcialmente uma cobrança paga. Omita amount para o reembolso total.",
-    params: [
-      { name: "amount", type: "integer", required: false, desc: "Valor a reembolsar, em centavos. Se omitido, reembolsa tudo." },
-    ],
-    request: {
-      curl: `curl https://api.usenummo.com.br/v1/charges/chg_3a9f2c/refunds \\
-  -H "Authorization: Bearer sk_live_..." \\
-  -d '{ "amount": 19700 }'`,
-      node: `const refund = await nummo.charges.refund("chg_3a9f2c", {
-  amount: 19700,
-});`,
-      python: `refund = nummo.Charge.refund("chg_3a9f2c", amount=19700)`,
-      php: `$refund = $nummo->charges->refund("chg_3a9f2c", [
-    "amount" => 19700,
-]);`,
-      ruby: `refund = Nummo::Charge.refund("chg_3a9f2c", amount: 19700)`,
-      go: `refund, _ := client.Charges.Refund(ctx, "chg_3a9f2c", &nummo.RefundParams{
-    Amount: 19700,
-})`,
-      java: `Refund refund = nummo.charges().refund(
-    "chg_3a9f2c",
-    RefundParams.builder().amount(19700).build());`,
-      csharp: `var refund = await nummo.Charges.RefundAsync("chg_3a9f2c", new RefundParams {
-    Amount = 19700,
-});`,
-      cpp: `auto refund = client.charges().refund("chg_3a9f2c", {
-    {"amount", 19700},
-});`,
-      rust: `let refund = nummo.charges().refund("chg_3a9f2c", RefundParams {
-    amount: Some(19700),
-}).await?;`,
-    },
-    response: `{
-  "id": "ref_7b1e0a",
-  "charge_id": "chg_3a9f2c",
-  "status": "refunded",
-  "amount": 19700
-}`,
-  },
-  {
-    id: "events",
-    group: "Webhooks",
-    nav: "Eventos",
-    method: "GET",
-    path: "/v1/events",
-    title: "Eventos & webhooks",
-    desc: "A Nummo envia um evento para a sua URL a cada mudança de status (charge.paid, charge.refunded…). Valide a assinatura no header Nummo-Signature. Você também pode listar os eventos por aqui.",
-    params: [
-      { name: "type", type: "string", required: false, desc: "Filtra por tipo de evento, ex.: charge.paid." },
-    ],
-    request: {
-      curl: `curl https://api.usenummo.com.br/v1/events?type=charge.paid \\
-  -H "Authorization: Bearer sk_live_..."`,
-      node: `const events = await nummo.events.list({
-  type: "charge.paid",
-});`,
-      python: `events = nummo.Event.list(type="charge.paid")`,
-      php: `$events = $nummo->events->list([
-    "type" => "charge.paid",
-]);`,
-      ruby: `events = Nummo::Event.list(type: "charge.paid")`,
-      go: `events, _ := client.Events.List(ctx, &nummo.EventParams{
-    Type: "charge.paid",
-})`,
-      java: `EventList events = nummo.events().list(
-    EventParams.builder().type("charge.paid").build());`,
-      csharp: `var events = await nummo.Events.ListAsync(new EventParams {
-    Type = "charge.paid",
-});`,
-      cpp: `auto events = client.events().list({
-    {"type", "charge.paid"},
-});`,
-      rust: `let events = nummo.events().list(EventParams {
-    r#type: "charge.paid".into(),
-}).await?;`,
-    },
-    response: `{
-  "object": "list",
-  "data": [
-    {
-      "id": "evt_5c8d1f",
-      "type": "charge.paid",
-      "created_at": "2026-09-13T18:12:05Z",
-      "data": { "id": "chg_3a9f2c", "status": "paid" }
-    }
-  ]
-}`,
-  },
-];
+}`;
 
 // Realce de sintaxe (por linha) dos exemplos de código. Entrada 100% estática,
 // então o HTML gerado é seguro. Cores: comentário cinza, método HTTP magenta,
@@ -743,7 +375,7 @@ function ApiCodeWindow({ filename, code }: { filename: string; code: string }) {
           <button
             type="button"
             onClick={copy}
-            aria-label="Copiar código"
+            aria-label={copied ? "Código copiado" : "Copiar código"}
             className="text-[#F6F9FC]/45 transition-colors hover:text-[#F6F9FC]/85"
           >
             {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
@@ -769,11 +401,9 @@ function ApiCodeWindow({ filename, code }: { filename: string; code: string }) {
 }
 
 // Seção "Documentação da API": duas colunas (texto + CTA à esquerda, janela de
-// código à direita). Demonstração enxuta; a doc completa fica no CTA. A infra
-// por linguagem continua em API_ENDPOINTS.request para quando quiser reativar.
+// código à direita). Demonstração enxuta; a doc completa fica no CTA.
 function ApiDocs() {
-  const demo = API_ENDPOINTS.find((e) => e.id === "create-charge") ?? API_ENDPOINTS[0];
-  const code = `${demo.request.node}\n\n// Resposta\n${demo.response}`;
+  const code = `${DEMO_REQUEST}\n\n// Resposta\n${DEMO_RESPONSE}`;
   const features = [
     "Webhooks confiáveis em cada evento",
     "Ambiente de testes (sandbox)",
@@ -821,125 +451,10 @@ function Bento() {
   return (
     <section id="plataforma" className="grad-night-dev flex min-h-svh items-center py-24 max-sm:min-h-0 max-sm:py-16">
       <div className="mx-auto w-full max-w-7xl px-6">
-        <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
-          {/* Checkout Builder com IA + Área de membros + Marketplace -
-              TEMPORARIAMENTE OCULTOS a pedido (serão reutilizados depois).
-              Para reativar: trocar `false` por `true` no wrapper abaixo. */}
-          {false && (<>
-          {/* Big card */}
-          <div
-            className="noise relative -mt-[30px] overflow-hidden rounded-[28px] p-6 pt-[54px] text-[#F6F9FC] md:col-span-6 md:justify-self-start md:p-8 md:pt-[62px] lg:max-w-[840px]"
-            style={{ background: "#0C1730", boxShadow: "0 22px 44px -22px rgba(9,16,32,0.55)" }}
-          >
-            <div className="absolute left-6 top-6 flex gap-2 md:left-8">
-              <span className="size-3 rounded-full bg-[#FF5F57]" />
-              <span className="size-3 rounded-full bg-[#FEBD2E]" />
-              <span className="size-3 rounded-full bg-[#28C840]" />
-            </div>
-            <div className="flex h-full flex-col justify-between gap-10">
-              <div>
-                <h3 className="font-display text-3xl font-medium tracking-tight">
-                  Checkout Builder com IA
-                </h3>
-                <p className="mt-4 text-[#F6F9FC]/75">
-                  A IA da Nummo analisa seu checkout, dá uma nota e mostra o que trava suas vendas, sugerindo melhorias em cada etapa.
-                </p>
-
-                <div className="mt-5 grid translate-y-[7px] gap-2.5 lg:grid-cols-2">
-                  {/* Score de conversão (IA) */}
-                  <ConversionScore />
-                  {/* Recomendações da IA */}
-                  <div className="flex h-full flex-col gap-3">
-                    {[
-                      { title: "Pixel de rastreamento ativo", pts: 6, desc: "Cadastre um pixel (Meta/GTM) ativo na aba Pixel de Conversão.", tab: "Pixel de Conversão" },
-                      { title: "Suporte (SAC) visível", pts: 3, desc: "Preencha e-mail e WhatsApp do SAC em Informações Gerais.", tab: "Informações Gerais" },
-                      { title: "Página de vendas informada", pts: 2, desc: "Informe a URL da página de vendas em Informações Gerais.", tab: "Informações Gerais" },
-                      { title: "Depoimentos de clientes", pts: 4, desc: "Adicione provas sociais na aba Componentes do checkout.", tab: "Componentes" },
-                    ].map((r) => (
-                      <div key={r.title} className="flex flex-1 flex-col justify-center rounded-lg border border-white/10 p-2.5">
-                        <div className="flex items-center gap-1.5">
-                          <AlertTriangle className="size-3 shrink-0 text-[#2F6BFF]" />
-                          <span className="text-[11px] font-semibold text-[#F6F9FC]">{r.title}</span>
-                          <span className="text-[9px] text-[#F6F9FC]/70">+{r.pts}pts</span>
-                        </div>
-                        <p className="mt-1 text-[10px] leading-snug text-[#F6F9FC]/55">{r.desc}</p>
-                        <div className="mt-2 inline-flex self-start rounded-md border border-[#2F6BFF]/30 bg-[#2F6BFF]/12 px-2 py-0.5 text-[9px] font-semibold text-[#2F6BFF]">
-                          Configure na aba "{r.tab}"
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <BentoCard
-            className="md:col-span-2"
-            icon={<Users />}
-            title="Área de membros"
-            text="Hospede seu curso e entregue o conteúdo."
-          />
-          <BentoCard
-            className="md:col-span-2"
-            icon={<Layers />}
-            title="Marketplace"
-            text="Cadastre vários vendedores e a Nummo cuida do resto: split e repasse automático, KYC de cada seller e saldo com saque próprio. Tudo em uma só estrutura."
-          />
-          </>)}
-
-          {/* Foto do notebook (metodos-dashboard-2.png) + degradê radial.
-              TEMPORARIAMENTE OCULTA a pedido (será reutilizada depois).
-              Para reativar: trocar `false` por `true` abaixo. O PNG segue em /public. */}
-          {false && (
-          <div
-            className="relative flex min-h-[438px] items-start justify-center md:col-span-2"
-          >
-            <img
-              src="/metodos-dashboard-2.png"
-              alt="Dashboard da Nummo no notebook"
-              width={2160}
-              height={2160}
-              loading="lazy"
-              decoding="async"
-              className="w-full select-none object-contain"
-              draggable={false}
-              style={{
-                WebkitMaskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
-                maskImage: "radial-gradient(125% 100% at 50% 0%, #000 72%, rgba(0,0,0,0.3) 89%, transparent 100%)",
-              }}
-            />
-          </div>
-          )}
-        </Stagger>
-
         {/* Documentação da API do gateway */}
         <ApiDocs />
       </div>
     </section>
-  );
-}
-
-function BentoCard({
-  icon, title, text, className = "", compact = false, wide = false,
-}: {
-  icon: React.ReactNode; title: string; text: string; className?: string; compact?: boolean; wide?: boolean;
-}) {
-  return (
-    <div
-      className={`relative min-h-[438px] overflow-hidden rounded-[28px] p-8 text-[#F6F9FC] ${className}`}
-      style={{ background: "#0C1730", boxShadow: "0 16px 32px -18px rgba(9,16,32,0.5)" }}
-    >
-      <div
-        className="mb-5 inline-flex size-10 items-center justify-center rounded-xl text-[#F6F9FC]"
-        style={{ background: "#0D1B39", boxShadow: "inset 2px 2px 4px #080f22, inset -2px -2px 4px #12264a" }}
-      >
-        <span className="[&>svg]:size-5">{icon}</span>
-      </div>
-      <h3 className={`font-display ${compact ? "text-lg" : "text-2xl"} font-medium tracking-tight`}>
-        {title}
-      </h3>
-    </div>
   );
 }
 
@@ -1151,6 +666,7 @@ function IntegrationChip({ l }: { l: Integration }) {
           className={`object-contain ${l.wide ? "max-h-9 max-w-16" : "max-h-12 max-w-14"} max-sm:max-h-10 max-sm:max-w-12`}
           draggable={false}
           loading="lazy"
+          decoding="async"
         />
       )}
     </div>
@@ -1198,13 +714,13 @@ function HowItWorks() {
           className="relative mt-16 overflow-hidden py-6 max-sm:mt-12"
           style={{ maskImage: fade, WebkitMaskImage: fade }}
         >
-          <div className="flex w-max animate-marquee-right py-2">
+          <div className="flex w-max animate-marquee-right py-2" aria-hidden="true">
             {/* 4x: cada "metade" (2x) é mais larga que a tela → loop sem vão branco. */}
             {[...integrations, ...integrations, ...integrations, ...integrations].map((l, i) => (
               <IntegrationChip key={i} l={l} />
             ))}
           </div>
-          <div className="mt-4 flex w-max animate-marquee py-2">
+          <div className="mt-4 flex w-max animate-marquee py-2" aria-hidden="true">
             {[...bottomRow, ...bottomRow, ...bottomRow, ...bottomRow].map((l, i) => (
               <IntegrationChip key={i} l={l} />
             ))}
@@ -1405,9 +921,9 @@ export function Footer() {
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
             ].map((col) => (
               <div key={col.t}>
-                <h4 className="mb-4 text-[10px] font-medium uppercase tracking-widest text-[#F6F9FC]/55">
+                <h3 className="mb-4 text-[10px] font-medium uppercase tracking-widest text-[#F6F9FC]/55">
                   {col.t}
-                </h4>
+                </h3>
                 <ul className="space-y-1">
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];

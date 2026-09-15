@@ -26,14 +26,14 @@ export const TestimonialsColumn = (props: {
           ...new Array(2).fill(0).map((_, index) => (
             <React.Fragment key={index}>
               {props.testimonials.map(({ text, image, name, role }, i) => (
-                <div className="p-10 max-sm:p-6 rounded-3xl border border-[#0D1B39]/[0.04] bg-white shadow-[0_10px_30px_-12px_rgba(13,27,57,0.12)] max-w-xs w-full" key={i}>
+                <div className="p-10 max-sm:p-6 rounded-3xl border border-[#0D1B39]/[0.04] bg-white shadow-[0_10px_30px_-12px_rgba(13,27,57,0.12)] max-w-xs w-full" key={i} aria-hidden={index === 1 ? true : undefined}>
                   <div>{text}</div>
                   <div className="flex items-center gap-2 mt-5">
                     <img
                       width={40}
                       height={40}
                       src={image}
-                      alt={name}
+                      alt=""
                       loading="lazy"
                       decoding="async"
                       className="h-10 w-10 rounded-full ring-[2.5px] ring-[#0D1B39]"

@@ -325,22 +325,6 @@ html, body { overflow-x: clip; max-width: 100%; }
   color: #F6F9FC;
 }
 
-/* Fumacinha da xícara: cada wisp sobe, dilata e dissipa (com stagger) */
-@keyframes cs-rise {
-  0%   { opacity: 0;    transform: translateY(4px)   scaleX(0.55) scaleY(0.6); }
-  22%  { opacity: 0.75; }
-  55%  { opacity: 0.5; }
-  82%  { opacity: 0.18; }
-  100% { opacity: 0;    transform: translateY(-96px) scaleX(1.6)  scaleY(1.65); }
-}
-.cs-wisp { transform-box: fill-box; transform-origin: 50% 100%; will-change: transform, opacity; animation: cs-rise 6.2s ease-in-out infinite; }
-.cs-w1 { animation-duration: 6.2s; animation-delay: 0s; }
-.cs-w2 { animation-duration: 7.6s; animation-delay: 1.7s; }
-.cs-w3 { animation-duration: 8.4s; animation-delay: 3.3s; }
-@media (prefers-reduced-motion: reduce) {
-  .cs-wisp { animation: none; opacity: 0; }
-}
-
 /* ---------- reveal ao rolar (entrada das seções) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
@@ -366,87 +350,6 @@ html, body { overflow-x: clip; max-width: 100%; }
     opacity: 1;
     transform: none;
   }
-
-  /* mockup dos Métodos: fade suave em todas as telas; o deslize da borda direita
-     só no desktop (no mobile a coluna é estreita e o translateX transbordaria). */
-  .slide-in-right {
-    opacity: 0;
-    transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-  }
-  .slide-in-right.in {
-    opacity: 1;
-  }
-  @media (min-width: 1024px) {
-    .slide-in-right {
-      transform: translateX(60px);
-      transition:
-        opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .slide-in-right.in {
-      transform: translateX(0);
-    }
-  }
-}
-
-/* ---------- estados de pressão neumórficos (hover levanta, active afunda) ---------- */
-.nm-press-light,
-.nm-press-dark {
-  transition:
-    box-shadow 1.5s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.nm-press-light { box-shadow: 14px 14px 28px #d3dbea, -14px -14px 28px #ffffff; }
-.nm-press-dark { box-shadow: 6px 6px 14px #080f22, -6px -6px 14px #12264a; }
-@media (hover: hover) {
-  .nm-press-light:hover { box-shadow: 18px 18px 40px #cdd7e8, -16px -16px 34px #ffffff; transform: translateY(-3px); }
-  .nm-press-dark:hover { box-shadow: 9px 9px 22px #080f22, -9px -9px 22px #12264a; transform: translateY(-3px); }
-}
-/* Cards de meios de pagamento: SEM animação de clique (:active removido) - mantém só sombra base + hover. */
-.nm-press-dark:active { box-shadow: inset 4px 4px 9px #080f22, inset -4px -4px 9px #12264a; transform: translateY(0); }
-@media (prefers-reduced-motion: reduce) {
-  .nm-press-light, .nm-press-dark { transition: none; }
-  .nm-press-light:hover, .nm-press-dark:hover { transform: none; }
-}
-/* Só no mobile (phones): remove a animação de toque dos cards de meios de pagamento.
-   Tablet e desktop mantêm o efeito press/hover normalmente. */
-@media (max-width: 639px) {
-  .nm-press-light { transition: none; }
-  .nm-press-light:active { box-shadow: 14px 14px 28px #d3dbea, -14px -14px 28px #ffffff; transform: none; }
-}
-
-/* ---------- Fluxo de suporte: cascata em loop (cards sobem, barras enchem, todos descem) ---------- */
-/* Tudo controlado por JS via classes; as transições dão a suavidade (subir = descer). */
-@keyframes conn-spin { to { transform: rotate(360deg); } }
-
-/* Barra conectora (fill azul) - preenchimento fluido e contínuo, sem parar.
-   Enche da esquerda, some ao completar, reinicia invisível e repete (sem pulo visível).
-   A animação infinita sobrepõe as classes .half/.full/.empty do JS. */
-@keyframes conn-flow {
-  0%   { transform: scaleX(0); opacity: 0; }
-  12%  { opacity: 1; }
-  55%  { transform: scaleX(1); opacity: 1; }
-  72%  { transform: scaleX(1); opacity: 0; }
-  100% { transform: scaleX(0); opacity: 0; }
-}
-.conn-fill {
-  transform-origin: left;
-  animation: conn-flow 2.2s ease-in-out infinite;
-}
-
-/* Loader no meio da barra - aparece durante a pausa (.show) */
-.conn-loader { display: none; }
-.conn-spin-arc { animation: conn-spin 1.1s linear infinite; }
-
-/* Cards estáticos: animação de subir removida (mesmo que o JS marque .up, não se movem). */
-.card-lift { transform: none; transition: none; }
-.card-lift.up { transform: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  .card-lift, .card-lift.up { transform: none; transition: none; }
-  .conn-fill { transform: scaleX(1); opacity: 1; transition: none; animation: none; }
-  .conn-loader, .conn-spin-arc { animation: none; opacity: 0; }
 }
 
 /* ---------- Fundo gradiente azul → preto (luz nascendo da base) ---------- */

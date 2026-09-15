@@ -78,9 +78,17 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 	React.useEffect(() => {
 		if (open) {
 			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = '';
+			// Fecha o menu mobile com Esc (acessibilidade de teclado).
+			const onKey = (e: KeyboardEvent) => {
+				if (e.key === 'Escape') setOpen(false);
+			};
+			document.addEventListener('keydown', onKey);
+			return () => {
+				document.body.style.overflow = '';
+				document.removeEventListener('keydown', onKey);
+			};
 		}
+		document.body.style.overflow = '';
 		return () => {
 			document.body.style.overflow = '';
 		};
@@ -94,7 +102,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 		>
 			<nav className="relative mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-6">
 					<RouterLink to="/" className="nav-trigger rounded-md transition-opacity hover:opacity-80" aria-label="Nummo, início">
-						<img src="/logo-nummo.svg" alt="Nummo" className="h-6 w-auto" />
+						<img src="/logo-nummo.svg" alt="Nummo" width={145} height={24} className="h-6 w-auto" />
 					</RouterLink>
 					<NavigationMenu className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex">
 						<NavigationMenuList>
@@ -152,11 +160,13 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 									</div>
 								</NavigationMenuContent>
 							</NavigationMenuItem>
-							<NavigationMenuLink className="px-4" asChild>
-								<a href="/#taxas" className="nav-trigger hover:bg-accent rounded-md p-2">
-									Taxas
-								</a>
-							</NavigationMenuLink>
+							<NavigationMenuItem>
+								<NavigationMenuLink className="px-4" asChild>
+									<a href="/#taxas" className="nav-trigger hover:bg-accent rounded-md p-2">
+										Taxas
+									</a>
+								</NavigationMenuLink>
+							</NavigationMenuItem>
 						</NavigationMenuList>
 					</NavigationMenu>
 				<div className="hidden items-center gap-2 md:flex">

@@ -147,6 +147,7 @@ export function FaqCategorized({
             ref={tablistRef}
             className="relative flex flex-wrap justify-center gap-2 border-border border-b"
             role="tablist"
+            aria-label="Categorias de perguntas"
           >
             {categories.map((category, index) => (
               <button
@@ -202,6 +203,7 @@ export function FaqCategorized({
                 >
                   <button
                     aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${activeCategory}-${index}`}
                     className="flex w-full cursor-pointer items-center justify-between p-5 text-left transition-colors hover:bg-background/50"
                     onClick={() => toggleAccordion(index)}
                     type="button"
@@ -222,6 +224,8 @@ export function FaqCategorized({
                   </button>
 
                   <div
+                    id={`faq-answer-${activeCategory}-${index}`}
+                    role="region"
                     className={`overflow-hidden transition-all duration-300 ease-out motion-reduce:transition-none ${
                       isOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
                     }`}

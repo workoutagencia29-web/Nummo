@@ -1322,7 +1322,7 @@ function HowItWorks() {
         {/* Esteira: duas fileiras em sentidos opostos (→ em cima, ← embaixo), com
             fade nas bordas. Roda sempre, sem pausar no hover. Tudo com transform (marquee) → sem jank. */}
         <div
-          className="relative mt-16 overflow-hidden max-sm:mt-12"
+          className="relative mt-16 overflow-hidden py-6 max-sm:mt-12"
           style={{ maskImage: fade, WebkitMaskImage: fade }}
         >
           <div className="flex w-max animate-marquee-right py-2">

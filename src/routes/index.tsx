@@ -1165,13 +1165,34 @@ function Rates() {
             Seu negócio não precisa caber em uma taxa padrão
           </h2>
           <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-[#F6F9FC]/85 max-sm:text-sm">
-            Temos <span className="font-semibold text-[#5b8bff]">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa. E, conforme seu negócio evolui, cresce em volume ou muda de estrutura, suas condições podem ser revisadas para acompanhar essa nova fase.
+            Sua taxa é definida pelo <span className="font-semibold text-[#5b8bff]">perfil da sua operação</span>, não por uma tabela genérica. E conforme você cresce em volume, revisamos suas condições para deixá-las ainda melhores.
           </p>
-          <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-[#F6F9FC]/70 max-sm:text-[13px]">
-            Comece com o plano ideal hoje e{" "}
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#5b8bff] underline-offset-2 transition-colors hover:text-white hover:underline">negocie condições ainda melhores</a>{" "}
-            quando sua operação pedir.
-          </p>
+
+          {/* Chips de benefício */}
+          <div className="mt-7 flex flex-wrap gap-2.5">
+            {["Pix na hora", "Sem mensalidade", "Taxa sob medida"].map((c) => (
+              <span
+                key={c}
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-medium text-[#F6F9FC]/90 backdrop-blur max-sm:text-[13px]"
+              >
+                <Check className="size-4 shrink-0 text-[#5b8bff]" />
+                {c}
+              </span>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="mt-8">
+            <a
+              href="https://wa.me/5511912002801?text=Olá!%20Quero%20falar%20com%20um%20especialista%20sobre%20as%20taxas%20da%20Nummo."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-[52px] items-center justify-center gap-2 rounded-full bg-[#2559d8] px-7 text-base font-semibold text-white shadow-[0_12px_28px_-10px_rgba(37,89,216,0.6)] transition-all hover:-translate-y-0.5 hover:bg-[#1f4fc4] max-sm:w-full"
+            >
+              Falar com um especialista
+              <ArrowRight className="size-[18px]" />
+            </a>
+          </div>
         </div>
       </div>
     </section>

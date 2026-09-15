@@ -244,7 +244,7 @@ function HeroOrbits() {
 
 function Hero() {
   return (
-    <section className="grad-night relative -mt-[73px] flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-28 pt-32 text-[#F6F9FC] max-sm:pb-24 max-sm:pt-28 md:min-h-[calc(100svh+150px)]">
+    <section className="grad-night relative -mt-[73px] flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-28 pt-32 text-[#F6F9FC] max-sm:pb-24 max-sm:pt-28">
       <HeroOrbits />
       {/* brilho azul suave atrás do título */}
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[520px] w-[760px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2F6BFF]/12 blur-[130px]" />

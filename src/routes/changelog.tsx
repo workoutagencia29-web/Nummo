@@ -81,7 +81,7 @@ function ChangelogPage() {
                     {e.tag}
                   </span>
                 </div>
-                <h3 className="mt-2 font-display text-xl font-medium tracking-tight">{e.title}</h3>
+                <h2 className="mt-2 font-display text-xl font-medium tracking-tight">{e.title}</h2>
                 <p className="mt-1.5 max-w-xl text-pretty text-sm text-muted-foreground">{e.desc}</p>
               </li>
             );

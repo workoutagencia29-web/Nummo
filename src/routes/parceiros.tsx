@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PlaceholderPage } from "../components/placeholder-page";
 
 export const Route = createFileRoute("/parceiros")({
-  head: () => ({ meta: [{ title: "Parceiros | Nummo" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Parceiros | Nummo" }, { name: "robots", content: "noindex" }, { name: "googlebot", content: "noindex" }, { property: "og:url", content: "https://www.usenummo.com.br/parceiros" }] }),
   component: () => (
     <PlaceholderPage
       eyebrow="Parceiros"

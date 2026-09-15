@@ -56,6 +56,7 @@ export const Route = createFileRoute("/email")({
       { title: "Suporte | Nummo" },
       { name: "description", content: "Suporte da Nummo: tire suas dúvidas sobre conta, pagamentos, integrações e mais. Nosso time está pronto para ajudar." },
       { name: "robots", content: "noindex" },
+      { name: "googlebot", content: "noindex" },
       { property: "og:title", content: "Suporte | Nummo" },
       { property: "og:description", content: "Suporte da Nummo: tire suas dúvidas sobre conta, pagamentos, integrações e mais. Nosso time está pronto para ajudar." },
       { property: "og:url", content: "https://www.usenummo.com.br/email" },

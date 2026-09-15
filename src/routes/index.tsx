@@ -492,10 +492,18 @@ curl -X POST https://api.usenummo.com.br/v1/charges \\
       "document": "12345678900"
     }
   }'`,
-      node: `const charge = await nummo.charges.create({
-  amount: 19700,
+      node: `// Crie uma cobrança Pix em segundos
+import { Nummo } from "nummo";
+
+const nummo = new Nummo("SEU_TOKEN");
+
+const cobranca = await nummo.charges.create({
+  amount: 4990,
   payment_method: "pix",
-  customer: { email: "cliente@email.com" },
+  customer: {
+    name: "Maria Silva",
+    document: "12345678900",
+  },
 });`,
       python: `charge = nummo.Charge.create(
     amount=19700,
@@ -684,18 +692,20 @@ curl -X POST https://api.usenummo.com.br/v1/charges \\
 // URL ciano, string verde, chave azul, número laranja.
 function highlightCode(line: string): string {
   const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  if (/^\s*#/.test(line)) return `<span style="color:#6b7a90">${esc(line)}</span>`;
-  const re = /("(?:\\.|[^"\\])*"\s*:)|("(?:\\.|[^"\\])*")|(https?:\/\/[^\s"'\\]+)|\b(POST|GET|PUT|PATCH|DELETE)\b|\b(\d+)\b/g;
+  // Comentário de linha inteira (# do shell ou // do JS)
+  if (/^\s*(#|\/\/)/.test(line)) return `<span style="color:#6b7a90">${esc(line)}</span>`;
+  const re = /("(?:\\.|[^"\\])*"\s*:)|("(?:\\.|[^"\\])*")|(https?:\/\/[^\s"'\\]+)|\b(import|from|const|let|var|new|await|async|return|function|POST|GET|PUT|PATCH|DELETE)\b|\b([A-Za-z_$][\w$]*)(?=\s*:)|\b(\d+)\b/g;
   let out = "";
   let last = 0;
   let m: RegExpExecArray | null;
   while ((m = re.exec(line)) !== null) {
     out += esc(line.slice(last, m.index));
-    if (m[1]) out += `<span style="color:#7cc5ff">${esc(m[1])}</span>`;
-    else if (m[2]) out += `<span style="color:#9be08f">${esc(m[2])}</span>`;
-    else if (m[3]) out += `<span style="color:#56c8d8">${esc(m[3])}</span>`;
-    else if (m[4]) out += `<span style="color:#e879c9">${esc(m[4])}</span>`;
-    else if (m[5]) out += `<span style="color:#e0b978">${esc(m[5])}</span>`;
+    if (m[1]) out += `<span style="color:#7cc5ff">${esc(m[1])}</span>`;      // chave "..." :
+    else if (m[2]) out += `<span style="color:#9be08f">${esc(m[2])}</span>`; // string
+    else if (m[3]) out += `<span style="color:#56c8d8">${esc(m[3])}</span>`; // url
+    else if (m[4]) out += `<span style="color:#e879c9">${esc(m[4])}</span>`; // palavra-chave / método HTTP
+    else if (m[5]) out += `<span style="color:#7cc5ff">${esc(m[5])}</span>`; // chave não-aspeada (JS)
+    else if (m[6]) out += `<span style="color:#e0b978">${esc(m[6])}</span>`; // número
     last = re.lastIndex;
   }
   out += esc(line.slice(last));
@@ -763,7 +773,7 @@ function ApiCodeWindow({ filename, code }: { filename: string; code: string }) {
 // por linguagem continua em API_ENDPOINTS.request para quando quiser reativar.
 function ApiDocs() {
   const demo = API_ENDPOINTS.find((e) => e.id === "create-charge") ?? API_ENDPOINTS[0];
-  const code = `${demo.request.curl}\n\n# Resposta\n${demo.response}`;
+  const code = `${demo.request.node}\n\n// Resposta\n${demo.response}`;
   const features = [
     "Webhooks confiáveis em cada evento",
     "Ambiente de testes (sandbox)",
@@ -802,7 +812,7 @@ function ApiDocs() {
       </div>
 
       {/* Direita: janela de código */}
-      <ApiCodeWindow filename="api-pix-nummo" code={code} />
+      <ApiCodeWindow filename="criar-cobranca.js" code={code} />
     </div>
   );
 }

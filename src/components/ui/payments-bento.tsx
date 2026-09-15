@@ -5,7 +5,7 @@ import { CreditCard, Barcode, Link2, Repeat, Blocks, TrendingUp, PlusCircle, Spa
    Card grande de destaque (Checkout Builder, com mini-preview), card de IA
    em evidência, tile com os meios de pagamento e tiles menores das demais
    ferramentas. Cards brancos com borda fina + elevação; hover levanta +
-   brilho de marca. Sem imagens externas — marcas em SVG inline (CSP-safe). */
+   brilho de marca. Sem imagens externas - marcas em SVG inline (CSP-safe). */
 /* ------------------------------------------------------------------ */
 
 function PixMark({ className = "" }: { className?: string }) {
@@ -138,7 +138,7 @@ export function PaymentsBento() {
       {/* Recorrência */}
       <ToolTile icon={Repeat} title="Recorrência" desc="Assinaturas e cobranças automáticas." />
 
-      {/* Recuperação de carrinho (IA) — destaque, 2 colunas */}
+      {/* Recuperação de carrinho (IA) - destaque, 2 colunas */}
       <div className="group relative overflow-hidden rounded-2xl border border-[#2559d8]/20 bg-gradient-to-br from-[#eef4ff] to-white p-5 shadow-[0_10px_30px_-16px_rgba(37,89,216,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_46px_-18px_rgba(37,89,216,0.42)] md:col-span-2">
         <div aria-hidden className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-[#2559d8] opacity-[0.1] blur-3xl transition-opacity duration-300 group-hover:opacity-[0.16]" />
         <span className="absolute right-4 top-4 z-10 rounded-full bg-gradient-to-r from-[#2559d8] to-[#5b8bff] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white shadow-[0_4px_10px_-3px_rgba(37,89,216,0.6)]">
@@ -154,7 +154,7 @@ export function PaymentsBento() {
       {/* Upsell */}
       <ToolTile icon={TrendingUp} title="Upsell" desc="Aumente o ticket no pós-compra." />
 
-      {/* Meios de pagamento — 2 colunas, chips dentro */}
+      {/* Meios de pagamento - 2 colunas, chips dentro */}
       <div className="flex flex-col justify-center rounded-2xl border border-[#0D1B39]/[0.07] bg-white p-6 shadow-[0_1px_3px_rgba(13,27,57,0.05)] max-sm:p-5 md:col-span-2">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#0D1B39]/45">Meios de pagamento</p>
         <p className="mt-1.5 text-sm text-[#0D1B39]/55">Do Pix ao Apple Pay, num só checkout.</p>

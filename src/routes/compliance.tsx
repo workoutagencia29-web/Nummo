@@ -32,7 +32,7 @@ function CompliancePage() {
     <>
       <Nav solid />
       <main id="conteudo">
-        {/* Head — mesmo modelo/posição/tamanho das outras páginas */}
+        {/* Head - mesmo modelo/posição/tamanho das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pt-20 md:pt-28">
           <div className="lg:-ml-24 xl:-ml-40">
             <h1 className="text-balance font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#0D1B39] md:text-6xl">
@@ -44,7 +44,7 @@ function CompliancePage() {
           </div>
         </div>
 
-        {/* Conteúdo — mesma posição/eixo das outras páginas */}
+        {/* Conteúdo - mesma posição/eixo das outras páginas */}
         <div className="mx-auto max-w-4xl px-6 pb-20 md:pb-28">
           <div className="mt-14 lg:-ml-12 lg:-mr-16 lg:mt-[98px] xl:-ml-24 xl:-mr-28">
             <div className="flex flex-wrap gap-2.5">

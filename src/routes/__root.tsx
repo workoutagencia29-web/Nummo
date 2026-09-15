@@ -188,7 +188,7 @@ function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // Só no desktop (ponteiro fino). No touch, o scroll nativo já cobre — e o
+    // Só no desktop (ponteiro fino). No touch, o scroll nativo já cobre - e o
     // Lenis (~8KB) é importado sob demanda aqui, ficando fora do bundle mobile.
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     let raf = 0;
@@ -220,7 +220,7 @@ function RootComponent() {
     else window.scrollTo(0, 0);
   }, [pathname]);
   // Preloader: aparece no 1º paint (SSR) e some assim que a página está REALMENTE
-  // pronta — hidratada (este efeito já rodou), fontes carregadas (document.fonts.ready,
+  // pronta - hidratada (este efeito já rodou), fontes carregadas (document.fonts.ready,
   // evita o "swap" da Inter aparecer depois) e um frame pintado. Em vez de timer fixo:
   // some cedo em conexões rápidas, espera só o necessário nas lentas.
   // MIN evita um flash/piscada; MAX é o teto de segurança; a rede 100% CSS (2.2s no

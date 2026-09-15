@@ -11,7 +11,7 @@ const KEY = "nummo-cookie-consent";
 
 /**
  * Gate de consentimento (LGPD). Cookies/analytics não essenciais só carregam
- * após o "Aceitar" — antes disso, nenhum tracker sobe. O banner torna verdadeira
+ * após o "Aceitar" - antes disso, nenhum tracker sobe. O banner torna verdadeira
  * a Política de Cookies (que promete um banner de consentimento no site).
  */
 export function ConsentAnalytics() {
@@ -23,7 +23,7 @@ export function ConsentAnalytics() {
     try {
       v = localStorage.getItem(KEY);
     } catch {
-      /* localStorage indisponível — trata como sem escolha */
+      /* localStorage indisponível - trata como sem escolha */
     }
     setChoice(v === "granted" ? "granted" : v === "denied" ? "denied" : null);
     setReady(true);

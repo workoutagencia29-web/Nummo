@@ -3,13 +3,13 @@ import * as React from "react";
 interface LoaderProps {
   size?: number;
   text?: string;
-  /** id/className repassados pra raiz — usados pelo #app-loader (fade + dismiss). */
+  /** id/className repassados pra raiz - usados pelo #app-loader (fade + dismiss). */
   id?: string;
   className?: string;
 }
 
 // Loader de marca: anel giratório com brilho azul + letras pulsando.
-// styled-jsx do original foi removido (não suportado neste projeto) — os keyframes
+// styled-jsx do original foi removido (não suportado neste projeto) - os keyframes
 // (loaderCircle / loaderLetter) vivem em styles.css. Só transform/opacity nas letras.
 export const Component: React.FC<LoaderProps> = ({
   size = 180,

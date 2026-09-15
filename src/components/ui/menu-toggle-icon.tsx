@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * MenuToggleIcon — ícone hambúrguer que anima para um "X" quando `open`.
+ * MenuToggleIcon - ícone hambúrguer que anima para um "X" quando `open`.
  * (Não fazia parte do pacote do header; criado aqui para satisfazer o import.)
  */
 export function MenuToggleIcon({

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
    - o loop pausa quando a seção sai da tela (IntersectionObserver);
    - respeita prefers-reduced-motion (renderiza 1 quadro estático);
    - DPR limitado a 1.5 (o gradiente é suave, não precisa de mais).
-   Tudo em canvas WebGL — nenhum recurso externo (seguro no CSP).            */
+   Tudo em canvas WebGL - nenhum recurso externo (seguro no CSP).            */
 
 const vertexShaderGLSL = `
 attribute vec2 position;
@@ -98,7 +98,7 @@ export interface VelarisProps {
   children?: React.ReactNode;
 }
 
-// Paleta azul da Nummo (antes era verde) — mesma família do .grad-night.
+// Paleta azul da Nummo (antes era verde) - mesma família do .grad-night.
 const DEFAULT_COLORS = ["#3b8bff", "#2559d8", "#1652c6", "#03060c"];
 
 const Velaris = ({

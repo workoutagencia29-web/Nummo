@@ -206,7 +206,7 @@ function Landing() {
 /* Sections                                                            */
 /* ------------------------------------------------------------------ */
 
-// Navbar do site — agora renderiza o novo Header (shadcn navigation-menu).
+// Navbar do site - agora renderiza o novo Header (shadcn navigation-menu).
 // Mantém o nome/So export `Nav` e o prop opcional `solid` (ignorado) para que
 // todas as páginas que importam `Nav` continuem funcionando sem alteração.
 export function Nav({ dark = false }: { solid?: boolean; dark?: boolean } = {}) {
@@ -299,7 +299,7 @@ function Hero() {
         </div>
       </div>
 
-      {/* Onda branca com seta para baixo — indicador de "role para baixo" que faz a
+      {/* Onda branca com seta para baixo - indicador de "role para baixo" que faz a
           transição do hero escuro para a próxima seção (clara). */}
       <div className="pointer-events-none absolute inset-x-0 -bottom-px z-20 hidden justify-center md:flex">
         <button
@@ -336,7 +336,7 @@ const SCORE_METRICS = [
   { label: "Preparo", value: 0 },
 ];
 
-// Painel "Conversion Score" do Checkout Builder — anel de progresso + selo + barras.
+// Painel "Conversion Score" do Checkout Builder - anel de progresso + selo + barras.
 function ConversionScore() {
   const score = 91;
   const radius = 42;
@@ -842,11 +842,53 @@ function ApiDocs() {
             ))}
           </aside>
 
-          {/* Conteúdo do endpoint — remonta a cada troca (fade suave via .tour-in) */}
+          {/* Conteúdo do endpoint - remonta a cada troca (fade suave via .tour-in) */}
           <div key={active} className="tour-in min-w-0">
+            {/* Cabeçalho: método + rota + título + descrição + parâmetros */}
+            <div className="border-b border-white/10 p-4 md:p-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className="grid h-5 min-w-[46px] place-items-center rounded px-1.5 font-mono text-[10px] font-bold"
+                  style={{ color: methodColor(ep.method), background: methodColor(ep.method) + "22" }}
+                >
+                  {ep.method}
+                </span>
+                <code className="font-mono text-sm text-[#F6F9FC]/80">{ep.path}</code>
+              </div>
+              <h3 className="mt-3 font-display text-lg font-semibold tracking-tight text-[#F6F9FC]">{ep.title}</h3>
+              <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-[#F6F9FC]/60">{ep.desc}</p>
+
+              {ep.params.length > 0 && (
+                <div className="mt-5">
+                  <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-[#F6F9FC]/40">Parâmetros</div>
+                  <div className="overflow-hidden rounded-lg border border-white/10">
+                    {ep.params.map((p, i) => (
+                      <div
+                        key={p.name}
+                        className={`flex flex-col gap-1 p-3 sm:flex-row sm:items-baseline sm:gap-3 ${i > 0 ? "border-t border-white/[0.06]" : ""}`}
+                      >
+                        <div className="flex items-center gap-2 sm:w-40 sm:shrink-0">
+                          <code className="font-mono text-[13px] text-[#7cc5ff]">{p.name}</code>
+                          {p.required && (
+                            <span className="rounded bg-[#ff5f57]/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[#ff8a84]">
+                              obrig.
+                            </span>
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="font-mono text-[11px] text-[#F6F9FC]/40">{p.type}</span>
+                          <p className="mt-0.5 text-[13px] leading-relaxed text-[#F6F9FC]/60">{p.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Exemplos de código */}
             <div className="bg-[#091020] p-4 md:p-6">
-              {/* Tabs de linguagem (com ícones) — grade alinhada: 5 por linha */}
+              {/* Tabs de linguagem (com ícones): grade alinhada, 5 por linha */}
               <div className="mb-4 grid grid-cols-3 gap-1.5 sm:grid-cols-5">
                 {langs.map((l) => {
                   const on = lang === l.key;
@@ -868,8 +910,8 @@ function ApiDocs() {
                 })}
               </div>
 
-              <CodeBlock label="Requisição" code={ep.request[lang]} />
-              <div className="mt-4">
+              <div className="grid gap-4 lg:grid-cols-2">
+                <CodeBlock label="Requisição" code={ep.request[lang]} />
                 <CodeBlock label="Resposta" code={ep.response} status={ep.method === "POST" ? "201 Created" : "200 OK"} />
               </div>
             </div>
@@ -877,7 +919,7 @@ function ApiDocs() {
         </div>
       </div>
 
-      {/* CTA — página completa da documentação */}
+      {/* CTA - página completa da documentação */}
       <div className="mt-8 flex flex-col items-center gap-3">
         <a
           href={NUMMO_DOCS_URL}
@@ -901,7 +943,7 @@ function Bento() {
     <section id="plataforma" className="grad-night-dev pb-24 pt-20 max-sm:pb-16 max-sm:pt-14">
       <div className="mx-auto max-w-7xl px-6">
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
-          {/* Checkout Builder com IA + Área de membros + Marketplace —
+          {/* Checkout Builder com IA + Área de membros + Marketplace -
               TEMPORARIAMENTE OCULTOS a pedido (serão reutilizados depois).
               Para reativar: trocar `false` por `true` no wrapper abaixo. */}
           {false && (<>
@@ -1041,7 +1083,7 @@ function PaymentMethods() {
 // do app, título em negrito + horário à direita, corpo abaixo). Componente
 // autocontido: preenche a coluna esquerda da seção Taxas sem tocar em mais nada.
 // Arranjo em cascata "embaralhada": cada card recebe um deslocamento horizontal
-// (off), rotação (rot), escala, opacidade e blur próprios — os do fundo ficam
+// (off), rotação (rot), escala, opacidade e blur próprios - os do fundo ficam
 // menores/translúcidos/desfocados (profundidade), com um card central em foco.
 // Posicionamento absoluto num container de altura fixa (< coluna do texto),
 // então NÃO altera o fluxo nem a altura da página.
@@ -1165,13 +1207,34 @@ function Rates() {
             Seu negócio não precisa caber em uma taxa padrão
           </h2>
           <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-[#F6F9FC]/85 max-sm:text-sm">
-            Temos <span className="font-semibold text-[#5b8bff]">uma vasta seleção</span> de planos definidos conforme o perfil de atuação da sua empresa. E, conforme seu negócio evolui, cresce em volume ou muda de estrutura, suas condições podem ser revisadas para acompanhar essa nova fase.
+            Sua taxa é definida pelo <span className="font-semibold text-[#5b8bff]">perfil da sua operação</span>, não por uma tabela genérica. E conforme você cresce em volume, revisamos suas condições para deixá-las ainda melhores.
           </p>
-          <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-[#F6F9FC]/70 max-sm:text-[13px]">
-            Comece com o plano ideal hoje e{" "}
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-[#5b8bff] underline-offset-2 transition-colors hover:text-white hover:underline">negocie condições ainda melhores</a>{" "}
-            quando sua operação pedir.
-          </p>
+
+          {/* Chips de benefício */}
+          <div className="mt-7 flex flex-wrap gap-2.5">
+            {["Pix na hora", "Sem mensalidade", "Taxa sob medida"].map((c) => (
+              <span
+                key={c}
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-medium text-[#F6F9FC]/90 backdrop-blur max-sm:text-[13px]"
+              >
+                <Check className="size-4 shrink-0 text-[#5b8bff]" />
+                {c}
+              </span>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="mt-8">
+            <a
+              href="https://wa.me/5511912002801?text=Olá!%20Quero%20falar%20com%20um%20especialista%20sobre%20as%20taxas%20da%20Nummo."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-[52px] items-center justify-center gap-2 rounded-full bg-[#2559d8] px-7 text-base font-semibold text-white shadow-[0_12px_28px_-10px_rgba(37,89,216,0.6)] transition-all hover:-translate-y-0.5 hover:bg-[#1f4fc4] max-sm:w-full"
+            >
+              Falar com um especialista
+              <ArrowRight className="size-[18px]" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1208,7 +1271,7 @@ function IntegrationChip({ l }: { l: Integration }) {
           }}
         />
       ) : (
-        // Coloridos intactos — reconhecibilidade de marca.
+        // Coloridos intactos - reconhecibilidade de marca.
         <img
           src={l.src}
           alt={l.alt}
@@ -1339,11 +1402,13 @@ const FAQ_CATEGORIES = [
       { question: "Como a Nummo protege os meus pagamentos?", answer: "A Nummo segue o padrão PCI-DSS e conta com antifraude, que analisa o risco durante as transações, além de autenticação 3DS 2.0 quando necessária, ajudando a reduzir chargebacks." },
       { question: "A Nummo tem API e webhooks para integração?", answer: "Sim. A API da Nummo é moderna e bem documentada, com webhooks confiáveis para você integrar o checkout e acompanhar cada evento de pagamento em tempo real." },
       { question: "A Nummo tem boa taxa de aprovação?", answer: "Sim. A Nummo é focada em alta taxa de aprovação no checkout, combinando um checkout transparente com antifraude para aprovar mais vendas legítimas e reduzir recusas indevidas." },
+      { question: "Os dados dos meus clientes ficam seguros?", answer: "Sim. A Nummo é aderente à LGPD e ao padrão PCI-DSS: os dados sensíveis de cartão são tokenizados e trafegam criptografados, então você nunca precisa armazená-los. Seus clientes compram com a confiança de um checkout certificado." },
+      { question: "A plataforma é estável? E se sair do ar?", answer: "A estabilidade é prioridade. Você acompanha a disponibilidade de todos os serviços em tempo real na nossa página de Status, com transparência total, e a infraestrutura é monitorada para manter suas vendas no ar quando você mais precisa." },
     ],
   },
 ];
 
-// JSON-LD FAQPage — habilita rich results na busca (conteúdo já existe no acordeão).
+// JSON-LD FAQPage - habilita rich results na busca (conteúdo já existe no acordeão).
 const FAQ_JSONLD = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -1356,9 +1421,9 @@ const FAQ_JSONLD = JSON.stringify({
 
 function Faq() {
   return (
-    // Bloco escuro — quebra o ritmo claro da página. O fundo (gradiente azul → preto,
+    // Bloco escuro - quebra o ritmo claro da página. O fundo (gradiente azul → preto,
     // luz nascendo da base) e os tokens de cor da seção vêm da classe global `.faq`
-    // (styles.css), aplicada aqui no container inteiro — nunca nos cards.
+    // (styles.css), aplicada aqui no container inteiro - nunca nos cards.
     <div id="faq" className="faq grad-night-faq scroll-mt-24">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSONLD }} />
       <FaqCategorized
@@ -1435,7 +1500,7 @@ const FOOTER_LINKS: Record<string, string> = {
 };
 
 export function Footer() {
-  // Redes sociais — Instagram é link; os demais ainda não têm canal,
+  // Redes sociais - Instagram é link; os demais ainda não têm canal,
   // então ficam como botões visuais SEM função (não são <a>).
   const socialLinks = [
     { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/use.nummo" },

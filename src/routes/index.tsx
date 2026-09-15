@@ -244,7 +244,7 @@ function HeroOrbits() {
 
 function Hero() {
   return (
-    <section className="grad-night relative -mt-[73px] flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 pb-28 pt-32 text-[#F6F9FC] max-sm:pb-24 max-sm:pt-28">
+    <section className="grad-night relative -mt-[73px] flex min-h-svh flex-col items-center overflow-hidden px-6 text-[#F6F9FC] md:min-h-[calc(100svh+150px)]">
       <HeroOrbits />
       {/* brilho azul suave atrás do título */}
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[520px] w-[760px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2F6BFF]/12 blur-[130px]" />
@@ -252,7 +252,7 @@ function Hero() {
           na parte visível ao entrar, já que a base da seção agora fica mais abaixo. */}
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-[100svh] z-0 hidden h-[440px] w-[1100px] max-w-[140vw] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[#3b7fe6]/40 blur-[100px] md:block" />
 
-      <div className="relative z-10 flex w-full max-w-5xl flex-col items-center text-center">
+      <div className="relative z-10 flex min-h-svh w-full max-w-5xl flex-col items-center justify-center py-28 text-center max-sm:py-24">
         {/* selo com brilho girando ao redor */}
         <div className="animate-hero-in [animation-delay:120ms]">
           <span className="relative inline-flex overflow-hidden rounded-full p-[3px]">

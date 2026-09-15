@@ -750,10 +750,7 @@ function CodeBlock({ label, code, status }: { label: string; code: string; statu
 // endpoints à esquerda; à direita, descrição + parâmetros e os exemplos de
 // request/response por linguagem. CTA para a página completa da documentação.
 function ApiDocs() {
-  const [active, setActive] = useState(0);
   const [lang, setLang] = useState<LangKey>("curl");
-  const ep = API_ENDPOINTS[active];
-  const groups = Array.from(new Set(API_ENDPOINTS.map((e) => e.group)));
   const langs: {
     key: LangKey;
     label: string;
@@ -771,8 +768,7 @@ function ApiDocs() {
     { key: "cpp", label: "C++", Icon: SiCplusplus, color: "#659AD2" },
     { key: "rust", label: "Rust", Icon: SiRust, color: "#DEA584" },
   ];
-  const methodColor = (m: string) =>
-    m === "GET" ? "#28c840" : m === "DELETE" ? "#ff5f57" : "#7cc5ff";
+  const demo = API_ENDPOINTS.find((e) => e.id === "create-charge") ?? API_ENDPOINTS[0];
 
   return (
     <div>
@@ -785,7 +781,7 @@ function ApiDocs() {
           Uma API feita para escalar
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-[#F6F9FC]/60 max-sm:text-sm">
-          Preview da API da Nummo: REST, JSON e webhooks, com exemplos prontos em cURL, Node.js e Python.
+          REST, JSON e webhooks. Integre Pix, cartão e boleto com poucas linhas de código, na linguagem que o seu time já usa.
         </p>
       </div>
 
@@ -805,117 +801,30 @@ function ApiDocs() {
           </span>
         </div>
 
-        {/* Corpo: navegação + conteúdo */}
-        <div className="grid lg:grid-cols-[240px_1fr]">
-          {/* Navegação de endpoints */}
-          <aside className="min-w-0 border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
-            {groups.map((g) => (
-              <div key={g} className="mb-5 last:mb-0">
-                <div className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#F6F9FC]/40">
-                  {g}
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  {API_ENDPOINTS.map((e, i) =>
-                    e.group === g ? (
-                      <button
-                        key={e.id}
-                        type="button"
-                        onClick={() => setActive(i)}
-                        className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                          active === i
-                            ? "bg-[#2F6BFF]/12 font-medium text-[#F6F9FC]"
-                            : "text-[#F6F9FC]/55 hover:bg-white/[0.03] hover:text-[#F6F9FC]/85"
-                        }`}
-                      >
-                        <span
-                          className="grid h-4 w-9 shrink-0 place-items-center rounded font-mono text-[9px] font-bold"
-                          style={{ color: methodColor(e.method), background: methodColor(e.method) + "22" }}
-                        >
-                          {e.method}
-                        </span>
-                        {e.nav}
-                      </button>
-                    ) : null,
-                  )}
-                </div>
-              </div>
-            ))}
-          </aside>
-
-          {/* Conteúdo do endpoint - remonta a cada troca (fade suave via .tour-in) */}
-          <div key={active} className="tour-in min-w-0">
-            {/* Cabeçalho: método + rota + título + descrição + parâmetros */}
-            <div className="border-b border-white/10 p-4 md:p-6">
-              <div className="flex flex-wrap items-center gap-2">
-                <span
-                  className="grid h-5 min-w-[46px] place-items-center rounded px-1.5 font-mono text-[10px] font-bold"
-                  style={{ color: methodColor(ep.method), background: methodColor(ep.method) + "22" }}
+        {/* Conteúdo: seletor de linguagem + código colorido */}
+        <div className="p-4 md:p-6">
+          <div className="mb-4 grid grid-cols-3 gap-1.5 sm:grid-cols-5">
+            {langs.map((l) => {
+              const on = lang === l.key;
+              return (
+                <button
+                  key={l.key}
+                  type="button"
+                  onClick={() => setLang(l.key)}
+                  className={`inline-flex min-h-9 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-[13px] font-medium transition-colors ${
+                    on
+                      ? "bg-[#2F6BFF] text-white"
+                      : "bg-white/[0.04] text-[#F6F9FC]/55 hover:text-[#F6F9FC]/85"
+                  }`}
                 >
-                  {ep.method}
-                </span>
-                <code className="font-mono text-sm text-[#F6F9FC]/80">{ep.path}</code>
-              </div>
-              <h3 className="mt-3 font-display text-lg font-semibold tracking-tight text-[#F6F9FC]">{ep.title}</h3>
-              <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-[#F6F9FC]/60">{ep.desc}</p>
-
-              {ep.params.length > 0 && (
-                <div className="mt-5">
-                  <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-[#F6F9FC]/40">Parâmetros</div>
-                  <div className="overflow-hidden rounded-lg border border-white/10">
-                    {ep.params.map((p, i) => (
-                      <div
-                        key={p.name}
-                        className={`flex flex-col gap-1 p-3 sm:flex-row sm:items-baseline sm:gap-3 ${i > 0 ? "border-t border-white/[0.06]" : ""}`}
-                      >
-                        <div className="flex items-center gap-2 sm:w-40 sm:shrink-0">
-                          <code className="font-mono text-[13px] text-[#7cc5ff]">{p.name}</code>
-                          {p.required && (
-                            <span className="rounded bg-[#ff5f57]/15 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[#ff8a84]">
-                              obrig.
-                            </span>
-                          )}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <span className="font-mono text-[11px] text-[#F6F9FC]/40">{p.type}</span>
-                          <p className="mt-0.5 text-[13px] leading-relaxed text-[#F6F9FC]/60">{p.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Exemplos de código */}
-            <div className="bg-[#091020] p-4 md:p-6">
-              {/* Tabs de linguagem (com ícones): grade alinhada, 5 por linha */}
-              <div className="mb-4 grid grid-cols-3 gap-1.5 sm:grid-cols-5">
-                {langs.map((l) => {
-                  const on = lang === l.key;
-                  return (
-                    <button
-                      key={l.key}
-                      type="button"
-                      onClick={() => setLang(l.key)}
-                      className={`inline-flex min-h-9 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-2 py-2 text-[13px] font-medium transition-colors ${
-                        on
-                          ? "bg-[#2F6BFF] text-white"
-                          : "bg-white/[0.04] text-[#F6F9FC]/55 hover:text-[#F6F9FC]/85"
-                      }`}
-                    >
-                      <l.Icon className="size-3.5 shrink-0" style={{ color: on ? "#ffffff" : l.color }} />
-                      {l.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="grid gap-4 lg:grid-cols-2">
-                <CodeBlock label="Requisição" code={ep.request[lang]} />
-                <CodeBlock label="Resposta" code={ep.response} status={ep.method === "POST" ? "201 Created" : "200 OK"} />
-              </div>
-            </div>
+                  <l.Icon className="size-3.5 shrink-0" style={{ color: on ? "#ffffff" : l.color }} />
+                  {l.label}
+                </button>
+              );
+            })}
           </div>
+
+          <CodeBlock label="Criar uma cobrança" code={demo.request[lang]} />
         </div>
       </div>
 
@@ -933,7 +842,6 @@ function ApiDocs() {
         <span className="text-xs text-[#F6F9FC]/40">Referência completa, SDKs e ambiente de testes.</span>
       </div>
 
-      <style>{`@keyframes tourIn{from{opacity:0}to{opacity:1}}.tour-in{animation:tourIn .5s cubic-bezier(0.4,0,0.2,1)}`}</style>
     </div>
   );
 }

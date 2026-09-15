@@ -15,11 +15,11 @@
 /* O layout/fundo/animação do loader ficam no componente ai-loader.tsx (raiz com
    id="app-loader"). Aqui só o mecanismo de dismiss + a rede de segurança 100% CSS:
    fade de saída (.app-loader-hidden, controlado pelo __root.tsx quando a página
-   está pronta) e auto-some aos 1.4s caso a hidratação do React falhe/demore. */
+   está pronta) e auto-some aos 2.2s caso a hidratação do React falhe/demore. */
 #app-loader {
   opacity: 1;
   transition: opacity 0.6s ease;
-  animation: app-loader-autohide 0.5s ease 1.4s forwards;
+  animation: app-loader-autohide 0.5s ease 2.2s forwards;
 }
 #app-loader.app-loader-hidden {
   opacity: 0;

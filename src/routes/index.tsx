@@ -543,12 +543,11 @@ curl -X POST https://api.usenummo.com.br/v1/charges \\
     response: `{
   "id": "chg_3a9f2c8db1",
   "status": "pending",
-  "amount": 19700,
-  "currency": "BRL",
+  "amount": 4990,
   "payment_method": "pix",
   "customer": {
-    "name": "Ana Souza",
-    "email": "ana@email.com"
+    "name": "Maria Silva",
+    "document": "12345678900"
   },
   "pix": {
     "qr_code": "00020126360014BR.GOV.BCB.PIX...5204",
@@ -770,12 +769,18 @@ function ApiCodeWindow({ filename, code }: { filename: string; code: string }) {
 // por linguagem continua em API_ENDPOINTS.request para quando quiser reativar.
 function ApiDocs() {
   const demo = API_ENDPOINTS.find((e) => e.id === "create-charge") ?? API_ENDPOINTS[0];
+  const code = `${demo.request.curl}\n\n# Resposta\n${demo.response}`;
+  const features = [
+    "Webhooks confiáveis em cada evento",
+    "Ambiente de testes (sandbox)",
+    "SDKs oficiais e exemplos prontos",
+  ];
 
   return (
     <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-      {/* Esquerda: texto + CTA */}
+      {/* Esquerda: texto + CTA + destaques */}
       <div className="max-sm:text-center">
-        <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] md:text-5xl">
+        <h2 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-[#F6F9FC] md:text-5xl lg:text-[52px]">
           Uma API tão simples que integra num café
         </h2>
         <p className="mt-5 max-w-md text-lg leading-relaxed text-[#F6F9FC]/60 max-sm:mx-auto max-sm:text-base">
@@ -790,18 +795,28 @@ function ApiDocs() {
           Ver documentação da API
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
         </a>
+        <ul className="mt-10 space-y-3.5 max-sm:mx-auto max-sm:inline-block max-sm:text-left">
+          {features.map((f) => (
+            <li key={f} className="flex items-center gap-2.5 text-[15px] text-[#F6F9FC]/70">
+              <span className="grid size-5 shrink-0 place-items-center rounded-full bg-[#2559d8]/15 text-[#5b8bff]">
+                <Check className="size-3" />
+              </span>
+              {f}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Direita: janela de código */}
-      <ApiCodeWindow filename="api-pix-nummo" code={demo.request.curl} />
+      <ApiCodeWindow filename="api-pix-nummo" code={code} />
     </div>
   );
 }
 
 function Bento() {
   return (
-    <section id="plataforma" className="grad-night-dev pb-24 pt-20 max-sm:pb-16 max-sm:pt-14">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="plataforma" className="grad-night-dev flex min-h-svh items-center py-24 max-sm:min-h-0 max-sm:py-16">
+      <div className="mx-auto w-full max-w-7xl px-6">
         <Stagger className="grid grid-cols-1 gap-4 md:grid-cols-6 lg:-translate-y-[40px]" step={200}>
           {/* Checkout Builder com IA + Área de membros + Marketplace -
               TEMPORARIAMENTE OCULTOS a pedido (serão reutilizados depois).

@@ -62,7 +62,7 @@ export function ConsentAnalytics() {
             <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
               <p className="text-sm leading-relaxed text-foreground/80">
                 Usamos cookies essenciais e, com o seu consentimento, cookies de análise para melhorar o site. Veja a{" "}
-                <Link to="/cookies" className="font-medium text-primary underline-offset-2 hover:underline">
+                <Link to="/cookies" className="font-medium text-primary underline underline-offset-2">
                   Política de Cookies
                 </Link>
                 .

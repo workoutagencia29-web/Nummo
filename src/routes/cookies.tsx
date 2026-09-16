@@ -55,7 +55,7 @@ function CookiesPage() {
             </p>
             <p className="mt-5">
               Para saber mais sobre como a Nummo trata Dados Pessoais, consulte nossa{" "}
-              <Link to="/privacidade" className="text-neon underline-offset-2 hover:underline">Política de Privacidade</Link>.
+              <Link to="/privacidade" className="text-neon underline underline-offset-2">Política de Privacidade</Link>.
             </p>
           </div>
         </div>

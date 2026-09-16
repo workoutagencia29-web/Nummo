@@ -225,7 +225,6 @@ export function FaqCategorized({
 
                   <div
                     id={`faq-answer-${activeCategory}-${index}`}
-                    role="region"
                     className={`overflow-hidden transition-all duration-300 ease-out motion-reduce:transition-none ${
                       isOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
                     }`}

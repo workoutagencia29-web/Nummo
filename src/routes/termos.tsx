@@ -201,7 +201,7 @@ function TermosPage() {
             <P>A Nummo não disponibiliza ambiente sandbox neste momento, podendo disponibilizá-lo futuramente conforme sua estratégia operacional.</P>
             <P>A Nummo poderá modificar, limitar, depreciar, suspender ou revogar APIs, endpoints, webhooks, chaves e integrações por razões de segurança, manutenção, evolução tecnológica, risco, abuso, descumprimento destes Termos, exigência de Parceiros de Pagamento ou obrigação legal.</P>
             <P>A Nummo não garante disponibilidade ininterrupta da API, do dashboard, dos checkouts, dos meios de pagamento ou de serviços dependentes de terceiros. Manutenções, atualizações, falhas de conectividade, indisponibilidades de Parceiros de Pagamento, interrupções de segurança ou eventos fora do controle direto da Nummo poderão afetar a operação.</P>
-            <P>Informações sobre disponibilidade e incidentes operacionais poderão ser divulgadas na <Link to="/status" className="text-neon underline-offset-2 hover:underline">página de status</Link> da Nummo.</P>
+            <P>Informações sobre disponibilidade e incidentes operacionais poderão ser divulgadas na <Link to="/status" className="text-neon underline underline-offset-2">página de status</Link> da Nummo.</P>
 
             <H2>13. Tratamento de Dados Pessoais (DPA Simplificado)</H2>
             <P>Esta seção integra estes Termos e funciona como acordo simplificado de tratamento de dados entre a Nummo e o Seller sempre que a Nummo tratar Dados Pessoais em nome do Seller.</P>
@@ -220,7 +220,7 @@ function TermosPage() {
             <P>A Nummo poderá utilizar provedores, suboperadores e Parceiros de Pagamento para execução dos serviços, incluindo provedores de nuvem, KYC, antifraude, analytics, CRM, mensageria, suporte, emissão fiscal, segurança e infraestrutura, observadas as finalidades legítimas e a Política de Privacidade.</P>
             <P>A Nummo adotará medidas razoáveis de segurança para proteger os Dados Pessoais tratados em sua Plataforma e poderá cooperar com o Seller em solicitações de titulares, incidentes e auditorias, dentro dos limites técnicos, legais, contratuais e operacionais aplicáveis.</P>
             <P>A Nummo poderá reter Dados Pessoais após o término da relação contratual quando necessário para cumprir obrigações legais, regulatórias, fiscais, de segurança, prevenção a fraudes, defesa de direitos ou exigências de Parceiros de Pagamento.</P>
-            <P>O tratamento de Dados Pessoais pela Nummo também observará sua <Link to="/privacidade" className="text-neon underline-offset-2 hover:underline">Política de Privacidade</Link>.</P>
+            <P>O tratamento de Dados Pessoais pela Nummo também observará sua <Link to="/privacidade" className="text-neon underline underline-offset-2">Política de Privacidade</Link>.</P>
 
             <H2>14. Suspensão, bloqueio, retenção e encerramento</H2>
             <P>A Nummo poderá, a qualquer momento, limitar funcionalidades, bloquear transações, reter valores, suspender acessos, revogar chaves de API, solicitar documentos, interromper saques ou encerrar contas quando identificar:</P>
@@ -269,7 +269,7 @@ function TermosPage() {
             <P>Alterações materiais serão comunicadas com antecedência razoável por dashboard, e-mail ou canais oficiais. Alterações necessárias por segurança, prevenção a fraudes, obrigação legal, exigência regulatória ou determinação de Parceiros de Pagamento poderão ser aplicadas imediatamente.</P>
             <P>A continuidade de uso da Plataforma após a entrada em vigor de uma atualização representará a aceitação da nova versão dos Termos.</P>
             <P>As comunicações da Nummo poderão ocorrer pelo dashboard, e-mail cadastrado, notificações, WhatsApp ou demais canais oficiais divulgados na Plataforma. O Seller é responsável por manter seus dados de contato atualizados.</P>
-            <P>A <Link to="/privacidade" className="text-neon underline-offset-2 hover:underline">Política de Privacidade</Link> e a <Link to="/cookies" className="text-neon underline-offset-2 hover:underline">Política de Cookies</Link> da Nummo integram estes Termos no que forem aplicáveis.</P>
+            <P>A <Link to="/privacidade" className="text-neon underline underline-offset-2">Política de Privacidade</Link> e a <Link to="/cookies" className="text-neon underline underline-offset-2">Política de Cookies</Link> da Nummo integram estes Termos no que forem aplicáveis.</P>
             <P>Estes Termos serão regidos pelas leis da República Federativa do Brasil.</P>
             <P>Fica eleito o foro da Comarca de São Paulo/SP para solucionar controvérsias relacionadas a estes Termos, com ressalva dos casos em que a legislação aplicável assegurar foro diverso ao Comprador consumidor.</P>
           </div>

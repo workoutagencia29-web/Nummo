@@ -921,9 +921,9 @@ export function Footer() {
               { t: "Legal", l: ["Privacidade", "Termos", "Cookies", "Compliance"] },
             ].map((col) => (
               <div key={col.t}>
-                <h3 className="mb-4 text-[10px] font-medium uppercase tracking-widest text-[#F6F9FC]/55">
+                <h2 className="mb-4 text-[10px] font-medium uppercase tracking-widest text-[#F6F9FC]/55">
                   {col.t}
-                </h3>
+                </h2>
                 <ul className="space-y-1">
                   {col.l.map((i) => {
                     const to = FOOTER_ROUTES[i];

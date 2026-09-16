@@ -308,15 +308,15 @@ function PrivacidadePage() {
             <P>A Nummo poderá atualizar esta Política de Privacidade para refletir alterações em seus produtos, práticas operacionais, tecnologias, requisitos legais ou medidas de segurança.</P>
             <P>Quando houver mudanças relevantes, a Nummo poderá comunicar os usuários por meio do site, dashboard, e-mail, notificações ou outros canais oficiais.</P>
             <P>A versão mais atual desta Política estará disponível em{" "}
-              <a href="https://www.usenummo.com.br" className="text-neon underline-offset-2 hover:underline">www.usenummo.com.br</a>.
+              <a href="https://www.usenummo.com.br" className="text-neon underline underline-offset-2">www.usenummo.com.br</a>.
             </P>
 
             <H2>17. Encarregado (DPO) e canais de contato</H2>
             <P>A Nummo mantém um Encarregado pela Proteção de Dados (DPO), responsável por receber comunicações dos titulares e da Autoridade Nacional de Proteção de Dados (ANPD).</P>
             <P>Para exercer seus direitos, esclarecer dúvidas sobre esta Política ou tratar de qualquer assunto relacionado a dados pessoais, entre em contato pelo e-mail{" "}
-              <a href="mailto:suporte@usenummo.com.br" className="text-neon underline-offset-2 hover:underline">suporte@usenummo.com.br</a>{" "}
+              <a href="mailto:suporte@usenummo.com.br" className="text-neon underline underline-offset-2">suporte@usenummo.com.br</a>{" "}
               ou pelo{" "}
-              <a href="https://wa.me/5511912002801" target="_blank" rel="noopener noreferrer" className="text-neon underline-offset-2 hover:underline">nosso WhatsApp oficial</a>.
+              <a href="https://wa.me/5511912002801" target="_blank" rel="noopener noreferrer" className="text-neon underline underline-offset-2">nosso WhatsApp oficial</a>.
             </P>
           </div>
         </div>

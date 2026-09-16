@@ -100,11 +100,11 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 				'nav-over-dark': dark,
 			})}
 		>
-			<nav className="relative mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-6">
+			<nav aria-label="Principal" className="relative mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-6">
 					<RouterLink to="/" className="nav-trigger rounded-md transition-opacity hover:opacity-80" aria-label="Nummo, início">
 						<img src="/logo-nummo.svg" alt="Nummo" width={145} height={24} className="h-6 w-auto" />
 					</RouterLink>
-					<NavigationMenu className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex">
+					<NavigationMenu aria-label="Produtos e empresa" className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex">
 						<NavigationMenuList>
 							<NavigationMenuItem>
 								<NavigationMenuTrigger className="nav-trigger bg-transparent">Produtos</NavigationMenuTrigger>
@@ -194,7 +194,7 @@ export function Header({ dark = false }: { dark?: boolean } = {}) {
 				</Button>
 			</nav>
 			<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
-				<NavigationMenu className="max-w-full">
+				<NavigationMenu aria-label="Menu mobile" className="max-w-full">
 					<div className="flex w-full flex-col gap-y-2">
 						<span className="text-sm">Produtos</span>
 						{productLinks.map((link) => (

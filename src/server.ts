@@ -39,29 +39,12 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   });
 }
 
-// Cache de borda: o HTML do SSR é cacheado no edge da Vercel (visitas repetidas
-// não invocam a função → corta o p99/cold start). Usa Vercel-CDN-Cache-Control,
-// que controla SÓ o cache do edge da Vercel e não altera o Cache-Control do
-// browser (o cliente segue com max-age=0, must-revalidate). A Vercel invalida o
-// edge a cada deploy, então nunca serve HTML de versão antiga. Só GET/200/HTML.
-function withEdgeCache(request: Request, response: Response): Response {
-  if (request.method !== "GET" || response.status !== 200) return response;
-  if (!(response.headers.get("content-type") ?? "").includes("text/html")) return response;
-  const headers = new Headers(response.headers);
-  headers.set("Vercel-CDN-Cache-Control", "max-age=600, stale-while-revalidate=86400");
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
-}
-
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return withEdgeCache(request, await normalizeCatastrophicSsrResponse(response));
+      return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

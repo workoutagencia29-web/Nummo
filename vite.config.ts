@@ -41,15 +41,6 @@ export default defineConfig({
     // violações sem quebrar o site, troque temporariamente a chave por
     // "Content-Security-Policy-Report-Only".
     routeRules: {
-      // Cache de borda das páginas SSR: o HTML fica no edge da Vercel (s-maxage),
-      // então visitas repetidas não invocam a função (corta o p99/cold start).
-      // max-age=0 no browser mantém o cliente sempre revalidando; a Vercel invalida
-      // o edge a cada deploy, então nunca serve HTML de uma versão antiga.
-      ...Object.fromEntries(
-        ["/", "/sobre", "/compliance", "/changelog", "/status", "/privacidade", "/termos", "/cookies", "/email", "/documentacao", "/integracoes", "/parceiros"].map(
-          (p) => [p, { headers: { "Cache-Control": "public, max-age=0, must-revalidate, s-maxage=600, stale-while-revalidate=86400" } }],
-        ),
-      ),
       "/**": {
         headers: {
           "Content-Security-Policy":
